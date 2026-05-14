@@ -105,10 +105,10 @@
   }
   .btn-primary {
     @apply btn text-white shadow-card;
-    background-image: linear-gradient(180deg, theme('colors.brand.500') 0%, theme('colors.brand.700') 100%);
+    background-image: linear-gradient(180deg, theme('colors.brand.700') 0%, theme('colors.brand.800') 100%);
   }
   .btn-primary:hover {
-    background-image: linear-gradient(180deg, theme('colors.brand.600') 0%, theme('colors.brand.800') 100%);
+    background-image: linear-gradient(180deg, theme('colors.brand.800') 0%, theme('colors.brand.900') 100%);
     box-shadow: 0 4px 12px -2px rgb(40 118 70 / 0.35);
   }
   .btn-primary:focus-visible {

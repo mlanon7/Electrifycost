@@ -392,7 +392,7 @@ export default function SolarCalculator() {
         <div className="mt-5 card p-4">
           <h3 className="text-sm font-semibold text-ink-900">Quote check — what to ask</h3>
           <ul className="mt-2 space-y-1 text-sm text-ink-700">
-            <li>· Per-Watt installed cost <em>after</em> federal credit. Compare to $2.50-$3.30/W national median.</li>
+            <li>· Per-Watt installed cost <em>gross</em> (before any state/utility rebate). Compare to $2.50-$3.30/W national median. The federal 25D credit is 0% for 2026 installs, so per-watt should be compared on gross cost.</li>
             <li>· Production guarantee in kWh (annual) tied to performance, not a vague "estimate."</li>
             <li>· Inverter warranty (string: 10 yr standard, micro: 25 yr) and panel performance warranty (typically 25-yr 84-86% retained capacity).</li>
             <li>· Roof penetration warranty separate from solar warranty.</li>
