@@ -365,17 +365,54 @@ const schemaJsonLd = [
         <h1 class="mt-2 text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl md:text-5xl">
           What will it really cost to electrify your home?
         </h1>
-        <p class="mt-4 max-w-2xl text-base text-ink-700 md:text-lg">
-          Free, source-backed planning calculators for HVAC (heat pumps, mini-splits, geothermal, AC, ductwork), electrical (panel, EV charger, EV TCO), solar &amp; resilience (solar PV, battery, generator), water heating, and envelope (insulation, windows, audits). Type a ZIP and we auto-detect your state. Current federal + state rebates included (25C/25D/30D expired 2025; 30C through 2026-06-30). No login, no email gate.
+        <p class="mt-4 max-w-2xl text-base text-ink-800 md:text-lg">
+          Free, source-backed planning calculators. Type a ZIP, get a low / mid / high installed-cost range with rebates already applied.
+        </p>
+        <ul class="mt-5 grid max-w-2xl gap-x-5 gap-y-2 text-sm sm:grid-cols-2">
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">HVAC</strong> — heat pumps, mini-splits, geothermal, AC, ductwork</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">Electrical &amp; EV</strong> — panel upgrade, EV charger, EV vs gas TCO</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">Solar &amp; resilience</strong> — solar PV, home battery, generator</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">Water heating</strong> — HPWH, tankless, tank, recirculation</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">Envelope</strong> — insulation, windows, doors, audits</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-11" /></svg>
+            </span>
+            <span class="text-ink-700"><strong class="text-ink-900">Appliances</strong> — induction stove, heat-pump dryer, more</span>
+          </li>
+        </ul>
+        <p class="mt-4 max-w-2xl text-xs text-ink-600">
+          Current federal + state rebates included. 25C / 25D / 30D federal credits expired 2025-12-31; 30C EV-charger credit valid through 2026-06-30. No login, no email gate.
         </p>
         <div class="mt-6 flex flex-wrap gap-2">
           {trustChips.map(c => (
             <a href={c.href} class="rounded-full border border-ink-200 bg-white/70 px-3 py-1 text-xs text-ink-700 no-underline shadow-sm hover:bg-ink-50">{c.label}</a>
           ))}
-        </div>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
-          <a href="/heat-pump-cost-calculator/" class="btn-primary">Open heat pump calculator</a>
-          <a href="/methodology/" class="btn-ghost border border-ink-200">How we calculate</a>
         </div>
       </div>
 
