@@ -1,0 +1,54 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+const lastReviewed = '2026-05-01';
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Smart electrical panels in 2026: Span, Lumin, Schneider, and when load shedding beats them all', datePublished: '2026-03-06', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
+---
+<Layout title="Smart Electrical Panels in 2026: Span, Lumin, Schneider Reviewed" description="Comprehensive guide to smart electrical panels — Span Drive, Schneider Square D Energy Center, Lumin, and load-shed devices. When each makes sense." active="/guides/smart-panels/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/panel-upgrade-calculator.png" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Smart panels', href: '/guides/smart-panels/' }]}>
+  <article class="container-wide max-w-3xl py-10 prose-guide">
+    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Smart electrical panels in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~8 min read</p></header>
+    <p class="lede">A smart panel can save you a $5,000 service upgrade and unlock electrification on existing 100A service — but only if the math works for your specific situation. This guide breaks down the four product approaches (full smart panel, add-on smart load center, monitoring-only, load-shed device), when each pays back, and the install gotchas that contractors often miss.</p>
+
+    <h2>What "smart" actually means</h2>
+    <p>A traditional electrical panel has mechanical breakers that trip on overcurrent. A smart panel adds: software-controlled breakers (turn circuits on/off via app), real-time per-circuit energy monitoring, automated load shedding when total demand approaches the service limit, and integration with solar inverters and home batteries. The killer feature for electrification is <strong>load shedding</strong> — pausing the EV charger when the dryer kicks on, so 100A service can carry loads that traditionally needed 200A.</p>
+
+    <h2>The four approaches</h2>
+    <p><strong>Full smart panel replacement</strong> (Span Drive $5,800–$9,000, Schneider Square D Energy Center $5,200–$8,500): every circuit is smart, app-controlled, with per-circuit data. Replaces your existing panel entirely. Maximum capability, maximum cost.</p>
+
+    <p><strong>Add-on smart load center</strong> (Lumin Smart Panel $2,800–$4,800): sits next to your existing traditional panel and takes over up to 12 critical circuits. Cheaper than full replacement; gives you smart control of just the circuits that matter (refrigerator, HVAC, EV charger, well pump). Most popular retrofit path.</p>
+
+    <p><strong>Monitoring-only retrofit</strong> (Emporia Vue Smart Panel $800–$2,400): current sensors clamp around your existing breakers and report energy use via WiFi. No control — just visibility. Useful for understanding your usage before committing to smart panel; not enough for load management.</p>
+
+    <p><strong>Load-shed device</strong> (DCC-9-USA $1,000–$2,400, Wallbox EM112): a single device that pauses ONE big load (typically the EV charger) when other loads spike. No app, no monitoring, just dynamic load management. The right tool when your only electrification project is an EV charger.</p>
+
+    <h2>When smart panel pays back</h2>
+    <p>The economics work in three scenarios:</p>
+    <ol>
+      <li><strong>Avoided service upgrade.</strong> 100→200A upgrade is $1,500–$5,500 by itself. If smart load management lets you skip that, you&rsquo;ve recovered most of the smart-panel premium.</li>
+      <li><strong>TOU + solar + battery integration.</strong> Smart panels can automate load shifting to off-peak hours and direct excess solar to specific loads. Worth $200–$600/yr in TOU states.</li>
+      <li><strong>Outage management with battery backup.</strong> When the grid drops, a smart panel keeps your critical circuits running on battery for days instead of hours. Hard to put a dollar value on resilience but real.</li>
+    </ol>
+
+    <h2>When traditional wins</h2>
+    <p>If you already have 200A+ service, aren&rsquo;t adding heat pump + EV, don&rsquo;t care about per-circuit monitoring, and won&rsquo;t add solar/battery — a traditional 200A panel is the right call. Save $3,000+ and avoid the proprietary-software lock-in.</p>
+
+    <h2>Span Drive vs Schneider Square D Energy Center vs Lumin</h2>
+    <p><strong>Span Drive</strong> is the category leader — purpose-built for electrification, best app, deepest solar/battery integration. Catch: Span filed for Chapter 11 bankruptcy reorganization in early 2026 — long-term software support is uncertain. Existing installations work; new ones carry risk.</p>
+
+    <p><strong>Schneider Square D Energy Center</strong> is the safer bet for long-term parts and software support. Schneider is a $30B company that isn&rsquo;t going anywhere. Slightly less polished app than Span. The professional electrician choice.</p>
+
+    <p><strong>Lumin Smart Panel</strong> is the value pick — pairs with your existing panel rather than replacing it. Less capable than full smart panels (12 circuits max, simpler control logic) but at half the cost. Best for retrofit when you don&rsquo;t want to replace a recently-upgraded traditional panel.</p>
+
+    <h2>Federal + state incentives</h2>
+    <p>The 25C credit subcategory C (electric service upgrade) was 30% up to $600 historically — but 25C expired Dec 31 2025 (OBBBA). HEEHRA / DOE Home Energy Rebates covers up to $4,000 toward electric panel work for income-qualified households where state programs are open. Several utilities (PG&amp;E, ConEd, Mass Save) offer $200–$1,500 rebates on smart-panel installs. Check your specific utility.</p>
+
+    <h2>Sources</h2>
+    <ul class="text-sm">
+      <li><a href="https://www.span.io/">Span Drive product specifications</a></li>
+      <li><a href="https://www.se.com/us/en/product-range/65420-square-d-pulse-energy-management-system/">Schneider Square D Pulse Energy Center</a></li>
+      <li><a href="https://www.luminsmart.com/">Lumin Smart Panel</a></li>
+    </ul>
+    <p class="mt-8"><a href="/smart-panel-cost-calculator/" class="font-medium text-brand-700">Run the smart panel calculator →</a></p>
+  </article>
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

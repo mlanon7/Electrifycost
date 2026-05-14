@@ -1,0 +1,113 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { ALL_STATES, findStateEnergy, findStateLabor } from '@/lib/data';
+
+export function getStaticPaths() {
+  return ALL_STATES.map(s => ({
+    params: { state: s.code.toLowerCase() },
+    props: { code: s.code, name: s.name },
+  }));
+}
+
+const { code, name } = Astro.props as { code: string; name: string };
+const labor = findStateLabor(code);
+const energy = findStateEnergy(code);
+
+// Solar yields by state (kWh/kW/yr) — mirrors solar-production-by-state.csv
+const yields: Record<string, number> = {
+  AL:1400,AK:1050,AZ:1700,AR:1400,CA:1600,CO:1600,CT:1300,DE:1350,DC:1350,FL:1450,
+  GA:1400,HI:1700,ID:1450,IL:1300,IN:1300,IA:1350,KS:1500,KY:1300,LA:1400,ME:1250,
+  MD:1300,MA:1300,MI:1250,MN:1350,MS:1400,MO:1400,MT:1400,NE:1450,NV:1700,NH:1300,
+  NJ:1300,NM:1700,NY:1250,NC:1400,ND:1400,OH:1250,OK:1500,OR:1250,PA:1300,RI:1300,
+  SC:1400,SD:1450,TN:1350,TX:1500,UT:1600,VT:1250,VA:1350,WA:1100,WV:1250,WI:1300,WY:1500,
+};
+const yieldKwhPerKw = yields[code] ?? 1350;
+const mult = labor?.electrician_multiplier ?? 1.0;
+
+// Mid $/W adjusted for state
+const midPerW = 3.30 * mult;
+const lowPerW = 2.50 * mult;
+const highPerW = 4.50 * mult;
+const watts7kw = 7000;
+const gross7Mid = Math.round(midPerW * watts7kw);
+const gross7Low = Math.round(lowPerW * watts7kw);
+const gross7High = Math.round(highPerW * watts7kw);
+
+// 25D federal credit expired after 2025-12-31 — net = gross for 2026
+const elecRate = energy ? energy.electricity_cents_per_kwh / 100 : 0.16;
+const annualKwh = 7 * yieldKwhPerKw;
+const annualValue = annualKwh * elecRate;
+const paybackYrs = Math.round((gross7Mid / annualValue) * 10) / 10;
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'WebPage',
+  name: `Solar Panel Cost in ${name}`,
+  description: `2026 residential solar PV cost in ${name}: $/W, 7 kW system net cost, payback, state programs. Federal 25D credit expired 2025-12-31.`,
+};
+---
+<Layout
+  title={`Solar Panel Cost in ${name} (2026)`}
+  description={`Solar PV cost in ${name}: ~$${midPerW.toFixed(2)}/W mid, 7 kW system ~$${gross7Mid.toLocaleString()}. Payback ~${paybackYrs} years. 25D federal credit expired 2025-12-31.`}
+  active={`/solar-panel-cost-${code.toLowerCase()}/`}
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/solar-panel-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Solar by state', href: '/solar-panel-cost-by-state/' },
+    { name, href: `/solar-panel-cost-${code.toLowerCase()}/` },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Solar PV · {name}</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Solar Panel Cost in {name} (2026)</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Planning-range installed cost for residential solar PV in {name}, adjusted for state labor multipliers and PVWatts production yield. 25D federal credit expired 2025-12-31; state and utility programs still apply.
+    </p>
+  </section>
+
+  <section class="container-tight pb-10">
+    <div class="net-card">
+      <p class="net-card-title">Mid installed cost · 7 kW system · {name}</p>
+      <p class="net-card-amount">${gross7Mid.toLocaleString()}</p>
+      <p class="mt-1 text-sm text-ink-600">Range ${gross7Low.toLocaleString()}–${gross7High.toLocaleString()} gross</p>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      <div class="card p-4">
+        <h2 class="text-lg font-semibold text-ink-900">Cost basics</h2>
+        <dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Mid $/W</dt><dd class="tabular-nums">${midPerW.toFixed(2)}</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Range $/W</dt><dd class="tabular-nums">${lowPerW.toFixed(2)}–${highPerW.toFixed(2)}</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">State labor multiplier</dt><dd class="tabular-nums">{mult.toFixed(2)}×</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">PV specific yield</dt><dd class="tabular-nums">{yieldKwhPerKw} kWh/kW/yr</dd></div>
+        </dl>
+      </div>
+      <div class="card p-4">
+        <h2 class="text-lg font-semibold text-ink-900">Production &amp; payback</h2>
+        <dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">7 kW annual production</dt><dd class="tabular-nums">{annualKwh.toLocaleString()} kWh</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Local electricity rate</dt><dd class="tabular-nums">${elecRate.toFixed(2)}/kWh</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Annual bill displaced</dt><dd class="tabular-nums">${Math.round(annualValue).toLocaleString()}/yr</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Simple payback (mid)</dt><dd class="tabular-nums">{paybackYrs} yr</dd></div>
+        </dl>
+        <p class="mt-3 text-[11px] text-ink-500">25D federal credit (30%) expired 2025-12-31. State and utility programs may shorten payback. Net-metering successor tariff (NEM 3.0 in CA, similar in HI, AZ, NY) reduces export value.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-tight pb-10">
+    <a href="/solar-panel-cost-calculator/" class="btn-primary">Run the full solar calculator →</a>
+  </section>
+
+  <section class="container-tight pb-10">
+    <h2 class="text-xl font-semibold text-ink-900">Other states</h2>
+    <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      {ALL_STATES.filter(s => s.code !== code).map(s => (
+        <li><a href={`/solar-panel-cost-${s.code.toLowerCase()}/`}>{s.name}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

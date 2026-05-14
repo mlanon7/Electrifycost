@@ -1,0 +1,145 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import AffiliateDisclosure from '@/components/AffiliateDisclosure.astro';
+import AffiliateModule from '@/components/AffiliateModule.astro';
+import HpwhCalculator from '@/components/HpwhCalculator';
+
+const faq = [
+  {
+    q: 'How much does a heat pump water heater cost installed?',
+    a: 'A standard 240V hybrid HPWH (50 gal) is typically $2,200 to $4,200 installed. 120V plug-in models are $1,700 to $3,400. 80-gallon hybrids run $2,700 to $5,200, and split-system HPWHs (Sanden / Daikin Altherma class) are $5,500 to $12,000. Removal of the old water heater, condensate routing, and any new electrical circuit can shift the total $200 to $700.',
+  },
+  {
+    q: 'Should I buy a 120V plug-in or 240V hybrid HPWH?',
+    a: '120V plug-in HPWHs avoid new circuit work and are great for older panels or condos. 240V hybrids deliver faster recovery and slightly better efficiency. Pick the 120V model if your panel is full or budget is tight; pick the 240V hybrid for a household of 4+ people.',
+  },
+  {
+    q: 'Does an HPWH need a big room?',
+    a: 'Manufacturer rules of thumb range from about 450 to 1,000 cubic feet of free air, depending on model. Roughly 700 cu-ft is a common middle-ground figure for a typical 50-gallon hybrid. Tight closets need a louvered door, ducted intake/exhaust, or a split-system unit. See DOE Energy Saver: https://www.energy.gov/energysaver/heat-pump-water-heaters and your model install manual (Rheem, AOSmith, Bradford White, SanCO2).',
+  },
+  {
+    q: 'What rebates are available for heat pump water heaters?',
+    a: 'No federal credits for 2026 installs: the 25C credit expired Dec 31, 2025 under OBBBA. DOE Home Energy Rebates (HEEHRA) provide up to $1,750 for HPWH for income-qualified households where states have launched (rollout uneven). State and utility rebates often add $400 to $1,000 more. See /rebates/ or DSIRE: https://www.dsireusa.org/. For historical 2025 installs, 25C covered 30% up to $2,000 (cap shared with heat pumps).',
+  },
+  {
+    q: 'Will a heat pump water heater make my house cold?',
+    a: 'It removes heat from the surrounding air to heat water. In a garage or basement that is usually a benefit (it dehumidifies, too). In a small interior closet without ducting, it can be a problem. Plan the location and confirm at least 700 cu-ft of free air, or use a ducted-intake kit.',
+  },
+  {
+    q: 'How noisy is a heat pump water heater?',
+    a: 'Roughly 45-55 dB(A) at one meter, depending on model and fan speed setting. Comparable to a quiet refrigerator. Rheem ProTerra is the typical benchmark at 49 dB(A). Locate it away from sleeping areas or use the manufacturer hybrid mode that biases toward the resistance element overnight.',
+  },
+  {
+    q: 'What is the recovery rate vs a gas tank?',
+    a: 'A 50-gal hybrid HPWH recovers about 18-25 gallons of hot water per hour in heat-pump-only mode, vs. 35-40 gph for a typical gas tank. Switching to hybrid/electric resistance mode brings recovery to about 30 gph. For households of 5+ or back-to-back showers, size up to 80 gallons or pair with a recirculation loop.',
+  },
+  {
+    q: 'How long does a heat pump water heater last?',
+    a: 'Tank life is 10-15 years for the hybrid models; compressor warranties from major brands run 6-10 years. Replace the anode rod every 3-5 years to extend tank life. Field reliability data from NEEA and Bonneville Power Administration field studies is good, with most replacements driven by anode neglect rather than compressor failure.',
+  },
+  {
+    q: 'Do I need a condensate drain?',
+    a: 'Yes. The HPWH produces about 1-2 gallons of condensate per day from dehumidifying the surrounding air. Route to a floor drain, condensate pump, or laundry tub. Skipping the drain voids most rebates and creates a slow water leak. Plan a 3/4-inch PVC line during install.',
+  },
+  {
+    q: 'What questions should I ask the contractor?',
+    a: 'See the contractor checklist next to the calculator result above. It covers free-air-volume confirmation, condensate routing, electrical circuit, anti-vibration pad, anode access, rebate paperwork, and the cold-air-output mitigation plan.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Heat Pump Water Heater Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description: 'Free planning-range calculator for 120V plug-in, 240V hybrid, and split-system heat pump water heaters with rebates and condensate planning.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="Heat Pump Water Heater Cost Calculator 2026: 120V Plug-In, 240V Hybrid"
+  description="Estimate the installed cost of a 120V plug-in, 240V hybrid, or split-system heat pump water heater. ZIP-aware with rebates, panel readiness, and condensate routing."
+  active="/heat-pump-water-heater-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump water heater cost calculator', href: '/heat-pump-water-heater-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Heat pump water heater</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Water Heater Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Estimate planning-level installed cost for 120V plug-in, 240V hybrid, and split-system heat pump water heaters. Rebate-aware with panel and condensate planning.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a 240V hybrid HPWH (50 gal) is typically $2,200–$4,200 installed. A 120V plug-in version skips the electrical work for $1,700–$3,400. Income-qualified DOE Home Energy Rebate caps at $1,750 in states where the program is open. Federal 25C expired Dec 31 2025.
+      </p>
+    </div>
+    <picture>
+      <source srcset="/assets/topic-images/heat-pump-water-heater-hero-photo.avif" type="image/avif" />
+      <source srcset="/assets/topic-images/heat-pump-water-heater-hero-photo.webp" type="image/webp" />
+      <img src="/assets/topic-images/heat-pump-water-heater-hero-photo.png"
+        alt="Heat pump water heater installed in a home utility area"
+        width="1200" height="675"
+        class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+        loading="eager" decoding="async" />
+    </picture>
+  </section>
+
+  <section class="container-wide pb-10"><HpwhCalculator client:load /></section>
+
+  <AffiliateDisclosure />
+  <AffiliateModule kind="hpwh" />
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to heat pump water heaters?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        An HPWH is a tank water heater with a refrigeration cycle on top: it <em>moves</em> heat from the surrounding air into the water instead of generating it directly. UEF 3.0–4.0 vs. 0.95 for a standard electric resistance tank means meaningful operating-cost savings. Three form factors: 120V plug-in (no electrical work needed), 240V hybrid (the mainstream), or split-system (compressor outside). Needs about 700 cu-ft of free air to breathe and a condensate drain. 10–15 year service life.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/heat-pump-water-heaters/" class="font-medium text-brand-700">Read the full guide</a>
+        <span class="ml-2 text-ink-500">7-min read</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade cost calculator</a></li>
+      <li><a href="/ev-charger-installation-cost-calculator/">EV charger installation cost calculator</a></li>
+      <li><a href="/induction-stove-cost-calculator/">Induction stove cost calculator</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

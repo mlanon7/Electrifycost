@@ -1,0 +1,180 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Home Battery Storage: How It Works, What It Costs, How to Choose',
+  description: 'A long-form, source-backed guide to residential battery storage in 2026: chemistry (LFP vs NMC), sizing, the three use cases (backup, self-consumption, arbitrage), and how to read a battery bid.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Home Battery Storage Guide: How It Works, What It Costs, How to Choose"
+  description="A long-form, source-backed guide to residential battery storage in 2026: chemistry (LFP vs NMC), sizing, the three use cases (backup, self-consumption, arbitrage), 25D credit, and how to read a battery bid."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Home batteries', href: '/guides/home-batteries/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Home battery storage</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Home Battery Storage, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      What a battery actually is, why LFP took over from NMC, the three use cases (backup, self-consumption under NEM 3.0, time-of-use arbitrage), how to size it, brand-by-brand options for 2026, and how to read a bid without paying for a sales operation's overhead. 11-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#chemistry" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. Chemistry</a>
+      <a href="#usecase" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. Three use cases</a>
+      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Sizing</a>
+      <a href="#brands" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Brand options</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Real-world cost</a>
+      <a href="#bids" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Reading bids</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="what">
+      <h2>1. What a home battery actually is</h2>
+      <p>
+        A residential energy storage system is four things: a <strong>stack of lithium-ion cells</strong> (typically 14-280 individual cells, depending on capacity), a <strong>battery management system</strong> (BMS) that balances cell voltages and prevents over-charge / over-discharge, a <strong>power electronics</strong> stage (a hybrid inverter that handles AC-DC bidirectionally), and a <strong>communication + transfer switch</strong> layer that talks to the grid, your loads, and your solar inverter (if any).
+      </p>
+      <p>
+        Modern integrated systems — Powerwall 3, Franklin Home Power 2, Enphase IQ Battery 5P — bundle all four into a wall-mounted enclosure roughly the size of a half-refrigerator. Older split systems (LG Resu Prime + SolarEdge inverter) separated battery and inverter. Integration is now the default because it cuts installation complexity by 30–40%.
+      </p>
+    </section>
+
+    <section id="chemistry">
+      <h2>2. LFP vs NMC chemistry — and why LFP won residential</h2>
+      <p>
+        Residential storage uses two chemistries:
+      </p>
+      <ul>
+        <li><strong>LFP (LiFePO4 — lithium iron phosphate)</strong>. Standard cathode chemistry in 2026 residential. Specific energy 90–120 Wh/kg. Cycle life 6,000–10,000 cycles to 80% capacity. Thermal runaway temperature ~270°C (much higher than NMC). Safer, longer-life, slightly heavier per kWh. Used in Powerwall 3, Enphase IQ Battery 5P, Franklin Home Power 2, SimpliPhi, BYD.</li>
+        <li><strong>NMC (nickel manganese cobalt)</strong>. Older cathode chemistry. Specific energy 150–220 Wh/kg (denser). Cycle life 3,000–4,000 to 80%. Thermal runaway ~150–210°C. Used in older Powerwall 2, LG Resu Prime (discontinued 2024), and most EVs. Still dominant in EVs because vehicles are weight-sensitive; in homes weight doesn't matter.</li>
+      </ul>
+      <p>
+        For a stationary residential system, LFP wins on every dimension that matters: safety, cycle life, and now cost-per-kWh after sustained price declines. The denser-but-shorter-lived NMC pack only made sense when residential demand was small and the industry was repurposing automotive cells. As of 2025, virtually every new residential battery shipping in North America is LFP.
+      </p>
+    </section>
+
+    <section id="usecase">
+      <h2>3. The three use cases — and which one you actually have</h2>
+      <h3>Use case A: outage backup</h3>
+      <p>
+        You live somewhere with frequent or prolonged outages: hurricane country (FL, NC, TX coast, LA), wildfire shut-offs (CA PSPS, OR), ice-storm territory (TX, OK, the southeast). The battery's job is to power critical loads — refrigerator, lights, internet, well pump, medical equipment — for 12–48 hours.
+      </p>
+      <p>
+        Decision criteria: pick a <em>full-home</em> system (Powerwall 3, Franklin) only if you have a 200A panel and can afford whole-home backup wiring; otherwise a <em>critical-load subpanel</em> approach (10–15 essential circuits on a separate breaker box that the battery feeds) is much cheaper and equally useful. The federal 25D credit applies regardless of solar.
+      </p>
+
+      <h3>Use case B: self-consumption (NEM 3.0 territory)</h3>
+      <p>
+        You have or are buying solar in California (NEM 3.0), Hawaii (Customer Self-Supply), Arizona (export rate buy-back), or another state that has retired traditional net metering. Solar export is now worth far less than retail — 4–8¢/kWh instead of 25–55¢. The battery stores midday solar production and discharges it into the evening peak, recapturing the retail-rate value you'd otherwise lose to a low export tariff.
+      </p>
+      <p>
+        Math: a 13.5 kWh battery cycled once a day at 80% depth captures 10.8 kWh × (retail rate − export rate). In NEM 3.0 California, that's $1,800–$2,600/year in displaced import value — without the battery you'd be exporting at 5¢ and re-importing at 35¢.
+      </p>
+
+      <h3>Use case C: time-of-use arbitrage</h3>
+      <p>
+        Your utility has steep TOU rates but you don't have solar. The battery charges off-peak (overnight, ~$0.10/kWh) and discharges on-peak (4–9pm, ~$0.40/kWh). Annual benefit: 10–11 kWh-cycled × $0.30 spread × 365 = ~$1,100–$1,200/year. Payback on the battery alone is 8–15 years depending on net cost after 25D.
+      </p>
+      <p>
+        TOU arbitrage works best in CA, HI, MA, NY, CT, NJ where peak-to-off-peak spreads are real. In flat-rate utility territory (much of the South and Midwest), arbitrage is essentially zero.
+      </p>
+    </section>
+
+    <section id="sizing">
+      <h2>4. How to size a battery</h2>
+      <p>
+        For <strong>outage backup</strong>: list your critical loads (refrigerator 1.5 kWh/day, lights 0.5 kWh, internet 0.5 kWh, well pump 1 kWh, electronics 0.5 kWh = ~4 kWh/day baseline). Multiply by the longest outage you want to ride through. A 13.5 kWh Powerwall covers ~3 days of essentials. 5 kWh covers ~1 day.
+      </p>
+      <p>
+        For <strong>self-consumption</strong> with solar: size to your solar system's typical midday surplus during the lowest-export-rate months. A 7 kW solar array in a NEM 3.0 territory typically over-produces 8–12 kWh from 10am–3pm. A 13.5 kWh battery is the sweet spot.
+      </p>
+      <p>
+        For <strong>TOU arbitrage</strong>: size to your peak-window consumption. Most households use 8–12 kWh during the 4–9pm peak window. A 13.5 kWh battery covers it; smaller capacity leaves money on the table.
+      </p>
+      <p>
+        Common mistake: oversizing to 25–40 kWh "for security." Beyond ~15 kWh the marginal kWh rarely earns enough to justify itself, because you exhaust the daily arbitrage potential well before you exhaust the battery. The exception is a medical-baseline household or someone running a home business — there, ride-through capacity matters more than economic payback.
+      </p>
+    </section>
+
+    <section id="brands">
+      <h2>5. Brand-by-brand reality check (2026)</h2>
+      <ul>
+        <li><strong>Tesla Powerwall 3.</strong> 13.5 kWh usable, integrated solar inverter, $13,500–$17,000 installed. Strengths: integration, Tesla app, time-of-use scheduling. Trade-off: locks you into the Tesla ecosystem for future expansion.</li>
+        <li><strong>Enphase IQ Battery 5P.</strong> 5 kWh per unit, modular, $5,000–$7,000 installed. Strengths: stack as needed, microinverter-grade reliability, 15-year warranty. Trade-off: requires Enphase microinverters or an IQ8 System Controller — not a great retrofit unless your solar is already Enphase.</li>
+        <li><strong>Franklin Home Power 2.</strong> 13.6 kWh, integrated inverter, $14,000–$18,000 installed. Strengths: works with any solar inverter; 12-year warranty; better outage transfer than older systems.</li>
+        <li><strong>Generac PWRcell.</strong> Modular 9–18 kWh. Strengths: pairs with Generac generator products. Trade-off: customer-support reputation has lagged; check current reviews.</li>
+        <li><strong>SimpliPhi (now Briggs &amp; Stratton).</strong> LFP chemistry pioneer in residential. Strengths: rugged DC-coupled product good for off-grid. Trade-off: smaller dealer network.</li>
+      </ul>
+    </section>
+
+    <section id="cost">
+      <h2>6. What it actually costs in 2026</h2>
+      <p>
+        Per-kWh installed cost has stabilized at $1,100–$1,500/kWh for 10–15 kWh systems in 2026, per LBNL Tracking the Sun data and NREL's 2024 residential storage benchmark. Standalone retrofit installs run 10–15% more than co-installed solar-plus-storage because integration labor is duplicated.
+      </p>
+      <p>
+        Concrete examples (mid-band, before incentives):
+      </p>
+      <ul>
+        <li>13.5 kWh Powerwall 3 co-installed with new solar in Texas: ~$15,000 → ~$10,500 net after federal 25D.</li>
+        <li>13.5 kWh Powerwall 3 retrofit to existing 7 kW solar in California: ~$16,500 → ~$11,550 net federal, plus ~$2,000 SGIP for general-market tier.</li>
+        <li>20 kWh stacked Enphase IQ Battery 5P (4 units) in Massachusetts: ~$26,000 → ~$18,200 net, plus ConnectedSolutions performance payments over 5 years.</li>
+        <li>27 kWh full-home backup with critical-load panel in Florida (hurricane country): ~$36,000 → ~$25,200 net federal.</li>
+      </ul>
+    </section>
+
+    <section id="bids">
+      <h2>7. How to read a battery bid</h2>
+      <p>
+        Three bids minimum. Compare:
+      </p>
+      <ul>
+        <li><strong>$/kWh installed</strong> — total contract price ÷ usable kWh. Target $1,100–$1,500. Anything over $1,750/kWh needs a justification (complex panel work, structural reinforcement, etc.).</li>
+        <li><strong>Usable vs nameplate capacity.</strong> Powerwall 3 is 13.5 kWh nameplate / 13.5 kWh usable. Some systems claim a nameplate but only let you cycle 80% — read the spec sheet.</li>
+        <li><strong>Round-trip efficiency.</strong> 89–92% is current state-of-art. Lower numbers mean you lose more energy per cycle.</li>
+        <li><strong>Cycle warranty</strong> with explicit capacity retention. "10 years or 6,000 cycles to 70% capacity" is standard for LFP.</li>
+        <li><strong>Transfer switch type.</strong> Whole-home automatic (<10 second outage transition) vs critical-load subpanel (instant via dedicated subpanel) vs grid-tied no-backup (cheapest but no outage value).</li>
+        <li><strong>Permit and interconnection lead time</strong> — 4–10 weeks is typical in 2026; some utilities are slower.</li>
+        <li><strong>Software, monitoring, and grid-services enrollment</strong>. Tesla VPP, Sunrun Connected Solutions, Sonnen flex programs all pay $200–$1,000/year for grid services. Verify what tariff the installer files you under.</li>
+      </ul>
+      <p>
+        For the federal 25D credit, keep: the invoice with itemized battery cost (and 30% labor attribution), the permission-to-operate letter or interconnection approval, and IRS Form 5695 filed for the tax year the system was placed in service. Credit is non-refundable but carries forward.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL Tracking the Sun 2024</a> — paired storage and standalone storage installed cost</li>
+        <li><a href="https://www.nrel.gov/docs/fy24osti/89610.pdf" target="_blank" rel="noopener">NREL U.S. Solar PV System and Storage Cost Benchmark 2024</a></li>
+        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit (Section 25D)</a> — covers standalone storage ≥3 kWh</li>
+        <li><a href="https://www.selfgenca.com/" target="_blank" rel="noopener">CA SGIP — Self-Generation Incentive Program</a></li>
+        <li><a href="https://www.energizect.com/your-home/solutions-list/energy-storage-solutions" target="_blank" rel="noopener">CT Energy Storage Solutions</a></li>
+        <li><a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Residential-Energy-Storage" target="_blank" rel="noopener">NY-Sun Residential Energy Storage Incentive</a></li>
+        <li><a href="https://www.dsireusa.org/" target="_blank" rel="noopener">DSIRE — state and utility renewable incentives database</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get a $/kWh and net-cost estimate for your state, capacity, use case, and chemistry in 30 seconds.</p>
+        <a href="/home-battery-cost-calculator/" class="btn-primary mt-3 inline-block">Open the battery calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

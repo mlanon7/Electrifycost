@@ -1,0 +1,99 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const lastReviewed = '2026-05-01';
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Boilers in 2026: replacement cost, condensing vs cast-iron, and the hydronic heat-pump path',
+  datePublished: '2026-02-14', dateModified: lastReviewed,
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+};
+---
+<Layout
+  title="Boilers in 2026: Replacement Cost, Condensing vs Cast-Iron, Hydronic Heat Pumps"
+  description="Deep guide to residential boiler replacement: gas vs oil vs propane, condensing vs cast-iron, AFUE explained, lifespan, brand reliability, and air-to-water heat pump alternatives."
+  active="/guides/boilers/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Boilers', href: '/guides/boilers/' },
+  ]}
+>
+  <article class="container-wide max-w-3xl py-10 prose-guide">
+    <header class="not-prose mb-8">
+      <p class="eyebrow">Guide</p>
+      <h1 class="text-3xl md:text-4xl">Boilers in 2026</h1>
+      <p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~11 min read</p>
+    </header>
+
+    <p class="lede">If your home is heated by a boiler — and you have radiators or baseboard rather than vents in every room — the decisions in front of you are different than for a forced-air furnace owner. This guide explains what a boiler replacement actually costs in 2026, when cast-iron’s durability beats condensing efficiency, and the increasingly viable path to a fuel-free hydronic system through air-to-water heat pumps.</p>
+
+    <h2>What a boiler does (and doesn’t)</h2>
+    <p>A residential boiler heats water — not air. Hot water (or steam in very old systems) circulates through pipes to cast-iron radiators, fin-tube baseboard, or in-floor PEX tubing. Heat transfers to the room by radiation and convection from the radiator surface. There’s no blower, no ductwork, and usually no central air-conditioning integrated with it. Boiler-heated homes are concentrated in the Northeast US and parts of the Midwest, mostly built before 1960.</p>
+
+    <p>Efficiency is measured the same way as a furnace — AFUE. Older cast-iron sectional boilers run 80–85% AFUE. Modern condensing boilers reach 95–97% AFUE by recovering heat from the exhaust gases before they leave the flue. The condensing trick works the same way as a condensing furnace: cool the exhaust below its dew point and the latent heat of water vapor (about 1,000 BTU per pound of condensed water) goes into your heating loop instead of out the chimney.</p>
+
+    <h2>Cost ranges for 2026</h2>
+    <p>National installed-cost ranges from Modernize, contractor association data, and ASHRAE references:</p>
+    <ul>
+      <li>Cast-iron sectional natural gas boiler (85% AFUE): <strong>$4,500–$8,500</strong> installed.</li>
+      <li>Condensing wall-mount natural gas (95–96% AFUE): <strong>$7,500–$14,000</strong> installed.</li>
+      <li>Modulating premium (Viessmann, Buderus, Lochinvar Knight): <strong>$10,000–$18,000</strong> installed.</li>
+      <li>Oil-fired standard 85% AFUE: <strong>$8,000–$13,000</strong> installed.</li>
+      <li>Premium oil 87% AFUE (three-pass): <strong>$10,000–$15,000</strong> installed.</li>
+      <li>Propane condensing 95% AFUE: <strong>$8,500–$14,000</strong> (plus tank rental/purchase).</li>
+      <li>Electric resistance boiler: <strong>$4,000–$9,000</strong> (rare; high operating cost).</li>
+    </ul>
+    <p>Massachusetts, Connecticut, New York, and New Jersey labor rates run 25–40% above the national average; rural Vermont and Maine are closer to average but parts logistics can be slower.</p>
+
+    <h2>Cast-iron vs condensing — a real tradeoff</h2>
+    <p>Modern advice usually pushes condensing for the AFUE bump, but the picture is more nuanced. Cast-iron sectional boilers (Burnham, Slant/Fin, Weil-McLain CGi, Crown) commonly run 25–40 years with regular cleaning. Their thermal mass smooths heat delivery, they tolerate dirty water, and any competent service plumber can repair them.</p>
+
+    <p>Condensing boilers (Navien NCB, Rinnai i-Series, Lochinvar Knight, Viessmann Vitodens, Bosch Greenstar) hit 95–97% AFUE but use stainless-steel heat exchangers that are sensitive to water quality, require annual servicing, and typically last 12–20 years. Replacement parts are proprietary and pricey. The first 10–12 years of fuel savings often pay back the premium, but a heat exchanger failure at year 13 wipes out that gain.</p>
+
+    <p>The decision rule: if you stay in the home 15+ years and have decent water quality, condensing wins. If you might move in 8–10 years or have hard water that hasn’t been treated, cast-iron is the more honest choice.</p>
+
+    <h2>Oil vs gas — and the conversion question</h2>
+    <p>If your boiler is oil and natural gas is available on your street, conversion saves money but costs upfront. Removing the old oil tank ($800–$2,500), running a gas service from the street ($1,500–$4,000), and converting or replacing the boiler adds $3,000–$8,000 to the boiler cost itself. Total project: $13,000–$25,000. Payback depends on the oil-vs-gas price spread, which has been favorable for gas in the Northeast for 10+ years.</p>
+
+    <p>If gas isn’t available, propane is the usual substitute, but it’s typically 30–50% more expensive per BTU than natural gas and is at the mercy of delivery contracts. Many homeowners in this position now skip the propane path and go straight to a hydronic heat pump.</p>
+
+    <h2>Sizing — the chronic mistake (again)</h2>
+    <p>Most existing boilers are 30–50% oversized. The contractor’s shortcut is to “match the old one” based on net BTU. The correct approach is a heat-loss calculation: Slant/Fin Hydronic Explorer, the IBR (Hydronics Institute) method, or a Manual J load calc. Oversized boilers short-cycle (rapid on/off), which wastes fuel, stresses the heat exchanger, and produces uneven temperatures. A correctly sized boiler runs longer at lower output and is materially quieter and longer-lived.</p>
+
+    <h2>The hydronic heat pump path</h2>
+    <p>This is the most interesting option in 2026 and the one most contractors don’t mention. An <strong>air-to-water heat pump</strong> (also called a hydronic heat pump) replaces your boiler entirely. It puts an outdoor unit that looks like an AC condenser in your yard, runs refrigerant lines to an indoor module, and that module heats water for your existing radiator or baseboard loop. No combustion, no flue, no fuel delivery.</p>
+
+    <p>Capital cost is $14,000–$30,000 installed for a typical home — substantially more than a boiler. But operating cost is 50–65% lower than gas or oil (depending on electricity rates), and you eliminate the carbon-monoxide risk, the annual safety inspection, and the price volatility of fossil fuel. State rebates (Mass Save, NYSERDA Clean Heat, Maine Heat Pump program) often subtract $2,000–$10,000 from the heat-pump number, narrowing the gap.</p>
+
+    <p>The technical caveat: hydronic heat pumps deliver lower-temperature water than boilers (typically 110–130°F vs 160–180°F from a boiler). If your home has fin-tube baseboard sized for 180°F water, the heat pump may not put out enough at design temperature without help. Solutions: oversized baseboard, in-floor radiant, low-temp panel radiators, or a backup heat strip. SpacePak SIM, Chiltrix CX34, Arctic Heat Pumps, and Mitsubishi Ecodan all have established US installer networks.</p>
+
+    <h2>Federal incentives in 2026: there aren’t any (for boilers)</h2>
+    <p>The 25C tax credit, which covered 95%+ AFUE boilers at 30% of cost up to $600, expired December 31 2025 (OBBBA). HEEHRA / DOE Home Energy Rebates are statutorily electric-only — gas, oil, propane boilers do not qualify. Hydronic heat pumps DO qualify for HEEHRA where state programs are open and for any state heat-pump rebate.</p>
+
+    <p>State and utility programs vary. Mass Save offers $0% loans (HEAT Loan) for 95%+ AFUE boilers. National Grid in NY rebates $750 on condensing gas installs. Some oil suppliers (Cheap Oil, Bottom Line) offer $200–$500 promotional rebates on premium oil boilers. The trend is incentives shifting away from gas equipment and toward electrification.</p>
+
+    <h2>Brand reliability</h2>
+    <p>Top tier for cast-iron: <strong>Weil-McLain, Burnham (US Boiler), Slant/Fin, Crown</strong>. Top tier for condensing wall-mounts: <strong>Viessmann Vitodens, Buderus, Lochinvar Knight</strong>. Mid-tier reliable: <strong>Navien NCB, Rinnai i-Series, Bosch Greenstar</strong>. Budget tier: Westinghouse, Smith. The premium European brands (Viessmann, Buderus) have higher parts costs but longer service life.</p>
+
+    <h2>Maintenance you should never skip</h2>
+    <p>Annual cleaning of the heat exchanger and burner, especially for condensing units. The pH-balancing of the condensate (it’s mildly acidic) is critical — wrong pH erodes the condensate drain and trap. Pressure-relief valve and expansion tank inspection annually. Combustion-air analyzer printout at every service call — without it, the technician is guessing. Low-water cutoff testing. Boiler should hold a steady 12–15 psi when cold; if pressure drops, you have a leak.</p>
+
+    <h2>Sources</h2>
+    <ul class="text-sm">
+      <li><a href="https://www.energystar.gov/products/heating_cooling/boilers">ENERGY STAR boiler specifications</a></li>
+      <li><a href="https://www.energy.gov/energysaver/home-heating-systems/furnaces-and-boilers">DOE Home Heating Systems: Furnaces and Boilers</a></li>
+      <li><a href="https://ahrinet.org/">AHRI Certified Product Directory</a></li>
+      <li><a href="https://www.ashrae.org/">ASHRAE 2019 Handbook — HVAC Applications, Service Life Tables</a></li>
+      <li><a href="https://heatpumpcollaborative.org/">Northeast Energy Efficiency Partnerships — air-to-water heat pump product list</a></li>
+    </ul>
+
+    <p class="mt-8">
+      <a href="/boiler-replacement-cost-calculator/" class="font-medium text-brand-700">Run the boiler cost calculator →</a>
+    </p>
+  </article>
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

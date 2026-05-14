@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Smart Thermostats: How They Save, What to Buy, and the C-Wire Problem',
+  description: 'Long-form guide to smart thermostats in 2026: how they save HVAC energy, model comparison (Nest, Ecobee, Honeywell), C-wire installation, demand-response, and heat-pump-aware behavior.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Smart Thermostat Guide 2026: How They Save, What to Buy"
+  description="How Nest/Ecobee/Honeywell save energy: occupancy, adaptive recovery, multi-sensor zoning, heat-pump-aware mode, C-wire problem, demand response, privacy."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Smart thermostats', href: '/guides/smart-thermostats/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Smart thermostats</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Smart Thermostats, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How smart thermostats actually save energy, the C-wire question, model-by-model differences in 2026, why heat-pump-aware behavior matters, demand-response programs, privacy considerations, and the install reality. 7-minute read.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>1. How smart thermostats save energy</h2>
+      <p>
+        Four mechanisms, in rough order of contribution:
+      </p>
+      <ul>
+        <li><strong>Occupancy-based setbacks.</strong> When everyone leaves the house (geofencing via phone GPS, or motion sensors), the system relaxes setpoint 4-8°F. This is the biggest single saver.</li>
+        <li><strong>Adaptive recovery.</strong> The thermostat learns how long it takes to warm/cool the house and starts ramping up before you arrive, hitting setpoint exactly when expected. Avoids you cranking it manually because "it&rsquo;s taking too long."</li>
+        <li><strong>Multi-sensor zoning.</strong> Ecobee&rsquo;s SmartSensors and Honeywell T9 sensors let the thermostat target average temperature across occupied rooms, not just the hallway where the thermostat happens to sit. Eliminates the &quot;cold bedroom&quot; / &quot;hot living room&quot; tug-of-war.</li>
+        <li><strong>Equipment runtime optimization.</strong> Heat-pump-aware logic prevents the system from kicking on resistance backup heat when the heat pump just needs another 10 minutes. This single behavior is worth 5-10% on heat-pump electricity in cold-climate homes.</li>
+      </ul>
+      <p>
+        Nest&rsquo;s own peer-reviewed studies (2015-2022) document 10-12% heating + 15% cooling savings on average. ENERGY STAR&rsquo;s certified-thermostat program uses a more conservative 8% combined figure. EnergyHub&rsquo;s utility demand-response data shows participating smart thermostats reduce peak-period HVAC load 30-50% during called events.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Model comparison (2026)</h2>
+      <ul>
+        <li><strong>Nest Learning (4th gen).</strong> $230-280. Most refined hardware; clean industrial design (Tony Fadell, ex-Apple). Best with Google Home / Pixel / Wear OS. Trade-off: limited multi-sensor support (only one Nest Temperature Sensor at a time, vs Ecobee&rsquo;s simultaneous group).</li>
+        <li><strong>Nest E (3rd gen).</strong> $130-200. Plastic chassis, fewer features, no Farsight display. Same algorithm under the hood. Best value in the Nest line.</li>
+        <li><strong>Ecobee Premium.</strong> $230-280. Multi-sensor support (up to 32 sensors), built-in Siri / Alexa voice control, indoor air quality monitoring, smart smoke-alarm listener. Best ecosystem support (HomeKit, Google, Alexa, SmartThings, IFTTT). Heat-pump-aware logic is industry-leading. Editor&rsquo;s pick for most homes.</li>
+        <li><strong>Honeywell T9.</strong> $180-250. Multi-sensor support, less polished app, no built-in voice. Solid value if you don&rsquo;t care about voice / HomeKit.</li>
+        <li><strong>Basic Wi-Fi (Sensi Touch, Honeywell RTH9580).</strong> $60-130. Smartphone scheduling and away mode; no learning, no occupancy detection, limited demand-response. Right for budget-conscious or rental-property installs.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. The C-wire problem</h2>
+      <p>
+        Old thermostats (mercury bulb, mechanical) used the heat call itself as a momentary contact closure — they didn&rsquo;t need continuous power. Smart thermostats have always-on displays, Wi-Fi radios, and microprocessors that need 24V DC continuously. That power comes through a 5th wire called the <strong>C-wire</strong> (common), drawn from the air handler&rsquo;s transformer secondary.
+      </p>
+      <p>
+        Most furnaces installed after ~2000 have a C-wire run from the air handler to the thermostat. Pre-2000 forced-air systems and many boiler-only systems don&rsquo;t. Three solutions if you don&rsquo;t have one:
+      </p>
+      <ul>
+        <li><strong>Power-stealing (Nest only).</strong> Nest can pulse power off the R-wire during the heat call. Works on ~80% of systems. The other 20% experience random false heat calls or W-restart issues. If you go this route, test for a week before committing.</li>
+        <li><strong>Power Extender Kit (Ecobee).</strong> Ecobee includes a small adapter that splices into the air handler. Adds 30 min to install but works reliably.</li>
+        <li><strong>Add a real C-wire.</strong> An electrician runs a new 18-gauge wire from the air handler to the thermostat. $100–$300 in most homes. The cleanest solution.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Demand-response programs</h2>
+      <p>
+        Most major utilities (PG&amp;E, SCE, ConEd, NYSEG, Eversource, ComEd, NSTAR, Xcel, others) run demand-response programs that pay $25–$125 enrollment + $25–$100/year to let the utility briefly adjust your thermostat during grid-stress events. Typical events: 5-15 per summer, 2-4 hours each, 3-4°F setpoint shift. You can usually opt out of any single event from the app.
+      </p>
+      <p>
+        This is hidden value: it&rsquo;s above the energy-savings number on a thermostat&rsquo;s spec sheet. A New York or Massachusetts homeowner can clear $100–$200/year from demand-response participation alone.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Privacy considerations</h2>
+      <p>
+        Smart thermostats know when you&rsquo;re home, how many people are home, your sleep schedule, your travel patterns. Nest data goes to Google; Ecobee data to Ecobee/Generac. Both companies publish privacy policies and offer data-export. Demand-response enrollment shares HVAC runtime with the utility (no personally identifiable data beyond your account).
+      </p>
+      <p>
+        If privacy is a serious concern: choose Ecobee over Nest (Generac/Ecobee have less commercial data-monetization than Google), disable voice features, opt out of "Studies and Trends" data sharing, and use a guest Wi-Fi for the device.
+      </p>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energystar.gov/products/connected_thermostats" target="_blank" rel="noopener">ENERGY STAR Connected Thermostat program</a></li>
+        <li><a href="https://nest.com/-downloads/press/documents/energy-savings-white-paper.pdf" target="_blank" rel="noopener">Nest energy savings white paper</a></li>
+        <li><a href="https://www.energy.gov/energysaver/programmable-thermostats" target="_blank" rel="noopener">DOE Energy Saver — Programmable Thermostats</a></li>
+        <li><a href="https://www.ecobee.com/en-us/" target="_blank" rel="noopener">Ecobee technical documentation</a></li>
+        <li><a href="https://www.energyhub.com/" target="_blank" rel="noopener">EnergyHub demand-response platform research</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get an installed-cost estimate with C-wire risk, utility rebate, and payback in 30 seconds.</p>
+        <a href="/smart-thermostat-cost-calculator/" class="btn-primary mt-3 inline-block">Open the thermostat calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

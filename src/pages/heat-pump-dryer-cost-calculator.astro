@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpDryerCalculator from '@/components/HeatPumpDryerCalculator';
+
+const faq = [
+  { q: 'How much does a heat-pump dryer cost in 2026?',
+    a: 'Compact ventless models (4 cu ft): $900–$1,700. Full-size ventless (7.5 cu ft, most common): $1,400–$2,700. Premium (Miele, Bosch 800 Series): $2,200–$3,600. Hybrid vented heat-pump dryers (Whirlpool, Samsung): $1,100–$2,100. Washer-dryer combos (LG WashCombo, GE Profile): $1,800–$3,200.' },
+  { q: 'Is a heat-pump dryer worth it?',
+    a: 'For most households, yes. Heat-pump dryers use 50-70% less electricity per load than electric resistance dryers (1.0-1.3 kWh per load vs 3.3 kWh). For a typical 5-load-per-week household at 16¢/kWh, that\'s $50-90/yr in savings. Combined with rebates ($100-840 from utility or HEEHRA), payback is usually 3-6 years. Bigger advantage in apartments where you can\'t vent or in states with expensive electricity.' },
+  { q: 'Ventless vs vented heat pump dryer?',
+    a: 'Ventless is the future and dominates the heat-pump dryer market. Heat is recovered from the moist exhaust into a condensate stream that drains away. No exterior vent needed — saves install hassle and avoids the energy penalty of pumping conditioned air outside. Hybrid vented heat-pump dryers exist (Whirlpool) but are a transition product.' },
+  { q: 'How long do heat-pump dryer cycles take?',
+    a: 'A typical heat-pump dryer cycle is 60-90 minutes vs 40-50 minutes for a vented dryer. The slower cycle is the tradeoff for the energy savings — the dryer runs at a lower temperature for longer. Most users adapt easily; the cycle time matters most for families running 3+ loads back-to-back.' },
+  { q: 'Will it fit in my laundry space?',
+    a: 'Heat-pump dryers come in compact (24" wide, 4 cu ft) and full-size (27" wide, 7.5 cu ft) variants. Most full-size models work on a standard 120V outlet — no 240V circuit needed. Stackable kits available for tight spaces. Verify depth (usually 26-28") and the door swing direction.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Heat Pump Dryer Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Cost + operating-savings calculator for heat-pump clothes dryers by model type, current dryer type, and state electricity rate.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Heat Pump Dryer Cost Calculator 2026: Ventless, Compact, Full-Size"
+  description="Cost + operating-savings calculator for heat-pump clothes dryers. Ventless vs hybrid vs combos. State rate adjustment + HEEHRA rebate eligibility."
+  active="/heat-pump-dryer-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump dryer cost calculator', href: '/heat-pump-dryer-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Heat pump dryer</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Dryer Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Cost + operating-savings calculator for heat-pump clothes dryers. Compares ventless, hybrid vented, and washer-dryer combos.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a full-size ventless heat-pump dryer costs $1,400–$2,700. Premium models (Miele, Bosch) $2,200–$3,600. Uses 50–70% less electricity per load than a standard electric dryer. HEEHRA rebate up to $840 for income-qualified households.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/heat-pump-dryer-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/heat-pump-dryer-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/heat-pump-dryer-hero-photo.png" alt="Heat-pump clothes dryer in a home laundry room"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpDryerCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to heat-pump dryers?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A heat-pump dryer uses a refrigerant cycle to dehumidify clothes at lower temperatures than electric resistance or gas dryers, using one-third to half the energy. Most modern models are <strong>ventless</strong> — no exterior duct required — which means heat stays inside your home in winter and you can install one anywhere with a 120V outlet and a drain. The tradeoff is longer cycle times (60–90 min vs 40–50 min) and a higher upfront cost ($1,400–$2,700 vs $500–$1,100 for a vented electric dryer).
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/heat-pump-dryers/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">7-min read · how it works · ventless vs vented · brand comparison · HEEHRA rebate</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-water-heater-cost-calculator/">HPWH cost calculator →</a></li>
+      <li><a href="/induction-stove-cost-calculator/">Induction stove calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Panel upgrade calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

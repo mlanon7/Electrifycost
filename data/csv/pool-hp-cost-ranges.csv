@@ -1,0 +1,13 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+equipment_85k,base,2500,3200,4000,$,85k BTU/hr — small pools warm climate,manufacturer_msrp,2026-05-12
+equipment_110k,base,3000,3800,4700,$,110k BTU/hr — typical,manufacturer_msrp,2026-05-12
+equipment_125k,base,3500,4300,5200,$,125k BTU/hr — larger pools,manufacturer_msrp,2026-05-12
+equipment_140k,base,4000,4900,6000,$,140k BTU/hr — premium / spa,manufacturer_msrp,2026-05-12
+install,base,800,1400,2200,$,Pad plumbing electrical tie-in,Modernize_2024,2026-05-12
+electrical_circuit,base,600,1100,1800,$,New 240V/50A circuit,NEC_680,2026-05-12
+annual_kwh_warm,85k,420,600,840,kWh,Warm climate operating energy 85k,DOE_Energy_Saver,2026-05-12
+annual_kwh_warm,110k,560,800,1120,kWh,Warm climate 110k operating,DOE_Energy_Saver,2026-05-12
+annual_kwh_warm,125k,700,1000,1400,kWh,Warm climate 125k operating,DOE_Energy_Saver,2026-05-12
+annual_kwh_warm,140k,840,1200,1680,kWh,Warm climate 140k operating,DOE_Energy_Saver,2026-05-12
+climate_mult,warm,0.7,0.7,0.7,multiplier,"FL / TX coast / Gulf Coast",DOE_Energy_Saver,2026-05-12
+climate_mult,mild,1.0,1.0,1.0,multiplier,"CA / NC / AZ",DOE_Energy_Saver,2026-05-01

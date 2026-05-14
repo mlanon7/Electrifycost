@@ -1,0 +1,108 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import BatteryCalculator from '@/components/BatteryCalculator';
+
+const faq = [
+  {
+    q: 'How much does a home battery cost installed in 2026?',
+    a: 'A Powerwall-3 class system (13.5 kWh, integrated inverter) installs for $13,000–$19,000 gross. The federal 25D credit (30% for standalone batteries ≥3 kWh) expired after 2025-12-31 under OBBBA. State programs (CA SGIP, NY-Sun Storage, CT Energy Storage Solutions, MD Storage Tax Credit) still apply where eligible. Smaller modular systems (Enphase IQ Battery 5P at 5 kWh) start around $6,000–$8,000 per unit.',
+  },
+  {
+    q: 'Is there a federal tax credit for batteries in 2026?',
+    a: 'No. The Inflation Reduction Act expanded the Residential Clean Energy Credit (Section 25D) to cover battery storage ≥3 kWh, including standalone installs. OBBBA (July 2025) terminated 25D for property placed in service after 2025-12-31. Batteries with a 2025 placed-in-service date still qualified for the 30% credit on the 2025 return. Source: IRS https://www.irs.gov/credits-deductions/residential-clean-energy-credit.',
+  },
+  {
+    q: 'LFP vs NMC — which chemistry should I pick?',
+    a: 'LFP (lithium iron phosphate) is the safer, longer-life chemistry now standard in Tesla Powerwall 3, Enphase IQ Battery 5P, and Franklin Home Power. ~6,000-10,000 cycles vs ~3,000-4,000 for NMC, and it does not thermally run away. Slightly heavier per kWh, so LFP is dominant in residential. NMC (nickel manganese cobalt) is what older Powerwall and LG Resu Prime used. In 2026 you should default to LFP unless space or weight makes NMC necessary.',
+  },
+  {
+    q: 'How long does a battery last?',
+    a: 'Manufacturer warranties are typically 10 years or a cycle count, whichever comes first, with end-of-warranty capacity retention of 70-80%. Actual lifespan for LFP cells under one-cycle-per-day use is 15-20 years to 70% capacity. Inverter electronics typically need refurbishment at year 12-15.',
+  },
+  {
+    q: 'Do I need solar to install a battery?',
+    a: 'No. Standalone batteries qualify for the 30% federal 25D credit and can be charged from the grid. The economics work in time-of-use rate territory (CA, MA, NY, HI) or for outage resilience. Without solar, you are arbitraging utility rates and providing backup — not capturing solar export value.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Home Battery Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for residential battery storage by capacity (kWh), use case, chemistry, paired-solar status, and state incentives. Models 25D credit step-down.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Home Battery Cost Calculator 2026: Powerwall, Enphase, Franklin Pricing"
+  description="Residential battery storage cost by capacity, use case, chemistry, and state incentives. 25D federal credit expired 2025-12-31; state programs still apply."
+  active="/home-battery-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/home-battery-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Home battery cost calculator', href: '/home-battery-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Home battery</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Home Battery Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for residential battery storage. Adjusts by capacity, use case (backup / self-consumption / TOU arbitrage), chemistry, paired-with-solar status, and state incentives.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a 13.5 kWh Powerwall-class system installs for $13,000–$19,000 gross in 2026. Federal 25D (30%) expired after 2025-12-31; state programs (CA SGIP, CT Energy Storage, NY-Sun Storage, MD Storage Tax Credit) subtract $2,000–$7,500 where eligible.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/home-battery-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/home-battery-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/home-battery-hero-photo.png"
+      alt="Home battery storage system mounted in a garage"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><BatteryCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to home batteries?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A home battery is a stack of lithium-ion cells, a battery management system, an inverter (or interface to your solar inverter), and a transfer switch. Modern systems use LFP chemistry — safer than NMC and warrantied for 6,000-10,000 cycles. The three reasons to install one are outage backup, self-consumption of midday solar production (especially under CA NEM 3.0 export rates), and time-of-use arbitrage. The federal 25D credit (30% for standalone batteries ≥3 kWh) was terminated by OBBBA for property placed in service after 2025-12-31; state programs (CA SGIP, NY-Sun Storage, CT, MD) still apply where eligible.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/home-batteries/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">11-min read · chemistry · sizing · backup vs arbitrage · permitting · brand-by-brand</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

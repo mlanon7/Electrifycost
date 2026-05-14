@@ -1,0 +1,12 @@
+key,scenario,fuel,gallons,uef,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,permit_low,permit_mid,permit_high,annual_kwh,annual_therms,notes,source_id,last_reviewed
+gas_40_standard,Standard atmospheric-vent gas 40-gal,natural_gas,40,0.62,600,850,1200,500,800,1300,75,150,300,0,194,"Most common gas tank — atmospheric vent up flue. UEF 0.58-0.64 typical.",DOE_appliance_2024,2026-05-01
+gas_50_standard,Standard atmospheric-vent gas 50-gal,natural_gas,50,0.61,700,1000,1400,500,800,1300,75,150,300,0,221,"Larger family households — 4+ people",DOE_appliance_2024,2026-05-01
+gas_50_powervent,Power-vent gas 50-gal,natural_gas,50,0.68,1100,1500,2000,700,1100,1600,75,150,300,0,196,"Power-vent for interior installs where atmospheric venting impossible",DOE_appliance_2024,2026-05-01
+gas_50_condensing,Condensing gas 50-gal,natural_gas,50,0.86,1700,2200,2900,800,1200,1800,75,150,300,0,155,"95%+ EF condensing — recovers exhaust heat. AO Smith Vertex, Rheem Prestige",ENERGY_STAR_2024,2026-05-01
+electric_40_standard,Electric resistance 40-gal,electric,40,0.92,400,650,950,400,700,1100,75,150,300,4500,0,"Cheapest install but expensive operation. 2x4500W elements typical",DOE_appliance_2024,2026-05-01
+electric_50_standard,Electric resistance 50-gal,electric,50,0.91,500,750,1100,400,700,1100,75,150,300,4880,0,"For 4-person households on electric service",DOE_appliance_2024,2026-05-01
+electric_80_standard,Electric resistance 80-gal,electric,80,0.89,750,1100,1500,500,800,1300,75,150,300,5400,0,"Large family or solar self-consumption. Often paired with PV",DOE_appliance_2024,2026-05-01
+propane_40_standard,Propane atmospheric-vent 40-gal,propane,40,0.62,650,900,1300,500,800,1300,75,150,300,0,194,"Rural homes without natural gas",DOE_appliance_2024,2026-05-01
+propane_50_powervent,Propane power-vent 50-gal,propane,50,0.68,1200,1600,2100,700,1100,1600,75,150,300,0,196,"Common in non-gas service areas",DOE_appliance_2024,2026-05-01
+hpwh_50_baseline,HPWH 50-gal baseline (for comparison),heat_pump,50,3.50,1500,1900,2400,800,1200,1800,75,150,300,1380,0,"Rheem ProTerra, AO Smith Voltex baseline. UEF 3.0-3.7. ~70% less electricity than electric resistance",ENERGY_STAR_2024,2026-05-01
+tankless_gas_baseline,Tankless gas baseline (for comparison),natural_gas,0,0.86,1300,1800,2500,1500,2500,4000,75,150,300,0,180,"Rinnai/Navien/Noritz. No tank. 95%+ condensing. Lower op cost than tank gas",ENERGY_STAR_2024,2026-05-01

@@ -1,0 +1,167 @@
+{
+  "afue": {
+    "term": "AFUE",
+    "expansion": "Annual Fuel Utilization Efficiency",
+    "definition": "Percentage of fuel a furnace converts into useful heat over a year. An 80% AFUE furnace turns 80 cents of every fuel dollar into heat; the rest goes up the flue. Modern condensing furnaces hit 95%+.",
+    "category": "heating"
+  },
+  "amp_panel": {
+    "term": "Amps (panel size)",
+    "expansion": "Amperes",
+    "definition": "The current-carrying capacity of your home's electrical service. 100A is common in older homes, 200A in newer ones, 320/400A in larger or all-electric homes. Heat pumps and EV chargers may need a panel upgrade if your service is undersized.",
+    "category": "electrical"
+  },
+  "btu": {
+    "term": "BTU",
+    "expansion": "British Thermal Unit",
+    "definition": "The amount of energy needed to raise 1 lb of water by 1°F. HVAC equipment is sized in BTU/hr; 12,000 BTU/hr = 1 ton of cooling.",
+    "category": "general"
+  },
+  "cop": {
+    "term": "COP",
+    "expansion": "Coefficient of Performance",
+    "definition": "Ratio of heat delivered to electrical energy consumed. A heat pump with COP 3.0 delivers 3 units of heat for every 1 unit of electricity. Electric resistance heaters have COP 1.0; cold-climate heat pumps maintain COP ~2 even at 5°F.",
+    "category": "heating"
+  },
+  "ducted": {
+    "term": "Ducted heat pump",
+    "definition": "A central heat pump that uses your home's existing ductwork to distribute heated/cooled air. Replaces a furnace or AC. Cheaper to install than a multi-zone ductless system if ducts are usable.",
+    "category": "heating"
+  },
+  "ductless": {
+    "term": "Ductless mini-split",
+    "definition": "A heat pump that pairs an outdoor unit with one or more wall-mounted indoor heads. Each head is its own zone, useful for additions, garages, or homes without ducts. Multi-zone systems can be more expensive than ducted.",
+    "category": "heating"
+  },
+  "dual_fuel": {
+    "term": "Dual-fuel system",
+    "definition": "A heat pump paired with a gas or oil furnace. The heat pump runs in mild weather (where it's most efficient); the furnace kicks in for very cold conditions. Common in cold climates as a way to keep existing fuel infrastructure as backup.",
+    "category": "heating"
+  },
+  "evse": {
+    "term": "EVSE",
+    "expansion": "Electric Vehicle Supply Equipment",
+    "definition": "The technical name for a 'charger' — actually, the wall-mounted unit, cable, and connector that delivers power to your EV. Level 1 = 120V, Level 2 = 240V, DC fast charging = high-voltage commercial.",
+    "category": "ev"
+  },
+  "hdd": {
+    "term": "HDD",
+    "expansion": "Heating Degree Days",
+    "definition": "A weather metric that quantifies how cold a location is. The number of degrees by which the average daily temperature falls below 65°F, summed over the year. Boston ≈ 6,000 HDD, Houston ≈ 1,400. Higher = more heating needed.",
+    "category": "general"
+  },
+  "heehra": {
+    "term": "HEEHRA",
+    "expansion": "High-Efficiency Electric Home Rebate Act",
+    "definition": "One half of the federal DOE Home Energy Rebates program, providing point-of-sale rebates for income-qualified households on heat pumps, water heaters, electrical panels, wiring, and more. Rolling out by state through 2031.",
+    "category": "incentive"
+  },
+  "homes": {
+    "term": "HOMES Rebate Program",
+    "expansion": "Home Owner Managing Energy Savings",
+    "definition": "The performance-based half of the DOE Home Energy Rebates: pays based on whole-home modeled or measured energy savings. Like HEEHRA, administered by states with varying timelines.",
+    "category": "incentive"
+  },
+  "hpwh": {
+    "term": "HPWH",
+    "expansion": "Heat Pump Water Heater",
+    "definition": "A water heater that uses a heat pump to move heat from surrounding air into the tank, instead of generating heat directly. Typically 2–3× more efficient than electric resistance; comes in 120V plug-in and 240V hybrid models.",
+    "category": "water"
+  },
+  "hspf": {
+    "term": "HSPF / HSPF2",
+    "expansion": "Heating Seasonal Performance Factor",
+    "definition": "Heat pump heating efficiency measure. Higher is better. HSPF2 is the newer test standard (2023+) and gives slightly lower numbers than the legacy HSPF for the same equipment. ENERGY STAR certified heat pumps usually have HSPF2 ≥ 7.5.",
+    "category": "heating"
+  },
+  "iecc_zone": {
+    "term": "IECC climate zone",
+    "expansion": "International Energy Conservation Code climate zone",
+    "definition": "A standardized 1–8 climate-zone system used by U.S. building codes. Zone 1 is South Florida; Zone 7–8 is Alaska. Determines insulation requirements, equipment-sizing assumptions, and whether cold-climate-rated heat pumps are recommended.",
+    "category": "general"
+  },
+  "induction": {
+    "term": "Induction cooktop",
+    "definition": "An electric cooktop that uses an electromagnetic field to heat ferrous (magnetic) cookware directly — the surface stays cool. Faster, more responsive, and more efficient than gas or electric resistance.",
+    "category": "kitchen"
+  },
+  "kwh": {
+    "term": "kWh",
+    "expansion": "Kilowatt-hour",
+    "definition": "The unit your utility bills you in for electricity. 1,000 watts of power for one hour. A typical U.S. home uses 800–1,200 kWh/month.",
+    "category": "general"
+  },
+  "load_calculation": {
+    "term": "Load calculation",
+    "definition": "The math an HVAC contractor (Manual J) or electrician (NEC 220.83) does to figure out how much heat/cool or how much amperage your home actually needs. A right-sized heat pump or panel comes from a real load calc — not from a tape measure or rule of thumb.",
+    "category": "general"
+  },
+  "load_management": {
+    "term": "Smart load management",
+    "definition": "A device or panel that intelligently schedules large electric loads (EV charger, heat pump, dryer) so the home never exceeds the existing service capacity. Can substitute for a panel upgrade in many homes. NEC 750-listed devices are typical.",
+    "category": "electrical"
+  },
+  "manual_j": {
+    "term": "Manual J",
+    "definition": "ACCA's residential heating and cooling load-calculation method. The industry standard for sizing HVAC equipment. If a contractor 'uses my old furnace size' or 'rules of thumb,' that's a red flag.",
+    "category": "heating"
+  },
+  "manual_s": {
+    "term": "Manual S",
+    "definition": "ACCA's standard for selecting equipment to match the Manual J load. Sized too small and you'll be uncomfortable; sized too large and you'll cycle and lose efficiency and humidity control.",
+    "category": "heating"
+  },
+  "nec_220_83": {
+    "term": "NEC 220.83",
+    "definition": "Section of the National Electrical Code that defines how to compute the existing load on a service before adding new circuits. The basis for deciding whether your panel can handle a heat pump or EV charger without an upgrade.",
+    "category": "electrical"
+  },
+  "nema_14_50": {
+    "term": "NEMA 14-50",
+    "definition": "A 240V/50A outlet — the same one used by RV parks. Common choice for plug-in Level 2 EV chargers and some induction ranges. Hardwiring is required for ≥48A continuous-load chargers.",
+    "category": "electrical"
+  },
+  "rated_capacity_5f": {
+    "term": "Rated capacity at 5°F",
+    "definition": "How many BTU/hr of heat a heat pump produces at 5°F outdoor temperature. The single best number to look at for cold-climate performance. NEEP's database publishes this for hundreds of models.",
+    "category": "heating"
+  },
+  "service_drop": {
+    "term": "Service drop / service entrance",
+    "definition": "The wires running from the utility's pole or transformer to your home's meter. Service-upgrade jobs often include replacing this run, especially when going from 100A to 200A or higher.",
+    "category": "electrical"
+  },
+  "subpanel": {
+    "term": "Subpanel",
+    "definition": "A secondary breaker panel fed from the main panel. Useful for a garage, addition, or to free space in a full main panel. Cheaper than a full main-panel upgrade but doesn't increase total service capacity.",
+    "category": "electrical"
+  },
+  "therm": {
+    "term": "Therm",
+    "definition": "100,000 BTU of natural-gas energy. The unit on your gas bill. A typical U.S. household uses 30–80 therms/month for heating in winter.",
+    "category": "general"
+  },
+  "ton_hvac": {
+    "term": "Ton (HVAC)",
+    "definition": "12,000 BTU/hr of heating or cooling capacity. Named after the cooling produced by melting one ton of ice in 24 hours. A 3-ton heat pump = 36,000 BTU/hr.",
+    "category": "general"
+  },
+  "ufer": {
+    "term": "UEF",
+    "expansion": "Uniform Energy Factor",
+    "definition": "Water-heater efficiency metric (replaces older 'EF'). Higher is better. ENERGY STAR HPWHs typically have UEF 3.0+; gas water heaters are around 0.6–0.7.",
+    "category": "water"
+  },
+  "credit_25c": {
+    "term": "25C credit",
+    "expansion": "Energy Efficient Home Improvement Credit",
+    "definition": "Federal tax credit covering 30% of cost for qualifying heat pumps, heat pump water heaters, electrical panels, insulation, and windows. Annual category caps apply ($2,000 for heat pumps and HPWHs combined; $600 for panels). Through Dec 31, 2025 under current law.",
+    "category": "incentive"
+  },
+  "credit_30c": {
+    "term": "30C credit",
+    "expansion": "Alternative Fuel Vehicle Refueling Property Credit",
+    "definition": "Federal tax credit covering 30% of cost (up to $1,000) for residential EV chargers and other alt-fuel refueling equipment. Limited to qualifying census tracts; check the AFDC tract-lookup tool. Property placed in service through June 30, 2026.",
+    "category": "incentive"
+  }
+}

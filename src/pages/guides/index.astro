@@ -1,0 +1,141 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const guides = [
+  { href: '/guides/whole-home-electrification/', title: 'Whole-home electrification',
+    summary: 'The 5–10 year sequence: insulation, then heat pump, then EV charger, then HPWH, then induction. Panel reality, incentive stacking, combined cost.',
+    calc: '/whole-home-electrification-cost-calculator/', calcLabel: 'Whole-home calculator', accent: 'bg-emerald-100 text-emerald-700' },
+  { href: '/guides/solar/', title: 'Solar PV',
+    summary: 'How PV cells produce DC, inverter architectures, sizing, NEM 3.0 successor problem, battery decision, 25-year economics, how to read a contractor bid.',
+    calc: '/solar-panel-cost-calculator/', calcLabel: 'Solar calculator', accent: 'bg-yellow-100 text-yellow-700' },
+  { href: '/guides/home-batteries/', title: 'Home batteries',
+    summary: 'LFP vs NMC, the three use cases (backup / self-consumption / TOU arbitrage), sizing, brand-by-brand options, how to read a battery bid.',
+    calc: '/home-battery-cost-calculator/', calcLabel: 'Battery calculator', accent: 'bg-indigo-100 text-indigo-700' },
+  { href: '/guides/heat-pumps/', title: 'Heat pumps',
+    summary: 'Refrigerant cycle, ducted vs ductless vs cold-climate vs geothermal, HSPF2/SEER2, Manual J sizing, install red flags.',
+    calc: '/heat-pump-cost-calculator/', calcLabel: 'Heat pump calculator', accent: 'bg-brand-100 text-brand-700' },
+  { href: '/guides/mini-splits/', title: 'Ductless mini-splits',
+    summary: 'Brand ranking (Mitsubishi, Daikin, Fujitsu, LG), sizing, hyper-heat cold-climate reality, install red flags, vs ducted central.',
+    calc: '/mini-split-heat-pump-cost-calculator/', calcLabel: 'Mini-split calculator', accent: 'bg-brand-100 text-brand-700' },
+  { href: '/guides/geothermal/', title: 'Geothermal heat pumps',
+    summary: 'Loop types (vertical/horizontal/pond/open), sizing, 30% federal 25D credit, brand options (WaterFurnace, ClimateMaster), drilling reality, vs air-source.',
+    calc: '/geothermal-heat-pump-cost-calculator/', calcLabel: 'Geothermal calculator', accent: 'bg-emerald-100 text-emerald-700' },
+  { href: '/guides/ac-replacement/', title: 'AC replacement',
+    summary: 'SEER2 (2023), R-410A → R-32/R-454B refrigerant transition, tier selection, Manual J sizing, why heat pump is usually the better answer.',
+    calc: '/ac-replacement-cost-calculator/', calcLabel: 'AC calculator', accent: 'bg-orange-100 text-orange-700' },
+  { href: '/guides/ductwork/', title: 'Ductwork',
+    summary: 'Leakage reality, Manual D design, materials (flex/sheet metal/duct board), mastic vs Aeroseal sealing, heat-pump airflow needs.',
+    calc: '/ductwork-installation-cost-calculator/', calcLabel: 'Ductwork calculator', accent: 'bg-amber-100 text-amber-700' },
+  { href: '/guides/ev-chargers/', title: 'EV chargers',
+    summary: 'Level 1/2/3, NEC 80%/125% rule, NACS / J3400 connector consolidation, plug-in vs hardwired, federal 30C credit, load management.',
+    calc: '/ev-charger-installation-cost-calculator/', calcLabel: 'EV charger calculator', accent: 'bg-blue-100 text-blue-700' },
+  { href: '/guides/ev-tco/', title: 'EV total cost of ownership',
+    summary: 'How 30D + state credits stack, home + DC fast-charging cost, why EV maintenance is half of ICE, depreciation, 5/8/10-year breakeven.',
+    calc: '/ev-total-cost-of-ownership-calculator/', calcLabel: 'EV TCO calculator', accent: 'bg-purple-100 text-purple-700' },
+  { href: '/guides/heat-pump-water-heaters/', title: 'Heat pump water heaters',
+    summary: 'UEF 3.0–4.0 vs 0.95, 120V plug-in vs 240V hybrid vs split, sizing by household, free-air install, condensate routing.',
+    calc: '/heat-pump-water-heater-cost-calculator/', calcLabel: 'HPWH calculator', accent: 'bg-cyan-100 text-cyan-700' },
+  { href: '/guides/tankless-water-heaters/', title: 'Tankless water heaters',
+    summary: 'Gas condensing vs non, why electric whole-home is wrong, sizing for cold water, venting + gas line, descaling, when HPWH wins.',
+    calc: '/tankless-water-heater-cost-calculator/', calcLabel: 'Tankless calculator', accent: 'bg-teal-100 text-teal-700' },
+  { href: '/guides/induction-cooking/', title: 'Induction cooking',
+    summary: 'How magnetic-field heating works, cookware compatibility, range vs cooktop vs portable, 240V requirements, gas line capping, IAQ benefits.',
+    calc: '/induction-stove-cost-calculator/', calcLabel: 'Induction calculator', accent: 'bg-rose-100 text-rose-700' },
+  { href: '/guides/electrical-panels/', title: 'Electrical panels',
+    summary: 'Service-size definitions, replacement vs upgrade vs subpanel, NEC 220.83 load calc, recalled brands, NEC 750 energy-management alternatives.',
+    calc: '/electrical-panel-upgrade-cost-calculator/', calcLabel: 'Panel calculator', accent: 'bg-amber-100 text-amber-700' },
+  { href: '/guides/insulation/', title: 'Insulation & air-sealing',
+    summary: 'R-values by zone, cellulose vs fiberglass vs spray foam, where dollars go furthest, blower-door, HOMES rebate, why this is step zero.',
+    calc: '/insulation-cost-calculator/', calcLabel: 'Insulation calculator', accent: 'bg-stone-100 text-stone-700' },
+  { href: '/guides/windows/', title: 'Windows',
+    summary: 'NFRC label decoded, frame materials (vinyl/fiberglass/wood/aluminum), double vs triple-pane, honest payback math, install red flags.',
+    calc: '/window-replacement-cost-calculator/', calcLabel: 'Window calculator', accent: 'bg-sky-100 text-sky-700' },
+  { href: '/guides/energy-audits/', title: 'Energy audits',
+    summary: 'Walkthrough vs BPI vs HERS vs full rater, what each test measures, utility programs, DOE HOMES rebate path, what to expect.',
+    calc: '/home-energy-audit-cost-calculator/', calcLabel: 'Audit calculator', accent: 'bg-violet-100 text-violet-700' },
+  { href: '/guides/smart-thermostats/', title: 'Smart thermostats',
+    summary: 'How they save energy, Nest vs Ecobee vs Honeywell, C-wire problem, demand-response, privacy considerations.',
+    calc: '/smart-thermostat-cost-calculator/', calcLabel: 'Thermostat calculator', accent: 'bg-cyan-100 text-cyan-700' },
+  { href: '/guides/generators/', title: 'Backup generators',
+    summary: 'Portable vs standby, sizing, fuel choice (NG/propane/diesel), interlock vs ATS, NEC 702 compliance, vs battery storage.',
+    calc: '/generator-cost-calculator/', calcLabel: 'Generator calculator', accent: 'bg-zinc-100 text-zinc-700' },
+  { href: '/guides/pool-heat-pumps/', title: 'Pool heat pumps',
+    summary: 'Sizing, vs gas heater, operating cost, climate cutoff, brand options, install requirements.',
+    calc: '/pool-heat-pump-cost-calculator/', calcLabel: 'Pool HP calculator', accent: 'bg-cyan-100 text-cyan-700' },
+];
+
+const comparisons = [
+  { href: '/heat-pump-vs-gas-furnace/', title: 'Heat pump vs gas furnace',
+    summary: 'Side-by-side 15-year total cost: upfront, fuel, maintenance, lifespan, by climate zone.', accent: 'bg-brand-100 text-brand-700' },
+  { href: '/water-heater-comparison/', title: 'HPWH vs tankless vs tank',
+    summary: 'Four water heater categories compared on cost, lifespan, operating cost, install needs, rebate eligibility.', accent: 'bg-cyan-100 text-cyan-700' },
+  { href: '/solar-financing-comparison/', title: 'Solar: cash vs loan vs lease vs PPA',
+    summary: 'Four financing paths, 25-year economics, who claims 25D, exit at home sale, sales pressure red flags.', accent: 'bg-yellow-100 text-yellow-700' },
+];
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Home electrification guides',
+  description: 'Source-backed long-form guides covering every aspect of home electrification.',
+};
+---
+<Layout
+  title="Home Electrification Guides | ElectrifyCost"
+  description="Source-backed long-form guides to home electrification: heat pumps, solar, batteries, EV chargers, water heaters, insulation, and more. Each guide pairs with a free cost calculator."
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="eyebrow">Guides</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+      Home electrification, properly explained
+    </h1>
+    <p class="mt-3 max-w-prose text-base text-ink-700">
+      One long-form, source-backed guide per topic. Each covers what the equipment is, how it works, install requirements, lifespan and maintenance, cost expectations, and the practical tips you wish you&rsquo;d known before signing a contractor quote.
+    </p>
+  </section>
+
+  <section class="container-wide pb-8">
+    <h2 class="text-xl font-semibold text-ink-900">Topic guides</h2>
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      {guides.map(g => (
+        <article class="card p-5">
+          <div class={`mb-2 inline-flex items-center gap-2 rounded-full px-2 py-0.5 text-xs ${g.accent}`}>
+            <span>Guide</span>
+          </div>
+          <h3 class="mt-1 text-lg font-semibold text-ink-900">
+            <a href={g.href} class="no-underline hover:underline">{g.title}</a>
+          </h3>
+          <p class="mt-2 text-sm text-ink-700" set:html={g.summary}></p>
+          <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+            <a href={g.href} class="font-medium text-brand-700">Read the guide →</a>
+            <span class="text-ink-400">·</span>
+            <a href={g.calc} class="text-ink-700">{g.calcLabel}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Comparison pages</h2>
+    <p class="mt-1 text-sm text-ink-700">Head-to-head analyses across the most common decision points.</p>
+    <div class="mt-4 grid gap-4 sm:grid-cols-3">
+      {comparisons.map(c => (
+        <article class="card p-5">
+          <div class={`mb-2 inline-flex items-center gap-2 rounded-full px-2 py-0.5 text-xs ${c.accent}`}>
+            <span>Comparison</span>
+          </div>
+          <h3 class="mt-1 text-lg font-semibold text-ink-900">
+            <a href={c.href} class="no-underline hover:underline">{c.title}</a>
+          </h3>
+          <p class="mt-2 text-sm text-ink-700">{c.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

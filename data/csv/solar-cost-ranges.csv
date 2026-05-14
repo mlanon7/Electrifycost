@@ -1,0 +1,19 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+base_per_w,base,2.20,2.60,3.40,$/W,Median residential PV installed cost. EnergySage 2026 marketplace median $2.58/W national; LBNL TTS 2024 $2.92/W marketplace. https://www.energysage.com/local-data/solar-panel-cost/,SRC_LBNL_TTS,2026-05-13
+roof_multiplier,comp_shingle,1.00,1.00,1.00,multiplier,Flush mount on asphalt baseline,SRC_LBNL_TTS,2026-05-11
+roof_multiplier,tile,1.20,1.20,1.20,multiplier,Tile hooks / careful flashing 15-20% premium,SRC_LBNL_TTS,2026-05-11
+roof_multiplier,metal,1.10,1.10,1.10,multiplier,Standing-seam clamps; modest premium,SRC_LBNL_TTS,2026-05-11
+roof_multiplier,flat,1.15,1.15,1.15,multiplier,Ballasted or membrane penetration; tilt frames,SRC_LBNL_TTS,2026-05-11
+complexity_multiplier,simple,0.95,0.95,0.95,multiplier,Single south-facing plane no shade,SRC_NREL_PVWATTS,2026-05-11
+complexity_multiplier,standard,1.00,1.00,1.00,multiplier,Typical 2-3 roof planes,SRC_NREL_PVWATTS,2026-05-11
+complexity_multiplier,complex,1.15,1.15,1.15,multiplier,4+ planes shade mitigation dormers,SRC_NREL_PVWATTS,2026-05-11
+complexity_multiplier,historic_hoa,1.20,1.20,1.20,multiplier,HOA review historic district hidden conduit,SRC_NREL_PVWATTS,2026-05-11
+inverter_premium,string,0.00,0.00,0.00,$/W,Centralized string inverter baseline,SRC_ENERGYSTAR,2026-05-11
+inverter_premium,micro,0.18,0.20,0.22,$/W,Per-panel microinverters (Enphase IQ8),SRC_ENERGYSTAR,2026-05-11
+inverter_premium,optimizer,0.08,0.10,0.12,$/W,SolarEdge-style DC optimizers,SRC_ENERGYSTAR,2026-05-11
+mount_premium,rooftop,0.00,0.00,0.00,$/W,Baseline rooftop install,SRC_NREL_PVWATTS,2026-05-11
+mount_premium,ground,0.35,0.40,0.50,$/W,Trenching footings conduit run,SRC_NREL_PVWATTS,2026-05-11
+battery_adder,none,0,0,0,$,No battery,SRC_NREL_PVWATTS,2026-05-11
+battery_adder,small,7000,9000,11500,$,~5 kWh,SRC_LBNL_TTS,2026-05-11
+battery_adder,medium,13000,16000,19500,$,~13.5 kWh Powerwall-class,SRC_LBNL_TTS,2026-05-11
+battery_adder,large,19000,23000,28000,$,~20 kWh stacked,SRC_LBNL_TTS,2026-05-11

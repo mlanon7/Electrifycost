@@ -1,0 +1,13 @@
+key,material,per_sqft_low,per_sqft_mid,per_sqft_high,lifespan_years,tear_off_per_sqft,solar_ready_pct,notes,source_id,last_reviewed
+asphalt_3tab,3-tab asphalt shingle,3.50,5.00,7.00,18,1.25,3,"Cheapest mainstream choice — being phased out by manufacturers in favor of architectural",HomeAdvisor_2024,2026-05-01
+asphalt_architectural,Architectural asphalt shingle,4.50,7.00,9.50,25,1.25,3,"Most common in 2026 — 25-30 yr warranty, 50 year possible. Dimensional/laminated shingles",GAF_2024,2026-05-01
+asphalt_premium,Premium architectural shingle,7.00,9.50,12.50,35,1.25,3,"Designer/luxury asphalt — 50yr warranties, impact rated, often Class 4",GAF_2024,2026-05-01
+metal_standing_seam,Standing-seam metal,11.00,15.00,21.00,50,1.50,2,"Aluminum or steel standing-seam — best for solar, integrates with rail clamps",MRA_2024,2026-05-01
+metal_corrugated,Corrugated metal,7.50,10.00,13.50,40,1.50,2,"Less expensive metal option — exposed fasteners need re-tightening at year 15-20",MRA_2024,2026-05-01
+clay_tile,Clay tile,11.00,16.00,24.00,75,2.50,5,"Common in CA/AZ/FL — heavy (~9 lb/sqft); structure must support",NRCA_2024,2026-05-01
+concrete_tile,Concrete tile,9.00,13.50,18.00,50,2.50,4,"Lighter than clay but similar look — common in SW US",NRCA_2024,2026-05-01
+slate,Natural slate,18.00,25.00,40.00,100,3.00,5,"Premium — 100+ year lifespan, heavy, high install skill required",NRCA_2024,2026-05-01
+wood_shake,Wood shake/shingle,8.50,12.00,16.50,30,2.00,8,"Restricted by many fire codes — California prohibits in WUI zones",NRCA_2024,2026-05-01
+synthetic_slate,Synthetic slate/shake composite,9.00,12.50,17.00,50,2.00,4,"Polymer composites — DaVinci, Brava — Class A fire, lighter than real slate",DaVinci_2024,2026-05-01
+flat_tpo,Flat TPO membrane,5.50,7.50,10.00,25,1.50,2,"Single-ply for flat/low-slope roofs — common on additions",NRCA_2024,2026-05-01
+flat_epdm,Flat EPDM rubber,5.00,7.00,9.50,25,1.50,2,"Cheaper flat-roof option — black absorbs heat, increasing cooling load",NRCA_2024,2026-05-01

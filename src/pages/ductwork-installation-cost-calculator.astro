@@ -1,0 +1,93 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import DuctworkCalculator from '@/components/DuctworkCalculator';
+
+const faq = [
+  { q: 'How much does ductwork installation cost in 2026?',
+    a: 'Seal + insulate existing ducts: $1,500–$3,500 (1,800 sqft home). Partial replace of failing sections: $3,200–$7,500. Full replace reusing existing chases: $6,500–$14,500. New install (no existing ducts): $8,000–$18,000. Aeroseal injection adds $1,500–$3,200 and seals leaks from inside without tearing into walls.' },
+  { q: 'Flex, sheet metal, or duct board?',
+    a: 'Flex duct (insulated, lined corrugated): cheapest, most installed today, 15–20 year lifespan. Sheet metal (galvanized rigid): premium, longest life (40+ years), best for trunk lines, harder to install. Fiberglass duct board (rigid insulated panels): middle option, integral insulation, prone to mold if it gets wet. Most installs use flex for branch lines and sheet metal for the main trunk.' },
+  { q: 'How much do leaky ducts cost me?',
+    a: 'DOE / LBNL studies put typical residential duct leakage at 25-40% of conditioned air lost to attics/crawls. That equals $400–$900/yr wasted on heating + cooling in a typical home. Sealing alone (no replacement) typically pays back in 2-4 years. ENERGY STAR Home Improvement programs target ≤8% leakage post-sealing.' },
+  { q: 'Do I need new ducts for a heat pump?',
+    a: 'Often yes, partially. Heat pumps move 30-50% more CFM than gas furnaces at the same heating capacity (lower supply temperature means more airflow needed). Existing trunk lines and returns sized for a gas furnace are usually undersized for the heat pump replacement. A Manual D analysis is required to verify. Common upgrades: larger return ducts, balancing dampers, additional supply registers.' },
+  { q: 'Is Aeroseal worth it?',
+    a: 'Aeroseal is a polymer aerosol injected into the duct system that finds and seals leaks from inside. Independent studies show it reduces leakage 60-90%. Good fit for finished homes where exposing ducts is destructive (drywalled chases). Less compelling on open ducts where manual mastic sealing is easier and cheaper. $1,500–$3,200 typical add-on; payback 3-6 years in heating + cooling savings.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Ductwork Installation Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for ductwork sealing, partial replace, full replace, and new install by sqft, material, stories, and access difficulty.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Ductwork Installation Cost Calculator 2026"
+  description="Installed-cost calculator for ductwork: seal + insulate, partial replace, full replace, or new install. Adjusts by sqft, material (flex / sheet metal / duct board), stories, access difficulty, and state."
+  active="/ductwork-installation-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/ductwork-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Ductwork calculator', href: '/ductwork-installation-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Ductwork</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Ductwork Installation Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for sealing, partial replace, full replace, or new ductwork installation. Adjusts by sqft, material, stories, and access difficulty.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> seal + insulate $1,500–$3,500. Partial replace $3,200–$7,500. Full replace $6,500–$14,500. New install $8,000–$18,000. Aeroseal adds $1,500–$3,200.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/ductwork-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/ductwork-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/ductwork-hero-photo.png" alt="HVAC ductwork in a home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><DuctworkCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to ductwork?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Ductwork is the metal/fiber/flex air-distribution network that carries conditioned air from your furnace, AC, or heat pump to each room. In a typical 1,800 sqft home there&rsquo;s 200–400 linear feet of duct, sized per ACCA Manual D to deliver design airflow to each register at acceptable static pressure (≤0.5 inWC). Leakage is the big problem — DOE studies show 25-40% typical leakage in older systems, dumping conditioned air into attics. Sealing alone often pays back in 2-4 years.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/ductwork/" class="font-medium text-brand-700">Read the full guide →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/ac-replacement-cost-calculator/">AC replacement calculator →</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/mini-split-heat-pump-cost-calculator/">Mini-split (no ducts needed) →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

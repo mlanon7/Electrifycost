@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import AirSealingCalculator from '@/components/AirSealingCalculator';
+
+const faq = [
+  { q: 'How much does professional air sealing cost?',
+    a: 'A typical professional targeted air-sealing job runs $800–$2,000 for a mid-size home (1800–3000 sqft) — covering attic plane, rim joists, recessed lights, plumbing penetrations, and other major leakage paths. Deep sealing with blower-door verification can reach $2,000–$6,500 for larger homes. DIY caulk-and-weatherstrip basics cost $80–$300 in materials but produce only modest improvement.' },
+  { q: 'How much will air sealing save on my energy bills?',
+    a: 'Typical pro-targeted air sealing cuts HVAC energy use 8-15% in a leaky home. Deep sealing pushes 15-25%. The math: a $1,500 sealing job on a home spending $2,400/yr on heating + cooling saves $200-400/yr — payback 4-8 years. The benefit compounds across the equipment lifespan and shrinks any future heat-pump install.' },
+  { q: 'What is ACH50 and why does it matter?',
+    a: 'ACH50 (Air Changes per Hour at 50 Pascals) is the standard blower-door test result. A leaky pre-1980 home is often 12-20 ACH50; a typical 1990s home is 8-12; a sealed retrofit hits 3-6; passive-house construction targets 0.6. Lower is tighter. The 2021 IECC requires new construction to hit ≤5 ACH50 in southern zones and ≤3 in northern zones. Retrofits typically can&rsquo;t reach those targets but big gains are possible.' },
+  { q: 'Should I air-seal before insulation?',
+    a: 'Yes — order matters. Insulation alone, without air sealing, leaves convective heat loss intact (warm air leaking up and out through gaps). Air seal first to stop the convective losses, then add insulation for conductive resistance. Most professional energy audits will recommend the sequence as one combined project.' },
+  { q: 'Can I air-seal too much?',
+    a: 'Yes, in homes with combustion appliances (gas furnaces, gas water heaters, fireplaces). A too-tight envelope can backdraft combustion gases (including CO) into living spaces. A BPI- or RESNET-certified contractor will run combustion safety tests pre- and post-sealing. The fix is sealed-combustion appliances or mechanical ventilation (HRV/ERV), not "leave the house leaky on purpose."' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Air Sealing Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for residential air sealing by scope (DIY, pro targeted, deep), home size, climate zone. ACH50 reduction + HVAC savings estimate.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Air Sealing Cost Calculator 2026: ACH50, Blower Door, HVAC Savings"
+  description="Cost calculator for residential air sealing by scope (DIY, pro targeted, deep, ducts only). Climate zone awareness. HVAC savings + HOMES rebate estimate."
+  active="/air-sealing-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/insulation-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Air sealing cost calculator', href: '/air-sealing-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Air sealing</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Air Sealing Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Cost + HVAC savings calculator for residential air sealing. Models DIY, professional targeted, deep sealing, and duct sealing options.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> pro-targeted air sealing runs $800–$2,000 for a typical 1,800–3,000 sqft home. Deep sealing with blower-door verify $2,000–$6,500. Cuts HVAC bills 8–25%. Often paired with insulation; qualifies for DOE HOMES rebate where state programs are open.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/air-sealing-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/air-sealing-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/air-sealing-hero-photo.png" alt="Energy auditor sealing gaps and air leaks in a home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><AirSealingCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to air sealing?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Air leakage costs you money in two ways: heated or cooled air leaves through gaps in your envelope, and unconditioned outside air comes in to replace it. Both increase HVAC runtime. A typical pre-1980 home leaks 30–50% more air than a sealed one. Professional air sealing addresses the major leakage paths (attic plane, rim joists, recessed lights, plumbing penetrations) with caulk, foam, and gaskets. The improvement is verified with a blower-door test that measures airflow at a standardized pressure.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/air-sealing/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">8-min read · ACH50 explained · blower-door tests · combustion safety · DIY vs pro</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/home-energy-audit-cost-calculator/">Home energy audit calculator →</a></li>
+      <li><a href="/window-replacement-cost-calculator/">Window replacement calculator →</a></li>
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

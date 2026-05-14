@@ -1,0 +1,11 @@
+---
+// Reserved ad slot. Renders nothing user-visible unless
+// PUBLIC_ADS_ENABLED is set to 'true' at build time. Container preserves
+// a CLS-safe min-height so layout doesn't shift when ads are turned on.
+const adsEnabled = import.meta.env.PUBLIC_ADS_ENABLED === 'true';
+---
+{adsEnabled && (
+  <div class="ad-slot" data-ad-slot>
+    <!-- Provider snippet (Mediavine / Raptive / AdSense) injected here when wired. -->
+  </div>
+)}

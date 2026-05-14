@@ -1,0 +1,114 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Ductwork: Why It Leaks, How to Fix It, and Why Heat Pump Quotes Add Duct Work',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11', dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Ductwork Guide 2026: Leakage, Sealing, Heat Pump Sizing"
+  description="Long-form guide to residential ductwork: leakage reality, Manual D design, materials (flex / sheet metal / duct board), sealing methods (mastic / Aeroseal), heat-pump airflow needs."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Ductwork', href: '/guides/ductwork/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Ductwork</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Ductwork, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Why typical ductwork leaks 25–40% of conditioned air, the materials decision (flex / sheet metal / duct board), proper sealing (mastic vs Aeroseal), Manual D sizing, why heat pumps need more airflow than gas furnaces, and how to read a duct line item in a contractor bid. 8-minute read.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>The leakage problem</h2>
+      <p>
+        DOE / LBNL research consistently shows residential ductwork leaks 25–40% of conditioned air between supply registers and return grilles. Air leaving the supply boot at 110°F arrives at the room at 88°F because half of it went to the attic on the way. The opposite happens in summer: 55°F supply air mixes with attic air and arrives at 72°F instead of 60°F.
+      </p>
+      <p>
+        The result is a homeowner running the system longer to hit setpoint, paying for energy that&rsquo;s actively conditioning unoccupied attics and crawl spaces. ENERGY STAR Home Improvement programs target ≤8% leakage post-sealing, measured with a calibrated duct blaster.
+      </p>
+    </section>
+
+    <section>
+      <h2>Materials — flex, sheet metal, fiber board</h2>
+      <ul>
+        <li><strong>Insulated flex duct.</strong> Inner liner + helical wire + R-6 or R-8 fiberglass insulation + outer vapor barrier. Cheapest material ($1.50–$3/linear ft), fastest install, dominant in 2026 residential installs. Trade-off: pressure drop is higher than rigid metal, 15–20 year service life, susceptible to crushing.</li>
+        <li><strong>Sheet metal (galvanized steel).</strong> Rigid rectangular or round duct, externally insulated (R-6 or R-8 wrap) in unconditioned spaces. Most expensive ($4–$8/linear ft installed), 40+ year life, lowest pressure drop. Right call for main trunks and any duct you can&rsquo;t access easily later.</li>
+        <li><strong>Fiberglass duct board.</strong> Rigid panels of compressed fiberglass with foil facing. Integrated insulation (no separate wrap needed). Cheaper than sheet metal, good acoustic dampening. Trade-off: prone to mold if it gets wet, must not be used in high-humidity uninsulated spaces.</li>
+      </ul>
+      <p>
+        Best-practice install: sheet metal trunk, insulated flex branches to individual registers. Avoid all-flex on long runs over 25 ft.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sealing — mastic + mesh is the standard</h2>
+      <p>
+        The IECC and most state energy codes require duct joints to be sealed with mastic + fiberglass mesh tape, not duct tape (despite the name). Mastic is a paste-like sealant applied to every joint and seam, then reinforced with mesh. Properly applied, mastic creates a permanent flexible seal that survives temperature cycling.
+      </p>
+      <p>
+        <strong>Avoid duct tape.</strong> Standard foil-faced duct tape (UL-181 listed or not) typically fails within 5–10 years from thermal cycling and adhesive breakdown. Acceptable for temporary use only.
+      </p>
+    </section>
+
+    <section>
+      <h2>Aeroseal — sealing from inside</h2>
+      <p>
+        Aeroseal is a proprietary process that pressurizes the duct system with a polymer aerosol; the polymer drifts to leaks (where air is escaping), accumulates, and bridges holes up to ~5/8 inch. Independent studies show 60–90% leakage reduction.
+      </p>
+      <p>
+        Best fit: finished homes where opening drywall to access joints is destructive. Worst fit: open ductwork in unfinished basements where manual mastic is faster and cheaper. Cost: $1,500–$3,200 typical, plus a pre/post Duct Blaster test included. Some HOMES rebate programs accept Aeroseal pre/post as evidence of measured savings.
+      </p>
+    </section>
+
+    <section>
+      <h2>Heat pump airflow problem</h2>
+      <p>
+        Gas furnaces produce 130–140°F supply air. Heat pumps produce 90–105°F. To deliver the same heating BTU/hr, the heat pump moves 30–50% more CFM. Existing return ducts and trunk lines sized for a gas furnace are usually undersized for the heat pump replacement.
+      </p>
+      <p>
+        Symptoms of inadequate return: heat pump short-cycles, hot/cold spots, blower motor whines, ECM blower runs at 100% constantly. Symptoms of inadequate trunk: high static pressure (over 0.8 inWC), blower overheats, registers don&rsquo;t deliver design airflow.
+      </p>
+      <p>
+        Manual D analysis is required to verify. Common upgrades when retrofitting heat pump onto existing ducts: larger return ducts (often adding a second return), trunk-line upsizing or addition of a second trunk, balancing dampers, additional supply registers. Budget $1,500–$5,000 for these upgrades on top of the heat pump itself.
+      </p>
+    </section>
+
+    <section>
+      <h2>Reading a duct line item</h2>
+      <ul>
+        <li>Per-sqft pricing is a sanity check, not a quote. $1.30/sqft for seal + insulate is reasonable; $5+/sqft for the same scope is overpriced.</li>
+        <li>Manual D design referenced in the proposal.</li>
+        <li>Pre/post Duct Blaster numbers (CFM25 leakage rate) committed in writing.</li>
+        <li>R-8 insulation on ducts in unconditioned space; R-6 if mostly conditioned.</li>
+        <li>Mastic + mesh on every joint, not foil tape.</li>
+        <li>Pressure-tested at supply boots after install.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/duct-sealing" target="_blank" rel="noopener">DOE Energy Saver — Duct Sealing</a></li>
+        <li><a href="https://www.acca.org/standards/technical-manuals/manual-d" target="_blank" rel="noopener">ACCA Manual D — Duct Design Standard</a></li>
+        <li><a href="https://www.energystar.gov/saveathome/seal_insulate" target="_blank" rel="noopener">ENERGY STAR Seal and Insulate</a></li>
+        <li><a href="https://aeroseal.com/" target="_blank" rel="noopener">Aeroseal — duct-injection technology</a></li>
+        <li><a href="https://www.energyvanguard.com/blog/" target="_blank" rel="noopener">Energy Vanguard — Allison Bailes&rsquo; HVAC blog</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <a href="/ductwork-installation-cost-calculator/" class="btn-primary inline-block">Open the ductwork calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,75 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import WoodStoveCalculator from '@/components/WoodStoveCalculator';
+
+const faq = [
+  { q: 'How much does a wood or pellet stove cost installed?',
+    a: 'Wood stove (small to medium): $2,900–$8,800 installed. Catalytic large wood stove: $4,600–$11,200. Pellet stove (small to medium): $3,000–$8,300. Large pellet stove: $4,200–$9,700. Pellet insert (fireplace retrofit): $4,000–$9,000. Premium masonry heater: $13,000–$46,000.' },
+  { q: 'Wood vs pellet — which is cheaper to run?',
+    a: 'Depends on local fuel prices. Wood at $200–$400/cord, you need 3–5 cords/yr = $600–$2,000. Pellets at $250–$350/ton, you need 3–5 tons/yr = $750–$1,750. Wood wins where you can source cheap cordwood (rural areas with available trees). Pellets win on convenience (auto-feed) and cleaner burn but require ongoing pellet purchases.' },
+  { q: 'Is the 25C credit available for wood/pellet stoves in 2026?',
+    a: 'No. The 25C credit for biomass stoves (was 30% up to $2,000) terminated December 31 2025 per OBBBA. Several states still have programs — Maine Efficiency, NYSERDA Clean Heat, Mass Save — but most have shrunk. Some pellet-stove manufacturers offer factory rebates ($100–$400) at the point of sale.' },
+  { q: 'Wood stove vs heat pump for primary heat?',
+    a: 'Heat pump is more convenient (no fuel handling, no chimney maintenance, no firewood) and cheaper to operate in most US climates. Wood stove makes sense as supplemental heat in cold-climate rural homes where (a) firewood is cheap or free, (b) outages are common, or (c) you want the aesthetics. Most modern off-grid and cabin setups pair a heat pump with a small wood stove for resilience.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Wood + Pellet Stove Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for EPA-certified wood stoves and pellet stoves. Stovepipe + hearth pad included. Premium masonry heater option.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Wood + Pellet Stove Cost Calculator 2026"
+  description="Installed-cost calculator for EPA-certified wood and pellet stoves. Stovepipe + hearth pad + permit. Pellet inserts and masonry heater options."
+  active="/wood-pellet-stove-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/wood-pellet-stove-hero-photo.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Wood + pellet stove calculator', href: '/wood-pellet-stove-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Wood + pellet stove</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Wood + Pellet Stove Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">Installed-cost calculator for EPA-certified wood stoves, pellet stoves, pellet inserts, and masonry heaters.</p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800"><strong>Quick answer:</strong> small-to-medium wood stove $2,900–$8,800 installed. Pellet stove $3,000–$9,700. Catalytic large wood $4,600–$11,200. Premium masonry heater $13,000–$46,000. The 25C biomass credit ended Dec 31 2025.</p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/wood-pellet-stove-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/wood-pellet-stove-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/wood-pellet-stove-hero-photo.png" alt="EPA-certified wood stove installed in a residential living room"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><WoodStoveCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to wood + pellet stoves?</h2>
+      <p class="mt-2 text-sm text-ink-700">EPA 2020-certified wood stoves emit 90% less particulate than 1980s models. Modern catalytic stoves achieve 80%+ efficiency with 12-18 hour burns. Pellet stoves use compressed wood pellets, auto-feed for unattended operation, and exhaust through smaller side-wall vents instead of a full chimney. Both require a building permit and hearth pad with proper R-value. Cleared installation distances vary by manufacturer; most need at least 36" from combustibles.</p>
+      <p class="mt-3 text-sm"><a href="/guides/wood-pellet-stoves/" class="font-medium text-brand-700">Read the full guide →</a></p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">{faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}</div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump (primary alternative) →</a></li>
+      <li><a href="/off-grid-solar-cost-calculator/">Off-grid solar →</a></li>
+      <li><a href="/generator-cost-calculator/">Generator backup →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

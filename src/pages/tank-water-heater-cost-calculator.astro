@@ -1,0 +1,91 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import TankWaterHeaterCalculator from '@/components/TankWaterHeaterCalculator';
+
+const faq = [
+  { q: 'How much does a standard tank water heater cost installed?',
+    a: 'A standard 50-gal atmospheric-vent gas tank installs for $1,300–$2,700. Power-vent gas runs $2,000–$3,800. Condensing gas (95%+ EF): $3,000–$5,000. Electric resistance 50-gal: $1,200–$2,500. Propane tracks gas pricing plus 10–20%. The cheapest replacement is electric-for-electric or gas-for-gas like-for-like.' },
+  { q: 'Tank vs heat pump water heater (HPWH) vs tankless — which makes sense?',
+    a: 'Standard tank wins on upfront cost ($1,500–$3,000 installed for typical gas). HPWH wins on long-run economics ($2,300–$4,200 installed, $300–$500/yr operating savings vs gas, eligible for HEEHRA up to $1,750). Tankless wins on space + endless hot water ($2,800–$6,500). A standard tank is the right replacement when budget is the binding constraint or you turn around the house soon.' },
+  { q: 'Is the 25C tax credit available for tank water heaters in 2026?',
+    a: 'No. The federal 25C credit for high-efficiency gas water heaters (was 30% up to $600) expired Dec 31 2025. HEEHRA is electric-only — tank gas/propane do not qualify, only HPWH and electric resistance do. Some utilities still offer $50–$300 rebates on condensing tank installs.' },
+  { q: 'How long does a tank water heater last?',
+    a: 'Industry average: 8–12 years for gas, 10–14 for electric resistance. Hard water shortens life significantly — sediment buildup wears the bottom of the tank. Annual flushing extends life. Premium models (Bradford White, Rheem ProTerra) carry 6–8 year warranties; budget tier carries 6 years.' },
+  { q: 'What size tank do I need?',
+    a: 'Rule of thumb: 30–40 gal for 1–2 people, 40–50 gal for 3–4, 50–60 gal for 4–5, 75–80 gal for 5+. First-hour rating (FHR) on the spec sheet is the real number — should match your peak hour usage (~12 gal/person/hour for showers).' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Tank Water Heater Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for standard tank water heater replacement by fuel (gas, electric, propane), efficiency tier, size, and state. Head-to-head with HPWH and tankless.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Tank Water Heater Replacement Cost Calculator 2026"
+  description="Installed-cost calculator for standard tank water heater replacement by fuel, efficiency tier, and size. Head-to-head comparison with HPWH and tankless."
+  active="/tank-water-heater-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/tank-water-heater-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Tank water heater calculator', href: '/tank-water-heater-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Tank water heater</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Tank Water Heater Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for standard tank water heater replacement by fuel, efficiency tier, and size. Compares head-to-head with HPWH and tankless.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> standard atmospheric-vent 50-gal gas tank installs for $1,300–$2,700. Condensing gas $3,000–$5,000. Electric resistance $1,200–$2,500. HPWH alternative: $2,300–$4,200 with HEEHRA up to $1,750.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/tank-water-heater-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/tank-water-heater-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/tank-water-heater-hero-photo.png" alt="Residential water heater installed in a basement"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><TankWaterHeaterCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to water heater replacement?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A standard tank water heater stores 30–80 gallons of hot water and reheats it as you use it. Gas units burn natural gas (or propane) and vent up a flue; electric units use one or two resistance elements. Lifespan is 8–14 years; sediment in hard-water areas is the chronic failure point. Modern alternatives — heat pump water heaters and tankless — cost more upfront but pay back through 50–70% lower operating costs.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/tank-water-heaters/" class="font-medium text-brand-700">Read the full guide →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-water-heater-cost-calculator/">Heat pump water heater (HPWH) →</a></li>
+      <li><a href="/tankless-water-heater-cost-calculator/">Tankless water heater →</a></li>
+      <li><a href="/hot-water-recirculation-cost-calculator/">Hot water recirculation pump →</a></li>
+      <li><a href="/water-treatment-cost-calculator/">Water softener / filtration →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,77 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { ALL_STATES, findStateEnergy, findStateLabor } from '@/lib/data';
+
+const yields: Record<string, number> = {
+  AL:1400,AK:1050,AZ:1700,AR:1400,CA:1600,CO:1600,CT:1300,DE:1350,DC:1350,FL:1450,
+  GA:1400,HI:1700,ID:1450,IL:1300,IN:1300,IA:1350,KS:1500,KY:1300,LA:1400,ME:1250,
+  MD:1300,MA:1300,MI:1250,MN:1350,MS:1400,MO:1400,MT:1400,NE:1450,NV:1700,NH:1300,
+  NJ:1300,NM:1700,NY:1250,NC:1400,ND:1400,OH:1250,OK:1500,OR:1250,PA:1300,RI:1300,
+  SC:1400,SD:1450,TN:1350,TX:1500,UT:1600,VT:1250,VA:1350,WA:1100,WV:1250,WI:1300,WY:1500,
+};
+
+const rows = ALL_STATES.map(s => {
+  const energy = findStateEnergy(s.code);
+  const labor = findStateLabor(s.code);
+  const mult = labor?.electrician_multiplier ?? 1.0;
+  const mid7 = Math.round(3.30 * mult * 7000);
+  const yr = yields[s.code] ?? 1350;
+  const elec = energy ? energy.electricity_cents_per_kwh / 100 : 0.16;
+  const annualValue = 7 * yr * elec;
+  const payback = Math.round((mid7 / annualValue) * 10) / 10;
+  return { ...s, mid7, yield: yr, elec, payback };
+}).sort((a, b) => a.name.localeCompare(b.name));
+
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Solar Panel Cost by State', description: 'Residential solar PV installed cost benchmarks by state.' };
+---
+<Layout
+  title="Solar Panel Cost by State (2026)"
+  description="Residential solar PV installed cost and payback in all 50 states. Per-state $/W, 7 kW system cost, production yield, and electricity rate. 25D credit expired 2025-12-31."
+  active="/solar-panel-cost-by-state/"
+  ogImage="/assets/topic-images/solar-panel-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Solar by state', href: '/solar-panel-cost-by-state/' },
+  ]}
+  schemaJsonLd={schemaJsonLd}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Solar PV · By state</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Solar Panel Cost by State</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Mid installed cost for a typical 7 kW residential solar system across all 50 states + DC, plus PVWatts specific yield and current retail electricity rate. The federal 25D Residential Clean Energy Credit (30%) expired for property placed in service after 2025-12-31, so the figures below are gross installed cost — state and utility programs may reduce net cost further.
+    </p>
+  </section>
+
+  <section class="container-wide pb-12">
+    <div class="card overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-ink-50">
+          <tr>
+            <th class="px-3 py-2 text-left">State</th>
+            <th class="px-3 py-2 text-right">7 kW mid cost</th>
+            <th class="px-3 py-2 text-right">Yield (kWh/kW/yr)</th>
+            <th class="px-3 py-2 text-right">Electric rate</th>
+            <th class="px-3 py-2 text-right">Simple payback</th>
+            <th class="px-3 py-2 text-left">Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr class="border-t border-ink-100">
+              <td class="px-3 py-2">{r.name}</td>
+              <td class="px-3 py-2 text-right tabular-nums">${r.mid7.toLocaleString()}</td>
+              <td class="px-3 py-2 text-right tabular-nums">{r.yield}</td>
+              <td class="px-3 py-2 text-right tabular-nums">${r.elec.toFixed(2)}/kWh</td>
+              <td class="px-3 py-2 text-right tabular-nums">{r.payback} yr</td>
+              <td class="px-3 py-2"><a href={`/solar-panel-cost-${r.code.toLowerCase()}/`}>{r.code} →</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,8 @@
+tier,low,mid,high,unit,deliverables,source_id,last_reviewed
+walkthrough,100,200,350,$,Visual only — no diagnostics,BPI,2026-05-12
+standard,250,425,650,$,Blower door + IR + combustion safety,BPI,2026-05-12
+hers,450,650,900,$,RESNET HERS Index Rating,RESNET,2026-05-12
+rater_full,600,900,1400,$,HERS + duct blaster + combustion + full report,RESNET,2026-05-12
+utility_yes_free,0,0,0,fraction,"Mass Save / ConEd / Energy Trust — free",utility_avg,2026-05-12
+utility_yes_subsidized,0.4,0.4,0.4,fraction,"50% subsidy typical",utility_avg,2026-05-12
+utility_no,1.0,1.0,1.0,fraction,"Pay full market price",utility_avg,2026-05-12

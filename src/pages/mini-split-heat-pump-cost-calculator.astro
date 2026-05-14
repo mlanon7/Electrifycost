@@ -1,0 +1,94 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import MiniSplitCalculator from '@/components/MiniSplitCalculator';
+
+const faq = [
+  { q: 'How much does a mini-split cost installed in 2026?',
+    a: 'A single-zone mini-split installs for $3,500–$6,000. A 2-zone system runs $7,500–$12,000. A 4-zone whole-home setup typically lands $14,000–$22,000 — economies of shared outdoor unit reduce marginal cost per zone. Cold-climate (Hyper-Heat / Aurora / Halcyon XLTH) adds 15–20%.' },
+  { q: 'Mini-split vs ducted central heat pump?',
+    a: 'Mini-splits win when you have no existing ductwork, want per-room temperature control, or have additions/finished basements without HVAC. Ducted wins when you already have good ducts, want centralized filtering, and prefer hidden equipment. Cost is comparable for whole-home — $14,000–$22,000 mini-split vs $10,000–$20,000 ducted, but ducted assumes good existing ducts.' },
+  { q: 'Which brand should I pick?',
+    a: 'Mitsubishi Hyper-Heat (H2i) and Daikin Aurora are the cold-climate gold standards — best capacity retention below 5°F, longest service network, highest residuals. Fujitsu Halcyon XLTH is close behind at slightly lower price. LG is solid mid-tier. Avoid no-name imports for permanent installs — warranty service is essentially nonexistent.' },
+  { q: 'Do mini-splits work in cold climates?',
+    a: 'Yes — modern hyper-heat models maintain 80%+ rated capacity at 5°F outdoor, 70%+ at -13°F. NEEP&rsquo;s Cold Climate Heat Pump Specification list (https://neep.org/heating-electrification/ccashp-specification-product-list) certifies which units qualify. Pair with a small backup if your design temp is below -15°F.' },
+  { q: 'Federal tax credit for mini-splits?',
+    a: 'The 25C Energy Efficient Home Improvement Credit covered heat pumps at 30% up to $2,000 through 2025-12-31. OBBBA terminated 25C for property placed in service after that date. State + utility heat-pump rebates remain robust: Mass Save up to $10,000, NYSERDA $1,000–$4,000, ComEd $2,250, Energy Trust of Oregon $1,500.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Mini-Split Heat Pump Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for ductless mini-split heat pumps by zone count, brand, cold-climate spec, and state.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Mini-Split / Ductless Heat Pump Cost Calculator 2026"
+  description="Installed-cost calculator for ductless mini-split heat pumps. Adjusts by zones, brand (Mitsubishi, Daikin, Fujitsu, LG, Pioneer), cold-climate spec, and state."
+  active="/mini-split-heat-pump-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/mini-split-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Mini-split cost calculator', href: '/mini-split-heat-pump-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Ductless mini-split</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Mini-Split Heat Pump Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for ductless mini-split systems by zone count, brand, and cold-climate spec. State-aware labor multipliers.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> single-zone $3,500–$6,000. 2-zone $7,500–$12,000. 4-zone whole-home $14,000–$22,000. Cold-climate Hyper-Heat / Aurora / Halcyon XLTH adds 15–20%.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/mini-split-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/mini-split-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/mini-split-hero-photo.png" alt="Mini-split indoor head and outdoor condenser at a home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><MiniSplitCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to ductless mini-splits?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A mini-split is a heat pump system with one outdoor compressor unit feeding 1–5 indoor "head" units through small refrigerant lines, no ductwork. Each head is independently controlled — you set the bedroom to 65°F while the living room is 72°F. Modern hyper-heat units (Mitsubishi H2i, Daikin Aurora, Fujitsu XLTH) maintain capacity below 5°F outdoor. Ideal for additions, finished basements, homes without ducts, or selective zoning in older homes. HSPF2 ratings of 9.0+ qualify for ENERGY STAR Most Efficient.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/mini-splits/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">10-min read · brands · sizing · install red flags · cold-climate spec · vs ducted central</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Central heat pump calculator →</a></li>
+      <li><a href="/geothermal-heat-pump-cost-calculator/">Geothermal heat pump calculator →</a></li>
+      <li><a href="/ductwork-installation-cost-calculator/">Ductwork installation calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

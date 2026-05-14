@@ -1,0 +1,155 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Whole-Home Electrification: The Complete Sequencing Guide',
+  description: 'How to sequence the full electrification of a home over 5–10 years: insulation first, then heat pump, EV charger, HPWH, induction. How rebates stack across modules and when panel work is actually required.',
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+};
+---
+<Layout
+  title="Whole-Home Electrification Guide 2026: Order, Cost, Rebates"
+  description="A practical sequence for replacing every fossil-fuel appliance in your home with electric. Order, timing, combined cost, incentive stacking, panel work, and the case for envelope-first."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Whole-home electrification', href: '/guides/whole-home-electrification/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="eyebrow">Guide</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Whole-Home Electrification: The Complete Sequencing Guide</h1>
+    <p class="mt-3 max-w-prose text-base text-ink-700">
+      Going fully electric isn't a single project — it's a 5–10 year sequence of natural-replacement moments. This guide explains the right order, the realistic combined cost, how rebates stack, and when panel work is actually required (less often than contractors quote). The <a href="/whole-home-electrification-cost-calculator/" class="text-brand-700 underline-offset-2 hover:underline">whole-home cost calculator</a> sums it up for your state.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs text-ink-600">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#order" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">2. The right order</a>
+      <a href="#envelope" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">3. Envelope first</a>
+      <a href="#panel" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">4. Panel reality</a>
+      <a href="#incentives" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">5. Stacking incentives</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">6. Combined cost</a>
+      <a href="#tips" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">7. Tips &amp; pitfalls</a>
+    </div>
+  </section>
+
+  <section id="what" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">1. What "whole-home electrification" actually means</h2>
+    <p>
+      Whole-home electrification means replacing every fossil-fuel-burning appliance in your home with an electric alternative — usually a heat-pump-based one — so the only utility connection you need is the electrical service. The four big combustion appliances in a typical U.S. home are the furnace or boiler (space heat), the water heater, the cooking range, and the clothes dryer. To support those new electric loads you may also need to add electrical capacity: a Level 2 EV charger if a car purchase is coming, a panel upgrade if your service is undersized, or a smart load-management device if it isn't.
+    </p>
+    <p>
+      The reason most homeowners get to this end state piecewise is simple: appliances don't fail on the same day. The furnace might be 14 years old, the water heater 8, the range 6, the dryer 11. Replacing all four at once costs $20,000–$45,000 and there's no reason to do it. Replacing each one with its electric counterpart <em>when it would have been replaced anyway</em> stretches the spend across 5–10 years and lets each decision use the latest equipment and rebates.
+    </p>
+  </section>
+
+  <section id="order" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">2. The right order</h2>
+    <p>The order most people get wrong is doing the easy things first (induction range) instead of the things that compound (envelope, then HVAC). Here's the sequence we recommend:</p>
+    <ol class="mt-3 list-decimal pl-6 space-y-2 text-ink-700">
+      <li><strong>Insulation and air-sealing</strong> if the envelope is leaky or under-insulated. This shrinks every other estimate downstream — a tighter home needs a smaller heat pump, smaller ducts, less panel capacity.</li>
+      <li><strong>Heat pump</strong> for space conditioning. This is the biggest single bill move because it replaces both the furnace and the AC. Schedule it when the furnace fails or when the AC is 12+ years old.</li>
+      <li><strong>EV charger</strong> when a car purchase is coming. Don't pre-install years ahead — connector standards (NACS / J3400) and onboard-charger amperages are still moving.</li>
+      <li><strong>Heat pump water heater</strong> at the next water-heater failure. They're 3–4&times; as efficient as resistance and run cheaper than gas in most states.</li>
+      <li><strong>Induction range</strong> during the next kitchen project or when the gas range fails. Cheap, fast, big indoor-air-quality win.</li>
+      <li><strong>Electric clothes dryer (heat pump or resistance)</strong> at the next dryer failure. Heat-pump dryers are the most efficient but install slower; resistance dryers are fine if you do laundry occasionally.</li>
+      <li><strong>Panel work</strong> only if a load calculation says you need it.</li>
+    </ol>
+    <p class="mt-3">There is no rule that you have to follow this order. But every order other than this one tends to either oversize equipment (no insulation first) or commit you to a panel upgrade you didn't need (induction or EVSE before checking load).</p>
+  </section>
+
+  <section id="envelope" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">3. Why envelope comes first</h2>
+    <p>
+      Air-sealing and insulation are the cheapest, longest-lived, lowest-tech upgrades in home electrification. A well-sealed, well-insulated home needs less heat-pump tonnage (smaller equipment, smaller install cost), less ductwork redesign, less circuit work, and produces lower bills regardless of which fuel is heating it. Typical numbers: a 2,000 sq ft home with poor attic insulation and average air leakage saves 15–30% on heating and cooling after a $1,500–$5,000 air-sealing + insulation upgrade, with payback in 3–8 years <em>before</em> you've touched the HVAC.
+    </p>
+    <p>
+      Mass Save (MA) pays up to 75–100% of insulation cost for income-eligible households; many states have similar programs. The federal 25C credit (which covered insulation through 2025) is gone for 2026, but state and utility programs largely remain. The DOE <a href="https://www.energy.gov/energysaver/insulation" target="_blank" rel="noopener noreferrer">Energy Saver insulation guide</a> has R-value targets by climate zone.
+    </p>
+  </section>
+
+  <section id="panel" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">4. Do you actually need panel work?</h2>
+    <p>
+      The most common contractor over-quote in residential electrification is "you'll need a panel upgrade." It's not always wrong, but it's frequently overstated. The authoritative check is an <a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70" target="_blank" rel="noopener noreferrer">NEC 220.83</a> load calculation: a licensed electrician adds up the demand of all existing major loads using diversified demand factors, plus the new load you're proposing, and compares the total to your service rating.
+    </p>
+    <p>
+      Rough rules of thumb (not a substitute for a real load calc):
+    </p>
+    <ul>
+      <li>60A service: needs an upgrade for almost any modern electrification.</li>
+      <li>100A service: often workable for one major add; two majors usually requires upgrade <em>or</em> load management.</li>
+      <li>125A or 150A service: comfortable for heat pump + EVSE in most homes.</li>
+      <li>200A service: adequate for whole-home electrification in most situations.</li>
+      <li>320/400A service: future-proof.</li>
+    </ul>
+    <p>
+      <strong>NEC 750 energy-management systems</strong> are the under-marketed alternative. Devices from Span, Lumin, NeoCharge, DCC, and Emporia shed non-critical loads in real time, letting you add a Level 2 EVSE on a 100A panel without a service upgrade. They cost $500–$1,500 installed (or $3,500–$7,000 for whole-panel smart-panel replacements) and routinely save $3,000–$5,000 vs. a 100A&rarr;200A upgrade.
+    </p>
+    <p>
+      The whole-home calculator above takes <strong>the worst-case panel adder across enabled modules, not the sum</strong> — because one upgrade typically supports multiple loads. Adding a heat pump and an EV charger doesn't mean two panel upgrades.
+    </p>
+  </section>
+
+  <section id="incentives" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">5. How rebates stack across modules in 2026</h2>
+    <p>The 2026 incentive landscape is meaningfully different from 2025. The big change: the federal §25C Energy Efficient Home Improvement Credit was terminated by OBBBA for property placed in service after Dec 31 2025. What still exists:</p>
+    <ul>
+      <li><strong>Federal §30C (EV charger):</strong> 30% of cost up to $1,000 for personal use, through <strong>June 30 2026</strong>, only at addresses in <a href="https://afdc.energy.gov/laws/30C" target="_blank" rel="noopener noreferrer">eligible census tracts</a>.</li>
+      <li><strong>Federal §25D (residential clean energy):</strong> <em>Also terminated by OBBBA for property placed in service after Dec 31 2025.</em> Historically covered 30% of solar PV, solar water heating, fuel cells, geothermal heat pumps, and qualified battery storage &ge; 3 kWh. Systems with a 2025-or-earlier placed-in-service date still claim 30% on that tax-year return.</li>
+      <li><strong>DOE Home Energy Rebates (HEEHRA / HOMES):</strong> income-qualified, state-administered, with per-program caps that <em>stack</em> across modules up to ~$14,000 per household. Rollout status varies by state — see <a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener noreferrer">DOE's program-status page</a>.</li>
+      <li><strong>State and utility programs:</strong> NYSERDA, Mass Save, TECH Clean California, Colorado, Illinois, and many utilities run programs that stack on top of federal credits. Cross-reference your state at <a href="https://www.dsireusa.org/" target="_blank" rel="noopener noreferrer">DSIRE</a>.</li>
+    </ul>
+    <p>
+      Stacking rules: federal credits stack with state and utility programs in nearly all cases. State and utility programs sometimes have rules about double-counting; verify before assuming. Income-qualified DOE Home Energy Rebates can <em>replace</em> some state programs in some states (the program administrator decides). The whole-home calculator above splits incentives into "applied" (confirmed for your selections) and "potential" (eligibility not yet confirmed) so you don't overcount.
+    </p>
+  </section>
+
+  <section id="cost" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">6. What full electrification typically costs</h2>
+    <p>Rough planning ranges for a 2,000 sq ft single-family home, low / mid / high installed before incentives, mid-cost state:</p>
+    <ul>
+      <li><strong>Heat pump (ducted central 3-ton):</strong> $7,500 / $13,000 / $22,000</li>
+      <li><strong>Heat pump water heater (240V hybrid 50 gal):</strong> $2,500 / $3,500 / $5,500</li>
+      <li><strong>Induction range (basic 30-inch):</strong> $1,400 / $2,500 / $4,300</li>
+      <li><strong>EV charger (Level 2 hardwired):</strong> $1,000 / $1,800 / $3,200</li>
+      <li><strong>Panel work (probabilistic):</strong> $0–$5,000 depending on existing service and load</li>
+      <li><strong>Insulation + air sealing (optional but high-ROI):</strong> $1,500 / $3,000 / $5,000</li>
+    </ul>
+    <p>
+      <strong>Mid-cost total:</strong> roughly $25,000 with no panel upgrade, $30,000 with one. Net of state rebates (HEEHRA-eligible state, income-qualified household): often $12,000–$22,000 out of pocket. In high-cost-of-living states (CA, NY, MA), add 25–40%; in low-cost states (AL, MS, KY), subtract 15–25%.
+    </p>
+  </section>
+
+  <section id="tips" class="container-tight pb-10 guide-prose">
+    <h2 class="text-2xl">7. Tips, tricks, and common pitfalls</h2>
+    <ul>
+      <li><strong>Don't pre-install equipment you won't use for 3+ years.</strong> Tech moves; rebates change; refrigerants transition. Buy when you're ready to install.</li>
+      <li><strong>Right-size every appliance.</strong> Oversized heat pumps short-cycle, oversized HPWH tanks waste standby losses, oversized EVSEs waste circuit capacity.</li>
+      <li><strong>Get bids in writing with line items.</strong> Demand itemized labor hours + equipment + permits + grounding + drywall repair + utility-coordination fees.</li>
+      <li><strong>Check the panel before assuming.</strong> Many homes with 100A or 150A service can support full electrification without a service upgrade if load management is used.</li>
+      <li><strong>Permits and inspection are not optional.</strong> An unpermitted install voids many rebates, fails AHJ inspection on resale, and complicates insurance.</li>
+      <li><strong>Document everything for tax season.</strong> Federal credits require receipts and (for 25D) the manufacturer's certification statement. Save them.</li>
+      <li><strong>Plan the kitchen project around the induction switch.</strong> If you're remodeling anyway, switching to induction adds almost nothing on the margin. As a standalone project the gas-line cap and 240V circuit add real cost.</li>
+    </ul>
+  </section>
+
+  <section class="container-tight py-10 border-t border-ink-100">
+    <h2 class="text-2xl">Estimate your combined cost</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <a href="/whole-home-electrification-cost-calculator/" class="text-brand-700 font-medium underline-offset-2 hover:underline">whole-home cost calculator</a> takes your state, panel size, current fuels, and which modules you want — and returns a combined band, per-module breakdown, shared panel math, and stacked incentives.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/whole-home-electrification-cost-calculator/" class="btn-primary">Open the calculator →</a>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,73 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HotTubHeatPumpCalculator from '@/components/HotTubHeatPumpCalculator';
+
+const faq = [
+  { q: 'How much does a heat pump hot tub heater cost?',
+    a: 'For a 300-gal tub: $2,200–$4,700 installed. 450-gal: $2,700–$5,500. 600+ gal (large tub or swim spa): $3,400–$6,800. Compared to standard electric resistance ($600–$1,700 installed but 3× the operating cost) or gas ($2,300–$6,000 installed plus fuel).' },
+  { q: 'How much will I save vs the built-in electric resistance heater?',
+    a: 'Heat pump uses about 70% less electricity per BTU delivered. At US average 16¢/kWh, expect $300–$500/yr savings for typical use. In cold-climate states (NE, Midwest) the heat pump can&rsquo;t work below ~50°F outdoor, so you still need the resistance backup. In warm-climate states (CA, FL, AZ, TX) the heat pump runs year-round.' },
+  { q: 'Premium cover or heat pump first?',
+    a: 'A premium insulated cover (R-12+) cuts annual hot-tub energy 30-50% on ANY heater type. A $500 cover often saves more than a $3,000 heat pump upgrade. If you have a stock R-3 to R-5 cover, replace the cover first. Then evaluate heat pump.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Hot Tub Heat Pump Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Cost calculator for heat-pump hot tub / spa heaters by tub size and state. Comparison with electric resistance and gas baselines.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Hot Tub Heat Pump Cost Calculator 2026"
+  description="Cost calculator for heat-pump hot tub / spa heaters. By tub size and state. Comparison with electric resistance and gas baselines."
+  active="/hot-tub-heat-pump-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/hot-tub-heat-pump-hero-photo.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Hot tub heat pump calculator', href: '/hot-tub-heat-pump-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Hot tub heat pump</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Hot Tub Heat Pump Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">Cost calculator for heat-pump hot tub heaters. By tub size and state. Compared with electric resistance and gas baselines.</p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800"><strong>Quick answer:</strong> heat pump for a 300-gal tub $2,200–$4,700 installed; 450-gal $2,700–$5,500; 600+ gal $3,400–$6,800. Uses 70% less electricity than built-in resistance. A premium R-12+ cover often saves more than a heater upgrade.</p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/hot-tub-heat-pump-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/hot-tub-heat-pump-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/hot-tub-heat-pump-hero-photo.png" alt="Heat pump unit installed alongside an outdoor hot tub"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><HotTubHeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to heat-pump hot tub heaters?</h2>
+      <p class="mt-2 text-sm text-ink-700">A heat-pump hot tub heater is a separate outdoor unit that replaces or augments your tub&rsquo;s built-in resistance heater. It uses the same physics as a heat pump pool heater — extracts heat from outside air, delivers 3-4× more heat per kWh than resistance. The catch: below ~50°F outdoor air, the heat pump loses efficiency and you fall back on resistance. So in cold-climate states it&rsquo;s a 3-season upgrade; in warm-climate states it runs year-round and saves the most.</p>
+      <p class="mt-3 text-sm"><a href="/guides/hot-tub-heat-pumps/" class="font-medium text-brand-700">Read the full guide →</a></p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">{faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}</div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/pool-heat-pump-cost-calculator/">Pool heat pump →</a></li>
+      <li><a href="/heat-pump-cost-calculator/">Home heat pump →</a></li>
+      <li><a href="/heat-pump-water-heater-cost-calculator/">HPWH →</a></li>
+      <li><a href="/solar-panel-cost-calculator/">Solar panels →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

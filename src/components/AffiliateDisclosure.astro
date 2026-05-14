@@ -1,0 +1,15 @@
+---
+// FTC-compliant disclosure. Only renders when the affiliate module is also
+// enabled — otherwise we'd have a disclosure for products that don't exist
+// on the page, which is both confusing and visually loud.
+const enabled = import.meta.env.PUBLIC_AFFILIATES_ENABLED === 'true';
+---
+{enabled && (
+  <div class="container-wide pt-6">
+    <p class="rounded-md border border-ink-200 bg-ink-50 p-3 text-[11px] leading-relaxed text-ink-700">
+      <strong class="text-ink-900">Disclosure:</strong> If you purchase through some product links below, ElectrifyCost may earn a commission at no extra cost to you.
+      We never let affiliate revenue change the calculator math, recommendations, or rebate amounts; that's why this disclosure sits
+      outside the result panel. See our <a href="/methodology/" class="underline">methodology</a> for how we pick what to include.
+    </p>
+  </div>
+)}

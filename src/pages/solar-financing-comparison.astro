@@ -1,0 +1,125 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Solar Financing: Cash vs Loan vs Lease vs PPA',
+  description: 'Side-by-side comparison of cash purchase, solar loan, solar lease, and Power Purchase Agreement (PPA): 25-year economics, transfer at sale. Federal 25D credit expired after 2025-12-31.',
+};
+---
+<Layout
+  title="Solar Financing: Cash vs Loan vs Lease vs PPA Comparison 2026"
+  description="Comprehensive comparison of the four solar financing options: cash, loan, lease, and PPA. 25-year cost, tax credit access, ownership transfer at home sale, exit options."
+  active="/solar-financing-comparison/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Solar financing comparison', href: '/solar-financing-comparison/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Comparison</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Solar Financing: Cash vs Loan vs Lease vs PPA</h1>
+    <p class="mt-3 text-base text-ink-700">
+      The four solar financing options, what each actually costs over 25 years, what happens when you sell the house, and which option door-knocker sales operations push hardest. <strong>2026 note:</strong> federal 25D credit (30%) expired 2025-12-31 — the math below assumes no federal credit. Pre-2026 systems retained 25D on their placed-in-service-year return.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>The four options</h2>
+      <ul>
+        <li><strong>Cash purchase.</strong> You write a check for the full installed cost. You own the system, you claim the 30% federal 25D credit, you keep all production value, you handle warranty claims with the installer directly.</li>
+        <li><strong>Solar loan.</strong> You borrow at fixed rate (5-10% typical in 2026) for 10-25 years. You still own the system, claim the 25D credit, and keep production value. The loan reduces your upfront cash to zero but adds finance charges.</li>
+        <li><strong>Solar lease.</strong> A third-party (Sunrun, Sunnova, SunPower Capital) owns the system; you pay a fixed monthly lease for 20-25 years. They claim the 25D credit. You get the electricity, but typically with annual escalators (2-3%/yr).</li>
+        <li><strong>Power Purchase Agreement (PPA).</strong> Similar to lease but you pay per-kWh produced (e.g., $0.16/kWh) rather than a flat monthly fee. Third-party owns, claims 25D, handles maintenance.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>25-year cost comparison (concrete example)</h2>
+      <p>
+        7 kW system, $22,000 gross installed, $0.16/kWh utility rate with 2.5%/yr escalation, Massachusetts, <em>placed in service after 2025-12-31 (no 25D)</em>:
+      </p>
+      <ul>
+        <li><strong>Cash:</strong> $22,000 upfront. No federal credit (expired). 25-year electricity bill displaced: ~$35,000. <strong>Net 25-year savings: $13,000.</strong></li>
+        <li><strong>Solar loan (7% for 15 years):</strong> $0 upfront. Total loan payments: ~$35,500. No federal credit. 25-year electricity displaced: $35,000. <strong>Net 25-year savings: ~-$500 (loan finance charges eat the displacement value).</strong></li>
+        <li><strong>Solar lease ($75/mo with 2.5% escalator):</strong> $0 upfront. 25-year payments: ~$30,000. No 25D for homeowner. 25-year electricity displaced: $35,000. <strong>Net 25-year savings: $5,000.</strong></li>
+        <li><strong>PPA ($0.13/kWh with 2.9% escalator):</strong> $0 upfront. 25-year payments based on production: ~$28,500. No 25D for homeowner. Electricity displaced: $35,000. <strong>Net 25-year savings: $6,500.</strong></li>
+      </ul>
+      <p>
+        Cash wins by a wide margin if you have the capital. Loan wins meaningfully if you don&rsquo;t. Lease and PPA make economic sense only when you can&rsquo;t use the 25D credit (low tax liability, very high income with AMT, or no upfront capital and no loan access).
+      </p>
+    </section>
+
+    <section>
+      <h2>Who claims the federal 25D credit</h2>
+      <ul>
+        <li><strong>Cash and loan:</strong> homeowner. You file IRS Form 5695 the year the system is placed in service (received Permission to Operate). Credit was 30% of cost for systems placed in service 2022-2025; OBBBA terminated 25D for property placed in service after 2025-12-31.</li>
+        <li><strong>Lease and PPA:</strong> third-party owner. You typically see this reflected indirectly in slightly lower payments — they monetize the credit and share some of the value with you.</li>
+      </ul>
+      <p>
+        Practical implication: if your tax liability is too low to use the 25D credit (retired, low-income, etc.), the credit carries forward to future years for cash/loan ownership. If carry-forward doesn&rsquo;t close the gap, lease/PPA may be more accessible.
+      </p>
+    </section>
+
+    <section>
+      <h2>What happens when you sell the house</h2>
+      <ul>
+        <li><strong>Cash / loan-paid-off:</strong> system stays with the house, increases value (Zillow research: +4-6% home value uplift from owned solar). Buyer inherits the warranty and production.</li>
+        <li><strong>Loan with balance:</strong> you can roll the loan into your mortgage payoff, or assign to buyer if they qualify and want it. Lenders often allow this; some don&rsquo;t.</li>
+        <li><strong>Lease:</strong> buyer assumes the lease (most commonly), or you buy out the lease at closing (typically a discounted price after year 5). This complicates the sale — some buyers walk because of lease terms.</li>
+        <li><strong>PPA:</strong> similar to lease — buyer assumes the PPA contract or you buy out at closing. A subset of buyers and lenders react negatively to inherited PPAs.</li>
+      </ul>
+      <p>
+        Owned (cash or loan-paid) solar is a clear positive at sale. Lease and PPA introduce contract complexity that occasionally kills deals. Plan ahead if you might sell within 10 years.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sales pressure red flags</h2>
+      <p>
+        Door-knocker sales operations heavily push leases and PPAs because their commission is higher and the contract obligation is easier to close (no large upfront ask). Watch for:
+      </p>
+      <ul>
+        <li><strong>"You won&rsquo;t qualify for the tax credit" with no analysis of your actual tax situation.</strong> Often a steering tactic toward lease.</li>
+        <li><strong>"This system pays for itself."</strong> The system pays for the installer&rsquo;s commission; whether it pays for you depends on the financing.</li>
+        <li><strong>Same-day signature pressure.</strong> Walk. Reputable installers give 30 days.</li>
+        <li><strong>"Free solar" or "$0 down."</strong> These phrases almost always mean lease or PPA, not free.</li>
+        <li><strong>Escalator rate that compounds higher than expected utility-rate inflation (3%+).</strong> A lease with 3.5% annual escalator and 1.5% real utility inflation guarantees you pay more for solar than you would have for utility power by year 12-15.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Recommendation</h2>
+      <p>
+        For homeowners with the capital and tax liability: cash. The 30% federal credit returns to you, no finance charges, simplest exit at home sale.
+      </p>
+      <p>
+        For homeowners without capital: a solar loan at &lt;8% APR with the federal credit applied to principal in year 1. Stay with the loan as long as the rate is favorable; refinance if rates drop.
+      </p>
+      <p>
+        Lease or PPA only when you genuinely cannot use the tax credit (very low tax liability with no carry-forward path) and have no loan access. Read the escalator carefully and have a real estate professional review impact on future home sale.
+      </p>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit (25D)</a></li>
+        <li><a href="https://www.nrel.gov/solar/market-research-analysis/solar-financing.html" target="_blank" rel="noopener">NREL Solar Financing research</a></li>
+        <li><a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL Tracking the Sun — financing mix data</a></li>
+        <li><a href="https://www.solarreviews.com/" target="_blank" rel="noopener">SolarReviews — independent installer reviews and financing analysis</a></li>
+        <li><a href="https://www.consumerreports.org/cro/home-and-garden/solar-power/index.htm" target="_blank" rel="noopener">Consumer Reports — solar financing comparison</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Estimate your system cost</p>
+        <a href="/solar-panel-cost-calculator/" class="btn-primary mt-3 inline-block">Open the solar calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

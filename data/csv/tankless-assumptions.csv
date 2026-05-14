@@ -1,0 +1,25 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+equipment_140k_btu,gas_non_condensing,1000,1300,1600,$,Rinnai V Rheem RTG entry 140k BTU,manufacturer_msrp,2026-05-11
+equipment_180k_btu,gas_non_condensing,1200,1500,1900,$,180k BTU/hr non-condensing,manufacturer_msrp,2026-05-11
+equipment_199k_btu,gas_non_condensing,1400,1750,2200,$,199k BTU/hr non-condensing,manufacturer_msrp,2026-05-11
+equipment_140k_btu,gas_condensing,1500,1900,2400,$,Rinnai RUR Navien NPE-2 Bosch ProTL,manufacturer_msrp,2026-05-11
+equipment_180k_btu,gas_condensing,1800,2200,2800,$,180k BTU/hr condensing,manufacturer_msrp,2026-05-11
+equipment_199k_btu,gas_condensing,2100,2600,3300,$,199k BTU/hr condensing,manufacturer_msrp,2026-05-11
+equipment_18kw,electric_pos,250,350,500,$,18kW point-of-use,manufacturer_msrp,2026-05-11
+equipment_27kw,electric_whole,700,900,1100,$,27kW whole-home (warm-water states),manufacturer_msrp,2026-05-11
+equipment_36kw,electric_whole,900,1200,1500,$,36kW whole-home (cold-water states),manufacturer_msrp,2026-05-11
+install_base,gas_non_condensing,800,1300,2000,$,Install + Cat-III vent + plumbing tie-in,Modernize_2024,2026-05-11
+install_base,gas_condensing,1200,1800,2800,$,PVC venting + condensate drain,Modernize_2024,2026-05-11
+install_base,electric_pos,200,400,700,$,240V circuit nearby,Modernize_2024,2026-05-11
+install_base,electric_whole,1500,2500,4000,$,Multiple 50A circuits often panel upgrade required,Modernize_2024,2026-05-11
+gas_line_adequate,base,0,0,0,$,No work needed,Modernize_2024,2026-05-11
+gas_line_upsize,base,500,900,1500,$,1/2" to 3/4" run,Modernize_2024,2026-05-11
+gas_line_new_run,base,800,1500,2800,$,New run from meter,Modernize_2024,2026-05-11
+panel_upgrade,electric_whole_required,2500,4000,6500,$,200A or 400A service upgrade for 27-36kW electric tankless,NEC_220.83,2026-05-11
+tank_removal,base,150,250,400,$,Old tank disposal,Modernize_2024,2026-05-11
+permit,base,250,450,800,$,Permit + inspection,municipal_avg,2026-05-11
+water_const,gal_per_day,64,64,64,gal/day,Default household hot water use,DOE_Energy_Saver,2026-05-11
+water_const,temp_rise_f,70,70,70,°F,Default ΔT 50°F incoming → 120°F output,DOE_Energy_Saver,2026-05-11
+uef,gas_non_condensing,0.82,0.82,0.82,fraction,Non-condensing UEF,ENERGY_STAR,2026-05-11
+uef,gas_condensing,0.95,0.95,0.95,fraction,Condensing UEF,ENERGY_STAR,2026-05-11
+uef,electric,0.99,0.99,0.99,fraction,Electric resistance UEF,ENERGY_STAR,2026-05-11

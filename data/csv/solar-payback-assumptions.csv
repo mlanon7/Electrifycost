@@ -1,0 +1,12 @@
+key,description,value,units,notes,source_id,last_reviewed
+degradation_pct_annual,Annual panel output degradation,0.5,percent,"Modern modules degrade ~0.5%/yr — Tier-1 panels (LG, REC, Q Cells, Maxeon) warranty 85-92% at year 25",NREL_PVMRP_2023,2026-05-01
+inverter_replacement_year,Year to replace string inverter,12,years,"String inverters typically need replacement at year 10-15; microinverters covered by 25-yr warranty",NREL_2024,2026-05-01
+inverter_replacement_cost_per_kw,Inverter replacement cost,250,usd_per_kw,"Replacement string inverter for 8 kW system ≈ $2000 including labor in year 12",NREL_2024,2026-05-01
+maintenance_annual_per_kw,Annual maintenance,15,usd_per_kw,"Cleaning + monitoring + minor repairs. Most systems are essentially maintenance-free first 10 years",NREL_O_M_2024,2026-05-01
+insurance_annual_per_kw,Insurance addition (HO),8,usd_per_kw,"Some homeowners add a rider for hail damage and theft; many policies cover automatically",III_2024,2026-05-01
+sell_back_rate_pct_of_retail,Net metering credit vs retail,80,percent,"Many states transitioning from 1:1 net metering to 60-90% credit. Some (CA NEM 3.0) much less for new installs",DSIRE_NEM_2024,2026-05-01
+escalation_electricity_annual,Annual electricity price escalation,3.5,percent,"EIA AEO 2024 reference case projects ~3% annual residential electricity rate growth through 2035",EIA_AEO_2024,2026-05-01
+self_consumption_pct_no_battery,Self-consumption rate without battery,35,percent,"Typical home consumes ~35% of solar generation directly; rest exports to grid",NREL_self_consumption_2023,2026-05-01
+self_consumption_pct_with_battery,Self-consumption with battery,75,percent,"Adding a 10 kWh battery raises self-consumption to ~75% — increases ROI in poor-NEM states",NREL_self_consumption_2023,2026-05-01
+typical_system_kw,Typical residential system size,8.0,kw_dc,"US median residential install size 2023 — LBNL Tracking the Sun data",LBNL_TTS_2024,2026-05-01
+typical_cost_per_watt,Median installed cost,3.50,usd_per_watt_dc,"LBNL 2024 median; pre-incentive",LBNL_TTS_2024,2026-05-01

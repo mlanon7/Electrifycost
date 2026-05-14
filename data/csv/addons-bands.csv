@@ -1,0 +1,8 @@
+addon_id,module,low,mid,high,notes
+ductwork_repair_poor,heat_pump,500,1500,2500,Existing ducts in poor condition; partial sealing/repair before HP install
+ductwork_replace_none,heat_pump,3500,6000,9000,No ducts at all; full new ductwork run for ducted scenario
+hpwh_tight_space,hpwh,200,400,700,Closet/utility install needs free-air or ducted intake/exhaust adder
+hpwh_removal_old_unit,hpwh,140,200,260,Removal & disposal of old water heater (anchor 200; +/-30 percent for low/high)
+induction_240v_circuit,induction,400,750,1300,New 240V branch circuit and breaker for an induction range when no electric range existed
+induction_gas_line_cap,induction,150,275,450,Licensed plumber caps and seals existing gas line during gas-to-induction switch
+induction_cookware_starter,induction,75,200,450,Optional starter induction-compatible cookware allowance (range scenarios only)

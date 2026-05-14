@@ -1,0 +1,116 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import GasFurnaceCalculator from '@/components/GasFurnaceCalculator';
+
+const faq = [
+  {
+    q: 'How much does a gas furnace cost installed in 2026?',
+    a: 'A typical 95% AFUE gas furnace installs for $4,500–$8,500 in 2026. Basic 80% AFUE runs $3,500–$6,000 (only allowed in southern US). Premium 97%+ two-stage and modulating units land $6,500–$11,000. State labor cost is the biggest variable — a Massachusetts install on the same equipment runs roughly 30% above the same project in Tennessee.',
+  },
+  {
+    q: 'Why is 95% AFUE now the minimum in northern US?',
+    a: 'The U.S. Department of Energy finalized a rule in 2023 requiring all new residential gas furnaces sold or installed in northern states to meet 95% AFUE or higher, effective May 2028. Several manufacturers stopped 80% AFUE production for non-mobile-home installs ahead of the deadline. Southern states still allow 80% AFUE replacements where ducted heating load is small. Source: https://www.energy.gov/eere/buildings/articles/biden-harris-administration-finalizes-cost-saving-efficiency-standards-gas',
+  },
+  {
+    q: 'Is there a federal tax credit for a new gas furnace in 2026?',
+    a: 'No. The Energy Efficient Home Improvement Credit (25C) once covered 95%+ AFUE gas furnaces at 30% of cost up to $600 in the heating-equipment sub-cap, but OBBBA (signed July 4, 2025) terminated 25C for property placed in service after December 31, 2025. The Inflation Reduction Act HEEHRA program does not cover gas equipment — it is electric-only by statute. State utility programs (Nicor Gas, Peoples Gas, Pacific Gas & Electric, etc.) may still offer $200–$600 rebates on 95%+ AFUE installs; check your utility’s residential rebate page.',
+  },
+  {
+    q: 'Furnace vs heat pump in 2026 — which makes sense?',
+    a: 'A modern cold-climate heat pump cuts heating energy use about 60% versus an 80% AFUE gas furnace and 50% versus a 95% AFUE furnace. The crossover where heat pump wins depends on your electricity rate vs gas rate (cents per kWh × 29.3 vs $/therm). In states with cheap electricity (WA, OR, ID, KY) and average gas rates, heat pump is a clear winner. In high-electricity / low-gas states (MA, CT, CA), the operating-cost margin narrows but doesn’t disappear because heat pumps also replace your AC. Plus state heat-pump rebates ($1,000–$10,000) currently exist where gas-furnace rebates have largely shrunk.',
+  },
+  {
+    q: 'How long does a gas furnace last?',
+    a: 'Industry data: 15–20 year average lifespan for residential gas furnaces, with 25+ years possible if regularly maintained. Heat exchangers usually fail first; once cracked, the unit must be replaced (CO leak risk). Source: ASHRAE 2019 Handbook of HVAC Applications, Table 4 — Service Life of Equipment.',
+  },
+  {
+    q: 'Single-stage, two-stage, or modulating?',
+    a: 'Single-stage furnaces are on/off — cheapest, fine in mild climates. Two-stage operates at low or high fire, quieter and more even temperature, $800–$1,500 premium. Modulating furnaces continuously match output (often 5:1 turndown) — best comfort, quietest, highest cost premium ($1,500–$3,000). Modulating + ECM blower also runs cooler-air longer for better dehumidification on the AC side if shared.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Gas Furnace Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for gas furnace replacement by AFUE tier, home size, install difficulty, and state. Compares head-to-head with heat-pump replacement.',
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Gas Furnace Replacement Cost Calculator 2026: AFUE, Size, State"
+  description="Installed-cost calculator for gas furnace replacement by AFUE tier, home size, and state. Operating savings + head-to-head heat-pump comparison."
+  active="/gas-furnace-replacement-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Gas furnace replacement cost calculator', href: '/gas-furnace-replacement-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Gas furnace</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Gas Furnace Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for residential gas furnace replacement by AFUE efficiency tier, home size, and state. Compares head-to-head with heat-pump replacement.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a typical 95% AFUE gas furnace installs for $4,500–$8,500 in 2026. Basic 80% AFUE (south only) is $3,500–$6,000. Premium two-stage 97% lands $6,500–$11,000. The federal 25C credit expired December 31 2025; some utilities still offer $200–$600 rebates on 95%+ installs.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/gas-furnace-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/gas-furnace-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/gas-furnace-hero-photo.png" alt="High-efficiency gas furnace installed in a residential basement"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><GasFurnaceCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to gas furnace replacement?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A gas furnace burns natural gas (or propane) to heat air, which is then distributed through your ductwork. Efficiency is rated in <strong>AFUE</strong> (Annual Fuel Utilization Efficiency) — the percentage of fuel that becomes useful heat. An 80% AFUE furnace wastes 20% up the flue; a 95% AFUE condensing furnace recovers most of that heat from the exhaust. Modern furnaces last 15–20 years; the heat exchanger is the failure point. As of 2024, the DOE requires 95%+ AFUE in northern US states for new installs.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/gas-furnaces/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">10-min read · AFUE explained · condensing vs non-condensing · DOE 2024 rule · heat-pump comparison</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/boiler-replacement-cost-calculator/">Boiler replacement calculator →</a></li>
+      <li><a href="/hvac-repair-vs-replace/">HVAC repair vs replace decision →</a></li>
+      <li><a href="/ac-replacement-cost-calculator/">AC replacement calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,197 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Electrical Panel Upgrades: The Complete Guide',
+  description: 'How residential electrical panels work, the difference between a panel replacement and a service upgrade, recalled brands to know about, NEC 220.83 load calculations, load management as an alternative to upgrading, lifespan, maintenance, and cost.',
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+};
+---
+<Layout
+  title="Electrical Panel Upgrades Explained: When You Need One, Cost, Alternatives | ElectrifyCost"
+  description="Plain-English guide to residential service panels — service-size definitions, replacement vs upgrade vs subpanel, Federal Pacific / Zinsco recalls, NEC 220.83 load calc, smart load management alternatives, lifespan, and installed cost."
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Electrical panels', href: '/guides/electrical-panels/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Guide</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+      Electrical Panel Upgrades: The Complete Guide
+    </h1>
+    <p class="mt-3 max-w-prose text-base text-ink-700">
+      The electrical panel is the quietest, most expensive box in your home you almost never think about &mdash; right up until you want to add a heat pump, an EV charger, or both. This explainer covers what's in there, when you genuinely need an upgrade, when you don't, and what alternatives the National Electrical Code now recognizes. The <a href="/electrical-panel-upgrade-cost-calculator/" class="text-brand-700 underline-offset-2 hover:underline">panel upgrade cost calculator</a> handles the dollars.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs text-ink-600">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#types" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">2. Types of work</a>
+      <a href="#need" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">3. Do you need one?</a>
+      <a href="#alt" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">4. Alternatives</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">5. Cost</a>
+      <a href="#service" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">6. Service &amp; life</a>
+      <a href="#tips" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">7. Tips &amp; red flags</a>
+      <a href="#calc" class="rounded-full border border-brand-300 bg-brand-50 px-3 py-1 text-brand-700 no-underline hover:bg-brand-100">Calculator →</a>
+    </div>
+  </section>
+
+  <section id="what" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">1. What's actually in the box</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <strong>electrical panel</strong> (also called the service panel, breaker box, main load center, distribution panel, consumer unit) is where the utility's incoming service conductors terminate and where every branch circuit in your home gets its own overcurrent-protection device &mdash; a breaker. Inside the panel, two energized "hot" bus bars run vertically, plus a grounded neutral bar and a separate grounding bar. Single-pole breakers snap onto one bus; double-pole breakers (for 240V loads like ranges, dryers, water heaters, AC condensers, EV chargers) span both buses simultaneously.
+    </p>
+    <figure class="mt-4 rounded-lg border border-ink-200 bg-white p-4">
+      <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" class="w-full" aria-label="Diagram of an electrical service panel showing main breaker, two bus bars, single-pole branch breakers, double-pole 240V breakers, neutral and ground bars">
+        <rect x="0" y="0" width="600" height="280" fill="#f6f9f7" rx="8"/>
+        <!-- Panel enclosure -->
+        <rect x="180" y="20" width="240" height="240" fill="#fff" stroke="#287646" stroke-width="2" rx="6"/>
+        <!-- Main breaker -->
+        <rect x="240" y="35" width="120" height="30" fill="#fee" stroke="#b91c1c" stroke-width="1.5" rx="3"/>
+        <text x="300" y="55" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#7f1d1d" font-weight="700">MAIN 200A</text>
+        <!-- Two bus bars -->
+        <rect x="245" y="80" width="14" height="160" fill="#287646"/>
+        <rect x="341" y="80" width="14" height="160" fill="#287646"/>
+        <text x="252" y="78" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5e6877">Bus L1</text>
+        <text x="348" y="78" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5e6877">Bus L2</text>
+        <!-- Single-pole breakers (left column) -->
+        <rect x="200" y="85" width="42" height="18" fill="#e6f0eb" stroke="#287646" stroke-width="1"/>
+        <text x="221" y="98" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1b3a28">20A</text>
+        <rect x="200" y="108" width="42" height="18" fill="#e6f0eb" stroke="#287646" stroke-width="1"/>
+        <text x="221" y="121" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1b3a28">15A</text>
+        <!-- Double-pole 240V breakers (span both buses) -->
+        <rect x="245" y="135" width="110" height="32" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+        <text x="300" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c2d12" font-weight="600">2-pole 50A (range)</text>
+        <rect x="245" y="172" width="110" height="32" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+        <text x="300" y="192" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#7c2d12" font-weight="600">2-pole 60A (EVSE)</text>
+        <!-- Right column singles -->
+        <rect x="358" y="85" width="42" height="18" fill="#e6f0eb" stroke="#287646" stroke-width="1"/>
+        <text x="379" y="98" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1b3a28">20A</text>
+        <rect x="358" y="108" width="42" height="18" fill="#e6f0eb" stroke="#287646" stroke-width="1"/>
+        <text x="379" y="121" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1b3a28">20A</text>
+        <!-- Neutral / ground bars -->
+        <rect x="200" y="215" width="200" height="14" fill="#94a3b8"/>
+        <text x="300" y="226" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0f172a">Neutral bar</text>
+        <rect x="200" y="235" width="200" height="14" fill="#9ca3af"/>
+        <text x="300" y="246" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0f172a">Ground bar</text>
+        <!-- Service entrance lines -->
+        <line x1="20" y1="50" x2="240" y2="50" stroke="#287646" stroke-width="2"/>
+        <line x1="20" y1="50" x2="20" y2="20" stroke="#287646" stroke-width="2"/>
+        <text x="30" y="40" font-family="sans-serif" font-size="11" fill="#5e6877">Service drop from utility</text>
+        <text x="30" y="120" font-family="sans-serif" font-size="11" fill="#5e6877" font-weight="600">Branch circuits</text>
+        <text x="30" y="140" font-family="sans-serif" font-size="10" fill="#5e6877">to outlets, lights, appliances</text>
+        <line x1="120" y1="135" x2="180" y2="150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="440" y="120" font-family="sans-serif" font-size="11" fill="#5e6877" font-weight="600">Grounding</text>
+        <text x="440" y="140" font-family="sans-serif" font-size="10" fill="#5e6877">to rod or water pipe</text>
+        <line x1="500" y1="140" x2="420" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 2"/>
+      </svg>
+    </figure>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <strong>service size</strong> &mdash; 60A, 100A, 125A, 150A, 200A, or 320/400A &mdash; is the amperage rating of the main disconnect breaker at the top of the panel. That's the maximum the entire home can draw simultaneously. It is <em>not</em> "how many breaker slots are left." A panel with 20 empty slots and a 100A main is still a 100A panel. Conversely, a panel with zero empty slots and a 200A main has plenty of capacity &mdash; you just need a subpanel to add new circuits.
+    </p>
+  </section>
+
+  <section id="types" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">2. Three different "panel upgrade" jobs</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Panel replacement</h3>
+        <p class="mt-1 text-sm text-ink-700">Swap the box and breakers but keep the same service amperage. Done for a recalled brand (Federal Pacific, Zinsco), a panel with bus-bar corrosion, or to fit modern AFCI/GFCI breakers. $1,500&ndash;$3,000 typical.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Service upgrade</h3>
+        <p class="mt-1 text-sm text-ink-700">Increase the actual amperage &mdash; usually 100&rarr;200A or 200&rarr;320/400A. Involves the utility because meter base, service conductors, and grounding system also have to be upsized. Power off 4&ndash;8 hours on install day. $2,500&ndash;$6,000.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Subpanel add</h3>
+        <p class="mt-1 text-sm text-ink-700">Add a smaller panel fed from the main &mdash; great when the issue is "out of breaker slots" rather than "out of amps." Doesn't increase the home's total capacity. $500&ndash;$2,000.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="need" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">3. Do you actually need an upgrade?</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The honest answer for most homes electrifying piecemeal: <strong>maybe, but probably less often than contractors quote.</strong> The authoritative check is an <a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70" target="_blank" rel="noopener noreferrer">NEC 220.83</a> load calculation. The electrician adds up the demand of all existing major loads (heating, cooling, range, dryer, water heater, dishwasher, disposal, microwave, hot tub) using diversified demand factors, then adds the new load you're proposing. If the total stays under the service rating with margin, you're fine.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Practically:
+    </p>
+    <ul class="mt-2 space-y-1 text-ink-700 text-sm">
+      <li>&bull; <strong>60A service:</strong> Almost always needs an upgrade for any modern electrification. Heat pump + EV is impossible at 60A.</li>
+      <li>&bull; <strong>100A service:</strong> Often workable for <em>one</em> major add (just a heat pump, or just a Level 2 EVSE). Two majors usually requires either an upgrade or a load-management device.</li>
+      <li>&bull; <strong>125A or 150A service:</strong> Comfortable for heat pump + EVSE in most homes. Some headroom for HPWH or induction too.</li>
+      <li>&bull; <strong>200A service:</strong> Adequate for whole-home electrification in most situations.</li>
+      <li>&bull; <strong>320/400A service:</strong> Future-proof for large homes, accessory dwelling units, or pool/spa loads.</li>
+    </ul>
+  </section>
+
+  <section id="alt" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">4. The load-management alternative</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The most under-marketed solution in residential electrical work: <a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70" target="_blank" rel="noopener noreferrer">NEC 750</a> recognized <strong>energy-management systems</strong> as a code-compliant alternative to a service upgrade. These devices monitor your home's total current draw in real time and shed a designated load (almost always the EV charger) when other large loads (electric range, dryer, oven) kick on. The car charges slower for those few minutes, then resumes at full power.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Products to know: <a href="https://www.span.io/" target="_blank" rel="noopener noreferrer">Span</a> and <a href="https://www.lumin.com/" target="_blank" rel="noopener noreferrer">Lumin</a> for whole-panel circuit-by-circuit control ($3,500&ndash;$7,000 installed); NeoCharge, DCC-9/12, and Emporia EV-add-on for charger-specific shedding ($300&ndash;$1,500); smart panels from Schneider Square D and Leviton in the same category as Span. On a 100A panel, paying $500&ndash;$1,500 for one of these is usually $3,000&ndash;$5,000 cheaper than a full service upgrade.
+    </p>
+  </section>
+
+  <section id="cost" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">5. Cost expectations</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li><strong>100A&rarr;200A service upgrade:</strong> $2,500&ndash;$5,000 typical; $4,000&ndash;$7,000 if the meter has to move or grounding has to be redone.</li>
+      <li><strong>150A&rarr;200A service upgrade:</strong> $1,800&ndash;$3,500.</li>
+      <li><strong>200A&rarr;320/400A service upgrade:</strong> $4,000&ndash;$8,000 (utility coordination and larger conductors are the cost drivers).</li>
+      <li><strong>Same-amperage panel replacement:</strong> $1,500&ndash;$3,000.</li>
+      <li><strong>Subpanel add:</strong> $500&ndash;$2,000 depending on distance from main and conductor size.</li>
+      <li><strong>Smart load-management device:</strong> $500&ndash;$1,500 (NeoCharge / DCC), or $3,500&ndash;$7,000 (Span / Lumin whole-panel).</li>
+      <li><strong>Overhead-to-underground service:</strong> $1,500&ndash;$5,000 if a trench is required.</li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Use the <a href="/electrical-panel-upgrade-cost-calculator/" class="text-brand-700">panel upgrade calculator</a> for a state-specific band.
+    </p>
+  </section>
+
+  <section id="service" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">6. Service life and maintenance</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The panel enclosure itself is essentially indefinite &mdash; 50+ years is normal. The <strong>breakers</strong> are the wearing parts. Mechanical breakers wear out after thousands of operations, and after 30&ndash;40 years they can fail to trip on overload, which is the dangerous failure mode &mdash; you don't get a warning, you get a fire.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700"><strong>Routine maintenance:</strong></p>
+    <ul class="mt-2 space-y-1 text-ink-700 text-sm">
+      <li>&bull; Keep 3 feet of clear floor space in front of the panel (NEC 110.26). Don't store anything inside that envelope.</li>
+      <li>&bull; Every 2&ndash;3 years, cycle each breaker fully off and back on to keep the mechanism free.</li>
+      <li>&bull; If breakers feel warm to the touch, you smell burning, or you see discoloration on bus bars, call a licensed electrician for an infrared scan. Loose connections are the #1 source of panel fires.</li>
+      <li>&bull; Don't work inside an energized panel yourself. The bus bars stay live even with the main breaker off (only the utility can deenergize a service entrance).</li>
+    </ul>
+  </section>
+
+  <section id="tips" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">7. Tips, tricks, and red flags</h2>
+    <ul class="mt-3 space-y-3 text-ink-700">
+      <li><strong>Recalled panel brands.</strong> If your home has a <strong>Federal Pacific Stab-Lok</strong> (manufactured 1950s&ndash;1980s) or <strong>Zinsco/Sylvania</strong> panel, a replacement is overdue regardless of electrification plans. Both brands have documented histories of failing to trip; some homeowners' insurance carriers refuse to write new policies on homes that still have them. Other older brands &mdash; Pushmatic, Bulldog, Murray, Challenger Type C &mdash; don't have the same safety record but often can't accept modern AFCI/GFCI breakers.</li>
+      <li><strong>Permits and inspection.</strong> An unpermitted panel upgrade is the single most common red flag during a home sale. The permit costs $150&ndash;$650 and includes a final inspection by a city electrical inspector. Skipping it to save the fee will cost you 10&times; the savings when the buyer's inspector finds it during escrow.</li>
+      <li><strong>Get the bid in writing with line items.</strong> A reputable panel quote will itemize: panel hardware + breakers + service conductors + grounding upgrade + meter-base replacement (if needed) + utility coordination fee + permit + drywall repair. Beware of single-line "$5,000 panel upgrade" quotes &mdash; you have no leverage to compare.</li>
+      <li><strong>Ask about copper vs aluminum service conductors.</strong> Aluminum is cheaper and standard for service-entrance conductors above 60A; it's perfectly safe when properly terminated with anti-oxidant compound. Copper is more expensive and uses smaller conductors for the same ampacity. Both are code-compliant; just know which your quote includes.</li>
+      <li><strong>Smart panels open new doors.</strong> Span and Lumin panels turn every breaker into a software-controllable circuit. That enables backup-battery integration (only essential circuits stay on during outages), per-circuit energy monitoring, time-of-use load shifting, and software-defined load management without the per-device costs of separate shedding tools. Premium pricing, but a genuine generational upgrade.</li>
+    </ul>
+  </section>
+
+  <section id="calc" class="container-tight py-10 border-t border-ink-100">
+    <h2 class="text-2xl font-semibold text-ink-900">Estimate your installed cost</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <a href="/electrical-panel-upgrade-cost-calculator/" class="text-brand-700 font-medium underline-offset-2 hover:underline">electrical panel upgrade calculator</a> takes project type (replacement vs service upgrade vs subpanel vs load management), current panel size, state, and timing &mdash; and returns a band calibrated to your state's electrician-labor multiplier and typical permit fees.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/electrical-panel-upgrade-cost-calculator/" class="btn-primary">Open the calculator →</a>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

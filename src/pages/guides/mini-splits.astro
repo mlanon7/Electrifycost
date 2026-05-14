@@ -1,0 +1,147 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Ductless Mini-Splits: Brands, Sizing, Cold-Climate Reality',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11', dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Mini-Split Guide 2026: Mitsubishi, Daikin, Fujitsu, LG"
+  description="Long-form guide to ductless mini-split heat pumps in 2026: brands, sizing, hyper-heat cold-climate reality, install red flags, and when ducted central is the better answer."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Mini-splits', href: '/guides/mini-splits/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Ductless mini-splits</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Mini-Splits, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      What a ductless system is, how single-zone vs multi-zone differs, the four major brands (Mitsubishi, Daikin, Fujitsu, LG) ranked by cold-climate performance, sizing without overpaying, and when ducted central is the better choice. 10-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#what">1. What it is</a>
+      <a href="#brands">2. Brand ranking</a>
+      <a href="#sizing">3. Sizing</a>
+      <a href="#cold">4. Cold-climate</a>
+      <a href="#vs-ducted">5. vs Ducted</a>
+      <a href="#install">6. Install red flags</a>
+      <a href="#cost">7. Real cost</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="what">
+      <h2>1. What a ductless mini-split actually is</h2>
+      <p>
+        A mini-split is a heat pump split into two physical pieces: one outdoor compressor/condenser unit and 1–5 indoor &quot;head&quot; units (wall-mounted cassettes, ceiling-recessed, or floor-mounted). They&rsquo;re connected by small refrigerant lines (3/8&quot; liquid + 5/8&quot; suction typical) and a thin 14/4 control cable run through a 3-inch wall penetration. No ductwork.
+      </p>
+      <p>
+        Each indoor head is independently controlled — you set bedrooms to 65°F at night while keeping the living room at 72°F during a movie. That zone-level control is the central feature, and the reason many older homes prefer mini-splits over a ducted retrofit.
+      </p>
+    </section>
+
+    <section id="brands">
+      <h2>2. Brand ranking for 2026</h2>
+      <ul>
+        <li><strong>Mitsubishi Electric (Hyper-Heat H2i).</strong> The premium choice. Best cold-climate retention (rated -13°F, 100% capacity at 5°F on M-Series Hyper-Heat). Strongest dealer network in the U.S. Highest residual value at resale. Industry-leading 12-year compressor warranty.</li>
+        <li><strong>Daikin (Aurora).</strong> Tied with Mitsubishi on cold-climate; slightly lower price. Excellent build quality, expanding dealer network. Goodman/Amana parent acquisition is bringing Daikin technology into more channels.</li>
+        <li><strong>Fujitsu (Halcyon XLTH).</strong> Strong value pick at ~10–15% lower price than Mitsubishi/Daikin for similar specs. Cold-climate rated to -15°F. Slightly smaller dealer network outside the Northeast.</li>
+        <li><strong>LG (Multi V/Multi F).</strong> Solid mid-tier. Good standard models; cold-climate is competent but not class-leading. Strong app ecosystem (LG ThinQ).</li>
+        <li><strong>Pioneer / Senville / MrCool (DIY brands).</strong> Budget option, often sold pre-charged for DIY install. Trade-offs: shorter warranties (1–5 yr vs 10–12 yr), weaker dealer support for service. Acceptable for non-critical zones (garage, sunroom); risky for whole-home replacement.</li>
+      </ul>
+    </section>
+
+    <section id="sizing">
+      <h2>3. Sizing — Manual J per zone</h2>
+      <p>
+        ACCA Manual J load calculation, per zone, is non-negotiable. The contractor shortcut of "1 ton per 400–600 sqft" over-sizes mini-splits by 30–50%. Oversized mini-splits short-cycle (compressor on/off rapidly), kill the high SEER2 efficiency advantage, and fail to dehumidify properly.
+      </p>
+      <p>
+        Reasonable per-zone BTU sizing for an insulated home (R-49 attic / R-15 walls / good windows):
+      </p>
+      <ul>
+        <li>Bedroom (12&times;12 ft): 6,000–9,000 BTU/hr indoor head</li>
+        <li>Living room (15&times;20 ft): 12,000–15,000 BTU/hr</li>
+        <li>Kitchen + dining open plan (25&times;15 ft): 15,000–18,000 BTU/hr</li>
+        <li>Finished basement (30&times;20 ft): 18,000–24,000 BTU/hr</li>
+      </ul>
+      <p>
+        For multi-zone systems, total indoor capacity should be 90–110% of outdoor capacity (don&rsquo;t oversize outdoor; don&rsquo;t starve zones). Insist on a written Manual J — without it the contractor is guessing.
+      </p>
+    </section>
+
+    <section id="cold">
+      <h2>4. Cold-climate reality (hyper-heat)</h2>
+      <p>
+        Standard mini-splits drop capacity hard below 17°F outdoor. Cold-climate (hyper-heat) models maintain 80–100% rated capacity at 5°F and 70%+ at -13°F. The difference is a larger compressor, vapor injection in the refrigerant cycle, and aggressive base-pan heating to prevent ice buildup.
+      </p>
+      <p>
+        NEEP&rsquo;s Cold Climate Heat Pump Specification list (https://neep.org/heating-electrification/ccashp-specification-product-list) is the authoritative reference for which models qualify. State and utility rebates often require NEEP listing for eligibility.
+      </p>
+      <p>
+        For climate zones 5+, choose hyper-heat. For zones 4 and warmer, standard mini-splits are usually adequate.
+      </p>
+    </section>
+
+    <section id="vs-ducted">
+      <h2>5. Mini-split vs ducted central — which to choose</h2>
+      <p>
+        <strong>Choose mini-split when:</strong> you have no existing ducts (older homes, finished basements, additions), want per-room temperature control, have a 1–2 story home with reasonable room layouts, value silent operation in bedrooms, or have an open floor plan where 1–2 heads can cover most of the home.
+      </p>
+      <p>
+        <strong>Choose ducted central when:</strong> you already have functional ductwork, want centralized filtration (HEPA, UV, etc.), prefer hidden equipment (no wall units), have a multi-story home where ducts hide easily in floor joists, or want to retain the same thermostat the rest of the family already knows how to operate.
+      </p>
+      <p>
+        Cost-wise the two are comparable for whole-home in 2026 ($14,000–$22,000 range), but ducted assumes existing good ducts. If you need to add or replace ductwork ($2,500–$10,000), mini-split is often cheaper net.
+      </p>
+    </section>
+
+    <section id="install">
+      <h2>6. Install red flags</h2>
+      <ul>
+        <li><strong>No vacuum pump on commissioning day.</strong> Refrigerant lines must be evacuated to 500 microns before charging. Skip this step, you contaminate the new compressor.</li>
+        <li><strong>Quick-connect (flared) fittings without torque wrench.</strong> Mini-splits use 45° flares that must be torqued to manufacturer spec (typically 26–47 ft-lb depending on line size). Hand-tight is a slow leak.</li>
+        <li><strong>Line set too long.</strong> Each manufacturer specifies max line length (typically 50–100 ft) and max vertical separation. Exceeding without additional traps/oil reservoirs voids warranty.</li>
+        <li><strong>Indoor head over a window.</strong> The condensate drain runs by gravity. Mounting where gravity isn&rsquo;t toward an exterior wall requires a condensate pump (~$200) — often skipped, then floods the wall in a year.</li>
+        <li><strong>No vibration isolation for outdoor unit.</strong> Cheap installs bolt the outdoor unit directly to siding. Vibration eventually cracks the bracket and damages the wall.</li>
+      </ul>
+    </section>
+
+    <section id="cost">
+      <h2>7. Real-world 2026 cost ranges</h2>
+      <ul>
+        <li>Single-zone Mitsubishi Hyper-Heat 12,000 BTU: ~$5,500 installed.</li>
+        <li>2-zone Mitsubishi Hyper-Heat (12K + 9K head): ~$10,500 installed.</li>
+        <li>3-zone Daikin Aurora (12K + 9K + 9K): ~$13,500 installed.</li>
+        <li>4-zone Fujitsu Halcyon XLTH whole-home: ~$16,500 installed.</li>
+        <li>Single-zone Pioneer 12K DIY: $1,500 equipment + $800 contractor commissioning if DIY-installed.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://neep.org/heating-electrification/ccashp-specification-product-list" target="_blank" rel="noopener">NEEP Cold Climate Heat Pump Specification</a></li>
+        <li><a href="https://ashp.neep.org/" target="_blank" rel="noopener">NEEP Air-Source Heat Pump database</a></li>
+        <li><a href="https://www.mitsubishicomfort.com/" target="_blank" rel="noopener">Mitsubishi Electric Trane HVAC (M-Series Hyper-Heat)</a></li>
+        <li><a href="https://www.daikinac.com/" target="_blank" rel="noopener">Daikin Aurora cold-climate documentation</a></li>
+        <li><a href="https://www.fujitsugeneral.com/us/" target="_blank" rel="noopener">Fujitsu General (Halcyon XLTH)</a></li>
+        <li><a href="https://www.energystar.gov/products/heating_cooling/heat_pumps_ductless_mini_split" target="_blank" rel="noopener">ENERGY STAR ductless mini-split criteria</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Estimate installed cost by zone count, brand, cold-climate spec, and state.</p>
+        <a href="/mini-split-heat-pump-cost-calculator/" class="btn-primary mt-3 inline-block">Open the mini-split calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

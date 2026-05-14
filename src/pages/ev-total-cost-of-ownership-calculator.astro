@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import EvTcoCalculator from '@/components/EvTcoCalculator';
+
+const faq = [
+  {
+    q: 'Is an EV cheaper than a gas car over 8 years?',
+    a: 'For most U.S. drivers, yes — by roughly $2,000–$8,000 over 8 years at 12,000 mi/yr, depending on state. EVs save $0.05-$0.08/mi in fuel and $0.05-$0.06/mi in maintenance. The federal 30D/25E credits expired for vehicles acquired after 2025-09-30, so 2026-onward purchases rely on state credits (CO $5,000, CT $4,250, NJ $4,000) to close the purchase-price gap. The math gets harder for low-mileage drivers (<7,000 mi/yr) and states with cheap gas + expensive electricity.',
+  },
+  {
+    q: 'Is there a federal EV tax credit in 2026?',
+    a: 'No. The Clean Vehicle Credits (30D for new, 25E for used) were terminated by OBBBA for vehicles acquired after 2025-09-30. Vehicles with an acquisition date on or before 2025-09-30 may still qualify on the buyer\'s tax return. New: up to $7,500 with income + MSRP caps. Used: 30% of price up to $4,000. Source: https://www.irs.gov/clean-vehicle-tax-credits.',
+  },
+  {
+    q: 'How much does it cost to charge an EV at home?',
+    a: 'About $0.04-$0.06 per mile in most states. Math: 0.30 kWh/mi × $0.16/kWh = $0.048/mi. Many utilities offer EV-friendly time-of-use plans with overnight rates of $0.08-$0.12/kWh, cutting cost to $0.024-$0.036/mi. Compare to a 32 MPG gas car at $3.50/gal: $0.109/mi.',
+  },
+  {
+    q: 'Do EVs really need less maintenance?',
+    a: 'Yes. No oil changes, no spark plugs, no timing belts, no exhaust, no transmission fluid (single-speed gearbox), regenerative braking dramatically extends brake-pad life. Consumer Reports 2024 data: EV maintenance averages $0.045/mile vs $0.105/mile for ICE — a $720/year difference at 12,000 miles. The exception is tires (heavier vehicles, instant torque) which wear ~15% faster.',
+  },
+  {
+    q: 'What about depreciation?',
+    a: 'EVs historically depreciated faster than ICE due to range anxiety, battery uncertainty, and rapid tech turnover. The 2023-2025 used market normalized things: post-2023 model years with longer warranties (battery 8 yr / 100K mi) and proven service histories hold value better. Tesla Model 3 and Model Y have year-5 residuals around 55-62% of MSRP; F-150 Lightning closer to 50% (more uncertainty); luxury EVs (Lucid, Mercedes EQS) underperformed at 40-50%.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'EV Total Cost of Ownership Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: '5/8/10-year EV vs gas total-cost-of-ownership comparison by category. 30D/25E credits expired 2025-09-30; state credits, fuel, maintenance, insurance, depreciation modeled.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="EV vs Gas Total Cost of Ownership Calculator 2026"
+  description="EV vs gas 5/8/10-year total ownership cost by category. 30D/25E expired 2025-09-30. State credits, fuel, maintenance, depreciation. State-aware electricity."
+  active="/ev-total-cost-of-ownership-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/ev-tco-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'EV TCO calculator', href: '/ev-total-cost-of-ownership-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">EV vs gas</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">EV Total Cost of Ownership Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Compare a new or used EV against an equivalent gas vehicle over 5, 8, or 10 years. Includes purchase, federal 30D/25E credits (for vehicles acquired on or before 2025-09-30), state EV credit, electricity (state-aware), gas, maintenance, insurance, and depreciation.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> for a typical 12,000-mi/yr driver of a $42,000 EV vs $32,000 gas sedan, EVs save $2,000–$8,000 over 8 years on fuel + maintenance alone. <strong>Federal 30D/25E credits expired for vehicles acquired after 2025-09-30 (OBBBA).</strong> State credits (CO $5,000, CT $4,250, NJ $4,000) and historical 30D for pre-cutoff acquisitions can close more of the gap.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/ev-tco-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/ev-tco-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/ev-tco-hero-photo.png"
+      alt="EV plugged in at home compared with a gas car"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><EvTcoCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to EV total-cost-of-ownership math?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Total cost of ownership (TCO) is the right way to compare EV and gas vehicles because the sticker prices tell only part of the story. EVs cost more up front but typically save $0.05-$0.08 per mile in fuel and another $0.05-$0.06 per mile in maintenance. Over 8-10 years that&rsquo;s $10,000–$20,000 in operating cost differential. The federal 30D/25E credits expired for vehicles acquired after 2025-09-30; state EV credits and operating savings carry the math now. Break-even depends on annual miles, electricity rate, gas price, and state credit availability.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/ev-tco/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">11-min read · 30D mechanics · charging cost · maintenance · depreciation · home charger install · road-trip economics</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/ev-charger-installation-cost-calculator/">EV charger installation calculator →</a></li>
+      <li><a href="/solar-panel-cost-calculator/">Solar panel cost calculator →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery cost calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

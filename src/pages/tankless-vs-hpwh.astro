@@ -1,0 +1,116 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const faq = [
+  { q: 'Which is cheaper to run, HPWH or gas tankless?',
+    a: 'HPWH wins by a factor of ~2.5x on operating cost. A 3-person household uses ~64 gallons of hot water per day; that requires ~0.37 therms (or ~11 kWh) of delivered energy. HPWH at UEF 3.5 uses ~3 kWh/day at ~$0.50; gas tankless at UEF 0.95 uses ~0.39 therms at ~$0.59/day. HPWH saves $180–$240/yr.' },
+  { q: 'Which is cheaper installed?',
+    a: 'HPWH 240V hybrid: $2,500–$5,500. HPWH 120V plug-in: $1,800–$3,500 (no electrical work). Gas condensing tankless: $4,500–$8,500 (includes vent + gas line). HPWH installed is consistently cheaper, especially with the $1,750 HEEHRA rebate in income-qualified households where state programs are open.' },
+  { q: 'Which lasts longer?',
+    a: 'Gas condensing tankless: 20+ years with annual descaling. HPWH: 12-15 years. Gas tank: 8-12 years. Tankless wins on equipment lifespan but only with annual maintenance discipline (descaling, anode rod for hybrid models).' },
+  { q: 'Which needs more install space?',
+    a: 'Gas tankless: wall-mount, vent path required, gas line near unit. ~3 sqft. HPWH: ~700 cu-ft free air (basement, garage, utility room), floor space for 50-80 gal tank. Tankless wins on space; HPWH wins where you have a basement or garage.' },
+  { q: 'Federal credit for either in 2026?',
+    a: 'No. 25C covered both at 30% up to $600 (tankless) or $2,000 (HPWH) through 2025-12-31. OBBBA terminated 25C. HPWH still qualifies for DOE HEEHRA up to $1,750 in income-qualified households where state programs are open.' },
+];
+---
+<Layout
+  title="Tankless vs HPWH Water Heater: Cost, Lifespan, Install"
+  description="Gas condensing tankless vs heat pump water heater (HPWH): installed cost, operating cost, lifespan, rebate eligibility, install requirements."
+  active="/tankless-vs-hpwh/"
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Tankless vs HPWH', href: '/tankless-vs-hpwh/' }]}
+  schemaJsonLd={[
+    { '@context': 'https://schema.org', '@type': 'Article', headline: 'Gas Tankless vs Heat Pump Water Heater (2026)',
+      author: { '@type': 'Organization', name: 'ElectrifyCost' }, datePublished: '2026-05-12', dateModified: '2026-05-12' },
+    { '@context': 'https://schema.org', '@type': 'FAQPage',
+      mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Comparison</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Gas Tankless vs Heat Pump Water Heater</h1>
+    <p class="mt-3 text-base text-ink-700">Both are upgrades over a standard gas or electric tank. Which one fits your house and pays back fastest?</p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>Short answer</h2>
+      <p>HPWH wins for most households with space for a tank in a basement, garage, or utility room. UEF 3.0-4.0 vs 0.95 gives 60-70% lower operating cost, qualifies for HEEHRA rebate up to $1,750 in open states, and installs cheaper. Tankless wins for compact spaces, unlimited hot water (no recovery time), and where you already have a working gas line and adequate flow capacity.</p>
+    </section>
+
+    <section>
+      <h2>Side-by-side comparison</h2>
+      <div class="card overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-ink-50">
+            <tr><th class="px-3 py-2 text-left">Dimension</th><th class="px-3 py-2 text-left">HPWH (240V hybrid)</th><th class="px-3 py-2 text-left">Gas Condensing Tankless</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Installed cost</td><td class="px-3 py-2 tabular-nums">$2,500–$5,500</td><td class="px-3 py-2 tabular-nums">$4,500–$8,500</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Net after HEEHRA</td><td class="px-3 py-2 tabular-nums">$750–$3,750 (income-qualified)</td><td class="px-3 py-2 tabular-nums">n/a (not covered)</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">UEF</td><td class="px-3 py-2 tabular-nums">3.0-4.0</td><td class="px-3 py-2 tabular-nums">0.95</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Annual op cost (3-person)</td><td class="px-3 py-2 tabular-nums">$180–$240/yr</td><td class="px-3 py-2 tabular-nums">$480–$540/yr</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Lifespan</td><td class="px-3 py-2 tabular-nums">12-15 yr</td><td class="px-3 py-2 tabular-nums">20+ yr (with descaling)</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Footprint</td><td class="px-3 py-2">~700 cu-ft free air, tank floor space</td><td class="px-3 py-2">Wall-mount, 3 sqft, vent + gas line</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Peak GPM</td><td class="px-3 py-2">Tank buffer — no flow limit</td><td class="px-3 py-2">5-7 GPM @ 70°F rise</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-medium">Maintenance</td><td class="px-3 py-2">Annual filter clean</td><td class="px-3 py-2">Annual descaling (mandatory)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>15-year total cost</h2>
+      <ul>
+        <li><strong>HPWH:</strong> $4,000 mid install − $1,500 HEEHRA (income-qualified) + 15 × $210/yr = $5,650 total. With one tank replacement (none needed in 15 yr) = $5,650.</li>
+        <li><strong>Gas tankless:</strong> $6,500 mid install + 15 × $510/yr = $14,150 total. No mid-life replacement.</li>
+        <li><strong>HPWH wins by ~$8,500 over 15 years</strong> for an income-qualified household in a HEEHRA-open state.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Scenarios</h2>
+      <ol>
+        <li><strong>"Old gas tank failed, I have a basement, family of 3, modest income."</strong> → HPWH 240V hybrid. Net ~$1,500 after HEEHRA. Pays back in &lt;5 years.</li>
+        <li><strong>"Family of 5, two showers run simultaneously, no basement."</strong> → Gas condensing tankless. Higher flow capacity, wall-mount space.</li>
+        <li><strong>"Going all-electric, family of 4, garage available."</strong> → HPWH 240V hybrid. Skip the gas line entirely.</li>
+        <li><strong>"Apartment / condo with no garage, electric service capped."</strong> → Gas tankless if gas is available. Electric tankless is rarely practical (100-150A continuous draw).</li>
+        <li><strong>"Hard water (15+ grains/gal) and no softener."</strong> → HPWH. Tankless requires annual descaling and softener; HPWH tolerates hard water better.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="not-prose mt-4 space-y-3">
+        {faq.map(f => (
+          <details class="card p-4">
+            <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+            <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="not-prose mt-8">
+      <div class="card p-5">
+        <div class="flex flex-wrap gap-2">
+          <a href="/heat-pump-water-heater-cost-calculator/" class="btn-primary inline-block">HPWH calculator →</a>
+          <a href="/tankless-water-heater-cost-calculator/" class="btn-ghost border border-ink-200 inline-block">Tankless calculator →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/water-heating" target="_blank" rel="noopener">DOE Energy Saver — Water Heating</a></li>
+        <li><a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener">DOE HEEHRA Rebates</a></li>
+        <li><a href="https://www.energystar.gov/products/water_heaters" target="_blank" rel="noopener">ENERGY STAR Water Heaters</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

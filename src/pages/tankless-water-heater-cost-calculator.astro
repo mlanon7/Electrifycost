@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import TanklessCalculator from '@/components/TanklessCalculator';
+
+const faq = [
+  {
+    q: 'How much does a tankless water heater cost installed?',
+    a: 'Gas condensing tankless (95% AFUE Rinnai, Navien, Rheem, Bosch): $4,500–$8,500 installed. Gas non-condensing (82% AFUE): $3,000–$5,800 installed. Electric whole-home (27-36 kW Stiebel Eltron): $2,500–$5,500 hardware + likely panel upgrade ($1,500–$5,000) = $4,000–$10,500 total. Add $500–$1,500 if existing gas line needs upsizing.',
+  },
+  {
+    q: 'Tankless vs tank vs HPWH — which to pick?',
+    a: 'For natural-gas homes that already have a working gas line: condensing tankless is fine, $4,500–$8,500 installed, saves 15-25% on gas bills vs a standard tank. For homes going electric or wanting the lowest operating cost: heat pump water heater (HPWH) wins — $2,500–$5,500 installed, qualifies for HEEHRA rebate up to $1,750. Electric whole-home tankless is rarely advisable because the 100-150A continuous draw usually triggers a panel upgrade. Plain electric tank: cheap, simple, but high operating cost.',
+  },
+  {
+    q: 'Why is electric tankless usually a bad idea?',
+    a: 'A 36 kW whole-home electric tankless draws 150 amps at 240V. That\'s 75% of a 200A residential service by itself, leaving no headroom for AC or anything else. In cold-water states (where incoming water is 40-50°F), even 36 kW struggles to deliver 2 simultaneous showers in winter. The math: 36,000 W ÷ (4.18 J/g/°C × 40°C rise × 0.063 GPM/W) ≈ 3.4 GPM. A heat pump water heater stores hot water in a tank, so peak demand isn\'t a problem — and it uses 1/3 the electricity per gallon.',
+  },
+  {
+    q: 'Does tankless save energy?',
+    a: 'Yes, modestly. Tankless eliminates standby losses (the heat that escapes a tank between uses). DOE estimates 8-34% savings depending on usage pattern. Lower usage households see bigger percentage savings; high-usage households (4+ people, multiple showers daily) see less. ENERGY STAR-certified condensing units (Rinnai RUR, Navien NPE-2 series) deliver UEF 0.95+ vs 0.62 for a standard gas tank.',
+  },
+  {
+    q: 'Is there a tax credit for tankless?',
+    a: 'Federal 25C covered gas/propane storage and tankless water heaters at 30% up to $600 through 2025-12-31. OBBBA terminated 25C; not available for 2026 installs. HEEHRA (DOE Home Energy Rebates) covers heat pump water heaters but not gas tankless. Some utility programs offer $200–$500 rebates for ENERGY STAR tankless — check your local utility before assuming.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Tankless Water Heater Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for gas condensing, gas non-condensing, electric whole-home, and electric point-of-use tankless water heaters. Compares with HPWH and tank alternatives.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Tankless Water Heater Cost Calculator 2026: Gas Condensing, Electric"
+  description="Installed-cost calculator for gas condensing, non-condensing, and electric tankless water heaters. State-aware labor multipliers, gas line and panel considerations, HPWH comparison."
+  active="/tankless-water-heater-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/tankless-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Tankless water heater calculator', href: '/tankless-water-heater-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Tankless water heater</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Tankless Water Heater Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for gas condensing, gas non-condensing, and electric tankless water heaters. State-aware labor multipliers, gas line work, panel considerations, and HPWH alternative comparison.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a gas condensing tankless installs for $4,500–$8,500. Cuts gas bills 15-25% vs a tank. Electric whole-home tankless is rarely practical — the 100-150A continuous draw usually triggers panel upgrade. If you&rsquo;re going electric anyway, a heat pump water heater is the better answer.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/tankless-water-heater-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/tankless-water-heater-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/tankless-water-heater-hero-photo.png"
+      alt="Tankless water heater mounted on a home wall"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><TanklessCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to tankless?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Tankless water heaters heat water on demand instead of maintaining a 40-50 gallon tank at 120°F continuously. They eliminate standby heat loss (the energy your tank radiates between uses) and deliver effectively unlimited hot water — limited only by flow rate at the supply temperature rise. Two flavors: gas (most common, 140,000-199,000 BTU/hr) and electric (whole-home 27-36 kW or point-of-use 18 kW). Gas units need a vent (PVC for condensing, stainless for non-condensing) and adequate gas line capacity. Electric whole-home is rarely practical due to amp draw.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/tankless-water-heaters/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">8-min read · condensing vs non-condensing · electric reality check · sizing · maintenance · vs HPWH</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-water-heater-cost-calculator/">Heat pump water heater calculator (alternative) →</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

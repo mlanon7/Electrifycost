@@ -1,0 +1,9 @@
+key,scenario,type,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,salt_lb_year,electricity_kwh_year,notes,source_id,last_reviewed
+softener_basic,Basic salt-based softener (Whirlpool/Morton),salt_softener,400,650,900,400,700,1100,250,40,"Cheapest. Grain capacity 30k-40k. Good for hardness 7-15 gpg",WQA_2024,2026-05-01
+softener_premium,Premium salt softener (Kinetico/Culligan),salt_softener,1500,2500,3800,800,1400,2200,200,30,"Premium dual-tank or twin-pump. Higher efficiency, no electricity needed (Kinetico)",Kinetico_2024,2026-05-01
+salt_free_conditioner,Salt-free water conditioner (TAC/template assisted),salt_free,800,1400,2200,300,600,1100,0,0,"Doesn't actually soften — conditions scale formation. Good for moderate hardness, no slippery feel",WQA_2024,2026-05-01
+whole_house_carbon,Whole-house carbon filtration,carbon_filter,500,900,1500,300,600,1100,0,0,"Chlorine removal, taste/odor. Cartridge replacement every 6-12 months ($60-150)",WQA_2024,2026-05-01
+softener_plus_carbon,Combo softener + carbon,combo,1200,2000,3000,600,1100,1800,250,40,"Soften + dechlorinate. Most common whole-home combo. Pentair, Aquasana",Aquasana_2024,2026-05-01
+reverse_osmosis_undersink,Reverse osmosis (undersink kitchen only),ro,200,450,800,150,350,650,0,0,"Drinking water only. Wastes 1-4 gal per gal produced. Cartridge replacement $30-80/yr",WQA_2024,2026-05-01
+ro_whole_house,Whole-house RO + storage tank,ro,3500,5500,8500,1500,2500,4000,0,200,"Whole-house RO — rare. Expensive maintenance. Only for high TDS or contaminated source",WQA_2024,2026-05-01
+iron_filter,Iron + sulfur filter (well water),iron_filter,900,1500,2500,500,900,1500,0,30,"For well water with iron > 0.3 ppm or sulfur smell. Birm or air-induction systems",WQA_2024,2026-05-01

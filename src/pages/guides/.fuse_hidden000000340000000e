@@ -1,0 +1,197 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Tankless Water Heaters: How They Work, What They Cost, and Why Electric Whole-Home Is Usually Wrong',
+  description: 'Long-form guide to tankless water heaters in 2026: gas condensing vs non-condensing, electric whole-home reality check, sizing, gas line and venting requirements, vs HPWH alternative.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Tankless Water Heater Guide 2026: Gas, Electric, HPWH Alternative"
+  description="Long-form, source-backed guide to tankless water heaters in 2026: gas condensing vs non-condensing, electric whole-home reality check, sizing, gas line and venting requirements, vs HPWH alternative."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Tankless water heaters', href: '/guides/tankless-water-heaters/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Tankless water heaters</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Tankless Water Heaters, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How tankless heats water on demand, gas condensing vs non-condensing, why electric whole-home is almost always wrong, sizing for cold-water states, venting and gas line requirements, maintenance reality, and when a heat pump water heater is the better answer. 8-minute read.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>1. How tankless works</h2>
+      <p>
+        When you turn on a hot-water fixture, a flow sensor in the tankless detects water movement and fires the burner (gas) or activates the heating elements (electric). Water passes through a heat exchanger and exits at the target temperature. When you turn the fixture off, the burner shuts down and the unit idles drawing only 2-4W for the control electronics.
+      </p>
+      <p>
+        Three numbers matter:
+      </p>
+      <ul>
+        <li><strong>BTU/hr (gas) or kW (electric):</strong> rated input heat. 199,000 BTU/hr is the upper limit for residential gas; 36 kW is the upper limit for residential electric whole-home.</li>
+        <li><strong>UEF (Uniform Energy Factor):</strong> efficiency at delivering heat to the water. Condensing gas: 0.95+. Non-condensing gas: 0.82-0.86. Electric: 0.98-0.99 (the &quot;efficiency&quot; advantage is misleading — see section 3).</li>
+        <li><strong>GPM at temperature rise:</strong> the practical limit. A unit may be rated 9.4 GPM at 35°F rise but only 5.3 GPM at 70°F rise. Northern homes pulling 40°F water need higher BTU/hr to deliver the same shower performance as a Florida home pulling 70°F water.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Gas condensing vs gas non-condensing</h2>
+      <ul>
+        <li><strong>Non-condensing.</strong> 80-86% efficient. Older, simpler technology. Vents through 4-inch stainless steel (Category III) with strict 25-50 ft length limits. Hot exhaust (300-500°F). Cheaper equipment by $500-$1,000. Examples: Rheem RTG, Rinnai V series.</li>
+        <li><strong>Condensing.</strong> 95-98% efficient. Sealed-combustion. Pulls heat from exhaust gas, condensing water vapor inside the heat exchanger. Vents through 3-inch PVC (Category IV) up to 100 ft. Cool exhaust (110-140°F). More expensive equipment but eligible for ENERGY STAR. Examples: Rinnai RUR, Navien NPE-2, Rheem RTGH, Bosch ProTL.</li>
+      </ul>
+      <p>
+        Condensing is the right choice for any new install unless venting routing is impossible. The 10-15% efficiency advantage compounds for 15-20 years of operating cost.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Why electric whole-home tankless is usually wrong</h2>
+      <p>
+        Marketing materials emphasize 99% efficiency. Real-world physics: heating water from 40°F to 110°F (a 70°F rise) takes 4.18 kJ/kg/°C × water mass. Math:
+      </p>
+      <p>
+        A single shower at 2.0 GPM = 0.126 L/s. Heating that 70°F (~39°C) requires 4.18 × 0.126 × 1000 × 39 = ~20,500 W = 20.5 kW continuous. Two simultaneous showers: 41 kW. Three: 61 kW.
+      </p>
+      <p>
+        A 36 kW whole-home electric tankless (Stiebel Eltron Tempra 36 Plus, EcoSmart ECO 36) can support 1-2 showers in warm-water states (where incoming is 60-75°F, needing only 35-50°F rise). In cold-water states (incoming 40-50°F), it&rsquo;s barely adequate for one shower in winter.
+      </p>
+      <p>
+        Then there&rsquo;s the panel: 36 kW at 240V = 150 amps continuous. That&rsquo;s 75% of a 200A service. Most existing residential panels cannot accommodate this without:
+      </p>
+      <ul>
+        <li>200A → 400A service upgrade ($3,500-$8,000)</li>
+        <li>Multiple 50A circuits with their own breakers</li>
+        <li>Utility transformer evaluation (sometimes upgrade)</li>
+      </ul>
+      <p>
+        Net: a "$1,200 electric tankless" frequently becomes a $7,000-$12,000 project. Compare to a heat pump water heater for $2,500-$5,500 installed (with rebates often $1,000-$2,500 net) that uses 1/3 the electricity per gallon and has zero panel impact. <strong>If you&rsquo;re going electric, choose HPWH, not whole-home tankless.</strong>
+      </p>
+      <p>
+        The legitimate use case for electric tankless is point-of-use (under-sink) booster for a far-from-main-water-heater fixture: 18 kW or smaller, draws 75A on a 240V circuit, supplies one fixture only.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Sizing gas tankless correctly</h2>
+      <p>
+        Calculate peak simultaneous demand at your design groundwater temperature:
+      </p>
+      <ul>
+        <li>Shower: 2.0-2.5 GPM</li>
+        <li>Kitchen sink: 1.5-2.0 GPM</li>
+        <li>Bathroom sink: 1.0-1.5 GPM</li>
+        <li>Dishwasher: 1.5-2.0 GPM (if running)</li>
+        <li>Washing machine: 1.5-2.5 GPM (if running)</li>
+      </ul>
+      <p>
+        Two simultaneous showers + a kitchen sink = 5.5-7.0 GPM peak demand. At 70°F rise (cold-water states), that requires:
+      </p>
+      <ul>
+        <li>140,000 BTU/hr unit: 4.5 GPM @ 70°F rise — inadequate</li>
+        <li>180,000 BTU/hr unit: 6.0 GPM @ 70°F rise — adequate for 2 showers + sink</li>
+        <li>199,000 BTU/hr unit: 6.6 GPM @ 70°F rise — adequate with margin</li>
+      </ul>
+      <p>
+        Don&rsquo;t over-buy. A 199K BTU/hr unit costs $400-$800 more than 140K and requires a larger gas line. If you live alone or have 1 shower + dishwasher overlap, 140K is plenty.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Venting and gas line requirements</h2>
+      <p>
+        Venting depends on type:
+      </p>
+      <ul>
+        <li><strong>Condensing:</strong> 3-inch PVC, up to 100 ft total equivalent length, sealed combustion (no indoor air drawn). Cheap material, easy install, condensate drain required (route to a plumbing stack or sump; neutralizer cartridge required in some jurisdictions).</li>
+        <li><strong>Non-condensing:</strong> 4-inch stainless steel (Category III), max 25-50 ft, vented vertically or through-wall. More expensive material, install constraints.</li>
+      </ul>
+      <p>
+        Gas line: a 199K BTU/hr tankless needs more gas than a 40K BTU/hr tank water heater. The existing 1/2&quot; line that fed your tank may be inadequate. Common scenarios:
+      </p>
+      <ul>
+        <li>1/2&quot; line from meter to water heater: usually needs upsize to 3/4&quot; for 180K+ BTU/hr ($500-$1,500).</li>
+        <li>1/2&quot; trunk line from meter feeding furnace + tank + range: load adds up; may need 1&quot; trunk + branch redesign ($1,200-$2,800).</li>
+      </ul>
+      <p>
+        Have a licensed plumber size the gas system before signing the tankless install contract.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Maintenance — descaling is not optional</h2>
+      <p>
+        Tankless heat exchangers are thin copper or stainless coils. Hard water (more than 7 grains/gallon) precipitates calcium carbonate scale that builds up on the exchanger walls, restricting flow and eventually destroying the unit. Manufacturers void warranty if you can&rsquo;t document annual descaling with a vinegar or commercial-cleaner flush.
+      </p>
+      <p>
+        Three options:
+      </p>
+      <ul>
+        <li>Install a whole-house water softener ($1,200-$3,500). Adds salt-disposal task. Eliminates scale issue.</li>
+        <li>Install dedicated water-softener service for the tankless feed only (single-tank softener $400-$800).</li>
+        <li>Manual annual descaling with isolation valves and a pump (Rinnai and Navien sell maintenance kits for $80-$150; flush takes 45-90 min).</li>
+      </ul>
+      <p>
+        Water hardness over 12 grains/gallon makes tankless inadvisable without water treatment. Test your water before buying.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. When HPWH is the better answer</h2>
+      <p>
+        Heat pump water heaters (Rheem ProTerra, Bradford White AeroTherm, A.O. Smith Voltex, SanCO₂) are the most efficient water-heating technology available — UEF 3.0-4.0, vs 0.95 for condensing gas tankless. They use ambient air heat to warm water in a tank, eliminating the panel-draw problem of electric tankless and the gas-line + venting requirements of gas tankless.
+      </p>
+      <p>
+        Choose HPWH over tankless if:
+      </p>
+      <ul>
+        <li>You have ~700 cu-ft of free air (typical basement, garage, or large utility room).</li>
+        <li>You want the lowest operating cost.</li>
+        <li>You qualify for HEEHRA (income-tiered DOE rebate, up to $1,750).</li>
+        <li>You don&rsquo;t want gas-line work.</li>
+      </ul>
+      <p>
+        Choose gas tankless over HPWH if:
+      </p>
+      <ul>
+        <li>You have natural gas service and want unlimited hot water.</li>
+        <li>You have nowhere to put a tank (HPWH needs floor space and free air).</li>
+        <li>You have very large peak demand (6+ GPM simultaneous).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/tankless-or-demand-type-water-heaters" target="_blank" rel="noopener">DOE Energy Saver — Tankless Water Heaters</a></li>
+        <li><a href="https://www.energystar.gov/products/water_heaters/high_efficiency_gas_storage_water_heaters/tankless_high_efficiency_gas_water_heaters" target="_blank" rel="noopener">ENERGY STAR Tankless Gas Water Heaters</a></li>
+        <li><a href="https://www.rinnai.us/" target="_blank" rel="noopener">Rinnai technical documentation</a></li>
+        <li><a href="https://www.navieninc.com/" target="_blank" rel="noopener">Navien technical documentation</a></li>
+        <li><a href="https://www.stiebel-eltron-usa.com/" target="_blank" rel="noopener">Stiebel Eltron — electric tankless reality check</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get an installed-cost estimate by tankless type, size, gas line condition, with an HPWH alternative comparison.</p>
+        <a href="/tankless-water-heater-cost-calculator/" class="btn-primary mt-3 inline-block">Open the tankless calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

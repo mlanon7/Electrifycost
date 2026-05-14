@@ -1,0 +1,186 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'EV vs Gas: The Real Total Cost of Ownership in 2026',
+  description: 'Long-form guide to EV vs gas total cost of ownership in 2026: 30D credit mechanics, charging cost, maintenance, depreciation, road-trip economics, and when an EV actually pays off.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="EV vs Gas TCO Guide 2026: When an EV Actually Pays Off"
+  description="30D + state credit stacking, home + DC fast-charging cost, why EV maintenance is half of ICE, depreciation, 5/8/10-yr breakeven. 30D expired 2025-09-30."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/ev-charger-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'EV TCO', href: '/guides/ev-tco/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · EV total cost of ownership</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">EV vs Gas TCO, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How the federal 30D credit works in 2026, what charging actually costs at home and on the road, why EVs need less maintenance, how depreciation has shifted, and when an EV actually saves you money over 8-10 years. 11-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#30d" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. 30D credit</a>
+      <a href="#state" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. State credits</a>
+      <a href="#charging" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. Charging cost</a>
+      <a href="#maintenance" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Maintenance</a>
+      <a href="#depreciation" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Depreciation</a>
+      <a href="#breakeven" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Breakeven</a>
+      <a href="#caveats" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. When EV doesn&rsquo;t pay</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="30d">
+      <h2>1. The federal 30D Clean Vehicle Credit</h2>
+      <p>
+        Section 30D of the Internal Revenue Code is the federal EV tax credit. It pays up to $7,500 for qualifying new EVs and up to $4,000 (or 30% of price, whichever is less) for qualifying used EVs. The credit has been substantially restructured by the Inflation Reduction Act (2022) and accelerated by OBBBA (2025).
+      </p>
+      <p>
+        For 2026, four qualifications matter:
+      </p>
+      <ul>
+        <li><strong>Vehicle eligibility:</strong> the EV must be on the IRS qualifying list. Two halves: $3,750 for critical mineral sourcing (currently 50% from U.S. or free-trade-agreement partners), $3,750 for battery components (60% manufactured in North America). Many models qualify for only one half. Check the current list at <a href="https://fueleconomy.gov/feg/tax2023.shtml" target="_blank" rel="noopener">fueleconomy.gov</a>.</li>
+        <li><strong>MSRP caps:</strong> $80,000 for SUVs, trucks, and vans; $55,000 for cars. Use IRS&rsquo;s vehicle classification (some Tesla Model Y trims slip between SUV and car depending on configuration).</li>
+        <li><strong>Income caps:</strong> $300,000 joint, $225,000 head of household, $150,000 single. Modified Adjusted Gross Income (MAGI), prior year OR year of purchase — whichever is lower.</li>
+        <li><strong>Phase-out date:</strong> OBBBA accelerated 30D&rsquo;s sunset. Credit ends 2026-09-30 for new and used vehicles. Verify with IRS at <a href="https://www.irs.gov/credits-deductions/credits-for-new-clean-vehicles-purchased-in-2023-or-after" target="_blank" rel="noopener">irs.gov/credits-deductions/credits-for-new-clean-vehicles</a>.</li>
+      </ul>
+      <p>
+        Point-of-sale transfer: since 2024 you can transfer the credit to the dealer at purchase, effectively turning it into a down-payment discount. That avoids needing tax liability to claim it. The dealer files Form 15400 on your behalf; you still must meet income caps at tax time or repay.
+      </p>
+    </section>
+
+    <section id="state">
+      <h2>2. State EV credits (2026 snapshot)</h2>
+      <p>
+        Several states offer additional EV purchase incentives that stack with the federal credit. Values shift annually based on funding:
+      </p>
+      <ul>
+        <li><strong>Colorado:</strong> $5,000 Innovative Motor Vehicle Credit (refundable, no income cap on new) — strongest state credit in 2026.</li>
+        <li><strong>Connecticut:</strong> CHEAPR $4,250 base + income-tier adders, up to $9,500 for low-income.</li>
+        <li><strong>New Jersey:</strong> Charge Up $4,000 (limited budget, first-come).</li>
+        <li><strong>Vermont:</strong> $4,000 income-tiered.</li>
+        <li><strong>Massachusetts:</strong> MOR-EV $3,500 base + adders.</li>
+        <li><strong>Oregon:</strong> $2,500 Standard + $5,000 Charge Ahead for low-moderate income.</li>
+        <li><strong>Delaware, Illinois, Maine, Maryland, NY, PA, RI:</strong> $2,000–$4,000 typical.</li>
+        <li><strong>California:</strong> CVRP was paused in 2023. Income-tested replacement programs (CC4A, Clean Cars 4 All) and CalCAP-EV available. Standard market-rate buyers should not assume California state cash on a 2026 EV purchase.</li>
+      </ul>
+      <p>
+        Check <a href="https://www.dsireusa.org/" target="_blank" rel="noopener">DSIRE</a> for the current state of programs and funding status.
+      </p>
+    </section>
+
+    <section id="charging">
+      <h2>3. What charging actually costs</h2>
+      <p>
+        Three charging contexts, each with different per-mile cost:
+      </p>
+      <ul>
+        <li><strong>Home Level 2 (240V, 30-50A):</strong> the dominant mode — 80% of charging happens here. At a national average $0.16/kWh and 0.30 kWh/mile, that&rsquo;s $0.048/mile or $48 per 1,000 miles. With a TOU plan offering $0.10/kWh overnight, drops to $0.030/mile. Hardware install ranges $800–$2,800 (see EV charger calculator).</li>
+        <li><strong>Public Level 2 (workplace, parking lots):</strong> often free or $0.20-$0.30/kWh. Slower (4-6 hours for full charge); used for top-ups.</li>
+        <li><strong>DC fast-charging (road trips):</strong> $0.35-$0.55/kWh at Tesla Supercharger / Electrify America / EVgo / ChargePoint, depending on time of day and network. At 0.30 kWh/mile, that&rsquo;s $0.105-$0.165/mile — about the same as gas at $3.50/gal in a 32-MPG car. Road-trip charging is a wash with gas; the savings come from home charging.</li>
+      </ul>
+      <p>
+        Practical math for a 12,000-mile/year driver, 90% home / 10% DC fast: 10,800 mi × $0.048 + 1,200 mi × $0.135 = $518 + $162 = $680/year. Compare to 12,000 miles ÷ 32 MPG × $3.50/gal = $1,313/year gas. Annual savings ~$630. Over 8 years, $5,000+ before maintenance.
+      </p>
+    </section>
+
+    <section id="maintenance">
+      <h2>4. Why EVs need less maintenance</h2>
+      <p>
+        An internal combustion engine has roughly 2,000 moving parts in the powertrain. An EV has about 20. The maintenance differential is structural, not anecdotal.
+      </p>
+      <p>
+        EVs eliminate: oil changes, oil filter, fuel filter, spark plugs, ignition coils, timing belt, serpentine belt, transmission fluid (single-speed gearbox), differential fluid (most), exhaust system, catalytic converter, oxygen sensors, EVAP system, intake gaskets. They reduce: brake pad wear (regenerative braking handles 70-80% of deceleration), coolant changes (still needed for battery thermal management, but less frequent).
+      </p>
+      <p>
+        EVs <em>do</em> need: tire rotation, cabin air filter, brake fluid every 3 years, coolant flush every 5 years, 12V battery replacement every 5-7 years, wiper blades. Tires wear 10-20% faster due to higher curb weight and instant torque.
+      </p>
+      <p>
+        Consumer Reports 2024 data (50,000+ owner-reported maintenance/repair costs): EVs averaged $4,600 over 200,000 miles vs $9,200 for ICE — $0.023/mile vs $0.046/mile. Add fluids, brake servicing, and oil at AAA TrueCost 2024 numbers, and EV total is ~$0.045/mile vs ICE ~$0.105/mile. At 12,000 miles/year that&rsquo;s $720/year. Over 8 years that&rsquo;s $5,760.
+      </p>
+    </section>
+
+    <section id="depreciation">
+      <h2>5. How depreciation has shifted</h2>
+      <p>
+        EVs historically depreciated faster than ICE because of range anxiety, battery uncertainty, and rapid technology turnover (a 2018 EV felt obsolete next to a 2022 EV). The market has shifted in two ways:
+      </p>
+      <ul>
+        <li><strong>Battery warranty &amp; performance.</strong> Modern packs (2022+) have 8 yr / 100K mi warranties and degradation curves better than feared — typical 88-92% retained capacity at 100K miles per Recurrent Auto data.</li>
+        <li><strong>Used market normalization.</strong> Manheim Used Vehicle Value Index shows EVs and ICE converging on residual percentages. Tesla Model 3 and Y particularly hold value (55-62% at 5 years on Edmunds, KBB).</li>
+      </ul>
+      <p>
+        That said, model-specific risk remains. Luxury EVs (Lucid Air, Mercedes EQS) depreciated 40-50% in 3 years. F-150 Lightning saw 30%+ depreciation in 2024 on used market. Stick with high-volume models (Model 3, Model Y, Ioniq 5, ID.4) for predictable resale.
+      </p>
+    </section>
+
+    <section id="breakeven">
+      <h2>6. Breakeven math</h2>
+      <p>
+        Three drivers determine EV breakeven:
+      </p>
+      <ol>
+        <li><strong>Annual miles.</strong> More miles = faster payback. At 20,000 mi/yr, EVs typically save money from year 1. At 6,000 mi/yr, breakeven can be year 10+.</li>
+        <li><strong>Federal + state credit.</strong> $7,500 + $4,000 closes most of the purchase gap. Without credits, payback shifts 3-5 years later.</li>
+        <li><strong>Local electricity vs gas rates.</strong> States with electricity below $0.13/kWh and gas above $4/gal (CA, OR, WA, HI) favor EV. States with cheap gas + expensive electricity (some New England, Hawaii) favor it less.</li>
+      </ol>
+      <p>
+        Typical breakeven scenarios (8-year hold, 12,000 mi/yr, 30D-eligible):
+      </p>
+      <ul>
+        <li><strong>$42,000 EV vs $32,000 sedan, California:</strong> EV saves $8,500 over 8 years; breakeven year 4.</li>
+        <li><strong>$55,000 EV truck vs $40,000 gas truck, Texas:</strong> EV saves $3,200; breakeven year 6.</li>
+        <li><strong>$60,000 luxury EV vs $50,000 luxury ICE, New York:</strong> EV saves $1,800; breakeven year 7.</li>
+        <li><strong>$28,000 used Model 3 (4K credit) vs $22,000 used Camry, Florida:</strong> EV saves $5,500; breakeven year 3.</li>
+      </ul>
+    </section>
+
+    <section id="caveats">
+      <h2>7. When an EV doesn&rsquo;t pay off</h2>
+      <ul>
+        <li><strong>Low annual mileage.</strong> Below 7,000 mi/yr, fuel savings can&rsquo;t overcome the up-front premium.</li>
+        <li><strong>No federal 30D eligibility.</strong> Income over $150,000 single / $300,000 joint, or vehicle over MSRP cap, or vehicle not on IRS qualifying list. The credit is the difference between EV being clearly cheaper and roughly even.</li>
+        <li><strong>No home charging.</strong> Apartment dwellers without dedicated parking face $0.35-$0.55/kWh public charging — eliminates most of the fuel-savings advantage. Workplace charging changes the math if free.</li>
+        <li><strong>Frequent long road trips.</strong> Charging stops add 30-90 minutes to road trips. Not a cost but a real cost-of-time consideration.</li>
+        <li><strong>EV registration surcharges.</strong> Texas, Missouri, Illinois, Georgia, and others levy $100–$250/year on EVs to recover gas-tax revenue. Subtract this from your savings.</li>
+      </ul>
+      <p>
+        Best fits for EVs in 2026: 10,000+ mi/yr drivers in states with stacked incentives (CO, CT, NJ, VT) and home charging access. Worst fits: low-mileage apartment dwellers in low-incentive states.
+      </p>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.irs.gov/credits-deductions/credits-for-new-clean-vehicles-purchased-in-2023-or-after" target="_blank" rel="noopener">IRS Section 30D Clean Vehicle Credit</a></li>
+        <li><a href="https://fueleconomy.gov/feg/tax2023.shtml" target="_blank" rel="noopener">fueleconomy.gov — Tax credit qualifying vehicles</a></li>
+        <li><a href="https://www.dsireusa.org/" target="_blank" rel="noopener">DSIRE — State EV incentive database</a></li>
+        <li><a href="https://www.consumerreports.org/cars/types/hybrids-evs/" target="_blank" rel="noopener">Consumer Reports EV reliability and maintenance studies</a></li>
+        <li><a href="https://www.aaa.com/AAA/common/AAR/files/AAA-Your-Driving-Costs.pdf" target="_blank" rel="noopener">AAA Your Driving Costs 2024</a></li>
+        <li><a href="https://www.recurrentauto.com/research" target="_blank" rel="noopener">Recurrent Auto — EV battery health data</a></li>
+        <li><a href="https://www.eia.gov/petroleum/gasdiesel/" target="_blank" rel="noopener">EIA Weekly Retail Gasoline Prices</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Compare EV vs gas total cost over 5/8/10 years with federal 30D, state credits, fuel, maintenance, and depreciation modeled.</p>
+        <a href="/ev-total-cost-of-ownership-calculator/" class="btn-primary mt-3 inline-block">Open the EV TCO calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

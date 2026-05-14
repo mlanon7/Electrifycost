@@ -1,0 +1,6 @@
+key,scenario,pump_low,pump_mid,pump_high,install_low,install_mid,install_high,water_savings_gal_year,energy_kwh_year,notes,source_id,last_reviewed
+dedicated_return,Dedicated return line + Taco/Grundfos pump,250,400,650,400,800,1500,12000,250,"Best performance. Requires running new dedicated return line — easiest during renovation",Grundfos_2024,2026-05-01
+crossover_undersink,Crossover (undersink valve) Grundfos Comfort,180,275,400,150,300,600,8000,150,"No new line — uses cold water line as return. Pump at heater, valve at farthest fixture",Grundfos_2024,2026-05-01
+crossover_demand,Demand-activated crossover (button or motion),300,450,650,200,400,800,10000,80,"Best efficiency — only runs when user requests hot water. Chilipepper, Watts Premier",Watts_2024,2026-05-01
+timer_only,Timer-only continuous loop pump,150,225,350,100,250,500,5000,400,"Cheapest but inefficient — runs continuously on schedule. Loses ~10% of HW energy to standby losses",Taco_2024,2026-05-01
+tankless_compatible,Tankless-compatible recirc kit,400,600,900,300,600,1200,9000,200,"Some tankless units have built-in recirc capability (Navien ComfortFlow, Rinnai Continuum)",Rinnai_2024,2026-05-01

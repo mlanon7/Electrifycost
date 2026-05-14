@@ -1,0 +1,131 @@
+# Deploy ElectrifyCost to Vercel
+
+Step-by-step. You said you have Git, GitHub, and Vercel ready. Domain isn't required to ship — Vercel gives you a free subdomain you can use today and swap for `electrifycost.com` when you register it.
+
+## 1. First-time local setup (one-time)
+
+Open a terminal in the project folder:
+
+```powershell
+cd "D:\claude projects\Electrifycost"
+```
+
+Install dependencies:
+
+```powershell
+npm install
+```
+
+Verify everything builds locally:
+
+```powershell
+npm run build
+npm run preview
+```
+
+`npm run preview` will give you a local URL (typically `http://localhost:4321`) — open it and click around to confirm calculators work.
+
+## 2. Initialize Git and push to GitHub
+
+```powershell
+git init
+git add .
+git commit -m "Initial commit: ElectrifyCost v1 — heat pump, panel, EV charger calculators"
+git branch -M main
+```
+
+Create a new empty repo on github.com (don't initialize it with a README — you already have one). Then point your local repo at it:
+
+```powershell
+git remote add origin https://github.com/YOUR-USERNAME/electrifycost.git
+git push -u origin main
+```
+
+If you have GitHub CLI (`gh`), it's a one-liner instead:
+
+```powershell
+gh repo create electrifycost --public --source=. --remote=origin --push
+```
+
+## 3. Connect to Vercel
+
+Two options — pick one.
+
+### Option A: Vercel dashboard (easiest)
+
+1. Go to <https://vercel.com/new>.
+2. Click "Import Git Repository" and select the `electrifycost` repo you just pushed.
+3. Vercel auto-detects it's an Astro project. Leave the defaults:
+   - Framework: **Astro**
+   - Build command: `npm run build`
+   - Output directory: `dist`
+4. Click **Deploy**.
+
+In ~60 seconds you'll have a live site at something like `electrifycost-yourname.vercel.app`.
+
+### Option B: Vercel CLI
+
+```powershell
+npm install -g vercel
+vercel login
+vercel
+```
+
+Answer the prompts. Pick the defaults. First deploy is to a preview URL; promote to production with:
+
+```powershell
+vercel --prod
+```
+
+## 4. Continuous deployment is now automatic
+
+Every `git push` to `main` triggers a new production deploy. Every push to a feature branch creates a preview URL you can share before merging.
+
+Typical workflow once deployed:
+
+```powershell
+# make some edits...
+git add .
+git commit -m "Add EV charger result UI tweaks"
+git push
+```
+
+Done — Vercel rebuilds and deploys automatically.
+
+## 5. Custom domain (when you're ready)
+
+Once you register `electrifycost.com`:
+
+1. In Vercel: **Project → Settings → Domains** → "Add" → type `electrifycost.com` and `www.electrifycost.com`.
+2. Vercel shows you the DNS records to add at your registrar:
+   - `A` record on root pointing to `76.76.21.21`
+   - `CNAME` on `www` pointing to `cname.vercel-dns.com`
+3. Add those records at the registrar's DNS panel. Wait 5–60 minutes for propagation.
+4. Vercel auto-provisions a free Let's Encrypt SSL certificate.
+
+I'd recommend choosing **www.electrifycost.com** as the canonical (or root — pick one). Vercel will 308-redirect the other to canonical automatically. The site is already configured with `https://electrifycost.com` as the canonical in `astro.config.mjs`; if you go with `www`, change `site` to `https://www.electrifycost.com` and re-deploy.
+
+## 6. Environment variables (none yet, but for later)
+
+When you eventually add Plausible/Pirsch analytics, the EIA API, or affiliate tracking, you'll add env vars in:
+
+**Vercel: Project → Settings → Environment Variables**
+
+Locally, copy `.env.example` to `.env.local` (the latter is gitignored).
+
+## 7. Quality-of-life tips
+
+- **Preview every PR:** open a feature branch, push it, and Vercel posts the preview URL on the GitHub PR automatically. Great for sharing in-progress changes without breaking prod.
+- **Lighthouse on every deploy:** Vercel runs Speed Insights for free — check **Project → Speed Insights** after a few visits. Astro's static output should score 95+ across the board.
+- **Domain redirects:** If you buy a misspelling like `electrifycosts.com`, point it at the same Vercel project and add a redirect in `vercel.json`.
+- **Branch policy:** keep `main` deployable. Use feature branches for anything risky. The Vercel preview URL is your safety net.
+
+## 8. What's already configured for you
+
+- `vercel.json` — clean URLs, trailing slashes, security headers, long-term asset caching, short-term HTML caching.
+- `.gitignore` — excludes `node_modules`, `dist`, `.astro`, `.env*`, editor folders.
+- `astro.config.mjs` — `site` set to `https://electrifycost.com` (sitemap, canonical URLs, OG tags reference this).
+- Sitemap auto-generated at `/sitemap-index.xml` via `@astrojs/sitemap`.
+- `robots.txt` references the sitemap.
+
+You're ready to push.

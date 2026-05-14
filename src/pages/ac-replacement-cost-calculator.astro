@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import AcCalculator from '@/components/AcCalculator';
+
+const faq = [
+  {
+    q: 'How much does a new central AC cost installed in 2026?',
+    a: 'A 3-ton single-stage (~15 SEER2) install typically runs $5,500–$8,500. Two-stage (~17.5 SEER2): $8,000–$11,500. Variable-speed inverter (~21 SEER2): $11,000–$16,500. Add $400–$1,500 for minor ductwork repair, $2,500–$7,500 for full duct replacement. The 2025 EPA R-410A phase-out means new units use R-32 or R-454B, adding $200–$700 in refrigerant-transition labor.',
+  },
+  {
+    q: 'What is SEER2 and how is it different from SEER?',
+    a: 'SEER2 is the updated efficiency rating that took effect 2023-01-01 under DOE\'s revised test procedure (Federal Register 87 FR 56500). It uses higher external static pressure than the old SEER test, producing more realistic real-world ratings. A SEER 16 rated under the old test is roughly SEER2 15.2. Minimum efficiency in 2026 is 14.3 SEER2 north of the 36th parallel, 15.2 SEER2 south. Variable-speed inverter systems reach 22-26 SEER2.',
+  },
+  {
+    q: 'Should I replace AC or convert to a heat pump?',
+    a: 'In most U.S. climates, a heat pump is the better choice if you\'re replacing anything. A central air-source heat pump does cooling and heating with the same equipment. The price premium is typically $1,500–$2,500 per ton over a comparable AC. Federal 25C credit ended 2025-12-31, but state and utility heat-pump rebates (e.g., Mass Save $10,000, NYSERDA, ComEd) are widely available. In states with cheap gas and cold winters, dual-fuel (heat pump + existing furnace) is often the sweet spot.',
+  },
+  {
+    q: 'What is the refrigerant transition (R-32, R-454B)?',
+    a: 'EPA\'s 2025 Significant New Alternatives Policy (SNAP) rule phases R-410A out of new residential AC and heat pump equipment manufactured after 2025-01-01. Manufacturers chose two replacements: Daikin (Goodman, Amana) uses R-32, while Carrier, Trane, Lennox, and York use R-454B. Both are A2L "mildly flammable" classifications requiring new installer training and tooling. Existing R-410A systems are fine to keep running and service; the rule only affects new equipment.',
+  },
+  {
+    q: 'Is there a tax credit for replacing my AC?',
+    a: 'No. The federal Energy Efficient Home Improvement Credit (25C) covered heat pumps and electric panels through 2025-12-31, but not air conditioning alone. The 25D Residential Clean Energy Credit covers solar PV, geothermal, and battery storage — also not AC. Income-qualified households may qualify for DOE Home Energy Rebates (HEEHRA) in states where the program is open, but again, only for heat pumps and other electrification measures, not standalone AC.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'AC Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for central air conditioning replacement by tonnage, efficiency tier (SEER2), ductwork condition, and state. Includes 2025 refrigerant transition cost and a heat-pump-alternative comparison.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="AC Replacement Cost Calculator 2026: SEER2 + R-32 Transition"
+  description="Estimate central AC replacement cost by tonnage, SEER2 tier, ductwork, and state. Includes R-410A → R-32/R-454B refrigerant-transition adder and a heat-pump-alternative comparison."
+  active="/ac-replacement-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/ac-replacement-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'AC replacement cost calculator', href: '/ac-replacement-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Central AC</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">AC Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for central air conditioning. Adjusts by tonnage, SEER2 efficiency tier, ductwork condition, optional furnace bundle, and state. Includes the 2025 R-32 / R-454B refrigerant-transition adder.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a 3-ton two-stage central AC installs for $8,000–$11,500 in 2026 with existing good ductwork. Variable-speed inverter systems run $11,000–$16,500. There is <em>no</em> federal tax credit for AC alone — if you&rsquo;re replacing anything, run the heat pump calculator first.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/ac-replacement-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/ac-replacement-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/ac-replacement-hero-photo.png"
+      alt="Central air conditioning condenser at a home"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><AcCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to central AC?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A central AC has two parts: an outdoor condenser/compressor and an indoor evaporator coil that sits on top of your furnace or air handler. A copper line-set carries refrigerant between them, and ductwork distributes cooled air through the house. Efficiency is rated in SEER2 (Seasonal Energy Efficiency Ratio, 2023 test procedure). Federal minimums are 14.3 SEER2 north / 15.2 SEER2 south. Variable-speed inverter systems reach 22-26 SEER2 and modulate continuously rather than cycling on and off — better dehumidification and 30-40% less electricity than a baseline single-stage unit.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/ac-replacement/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">10-min read · SEER2 explained · R-32/R-454B refrigerant transition · sizing · heat pump alternative · contractor red flags</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator (alternative) →</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

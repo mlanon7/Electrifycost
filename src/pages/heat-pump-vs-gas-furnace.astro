@@ -1,0 +1,136 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Heat Pump vs Gas Furnace: 15-Year Cost of Ownership',
+  description: 'Direct comparison of central heat pump vs gas furnace over 15 years: upfront, fuel, maintenance, lifespan, climate considerations.',
+};
+---
+<Layout
+  title="Heat Pump vs Gas Furnace: 15-Year Cost Comparison 2026"
+  description="Heat pump vs gas furnace + AC over 15 years: upfront, fuel, maintenance, lifespan, climate effects. Heat pump wins by $5,000–$15,000 in most climates."
+  active="/heat-pump-vs-gas-furnace/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Heat pump vs gas furnace', href: '/heat-pump-vs-gas-furnace/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Comparison</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump vs Gas Furnace: 15-Year Total Cost</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Side-by-side over 15 years for a typical 1,800 sqft U.S. home, by climate zone. Upfront cost, fuel, maintenance, refrigerant transitions, federal/state credit timing. Sources at the bottom.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>The short answer</h2>
+      <p>
+        In all climate zones with current 2026 energy prices, a central heat pump is cheaper than a new gas furnace over 15 years for the vast majority of homes. The win margin varies: $5,000–$8,000 in cold climates, $8,000–$15,000 in mild climates, $10,000–$20,000+ in hot climates (where the heat pump also serves as central AC, replacing two appliances with one).
+      </p>
+      <p>
+        Edge cases where gas might still win: cheap gas + expensive electricity (parts of the Midwest with under $0.10/kWh and $0.80/therm gas), or very large homes where heating load makes a cold-climate heat pump impractical without dual-fuel.
+      </p>
+    </section>
+
+    <section>
+      <h2>Upfront cost (year 0)</h2>
+      <ul>
+        <li><strong>Gas furnace (95% AFUE 80,000 BTU/hr) + 3-ton AC:</strong> $7,500–$13,500 installed. Two pieces of equipment, separate compressors, separate maintenance.</li>
+        <li><strong>3-ton central heat pump (cold-climate spec):</strong> $9,500–$16,500 installed. One piece of equipment doing both jobs.</li>
+        <li><strong>Heat pump premium:</strong> $2,000–$3,000 over gas+AC combination.</li>
+        <li><strong>State + utility rebates available:</strong> Mass Save up to $10,000, NYSERDA $1,000–$4,000, ComEd $2,250, Energy Trust of Oregon $1,500, etc. Federal 25C credit expired 2025-12-31.</li>
+      </ul>
+      <p>
+        Net after state rebates, heat pumps often install for less than gas + AC combination.
+      </p>
+    </section>
+
+    <section>
+      <h2>Annual operating cost — climate-dependent</h2>
+      <p>
+        For a typical 1,800 sqft well-insulated home (8,000 kWh annual heating load, 4,000 kWh annual cooling load):
+      </p>
+      <ul>
+        <li><strong>Northeast / Mid-Atlantic (zones 4–5):</strong> heat pump $1,300–$1,700/yr; gas furnace + AC $1,400–$2,000/yr. Heat pump wins by $100–$300/yr.</li>
+        <li><strong>Southeast / hot-humid (zones 2–3):</strong> heat pump $900–$1,200/yr; gas furnace + AC $1,400–$1,800/yr. Heat pump wins by $400–$600/yr.</li>
+        <li><strong>Mountain / cold (zones 5–6):</strong> heat pump $1,500–$2,200/yr (with cold-climate spec); gas furnace + AC $1,300–$1,800/yr. Roughly tied; dual-fuel often wins.</li>
+        <li><strong>Hot-arid (zones 1–2):</strong> heat pump $700–$1,000/yr; gas furnace + AC $1,200–$1,500/yr. Heat pump wins by $500/yr.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>15-year totals (concrete example)</h2>
+      <p>
+        Same 1,800 sqft home in Massachusetts (zone 5), comparing 15-year total cost:
+      </p>
+      <ul>
+        <li><strong>Gas furnace + AC:</strong> $10,500 upfront + $1,700/yr × 15 = $36,000 total. Plus $1,200 furnace replacement at year 12 (gas furnaces typically need replacement at 15-20 yr; AC at 12-15 yr). Adjusted total $37,200.</li>
+        <li><strong>Cold-climate heat pump:</strong> $13,000 upfront (after $8,000 Mass Save rebate) - $5,000 = $8,000 net upfront. + $1,500/yr × 15 = $30,500 total. No mid-life equipment replacement needed (15-yr typical heat pump life). <strong>Heat pump wins by $6,700.</strong></li>
+      </ul>
+      <p>
+        Adjust for your state by checking electricity vs gas rates at the EIA database and applying state rebates from /rebates/. Higher electricity rates and lower gas rates shrink the heat pump advantage; the opposite expands it.
+      </p>
+    </section>
+
+    <section>
+      <h2>Equipment lifespan</h2>
+      <ul>
+        <li>Gas furnace: 15-20 years typical, depending on cycle count and maintenance.</li>
+        <li>Central AC: 12-15 years typical.</li>
+        <li>Heat pump: 13-15 years for traditional split systems, 15-20 for inverter-driven units. Compressor sees more annual run hours than an AC-only system.</li>
+        <li>Net: similar replacement cycle; heat pump has one piece of equipment to replace vs furnace + AC.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Refrigerant transitions affect both</h2>
+      <p>
+        EPA&rsquo;s 2025 SNAP Rule 23 phased R-410A out of new residential AC and heat pump equipment. Replacements are R-32 (Daikin, Goodman) or R-454B (Carrier, Trane, Lennox). Both are A2L classification with new installer training requirements and slight (~$200–$700) refrigerant-transition adders. Affects new equipment of both types equally.
+      </p>
+    </section>
+
+    <section>
+      <h2>Dual-fuel: the cold-climate sweet spot</h2>
+      <p>
+        In IECC zones 5+ with existing gas service, dual-fuel pairs a heat pump with the existing gas furnace as backup heat. The heat pump runs down to ~30°F (where its COP is still &gt;2.0); below that, the furnace takes over. Captures 70-80% of heat pump operating savings while preserving the existing furnace for the coldest days. Cost: $1,500–$3,000 more than heat pump alone (mostly the integrated controls + transition kit). The pragmatic choice for many Northeast and Midwest homes.
+      </p>
+    </section>
+
+    <section>
+      <h2>When gas still wins</h2>
+      <ul>
+        <li>Very cheap gas (under $0.80/therm) AND expensive electricity (over $0.20/kWh) — increasingly rare combination.</li>
+        <li>Very large heating loads (5,000+ sqft, poor insulation) where cold-climate heat pumps can&rsquo;t deliver enough BTU/hr without resistance backup running constantly.</li>
+        <li>Existing furnace less than 5 years old (replacing it early throws away $3,000–$5,000 of remaining service life).</li>
+        <li>Home with no AC and no plans for AC, in mild summer climates (Pacific NW, parts of Northeast). Gas-only furnace is cheaper if you genuinely don&rsquo;t need cooling.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/heat-pump-systems" target="_blank" rel="noopener">DOE Energy Saver — Heat Pump Systems</a></li>
+        <li><a href="https://www.eia.gov/state/seds/" target="_blank" rel="noopener">EIA State Energy Data System — gas + electricity prices</a></li>
+        <li><a href="https://neep.org/heating-electrification/ccashp-specification-product-list" target="_blank" rel="noopener">NEEP Cold Climate Heat Pump Specification</a></li>
+        <li><a href="https://rmi.org/insight/the-economics-of-electrifying-buildings/" target="_blank" rel="noopener">RMI — The Economics of Electrifying Buildings</a></li>
+        <li><a href="https://www.epa.gov/snap/snap-final-rule-23" target="_blank" rel="noopener">EPA SNAP Rule 23 — R-410A phase-out</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Run the numbers for your state</p>
+        <p class="mt-1 text-sm text-ink-700">The heat pump calculator applies your state&rsquo;s labor multiplier and electricity rates; the AC calculator does the same for the gas+AC comparison.</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a href="/heat-pump-cost-calculator/" class="btn-primary inline-block">Heat pump calculator →</a>
+          <a href="/ac-replacement-cost-calculator/" class="btn-ghost border border-ink-200 inline-block">AC calculator →</a>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

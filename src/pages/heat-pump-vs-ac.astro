@@ -1,0 +1,136 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const faq = [
+  { q: 'Is a heat pump really cheaper than AC over 15 years?',
+    a: 'In nearly every U.S. climate, yes. A 3-ton heat pump installed for $9,500–$14,000 typically beats a new gas furnace + 3-ton AC ($7,500–$13,500) by $5,000–$8,000 over 15 years once you factor heating fuel savings and equipment longevity. State rebates (Mass Save up to $10,000, NYSERDA $1,000–$4,000) often make heat pumps cheaper net up front too.' },
+  { q: 'Why is heat pump efficiency so much better than gas + AC?',
+    a: 'A heat pump moves heat instead of generating it. COP 3.0 means 3 BTU of heat for every 1 BTU of electricity. A 95% AFUE gas furnace gets 0.95 BTU per BTU of fuel. Cooling-wise the heat pump and AC are roughly identical (same compressor and condenser). The heating side is where the heat pump wins.' },
+  { q: 'When does AC + gas furnace still win?',
+    a: 'When gas is under $0.80/therm AND electricity is over $0.22/kWh (rare combination — parts of New England), when the existing furnace is under 5 years old, or when the home heating load exceeds what cold-climate heat pumps can deliver (very large homes in IECC zone 7-8 without dual-fuel backup).' },
+  { q: 'What about dual-fuel — heat pump + existing gas furnace?',
+    a: 'Best of both. Heat pump runs down to ~30°F (where COP is still >2.0), gas furnace handles the coldest days. Captures 70-80% of heat pump operating savings while preserving the existing furnace. Adds $1,500–$3,000 over heat pump alone (mostly integrated controls + transition kit). The pragmatic choice for many Northeast and Midwest homes.' },
+  { q: 'Refrigerant transition affects both?',
+    a: 'Yes equally. EPA SNAP Rule 23 phased R-410A out of new residential equipment manufactured after 2025-01-01. New AC and new heat pumps both use R-32 (Daikin, Goodman) or R-454B (Carrier, Trane, Lennox). Both are A2L classification with $200–$700 transition adders. No advantage to either type here.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Article', headline: 'Heat Pump vs AC Replacement — 15-Year Cost Comparison 2026',
+    author: { '@type': 'Organization', name: 'ElectrifyCost' }, datePublished: '2026-05-12', dateModified: '2026-05-12' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Heat Pump vs AC Replacement: 15-Year Cost (2026)"
+  description="Side-by-side: replacing AC vs installing a heat pump that does both. Cost, state rebates, when each wins, dual-fuel option."
+  active="/heat-pump-vs-ac/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Heat pump vs AC', href: '/heat-pump-vs-ac/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Comparison</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump vs AC Replacement</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Your AC is dying. The contractor offers a like-for-like replacement and a heat pump option for $2,000–$3,000 more. Which is the better answer in 2026, and when is the AC swap still the right call?
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>Short answer</h2>
+      <p>In nearly every U.S. climate, the heat pump wins on total cost of ownership in 2026. Same outdoor footprint, same indoor coil, same ductwork, same installation labor. It adds a reversing valve and a slightly larger compressor for cold-weather performance. You get free heating capacity for $2,000–$3,000 more upfront, with state and utility rebates often making net cost lower than AC alone.</p>
+    </section>
+
+    <section>
+      <h2>Side-by-side cost (3-ton system, mid-band, 2026)</h2>
+      <div class="card overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-ink-50">
+            <tr><th class="px-3 py-2 text-left">Item</th><th class="px-3 py-2 text-right">AC + Gas Furnace</th><th class="px-3 py-2 text-right">Heat Pump (cold-climate)</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2">Equipment (3-ton)</td><td class="px-3 py-2 text-right tabular-nums">$7,500–$13,500</td><td class="px-3 py-2 text-right tabular-nums">$9,500–$14,000</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2">State rebate (avg)</td><td class="px-3 py-2 text-right tabular-nums">$0</td><td class="px-3 py-2 text-right tabular-nums">-$1,500 to -$10,000</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2">Federal 25C credit</td><td class="px-3 py-2 text-right tabular-nums text-ink-500">expired 2025-12-31</td><td class="px-3 py-2 text-right tabular-nums text-ink-500">expired 2025-12-31</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2 font-semibold">Net upfront (mid)</td><td class="px-3 py-2 text-right tabular-nums font-semibold">~$10,500</td><td class="px-3 py-2 text-right tabular-nums font-semibold">~$8,000–$11,000 (after rebates)</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2">Annual operating (zone 5)</td><td class="px-3 py-2 text-right tabular-nums">~$1,700/yr</td><td class="px-3 py-2 text-right tabular-nums">~$1,500/yr</td></tr>
+            <tr class="border-t border-ink-100"><td class="px-3 py-2">15-yr total (incl. one mid-life replacement of AC at yr 12)</td><td class="px-3 py-2 text-right tabular-nums">~$37,200</td><td class="px-3 py-2 text-right tabular-nums">~$30,500</td></tr>
+            <tr class="border-t border-ink-100 bg-brand-50"><td class="px-3 py-2 font-semibold">15-yr advantage</td><td class="px-3 py-2 text-right tabular-nums"></td><td class="px-3 py-2 text-right tabular-nums font-semibold text-brand-700">+$6,700 to heat pump</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Annual operating by climate</h2>
+      <p>1,800 sqft well-insulated home, 8,000 kWh heating load, 4,000 kWh cooling load:</p>
+      <ul>
+        <li><strong>Northeast / Mid-Atlantic (IECC 4-5):</strong> heat pump $1,300–$1,700/yr vs gas+AC $1,400–$2,000. Heat pump wins by $100–$300/yr.</li>
+        <li><strong>Southeast / hot-humid (IECC 2-3):</strong> heat pump $900–$1,200/yr vs gas+AC $1,400–$1,800. Heat pump wins by $400–$600/yr.</li>
+        <li><strong>Mountain / cold (IECC 5-6):</strong> heat pump $1,500–$2,200/yr vs gas+AC $1,300–$1,800. Roughly tied; dual-fuel often wins.</li>
+        <li><strong>Hot-arid (IECC 1-2):</strong> heat pump $700–$1,000/yr vs gas+AC $1,200–$1,500. Heat pump wins by $500/yr.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Scenarios — which wins for you</h2>
+      <ol>
+        <li><strong>"My 12-year-old AC just died, I have a 6-year-old gas furnace."</strong> → Heat pump alone (or dual-fuel) wins. Don&rsquo;t throw away a 6-yr furnace, but pair it with the heat pump so future fuel use drops 70%.</li>
+        <li><strong>"My AC just died and my furnace is 16 years old."</strong> → Heat pump wins decisively. Replace one piece, not two.</li>
+        <li><strong>"AC died, I rent the home out, owner wants cheapest swap."</strong> → AC like-for-like is rational here; tenants don&rsquo;t pay the gas bill so operating savings don&rsquo;t accrue to the owner.</li>
+        <li><strong>"AC died in Minnesota, design temp -10°F, I want backup."</strong> → Dual-fuel (heat pump + existing gas furnace) is the sweet spot. Heat pump runs to ~30°F; furnace handles deep cold.</li>
+        <li><strong>"AC died in Florida; we never use heating."</strong> → AC replacement is fine. Heat pump premium pays back slowly when heating runtime is near zero.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>What to ask the contractor</h2>
+      <ul>
+        <li>Manual J load calculation in writing.</li>
+        <li>NEEP-listed cold-climate heat pump if zone 5+.</li>
+        <li>AHRI-matched system certificate (outdoor + indoor coil pair).</li>
+        <li>SEER2, EER2, and HSPF2 numbers; HSPF2 ≥ 9.0 for ENERGY STAR Most Efficient.</li>
+        <li>R-32 or R-454B refrigerant (post-2025).</li>
+        <li>State + utility rebate paperwork prepared (Mass Save, NYSERDA, ComEd, Xcel etc.).</li>
+        <li>Dual-fuel option price separately from heat-pump-only price.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <div class="not-prose mt-4 space-y-3">
+        {faq.map(f => (
+          <details class="card p-4">
+            <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+            <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="not-prose mt-8">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Run both calculators for your state</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a href="/heat-pump-cost-calculator/" class="btn-primary inline-block">Heat pump calculator →</a>
+          <a href="/ac-replacement-cost-calculator/" class="btn-ghost border border-ink-200 inline-block">AC calculator →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/heat-pump-systems" target="_blank" rel="noopener">DOE Energy Saver — Heat Pump Systems</a></li>
+        <li><a href="https://neep.org/heating-electrification/ccashp-specification-product-list" target="_blank" rel="noopener">NEEP Cold Climate Heat Pump Specification</a></li>
+        <li><a href="https://www.eia.gov/state/seds/" target="_blank" rel="noopener">EIA State Energy Data System</a></li>
+        <li><a href="https://www.epa.gov/snap" target="_blank" rel="noopener">EPA SNAP Rule 23 — R-410A phase-out</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

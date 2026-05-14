@@ -1,0 +1,20 @@
+parameter,key,value,unit,notes,source_id,last_reviewed
+ev_kwh_per_mile,compact,0.28,kWh/mi,Chevy Bolt MINI SE — EPA + 15% charging losses,EPA_fueleconomy,2026-05-11
+ev_kwh_per_mile,sedan,0.30,kWh/mi,Tesla Model 3 Ioniq 6 Polestar 2,EPA_fueleconomy,2026-05-11
+ev_kwh_per_mile,suv,0.36,kWh/mi,Tesla Model Y VW ID.4 Ioniq 5,EPA_fueleconomy,2026-05-11
+ev_kwh_per_mile,truck,0.45,kWh/mi,F-150 Lightning Silverado EV,EPA_fueleconomy,2026-05-11
+ev_kwh_per_mile,luxury,0.38,kWh/mi,Lucid Air BMW iX EQS,EPA_fueleconomy,2026-05-11
+gas_mpg,compact,36,mpg,Civic Corolla,EPA_fueleconomy,2026-05-11
+gas_mpg,sedan,32,mpg,Camry Accord,EPA_fueleconomy,2026-05-11
+gas_mpg,suv,26,mpg,CR-V RAV4 Highlander,EPA_fueleconomy,2026-05-11
+gas_mpg,truck,22,mpg,F-150 Silverado V6,EPA_fueleconomy,2026-05-11
+gas_mpg,luxury,26,mpg,BMW 3 Mercedes E,EPA_fueleconomy,2026-05-11
+maint_per_mile,ev,0.045,$/mi,Consumer Reports 2024 maintenance survey,Consumer_Reports_2024,2026-05-11
+maint_per_mile,gas,0.105,$/mi,AAA TrueCost 2024,AAA_TrueCost_2024,2026-05-11
+insurance_ev_multiplier,base,1.10,multiplier,EVs typically 8-15% higher insurance,III_2024,2026-05-11
+depreciation_ev_y1,base,0.18,fraction,Year-1 EV depreciation,Edmunds_KBB_2024,2026-05-11
+depreciation_ev_y2to5,base,0.11,fraction,Year 2-5 EV depreciation,Edmunds_KBB_2024,2026-05-11
+depreciation_ev_y6plus,base,0.08,fraction,Year 6+ EV depreciation,Edmunds_KBB_2024,2026-05-11
+depreciation_gas_y1,base,0.15,fraction,Year-1 gas depreciation,Edmunds_KBB_2024,2026-05-11
+depreciation_gas_y2to5,base,0.10,fraction,Year 2-5 gas depreciation,Edmunds_KBB_2024,2026-05-11
+depreciation_gas_y6plus,base,0.07,fraction,Year 6+ gas depreciation,Edmunds_KBB_2024,2026-05-11

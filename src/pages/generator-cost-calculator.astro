@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import GeneratorCalculator from '@/components/GeneratorCalculator';
+
+const faq = [
+  {
+    q: 'How much does a whole-home generator cost installed in 2026?',
+    a: 'An 18-22 kW air-cooled standby generator (Generac Guardian, Kohler 20RCAL) installs for $9,000–$15,500 turnkey. That includes the generator ($5,100–$7,200), 200A whole-home automatic transfer switch ($1,500–$4,200), concrete pad + gas line + electrical wiring + permits. Liquid-cooled commercial-grade units (Generac Protector, Kohler 30RCL) run $20,000–$35,000+. Portable generators with an interlock kit: $1,500–$3,500.',
+  },
+  {
+    q: 'Generator vs battery — which is right?',
+    a: 'Battery wins for: silent operation, no fuel storage, integration with solar, short outages (<24 hours), daily TOU arbitrage in tariff-friendly states. Generator wins for: sustained multi-day outages (hurricane country), unlimited capacity if on natural gas, heavy loads like central AC. The federal 25D credit (30% standalone battery) expired for property placed in service after 2025-12-31 under OBBBA — both options now rely on state programs and operating value, not federal credit.',
+  },
+  {
+    q: 'Natural gas, propane, or diesel?',
+    a: 'Natural gas if your home has a gas line — unlimited runtime, no tank to fill, lowest fuel cost ($1–$2/hour at 50% load for 18-22 kW). Propane if you don\'t have natural gas — requires a 500-1000 gallon in-ground tank ($1,800–$4,200), 7-10 days of runtime per tank fill. Diesel for very large units (26 kW+) or commercial applications — most efficient but emissions and fuel storage are concerns. Gasoline for portable units only — limited tank capacity, fuel degrades in storage.',
+  },
+  {
+    q: 'Do I need an automatic transfer switch?',
+    a: 'For a standby generator: yes, by code (NEC 702.5). For a portable generator: an interlock kit + inlet box is the legal alternative (~$250–$700 vs $1,500–$4,200 for ATS). Interlock kits are mechanical breakers that physically prevent the main and generator breakers from being on simultaneously. Backfeeding without one is illegal in all 50 states because it sends 120V backward into the utility line and can kill repair crews.',
+  },
+  {
+    q: 'How big should my generator be?',
+    a: 'For critical-loads only (refrigerator, lights, internet, furnace blower, well pump): 7-10 kW. For whole-home with central AC selectively cycled: 18-22 kW. For whole-home running everything simultaneously including 4+ ton AC: 22-26 kW. Generac and Kohler offer free sizing tools. Most "whole-home" portable claims at 10-14 kW are misleading — they cannot start central AC without load shedding.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Home Generator Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for portable, inverter, air-cooled standby, and liquid-cooled standby home generators. Includes ATS, interlock, gas line, propane tank, and battery-alternative comparison.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Home Generator Cost Calculator 2026: Portable, Standby, Whole-Home"
+  description="Installed-cost calculator for portable, inverter, air-cooled standby, and liquid-cooled standby home generators. Includes ATS, interlock, gas line, propane tank, and battery storage alternative."
+  active="/generator-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/generator-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Home generator calculator', href: '/generator-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Backup power</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Home Generator Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for portable, inverter, air-cooled standby, and liquid-cooled standby generators. Adjusts for size, fuel, transfer mechanism, and state labor.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a 22 kW whole-home air-cooled standby with full ATS installs for $11,000–$17,500. Portable + interlock kit: $2,000–$5,000. Compare to a 13.5 kWh battery ($13,000–$19,000) which qualified for 30% federal credit historically (expired 2025-12-31) and runs silently.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/generator-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/generator-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/generator-hero-photo.png"
+      alt="Home standby generator installed beside a house"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><GeneratorCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to backup generators?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A backup generator converts mechanical energy (a gas engine) into electrical energy (an alternator) to power your house during a utility outage. Three classes: <strong>portable</strong> (wheels, refueled by hand, 5-14 kW), <strong>air-cooled standby</strong> (permanent install, 10-26 kW, the residential default), and <strong>liquid-cooled standby</strong> (heavy-duty, 14-48 kW, commercial-grade). The other half of any generator install is the transfer mechanism — interlock kit (cheap, manual) or automatic transfer switch (expensive, automatic). Backfeeding without one is illegal everywhere.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/generators/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">9-min read · sizing · fuel choice · ATS vs interlock · NEC 702 · generator vs battery</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/home-battery-cost-calculator/">Home battery cost calculator (alternative) →</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade calculator →</a></li>
+      <li><a href="/solar-panel-cost-calculator/">Solar panel cost calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

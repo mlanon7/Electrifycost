@@ -1,0 +1,28 @@
+type,size,low,mid,high,unit,notes,source_id,last_reviewed
+portable,5kw,600,900,1200,$,Portable gas/propane 5kW,Generac_MSRP,2026-05-11
+portable,7kw,800,1100,1400,$,Portable 7kW,Generac_MSRP,2026-05-11
+portable,10kw,1300,1700,2200,$,Portable 10kW (rare),Generac_MSRP,2026-05-11
+portable,14kw,1800,2300,2800,$,Portable 14kW (rare),Generac_MSRP,2026-05-11
+inverter,5kw,1200,1600,2000,$,Honda/Yamaha inverter 5kW,Honda_MSRP,2026-05-11
+inverter,7kw,1700,2100,2500,$,Inverter 7kW,Honda_MSRP,2026-05-11
+inverter,10kw,2400,2900,3400,$,Inverter 10kW,Honda_MSRP,2026-05-11
+standby_air,10kw,2800,3500,4200,$,Air-cooled standby 10kW,Generac_MSRP,2026-05-11
+standby_air,14kw,3400,4200,5000,$,Air-cooled standby 14kW (Generac Guardian),Generac_MSRP,2026-05-11
+standby_air,18kw,4200,5100,6100,$,Air-cooled standby 18kW,Generac_MSRP,2026-05-11
+standby_air,22kw,5000,6000,7200,$,Air-cooled standby 22kW Generac Guardian,Generac_MSRP,2026-05-11
+standby_air,26kw,5800,6900,8200,$,Air-cooled standby 26kW,Generac_MSRP,2026-05-11
+standby_liquid,14kw,8500,10500,12500,$,Liquid-cooled commercial-grade 14kW (Kohler),Kohler_MSRP,2026-05-11
+standby_liquid,18kw,10500,12500,14500,$,Liquid-cooled 18kW,Kohler_MSRP,2026-05-11
+standby_liquid,22kw,12500,14500,17000,$,Liquid-cooled 22kW Generac Protector,Generac_MSRP,2026-05-11
+standby_liquid,26kw,14500,16500,19500,$,Liquid-cooled 26kW,Generac_MSRP,2026-05-11
+transfer_none,base,0,0,0,$,Direct extension cords (portable only — code-questionable),NEC_702,2026-05-11
+transfer_interlock,base,250,450,700,$,UL-listed interlock kit + inlet box,NEC_702.5,2026-05-11
+transfer_ats_partial,base,800,1500,2400,$,Critical-load subpanel ATS,NEC_702,2026-05-11
+transfer_ats_whole,base,1500,2500,4200,$,Whole-home 200A service ATS,NEC_702,2026-05-11
+install_portable,base,50,150,350,$,Inlet box wire run,NEC_702.5,2026-05-11
+install_inverter,base,100,250,500,$,Light electrical work,NEC_702.5,2026-05-11
+install_standby_air,base,1500,2800,4500,$,Pad fuel-line wiring ATS commissioning,Generac_dealer_avg,2026-05-11
+install_standby_liquid,base,2500,4500,7500,$,Larger pad dedicated subpanel,Generac_dealer_avg,2026-05-11
+gas_line_extension,base,600,1400,2800,$,Natural gas line extension/upsize,plumber_avg,2026-05-11
+propane_tank,base,1800,2800,4200,$,500-gal in-ground tank,plumber_avg,2026-05-11
+permit,base,250,500,900,$,Permit + inspection,municipal_avg,2026-05-11

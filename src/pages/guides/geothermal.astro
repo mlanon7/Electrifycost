@@ -1,0 +1,152 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Geothermal Heat Pumps: Loop Types, Cost, 25D Credit, and When It Pays',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11', dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Geothermal Heat Pump Guide 2026: Loops, Cost, 25D Credit"
+  description="Long-form guide to geothermal (ground-source) heat pumps in 2026: vertical vs horizontal vs pond loops, sizing, 25D federal credit, brands, drilling reality, vs air-source comparison."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Geothermal', href: '/guides/geothermal/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Geothermal heat pumps</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Geothermal, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How ground-source heat pumps actually work, the four loop options (vertical / horizontal / pond / open), real cost math, the 25D federal credit (expired 2025-12-31), brand-by-brand options (WaterFurnace, ClimateMaster, Bosch), drilling reality, and when geothermal pays vs air-source. 12-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#what">1. What it is</a>
+      <a href="#loops">2. Loop types</a>
+      <a href="#cost">3. Real cost</a>
+      <a href="#credit">4. 25D credit</a>
+      <a href="#brands">5. Brands</a>
+      <a href="#sizing">6. Sizing</a>
+      <a href="#vs-air">7. vs Air-source</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="what">
+      <h2>1. What geothermal actually is</h2>
+      <p>
+        A geothermal (ground-source) heat pump uses the earth itself as a constant-temperature reservoir. A few feet below grade, ground temperature holds steady at 50–55°F year-round (varies slightly by latitude). That&rsquo;s warmer than winter outdoor air and cooler than summer outdoor air, so a heat pump exchanging heat with the ground has dramatically less work to do than one exchanging with outdoor air.
+      </p>
+      <p>
+        The physical system is three pieces: an indoor heat pump unit (looks like a normal furnace/air-handler, no outdoor unit), a buried polyethylene loop filled with propylene glycol, and a circulator pump that moves the fluid through the loop. The indoor unit pulls heat from the loop in winter and dumps heat to the loop in summer.
+      </p>
+      <p>
+        Result: COP (coefficient of performance) of 4.0–5.5 in heating mode, vs 2.5–3.5 for air-source heat pumps and ~0.95 for gas furnaces. 50% lower operating cost than air-source, 65–75% lower than gas.
+      </p>
+    </section>
+
+    <section id="loops">
+      <h2>2. Loop types — the cost driver</h2>
+      <ul>
+        <li><strong>Vertical bore (most common).</strong> Drilled holes 150–400 ft deep, one bore per ton typically. Suits any yard size including small urban lots. Cost: $20–$30 per linear foot of drilling, so $1,500–$2,500 per ton in loop alone. The high cost is balanced by no yard disruption (just a few small wellheads) and excellent thermal performance year-round.</li>
+        <li><strong>Horizontal trench.</strong> Polyethylene loop laid in trenches 4–8 ft deep, 400–600 ft per ton total trench length. Needs ~1 acre of yard. Trenching is much cheaper than drilling: $400–$800 per ton in materials + excavator time. Trade-off: yard is dug up, takes 1–2 years to fully restore lawn.</li>
+        <li><strong>Pond / lake loop.</strong> Coiled loop submerged in water at least 8 ft deep year-round. Cheapest option ($600–$1,200/ton) if you have qualifying water. Excellent thermal performance because water has much higher heat capacity than soil. Requires water-rights / DEP review in some states.</li>
+        <li><strong>Open loop (well discharge).</strong> Pumps groundwater through the heat exchanger, then discharges to a surface or second well. Cheapest if you have a productive well, but increasingly restricted by state water regulations, and can foul the heat exchanger with mineral deposits. Risky long-term.</li>
+      </ul>
+    </section>
+
+    <section id="cost">
+      <h2>3. Real 2026 installed cost</h2>
+      <p>
+        For a typical 3-ton system (1,500–2,000 sqft home):
+      </p>
+      <ul>
+        <li><strong>Vertical bore:</strong> $25,000–$40,000 gross / $17,500–$28,000 net after 25D.</li>
+        <li><strong>Horizontal trench:</strong> $18,000–$28,000 gross / $12,600–$19,600 net after 25D.</li>
+        <li><strong>Pond loop:</strong> $16,000–$24,000 gross / $11,200–$16,800 net after 25D.</li>
+        <li><strong>Open loop:</strong> $17,000–$26,000 gross / $11,900–$18,200 net after 25D.</li>
+      </ul>
+      <p>
+        Add $5,000–$15,000 if no existing ductwork (you can run geothermal ductless via hydronic radiant floor as a high-end option). State labor multipliers vary — Massachusetts, California, Hawaii add 15–25% over the U.S. average; Mississippi, Alabama, Kentucky come in 10–15% below.
+      </p>
+    </section>
+
+    <section id="credit">
+      <h2>4. Federal 25D credit — expired after 2025-12-31</h2>
+      <p>
+        Section 25D (Residential Clean Energy Credit) covered "qualified geothermal heat pump property" at 30% of total cost with no dollar cap, the same rate as solar PV and battery storage. <strong>OBBBA (signed July 2025) terminated 25D for property placed in service after 2025-12-31.</strong> A 2025-placed-in-service install still claims 30% on the 2025 tax return; 2026-onward installs do not get federal 25D. Source: <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS 25D guidance</a>.
+      </p>
+      <p>
+        Practical math for 2026: a $30,000 vertical-bore install costs $30,000 net after federal credit (i.e., no federal credit applies). State programs (NY-Sun, MA SMART, MD Geothermal Tax Credit, several utility rebates) layer where eligible — verify with the program administrator before counting on them.
+      </p>
+    </section>
+
+    <section id="brands">
+      <h2>5. Brand options (2026)</h2>
+      <ul>
+        <li><strong>WaterFurnace (Series 7, 5).</strong> The premium brand. Variable-speed compressor, two-stage equipment, industry-leading 10-year parts + 10-year compressor warranty. Strongest dealer network in the U.S. Series 7 reaches COP 5.3.</li>
+        <li><strong>ClimateMaster (Trilogy, Tranquility).</strong> WaterFurnace&rsquo;s primary competitor at slightly lower price. Trilogy has built-in domestic hot water option. Solid dealer network.</li>
+        <li><strong>Bosch (Greensource, Climate).</strong> European engineering, slightly lower COP than WaterFurnace but cheaper. Best fit for installs where Bosch has local service presence.</li>
+        <li><strong>Carrier / Bryant (geothermal split systems).</strong> Major-brand familiarity but smaller geothermal portfolio.</li>
+      </ul>
+      <p>
+        Less common but worth knowing: <strong>Enertech Global</strong> (Geocomfort, Hydron Module), <strong>Florida Heat Pump (FHP) by Bosch</strong>. Avoid no-name imports — geothermal warranty service is highly specialized.
+      </p>
+    </section>
+
+    <section id="sizing">
+      <h2>6. Sizing — Manual J then Manual S</h2>
+      <p>
+        Two engineering steps. <strong>Manual J</strong> calculates heating and cooling load (BTU/hr) from building geometry, insulation, infiltration, and design temperature. <strong>Manual S</strong> selects equipment to match that load without over-sizing. Geothermal especially punishes over-sizing because the ground loop has limited heat extraction rate — an oversized compressor pulls heat from the ground faster than soil can replenish it, dropping loop temperature mid-winter and crashing efficiency.
+      </p>
+      <p>
+        Reasonable sizes by square footage in a well-insulated home (R-49 attic, R-15 walls, modern windows):
+      </p>
+      <ul>
+        <li>1,000–1,500 sqft: 2 ton</li>
+        <li>1,500–2,000 sqft: 3 ton</li>
+        <li>2,000–2,500 sqft: 3.5–4 ton</li>
+        <li>2,500–3,500 sqft: 4–5 ton</li>
+      </ul>
+      <p>
+        Poor insulation can push these up 50–75%. Insulate first — it reduces system size and loop length proportionally.
+      </p>
+    </section>
+
+    <section id="vs-air">
+      <h2>7. Geothermal vs air-source heat pump</h2>
+      <p>
+        <strong>Choose geothermal when:</strong> you have a yard or pond, plan to stay in the home 10+ years, are in IECC zones 5+ (cold winters), value the lowest possible operating cost, can afford the upfront premium, and have time for the install (4–8 weeks vs 2–3 days for air-source).
+      </p>
+      <p>
+        <strong>Choose air-source when:</strong> you have a small or no yard, expect to move within 7 years, want minimum upfront cost, are in IECC zones 3–4 (modest cold), or need rapid replacement of dying equipment.
+      </p>
+      <p>
+        Crossover analysis: a 3-ton geothermal ($28,000 net) vs a 3-ton air-source ($12,000 net) has a $16,000 premium. Operating savings of $1,200/year (geothermal $700/yr vs air-source $1,900/yr in a Massachusetts climate) puts payback at 13 years. Air-source equipment needs replacement at year 15; geothermal at year 25+. Over 25 years, geothermal wins by $8,000–$15,000 depending on electricity rate trajectory.
+      </p>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/geothermal-heat-pumps" target="_blank" rel="noopener">DOE Energy Saver — Geothermal Heat Pumps</a></li>
+        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Section 25D (covers geothermal)</a></li>
+        <li><a href="https://igshpa.org/" target="_blank" rel="noopener">IGSHPA — International Ground Source Heat Pump Association</a></li>
+        <li><a href="https://www.waterfurnace.com/" target="_blank" rel="noopener">WaterFurnace technical documentation</a></li>
+        <li><a href="https://www.climatemaster.com/" target="_blank" rel="noopener">ClimateMaster technical documentation</a></li>
+        <li><a href="https://www.energystar.gov/products/geothermal_heat_pumps" target="_blank" rel="noopener">ENERGY STAR Geothermal Heat Pumps</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <a href="/geothermal-heat-pump-cost-calculator/" class="btn-primary mt-3 inline-block">Open the geothermal calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

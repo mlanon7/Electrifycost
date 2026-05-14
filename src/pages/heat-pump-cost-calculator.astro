@@ -1,0 +1,166 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does it cost to install a heat pump?',
+    a: 'Most ducted central heat pumps cost $7,500 to $20,000 installed; ductless mini-splits range from $3,500 for a single zone to $16,000+ for a multi-zone system. Cold-climate equipment runs higher. Your state, install difficulty, and ductwork condition can shift the range significantly. Use the calculator above for a state-specific estimate.',
+  },
+  {
+    q: 'Will a heat pump work in a cold climate?',
+    a: 'Yes. Modern cold-climate heat pumps (those listed in NEEP’s database at https://ashp.neep.org/) maintain meaningful capacity at 5°F and even below. The right move in IECC zones 5–8 is either a NEEP-listed cold-climate model or a dual-fuel setup pairing a heat pump with your existing gas/oil furnace as backup.',
+  },
+  {
+    q: 'Do I need a panel upgrade for a heat pump?',
+    a: 'Not always. A 200A panel is usually sufficient. A 100A panel often works after a NEC 220.83 load calculation, especially when paired with smart load management. A 60A service almost always requires an upgrade. Use the panel-size dropdown above to see the upgrade-likelihood badge.',
+  },
+  {
+    q: 'Is there a federal tax credit for heat pumps?',
+    a: 'No, not for 2026 installs. The 25C credit ended December 31, 2025 under OBBBA. For systems installed in tax year 2025, 25C provided 30% of cost up to $2,000 for qualifying ENERGY STAR heat pumps (cap shared with heat pump water heaters). See https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit for current IRS guidance.',
+  },
+  {
+    q: 'What state and utility rebates can I stack?',
+    a: 'Most state and utility rebates stack with any remaining tax credits. Notable programs include Mass Save (MA: up to $8,500 for whole-home effective 2026-01-01, reduced from $10,000 in 2025; $2,650/ton; R-410A no longer eligible), NYSERDA NYS Clean Heat (NY: up to $10,000–$12,000 for air-source heat pumps under the 2026–2030 reauthorization, with EmPower+ adding up to $24,000 for income-qualified), TECH Clean California (CA: $1,000–$4,000 per equipment), and Colorado’s state heat pump tax credit (up to $3,000 for cold-climate models). DOE Home Energy Rebates (HEEHRA) add another $4,000–$8,000 for income-qualified households where states have launched the program; rollout is uneven, and several states (e.g., CA HEEHRA single-family) have been fully reserved. Track your state’s status at https://www.energy.gov/scep/home-energy-rebates-programs and cross-reference utility offers via DSIRE: https://www.dsireusa.org/.',
+  },
+  {
+    q: 'Ducted, ductless, or dual-fuel: which is right for me?',
+    a: 'Ducted is cheapest if your existing ductwork is in decent shape and you want one central system. Ductless mini-splits give per-room control and avoid duct losses but cost more for whole-home coverage. Dual-fuel (heat pump + gas/oil furnace as backup) is popular in cold climates where you want best-of-both-worlds reliability.',
+  },
+  {
+    q: 'How long does a heat pump last?',
+    a: 'DOE Energy Saver puts typical service life around 15 years for ducted air-source heat pumps. Manufacturers commonly cite 15–20 years for mini-splits, but field longevity data is sparse. Compressor warranties from major brands run 10–12 years; labor warranties from contractors are usually 1–10 years. Reference: https://www.energy.gov/energysaver/heat-pump-systems',
+  },
+  {
+    q: 'How much will a heat pump save (or cost) on my monthly bill?',
+    a: 'Operating-cost change depends on local electricity vs. fuel prices and your climate. In states with cheap electricity (WA, ID, OR, KY) and expensive fuel, a heat pump saves money vs. natural gas in nearly every scenario. In states with expensive electricity (CA, MA, CT, NY, HI), savings vs. gas are smaller, sometimes neutral. Heat pumps almost always save money vs. heating oil, propane, and electric resistance. Cross-check retail rates at EIA State Energy Profiles: https://www.eia.gov/state/.',
+  },
+  {
+    q: 'Should I get a load calculation (Manual J) before signing a quote?',
+    a: 'Yes. Manual J is the ACCA standard residential load calculation (https://www.acca.org/standards/manual-j). Sizing by rule of thumb or matching the old furnace is a red flag: it leads to oversized systems that short-cycle, run inefficiently, and don’t dehumidify well. Ask your contractor to share the Manual J before installation.',
+  },
+  {
+    q: 'What is HSPF2 and what number should I look for?',
+    a: 'HSPF2 (Heating Seasonal Performance Factor, 2023+ standard) measures heating efficiency. Higher is better. ENERGY STAR thresholds vary by form factor and region. See the official key product criteria at https://www.energystar.gov/products/heating_cooling/heat_pumps_air_source/key_product_criteria. NEEP-listed cold-climate models often reach HSPF2 8.1+ and maintain capacity at 5°F (https://ashp.neep.org/). HSPF2 is roughly 0.85x the old HSPF rating for the same equipment.',
+  },
+  {
+    q: 'Will a heat pump cool my home in summer too?',
+    a: 'Yes. Every air-source heat pump is also a high-efficiency air conditioner. SEER2 (the cooling-side efficiency rating) is typically 14.3 for ENERGY STAR baseline and 16+ for premium models. If you currently have a separate AC, replacing both with one heat pump is the typical move.',
+  },
+  {
+    q: 'What questions should I ask the contractor?',
+    a: 'See the contractor checklist next to the calculator result above. It covers ductwork, Manual J, equipment cold-climate rating, electrical work, permits, rebate filing, warranty, and noise. Print or copy the list before your site visit.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Heat Pump Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description: 'Free planning-range calculator for ducted, ductless, cold-climate, and dual-fuel heat pump installations with rebates and payback.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="Heat Pump Cost Calculator 2026: Install Cost, Rebates & Payback"
+  description="Estimate residential heat pump installed cost by state, size, panel, ductwork, climate. ENERGY STAR + NEEP cold-climate data. State + utility rebates."
+  active="/heat-pump-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump cost calculator', href: '/heat-pump-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Heat pump</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">
+        Heat Pump Cost Calculator
+      </h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Estimate planning-level installed cost for ducted, ductless, cold-climate, and dual-fuel heat pumps. Includes federal credits and state rebates, plus monthly bill impact vs. your current fuel.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a typical 3-ton ducted central heat pump runs $7,500–$22,000 installed depending on state and home. Mini-splits range $3,500–$16,000. State rebates can take $1,500–$12,000 off (Mass Save $8,500 cap effective 2026; NY Clean Heat up to $12,000 under 2026–2030 reauthorization). The federal 25C credit ended Dec 31 2025.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/heat-pump-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/heat-pump-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/heat-pump-hero-photo.png"
+      alt="Outdoor heat pump condenser and indoor air handler shown in a home"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10">
+    <HeatPumpCalculator client:load />
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">What changes the price</h2>
+    <p class="mt-1 max-w-prose text-sm text-ink-700">A heat pump quote isn't just the equipment. These are the line items that swing real-world bids by thousands of dollars.</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Equipment tier</h3><p class="mt-1 text-sm text-ink-700">Single-stage, two-stage, and variable-speed compressors range $3,500–$10,000+ in equipment cost alone. Variable-speed runs quieter, dehumidifies better, and modulates output to match load.</p></div>
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Cold-climate rating</h3><p class="mt-1 text-sm text-ink-700">A NEEP-listed cold-climate model adds $1,500–$3,500 over a standard model but maintains capacity at 5&deg;F. In zones 5–8, this is essentially required.</p></div>
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Ductwork condition</h3><p class="mt-1 text-sm text-ink-700">Existing duct repair adds $500–$2,500. Full replacement on an old home: $5,000+. If your ducts leak more than ~15%, repair pays back in efficiency.</p></div>
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Panel and circuit work</h3><p class="mt-1 text-sm text-ink-700">A new 240V circuit for the air handler runs $400–$1,200. Full panel upgrade adds $1,800–$4,500. Smart load management can avoid that for $500–$1,500.</p></div>
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Refrigerant lines &amp; pad</h3><p class="mt-1 text-sm text-ink-700">Long line sets, attic-mounted air handlers, and rooftop or wall-bracket outdoor units add labor and material. A simple side-yard install on a concrete pad is the cheapest case.</p></div>
+      <div class="card p-4"><h3 class="text-sm font-semibold text-ink-900">Permit and inspection</h3><p class="mt-1 text-sm text-ink-700">$150–$650 in most jurisdictions; up to $1,000 in California or NYC. Skipping the permit is a red flag: it voids many rebates and can complicate a future sale.</p></div>
+    </div>
+  </section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to heat pumps?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A heat pump is one machine that does the job of a furnace <em>and</em> an air conditioner. It moves heat instead of creating it, which is why it's 2.5–4&times; as efficient as electric resistance and cheaper to run than oil, propane, or (in most states) natural gas. The main types are ducted central, ductless mini-split, cold-climate, dual-fuel, and geothermal. Lifespan is 15–20 years; maintenance is a filter change every 1–3 months plus an annual coil hose-down.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/heat-pumps/" class="font-medium text-brand-700">Read the full guide</a>
+        <span class="ml-2 text-ink-500">8-min read</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade cost calculator</a></li>
+      <li><a href="/heat-pump-water-heater-cost-calculator/">Heat pump water heater cost calculator</a></li>
+      <li><a href="/ev-charger-installation-cost-calculator/">EV charger installation cost calculator</a></li>
+      <li><a href="/induction-stove-cost-calculator/">Induction stove cost calculator</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

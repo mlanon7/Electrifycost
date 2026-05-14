@@ -1,0 +1,97 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const guides = [
+  {
+    href: '/guides/whole-home-electrification/',
+    title: 'Whole-home electrification',
+    summary: 'The 5&ndash;10 year sequence that actually works: insulation, then heat pump, then EV charger, then HPWH, then induction. Panel reality, incentive stacking, combined cost, and the pitfalls that cause people to over-spend.',
+    calc: '/whole-home-electrification-cost-calculator/',
+    calcLabel: 'Whole-home calculator',
+    accent: 'bg-emerald-100 text-emerald-700',
+  },
+  {
+    href: '/guides/solar/',
+    title: 'Solar PV',
+    summary: 'How PV cells produce DC, inverter architectures (string vs optimizer vs micro), how to size a system, the net-metering successor problem (CA NEM 3.0 and friends), battery decision, 25-year economics, and how to read a contractor bid.',
+    calc: '/solar-panel-cost-calculator/',
+    calcLabel: 'Solar calculator',
+    accent: 'bg-yellow-100 text-yellow-700',
+  },
+  {
+    href: '/guides/home-batteries/',
+    title: 'Home batteries',
+    summary: 'LFP vs NMC chemistry, the three real use cases (backup / self-consumption / TOU arbitrage), sizing, brand-by-brand options (Powerwall 3, Enphase IQ Battery 5P, Franklin, Generac), and how to read a battery bid.',
+    calc: '/home-battery-cost-calculator/',
+    calcLabel: 'Battery calculator',
+    accent: 'bg-indigo-100 text-indigo-700',
+  },
+  {
+    href: '/guides/tankless-water-heaters/',
+    title: 'Tankless water heaters',
+    summary: 'Gas condensing vs non-condensing, why electric whole-home tankless is almost always wrong, sizing for cold-water states, venting and gas line requirements, descaling reality, when HPWH is the better answer.',
+    calc: '/tankless-water-heater-cost-calculator/',
+    calcLabel: 'Tankless calculator',
+    accent: 'bg-teal-100 text-teal-700',
+  },
+  {
+    href: '/guides/generators/',
+    title: 'Backup generators',
+    summary: 'Portable vs standby, sizing without over-buying, fuel decision (NG / propane / diesel), transfer mechanisms (interlock vs ATS), NEC 702 compliance, and when battery storage is the better answer in 2026.',
+    calc: '/generator-cost-calculator/',
+    calcLabel: 'Generator calculator',
+    accent: 'bg-zinc-100 text-zinc-700',
+  },
+  {
+    href: '/guides/smart-thermostats/',
+    title: 'Smart thermostats',
+    summary: 'How they actually save energy (occupancy, adaptive recovery, multi-sensor zoning, heat-pump-aware behavior), Nest vs Ecobee vs Honeywell, the C-wire problem, demand-response programs, privacy considerations.',
+    calc: '/smart-thermostat-cost-calculator/',
+    calcLabel: 'Thermostat calculator',
+    accent: 'bg-cyan-100 text-cyan-700',
+  },
+  {
+    href: '/guides/ev-tco/',
+    title: 'EV total cost of ownership',
+    summary: 'How federal 30D + state EV credits actually stack, what home + DC fast-charging really costs, why EV maintenance is half of ICE, how depreciation has shifted, breakeven math for 5/8/10-year holds, and when an EV does not pay off.',
+    calc: '/ev-total-cost-of-ownership-calculator/',
+    calcLabel: 'EV TCO calculator',
+    accent: 'bg-purple-100 text-purple-700',
+  },
+  {
+    href: '/guides/insulation/',
+    title: 'Insulation &amp; air-sealing',
+    summary: 'Target R-values by climate zone, cellulose vs fiberglass vs spray foam vs mineral wool, where the dollars go furthest, blower-door diagnostics, DOE HOMES rebate, and why this is the first step in any electrification project.',
+    calc: '/insulation-cost-calculator/',
+    calcLabel: 'Insulation calculator',
+    accent: 'bg-stone-100 text-stone-700',
+  },
+  {
+    href: '/guides/ac-replacement/',
+    title: 'AC replacement',
+    summary: 'SEER2 (2023 efficiency standard), the R-410A → R-32/R-454B refrigerant transition, single-stage vs two-stage vs variable-speed, Manual J sizing, why most homeowners should consider a heat pump instead.',
+    calc: '/ac-replacement-cost-calculator/',
+    calcLabel: 'AC calculator',
+    accent: 'bg-orange-100 text-orange-700',
+  },
+  {
+    href: '/guides/heat-pumps/',
+    title: 'Heat pumps',
+    summary: 'How the refrigerant cycle works, ducted vs ductless vs cold-climate vs geothermal, HSPF2/SEER2 ratings, sizing with Manual J, refrigerant transition, install red flags.',
+    calc: '/heat-pump-cost-calculator/',
+    calcLabel: 'Heat pump cost calculator',
+    accent: 'bg-brand-100 text-brand-700',
+  },
+  {
+    href: '/guides/ev-chargers/',
+    title: 'EV chargers',
+    summary: 'Level 1/2/3 differences, the NEC 80% / 125% rule for sizing circuits, NACS / J3400 connector consolidation, plug-in vs hardwired, the federal 30C credit, load-management alternatives.',
+    calc: '/ev-charger-installation-cost-calculator/',
+    calcLabel: 'EV charger calculator',
+    accent: 'bg-blue-100 text-blue-700',
+  },
+  {
+    href: '/guides/electrical-panels/',
+    title: 'Electrical panels',
+    summary: 'Service-size definitions, replacement vs upgrade vs subpanel, NEC 220.83 load calculatio

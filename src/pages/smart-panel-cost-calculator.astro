@@ -1,0 +1,89 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import SmartPanelCalculator from '@/components/SmartPanelCalculator';
+
+const faq = [
+  { q: 'What is a smart electrical panel?',
+    a: 'A panel with software-controlled breakers. Lets you monitor energy use per circuit, schedule loads, and automatically shed load during peaks. Three main approaches: full smart panel replacement (Span Drive, Schneider Square D Energy Center, Eaton), add-on smart load center (Lumin), or pure load-shedding device (DCC-9-USA, Wallbox EM112).' },
+  { q: 'How much does a smart panel cost vs a traditional one?',
+    a: 'Span Drive runs $5,800–$9,000 installed; Schneider Square D Energy Center $5,200–$8,500; Lumin add-on $2,800–$4,800. A traditional 200A panel installs for $2,400–$5,800. The smart-panel premium is typically $2,500–$4,500 — but it can offset a 100A→200A service upgrade ($1,500–$5,500), narrowing or eliminating the gap.' },
+  { q: 'When does a smart panel make sense?',
+    a: 'Three scenarios: (1) You have 100A or 125A service and want to add heat pump + EV charger without a full upgrade. (2) You have or plan solar + battery and want time-of-use load shifting. (3) You want circuit-level energy visibility. For homeowners with 200A+ and no major electrification plans, a traditional panel is usually the better economic choice.' },
+  { q: 'Smart panel vs simple load-shedding device?',
+    a: 'A load-shedding device (DCC-9-USA at $1,000–$2,400 installed) only manages one big load — usually the EV charger — pausing it when other appliances spike. A smart panel manages all circuits dynamically. If your only electrification project is an EV charger, the load-shed device is the right tool. If you&rsquo;re doing heat pump + EV + HPWH, the smart panel pays back.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Smart Electrical Panel Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Cost calculator for smart electrical panels (Span, Lumin, Schneider Square D). Compares against traditional 200A panel and avoided upgrade costs.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Smart Electrical Panel Cost Calculator 2026"
+  description="Cost calculator for smart electrical panels — Span Drive, Lumin, Schneider Square D Energy Center. Compared with traditional panels and avoided upgrade costs."
+  active="/smart-panel-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/smart-panel-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Smart electrical panel calculator', href: '/smart-panel-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Smart electrical panel</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Smart Electrical Panel Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed cost for smart electrical panels — Span Drive, Lumin, Schneider Square D Energy Center — compared with traditional 200A panel and avoided service-upgrade costs.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> Span Drive $5,800–$9,000 installed. Schneider Square D Energy Center $5,200–$8,500. Lumin add-on $2,800–$4,800. Load-shed device only $1,000–$2,400. Smart panel often offsets a 100→200A service upgrade, narrowing the premium materially.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/smart-panel-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/smart-panel-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/smart-panel-hero-photo.png" alt="Modern smart electrical panel with software controls"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><SmartPanelCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to smart panels?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A smart electrical panel adds software-controlled breakers, real-time per-circuit energy monitoring, and automated load management. The big win for electrification: dynamic load management means you can add a heat pump and EV charger on existing 100A service without a service upgrade. Span, Lumin, Schneider, and Eaton are the main brands; load-shed devices (DCC-9-USA, Wallbox EM112) address single-load scenarios at much lower cost.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/smart-panels/" class="font-medium text-brand-700">Read the full guide →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Traditional panel upgrade →</a></li>
+      <li><a href="/ev-charger-installation-cost-calculator/">EV charger installation →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

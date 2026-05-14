@@ -1,0 +1,183 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'AC Replacement in 2026: SEER2, R-32, and Whether You Should Just Get a Heat Pump',
+  description: 'Long-form guide to central AC replacement in 2026: SEER2 efficiency standards, the R-410A → R-32/R-454B refrigerant transition, sizing with Manual J, the heat pump alternative, and how to read a bid.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="AC Replacement Guide 2026: SEER2, R-32, Heat Pump Alternative"
+  description="SEER2 (2023 standard), R-410A to R-32/R-454B refrigerant transition, single-stage vs two-stage vs variable, Manual J sizing, when heat pump is better."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'AC replacement', href: '/guides/ac-replacement/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · AC replacement</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">AC Replacement, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      What changed in 2023 (SEER2) and 2025 (R-32 refrigerant transition), how to size correctly with Manual J, why most homeowners should consider a heat pump instead, and how to read a bid without paying for sales overhead. 10-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#how" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. How AC works</a>
+      <a href="#seer2" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. SEER2 explained</a>
+      <a href="#refrigerant" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. R-32 transition</a>
+      <a href="#tiers" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Tier choice</a>
+      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Sizing (Manual J)</a>
+      <a href="#hp" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Heat pump alt</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Real cost</a>
+      <a href="#bids" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">8. Reading bids</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="how">
+      <h2>1. How a central AC actually works</h2>
+      <p>
+        Air conditioning is a refrigeration cycle, identical to your refrigerator&apos;s. Refrigerant in a copper loop absorbs heat from indoor air (at the evaporator coil), is compressed into a high-pressure gas, releases that heat outdoors (at the condenser coil), expands back to a low-pressure liquid, and returns indoors to absorb more heat. The compressor is the outdoor unit; the evaporator coil sits on top of your furnace or air handler; a copper &quot;line set&quot; connects them.
+      </p>
+      <p>
+        Four components define efficiency: <strong>compressor</strong> (scroll, rotary, or variable-speed inverter), <strong>condenser coil</strong> (microchannel aluminum is now standard), <strong>evaporator coil</strong> (must be AHRI-matched to the condenser), and <strong>blower motor</strong> (PSC, ECM, or variable-speed ECM). The 2023 SEER2 rating measures the whole system at realistic external static pressure — a more honest test than the old SEER number.
+      </p>
+    </section>
+
+    <section id="seer2">
+      <h2>2. SEER2 — the 2023 efficiency standard</h2>
+      <p>
+        DOE adopted a revised test procedure for residential central AC and heat pumps effective 2023-01-01 (Federal Register 87 FR 56500). The new test runs at higher external static pressure than the old SEER test, simulating the resistance of real ductwork. The result: SEER ratings drop ~5% when re-rated as SEER2. A SEER 16 unit becomes roughly SEER2 15.2.
+      </p>
+      <p>
+        Federal minimum efficiency in 2026:
+      </p>
+      <ul>
+        <li><strong>North of the 36th parallel:</strong> 14.3 SEER2 (~15 SEER under old rating)</li>
+        <li><strong>South of the 36th parallel:</strong> 15.2 SEER2 (~16 SEER under old rating)</li>
+      </ul>
+      <p>
+        Other ratings on a spec sheet: <strong>EER2</strong> measures full-load steady-state efficiency at 95°F (matters most in hot-dry climates), <strong>HSPF2</strong> applies only to heat pumps (heating efficiency over the season). Don&apos;t shop on SEER2 alone — a high-SEER2 unit with poor EER2 may underperform in Phoenix or Las Vegas.
+      </p>
+    </section>
+
+    <section id="refrigerant">
+      <h2>3. The R-410A → R-32 / R-454B transition</h2>
+      <p>
+        EPA&apos;s Significant New Alternatives Policy (SNAP) rule under the AIM Act phases R-410A (HFC, GWP 2,088) out of new residential equipment manufactured after 2025-01-01. Manufacturers chose two replacements:
+      </p>
+      <ul>
+        <li><strong>R-32</strong> (GWP 675) — chosen by Daikin, Goodman, Amana. Single-component refrigerant; better thermodynamic performance.</li>
+        <li><strong>R-454B</strong> (GWP 466) — chosen by Carrier, Trane, Lennox, York, Bryant. Blend of R-32 and R-1234yf.</li>
+      </ul>
+      <p>
+        Both are <strong>A2L</strong> classification: &quot;mildly flammable&quot; per ASHRAE 34. Installers need new tooling (leak detection sensors, A2L-rated vacuum pumps, recovery cylinders) and training. UL 60335-2-40 imposes new equipment-room and clearance requirements. Practical impact for homeowners: expect a $200–$700 transition adder on installs in 2025–2026; some supply-chain pinch on certain SKUs. <em>Your existing R-410A system is fine to keep running and service</em> — the rule only affects new equipment.
+      </p>
+    </section>
+
+    <section id="tiers">
+      <h2>4. Single-stage, two-stage, or variable-speed</h2>
+      <ul>
+        <li><strong>Single-stage (~14.3-16 SEER2).</strong> Compressor is either on at 100% or off. Cheapest equipment, simplest controls. Trade-off: short-cycles in mild weather (poor dehumidification), peak electrical draw matches nameplate. Good for tight budgets in moderate climates.</li>
+        <li><strong>Two-stage (~16-19 SEER2).</strong> Compressor runs at ~65% or 100%. Longer run times = better dehumidification, lower electrical bills. Sweet spot for most homeowners. Adds ~$1,200–$2,000 over single-stage.</li>
+        <li><strong>Variable-speed inverter (~18-26 SEER2).</strong> Compressor and blower modulate continuously 25-100%. Whisper-quiet, lowest bills, best dehumidification. Trade-off: complex electronics; warranty matters; some brands (Carrier Infinity, Trane XV, Lennox SL, Daikin Fit) have better service networks than others. Adds $2,500–$5,000 over single-stage.</li>
+      </ul>
+      <p>
+        General rule: in humid climates (Southeast, Gulf Coast, Mid-Atlantic), pay up for two-stage or variable. In dry climates (Southwest, Rockies), single-stage is often fine. In any climate where you run AC less than 800 hours/year (much of the North), efficiency tier rarely pays back — focus on installation quality instead.
+      </p>
+    </section>
+
+    <section id="sizing">
+      <h2>5. Sizing — Manual J is non-negotiable</h2>
+      <p>
+        ACCA Manual J is the load calculation standard. It accounts for square footage, ceiling height, insulation R-values, window area and orientation, infiltration rate, internal heat gain, and design temperature. The output is BTU/hr of cooling load. Divide by 12,000 to get tons.
+      </p>
+      <p>
+        The contractor rule-of-thumb (&quot;1 ton per 600 sqft&quot;) typically <em>over-sizes</em> systems by 20-40%. An oversized AC short-cycles: it cools faster than it dehumidifies, so air feels clammy and the equipment wears out early. Per ACCA research, an oversized 4-ton unit replacing a properly sized 3-ton can <em>increase</em> annual energy use by 8-15%.
+      </p>
+      <p>
+        Insist on a written Manual J printout, not a verbal &quot;Yeah, you need a 4-ton.&quot; Reputable contractors include this in their proposal. If they refuse, walk.
+      </p>
+    </section>
+
+    <section id="hp">
+      <h2>6. The heat pump alternative</h2>
+      <p>
+        A central air-source heat pump <em>is</em> a central AC that can run in reverse. Same condenser, same indoor coil, same ductwork, same installation labor. The difference is a reversing valve and slightly larger compressor + outdoor coil for cold-weather performance. Cost premium: $1,500–$2,500 per ton over a comparable AC.
+      </p>
+      <p>
+        Why most homeowners should choose the heat pump:
+      </p>
+      <ul>
+        <li><strong>You get heating for the price of a slightly larger AC.</strong> A 3-ton heat pump heats your house at 250-300% efficiency (vs ~95% for a gas furnace). In states with cheap electricity and expensive gas, operating cost is often lower than gas.</li>
+        <li><strong>State and utility rebates are widely available.</strong> Mass Save $10,000, NYSERDA $1,000–$4,000, Energy Trust of Oregon $1,500, ComEd $2,250, Xcel $2,000–$5,000. The federal 25C credit ended 2025-12-31 but state programs are alive.</li>
+        <li><strong>Cold-climate heat pumps now exist.</strong> NEEP&apos;s Cold Climate Heat Pump Specification certifies units that maintain capacity at 5°F outdoor. Mitsubishi Hyper-Heat, Fujitsu Halcyon, Daikin Aurora, Carrier 38MURA, and others all qualify.</li>
+        <li><strong>Dual-fuel is the sweet spot.</strong> Run the heat pump down to ~30°F; the existing gas furnace handles deep cold. Cuts annual gas use 60-80% without losing capacity for the coldest days.</li>
+      </ul>
+      <p>
+        Reasons to choose AC anyway: you have a 5-year-old furnace you&apos;re keeping, your electricity is &gt;25¢/kWh and gas is &lt;$1.20/therm, or your panel is full and you don&apos;t want to address it now. Otherwise, get a heat pump quote alongside the AC quote.
+      </p>
+    </section>
+
+    <section id="cost">
+      <h2>7. What it actually costs in 2026</h2>
+      <p>
+        Concrete examples (3-ton system, existing good ductwork, R-32 or R-454B refrigerant, mid-band):
+      </p>
+      <ul>
+        <li><strong>Single-stage 15 SEER2</strong>, Atlanta: ~$7,200 installed.</li>
+        <li><strong>Two-stage 17.5 SEER2</strong>, Atlanta: ~$9,800 installed.</li>
+        <li><strong>Variable-speed 21 SEER2</strong>, Atlanta: ~$13,400 installed.</li>
+        <li>Same two-stage system in <strong>Boston</strong> (higher labor): ~$11,200 installed.</li>
+        <li><strong>Bundled furnace replacement</strong> (gas 95% AFUE 80,000 BTU): adds ~$3,500 mid.</li>
+      </ul>
+      <p>
+        Sources: ACCA contractor surveys, AHRI directory pricing, Modernize 2024 contractor reports, Carrier/Trane/Lennox MSRP-to-install ratios from MarketWatch and HomeAdvisor 2024-2025 data.
+      </p>
+    </section>
+
+    <section id="bids">
+      <h2>8. How to read an AC bid</h2>
+      <ul>
+        <li><strong>Manual J load calculation</strong> — written, in the proposal.</li>
+        <li><strong>AHRI-matched system certificate</strong> — outdoor + indoor coil + air handler combination with the rated SEER2/EER2/HSPF2. Mis-matched coils kill efficiency and void warranty.</li>
+        <li><strong>Refrigerant type</strong> — R-32 or R-454B specifically (post-2025 units). Not R-410A retrofit.</li>
+        <li><strong>Equipment + labor warranty</strong> — 10-year parts is standard; labor warranty 1-10 years varies by installer. Get it in writing.</li>
+        <li><strong>Line-set</strong> — new copper or properly flush-and-reused. Existing R-410A line-sets must be flushed before connecting R-32 or R-454B equipment; some installers skip this and contaminate the new compressor.</li>
+        <li><strong>Commissioning report</strong> — superheat/subcool measured, static pressure measured, airflow verified to CFM per ton spec. This is the difference between a 15 SEER2 system performing as 15 and one performing as 11.</li>
+        <li><strong>Permit pulled</strong> — not optional. Unpermitted installs void manufacturer warranty in most jurisdictions.</li>
+        <li><strong>Heat pump alternate</strong> — ask explicitly for a side-by-side bid. If the contractor refuses, they&apos;re not the right contractor.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.federalregister.gov/documents/2022/09/16/2022-19704/energy-conservation-program-energy-conservation-standards-for-central-air-conditioners-and-heat" target="_blank" rel="noopener">DOE / Federal Register — SEER2 final rule (87 FR 56500)</a></li>
+        <li><a href="https://www.epa.gov/snap/snap-final-rule-23" target="_blank" rel="noopener">EPA SNAP Rule 23 — R-410A phase-out</a></li>
+        <li><a href="https://www.ahridirectory.org/" target="_blank" rel="noopener">AHRI Directory of Certified Product Performance</a></li>
+        <li><a href="https://www.acca.org/standards/technical-manuals/manual-j" target="_blank" rel="noopener">ACCA Manual J — load calculation standard</a></li>
+        <li><a href="https://neep.org/heating-electrification/ccashp-specification-product-list" target="_blank" rel="noopener">NEEP Cold Climate Heat Pump Specification</a></li>
+        <li><a href="https://www.energystar.gov/products/heating_cooling/central_air_conditioning" target="_blank" rel="noopener">ENERGY STAR central AC criteria</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get a tonnage-by-tier installed-cost estimate with a heat-pump-alternative comparison in 30 seconds.</p>
+        <a href="/ac-replacement-cost-calculator/" class="btn-primary mt-3 inline-block">Open the AC calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

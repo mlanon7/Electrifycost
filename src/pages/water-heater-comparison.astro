@@ -1,0 +1,126 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'HPWH vs Tankless vs Gas Tank Water Heater: Head-to-Head',
+  description: 'Comprehensive comparison of heat pump water heater, gas tankless, gas tank, and electric tank water heaters: cost, lifespan, operating cost, install needs.',
+};
+---
+<Layout
+  title="Water Heater Comparison 2026: HPWH vs Tankless vs Tank"
+  description="Head-to-head comparison of heat pump (HPWH), gas tankless, gas storage tank, and electric storage tank water heaters: installed cost, lifespan, operating cost, rebate eligibility, install requirements."
+  active="/water-heater-comparison/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Water heater comparison', href: '/water-heater-comparison/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Comparison</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">HPWH vs Tankless vs Tank: Which Water Heater Wins?</h1>
+    <p class="mt-3 text-base text-ink-700">
+      Side-by-side comparison of the four main residential water heater categories — heat pump (HPWH), gas tankless, gas storage tank, electric storage tank — across cost, lifespan, operating cost, install requirements, and rebate eligibility.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>The short answer</h2>
+      <p>
+        For most 3-person households planning to stay in the home 8+ years, heat pump water heaters (HPWH) win on total cost of ownership when income-qualified for HEEHRA rebate or when state/utility rebates apply. Without rebates, the choice tightens: gas tankless if you have natural gas, HPWH if you&rsquo;re going electric, gas tank if budget is the only concern.
+      </p>
+    </section>
+
+    <section>
+      <h2>Side-by-side — installed cost</h2>
+      <ul>
+        <li><strong>HPWH (50-gal 240V hybrid):</strong> $2,500–$5,500 installed. Net after $1,750 HEEHRA: $750–$3,750 for income-qualified households in open states.</li>
+        <li><strong>HPWH (120V plug-in):</strong> $1,800–$3,500 installed. No electrical work required. Net after HEEHRA: $50–$1,750.</li>
+        <li><strong>Gas tankless (condensing):</strong> $4,500–$8,500 installed including venting and gas line work.</li>
+        <li><strong>Gas tankless (non-condensing):</strong> $3,000–$5,800 installed.</li>
+        <li><strong>Gas storage tank (50-gal):</strong> $1,200–$2,500 installed.</li>
+        <li><strong>Electric storage tank (50-gal):</strong> $900–$1,800 installed.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Annual operating cost (3-person household, ~64 gal/day @ 75°F rise)</h2>
+      <p>
+        Energy required: ~12 therms/day equivalent. At national average prices:
+      </p>
+      <ul>
+        <li><strong>HPWH (UEF 3.5):</strong> $180–$240/yr.</li>
+        <li><strong>Gas tankless condensing (UEF 0.95):</strong> $480–$540/yr.</li>
+        <li><strong>Gas tank (UEF 0.62):</strong> $720–$820/yr.</li>
+        <li><strong>Gas tank tankless non-condensing (UEF 0.82):</strong> $560–$640/yr.</li>
+        <li><strong>Electric tank (UEF 0.92):</strong> $590–$660/yr.</li>
+      </ul>
+      <p>
+        HPWH is dramatically cheaper to operate because the heat pump moves heat from ambient air (UEF 3.0-4.0 = 300-400% efficient) rather than generating it directly. Over 12-15 years of service life, HPWH saves $4,000–$6,500 in operating cost vs gas tank.
+      </p>
+    </section>
+
+    <section>
+      <h2>Lifespan + maintenance</h2>
+      <ul>
+        <li><strong>HPWH:</strong> 12-15 years. Annual filter clean, every 3-5 years anode rod check. Compressor electronics can fail at 8-12 years.</li>
+        <li><strong>Gas tankless (condensing):</strong> 20+ years if descaled annually. Heat exchanger destroyed by scale buildup in hard water (>7 grains/gallon) without softener or annual flush.</li>
+        <li><strong>Gas tank:</strong> 8-12 years. Anode rod every 3-5 years extends life. Failure mode is usually tank leak (puddle on the floor).</li>
+        <li><strong>Electric tank:</strong> 10-15 years. Two heating elements ($30 each) typically need replacement around year 6-8.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Install requirements</h2>
+      <ul>
+        <li><strong>HPWH:</strong> needs ~700 cu-ft of free air (typical basement, garage, or utility room), 240V/30A circuit (for hybrid), condensate drain. Doesn&rsquo;t work in tight closets without ducted-air option or split-system.</li>
+        <li><strong>Gas tankless:</strong> 3-inch PVC vent up to 100 ft (condensing) or 4-inch stainless steel (non-condensing). Adequate gas line (often requires upsizing from 1/2&quot; to 3/4&quot;). 120V outlet for electronics.</li>
+        <li><strong>Gas tank:</strong> any code-compliant vented space. Cheapest install.</li>
+        <li><strong>Electric tank:</strong> 240V/30A circuit. Simplest install when electrical capacity exists.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Rebate eligibility (2026)</h2>
+      <ul>
+        <li><strong>HPWH:</strong> federal 25C credit ended 2025-12-31. DOE HEEHRA rebate up to $1,750 for income-qualified households in HEEHRA-open states. State + utility rebates typically $400–$1,000.</li>
+        <li><strong>Gas tankless:</strong> federal 25C credit ended 2025-12-31. Some utility rebates $200–$500.</li>
+        <li><strong>Gas tank:</strong> no federal credit. Rarely rebate-eligible.</li>
+        <li><strong>Electric tank:</strong> no federal credit. Rarely rebate-eligible.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>When to pick which</h2>
+      <ul>
+        <li><strong>Pick HPWH if:</strong> you have space (basement, garage, utility room), are going electric anyway, qualify for HEEHRA, value lowest operating cost, plan to stay 8+ years.</li>
+        <li><strong>Pick gas tankless if:</strong> you have natural gas service, want unlimited hot water, value compact wall-mount, accept annual descaling.</li>
+        <li><strong>Pick gas tank if:</strong> budget is the dominant factor, you have natural gas, water hardness rules out tankless, and you&rsquo;re comfortable replacing every 8-12 years.</li>
+        <li><strong>Pick electric tank if:</strong> existing electric water heating, no space for HPWH, low budget. Rarely the right long-term answer in 2026 — operating cost is 2-3× HPWH.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/water-heating" target="_blank" rel="noopener">DOE Energy Saver — Water Heating</a></li>
+        <li><a href="https://www.energystar.gov/products/water_heaters" target="_blank" rel="noopener">ENERGY STAR Water Heaters</a></li>
+        <li><a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener">DOE Home Energy Rebates (HEEHRA)</a></li>
+        <li><a href="https://www.dsireusa.org/" target="_blank" rel="noopener">DSIRE — state utility incentive database</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Run the cost calculators</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a href="/heat-pump-water-heater-cost-calculator/" class="btn-primary inline-block">HPWH calculator →</a>
+          <a href="/tankless-water-heater-cost-calculator/" class="btn-ghost border border-ink-200 inline-block">Tankless calculator →</a>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

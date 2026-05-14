@@ -1,0 +1,163 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Home EV Charging: The Complete Guide',
+  description: 'Level 1 vs Level 2 vs DC Fast Charging, charger amperage and the NEC 625.41 80%/125% rule, connector consolidation around NACS / J3400, install scenarios, lifespan, maintenance, and the federal 30C credit.',
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+};
+---
+<Layout
+  title="Home EV Charging Explained: Levels, Cost, Install, 30C Credit | ElectrifyCost"
+  description="Level 1/2/3 charging, NEC 80%/125% circuit-sizing rule, NACS/J3400 connector consolidation, plug-in vs hardwired, 30C credit, load-management options."
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'EV chargers', href: '/guides/ev-chargers/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Guide</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+      Home EV Charging: The Complete Guide
+    </h1>
+    <p class="mt-3 max-w-prose text-base text-ink-700">
+      Charging at home is how 80–90% of EV owners actually keep their car going day to day. The hardware on the wall is simple. The wiring behind the wall, the breaker in the panel, and the eligibility for the federal credit are where most of the cost and most of the confusion live. This is the long-form explainer. The <a href="/ev-charger-installation-cost-calculator/" class="text-brand-700 underline-offset-2 hover:underline">EV charger cost calculator</a> handles the dollar figures.
+    </p>
+    <div class="guide-toc">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#levels" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">2. Levels</a>
+      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">3. Sizing</a>
+      <a href="#connectors" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">4. Connectors</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">5. Cost</a>
+      <a href="#service" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">6. Service &amp; life</a>
+      <a href="#tips" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">7. Tips &amp; 30C</a>
+      <a href="#calc" class="rounded-full border border-brand-300 bg-brand-50 px-3 py-1 text-brand-700 no-underline hover:bg-brand-100">Open the calculator →</a>
+    </div>
+  </section>
+
+  <section id="what" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">1. The hardware on your wall is not actually the charger</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      What you mount to your garage wall is called an <strong>EVSE</strong> (Electric Vehicle Supply Equipment). The actual battery charger lives <em>inside</em> your car, and it's the on-board charger that converts AC power from the grid into the DC current the battery accepts. The EVSE's job is to safely deliver AC power to that on-board charger, monitor for ground faults and overcurrent, communicate with the car about how much current to accept, and disconnect on a fault.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      That distinction matters because your charging speed is bottlenecked by whichever is smaller: the EVSE's rated output or the car's on-board charger. Buying a 48A EVSE for a car whose on-board charger maxes out at 32A wastes the upgrade. Buying a 32A EVSE for a 48A-capable car wastes the car's capability. The calculator's install-scenario dropdown captures the most common combinations.
+    </p>
+  </section>
+
+  <section id="levels" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">2. Charging levels at a glance</h2>
+    <figure class="mt-4 rounded-lg border border-ink-200 bg-white p-4">
+      <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="w-full" aria-label="Three charging levels compared visually: Level 1 slow, Level 2 daily, Level 3 fast">
+        <rect x="0" y="0" width="600" height="180" fill="#f6f9f7" rx="8"/>
+        <!-- Level 1 -->
+        <rect x="30" y="40" width="160" height="100" fill="#fff" stroke="#287646" stroke-width="1.5" rx="6"/>
+        <text x="110" y="65" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1b3a28" font-weight="700">Level 1</text>
+        <text x="110" y="85" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">120V, 12A</text>
+        <text x="110" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">≈ 3–5 mi / hr</text>
+        <text x="110" y="125" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">No install needed</text>
+        <!-- Level 2 -->
+        <rect x="220" y="20" width="160" height="140" fill="#e6f0eb" stroke="#287646" stroke-width="2" rx="6"/>
+        <text x="300" y="50" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1b3a28" font-weight="700">Level 2 ★</text>
+        <text x="300" y="72" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">240V, 16–80A</text>
+        <text x="300" y="92" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">≈ 20–45 mi / hr</text>
+        <text x="300" y="112" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">Dedicated circuit</text>
+        <text x="300" y="130" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#287646" font-weight="600">What this calc estimates</text>
+        <!-- Level 3 -->
+        <rect x="410" y="40" width="160" height="100" fill="#fff" stroke="#287646" stroke-width="1.5" rx="6"/>
+        <text x="490" y="65" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1b3a28" font-weight="700">DC Fast (L3)</text>
+        <text x="490" y="85" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">400–1000V, 50–350+ kW</text>
+        <text x="490" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">≈ 100–800 mi / hr</text>
+        <text x="490" y="125" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">Public stations only</text>
+      </svg>
+    </figure>
+    <p class="mt-3 max-w-prose text-ink-700">
+      <strong>Level 1</strong> uses the portable cable that came with your car plugged into a standard 120V receptacle. Adds 3–5 miles of range per hour — fine for plug-in hybrids and very low-mileage drivers. Zero installation cost. The trade-off is that 12 hours of charging only nets ~45 miles.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      <strong>Level 2</strong> runs on a 208–240V circuit and is what 80–90% of EV owners actually want for daily use. Common amperages are 16, 24, 32, 40, 48, and (in commercial settings) 80. A 40A Level 2 EVSE delivers ~9.6 kW; a 48A unit delivers ~11.5 kW; an 80A unit delivers ~19.2 kW (but almost no consumer car accepts that on-board).
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      <strong>DC Fast Charging</strong> (Level 3) bypasses the car's on-board charger entirely and feeds DC current straight into the battery. Output ranges from 50 kW (legacy) to 350+ kW (modern); the car's battery and thermal-management system limit acceptance. Hardware is industrial — effectively only available at public stations.
+    </p>
+  </section>
+
+  <section id="sizing" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">3. The NEC 80%/125% rule</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Code is the part that often surprises homeowners. <a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70" target="_blank" rel="noopener noreferrer">NEC 625.41 and 210.20(B)</a> classify EV charging as a <em>continuous load</em>, which means the branch circuit (wire and breaker) must be sized at <strong>125% of the EVSE's continuous current</strong>. Stated the other way, the EVSE is allowed to draw a maximum of <strong>80% of the breaker rating</strong>. So:
+    </p>
+    <ul class="mt-3 space-y-1 text-ink-700 text-sm">
+      <li>&bull; 32A EVSE &rarr; 40A breaker, #8 copper</li>
+      <li>&bull; 40A EVSE &rarr; 50A breaker, #6 copper (or #8 if short run)</li>
+      <li>&bull; 48A EVSE &rarr; 60A breaker, #6 copper (or #4 aluminum)</li>
+      <li>&bull; 80A EVSE (rare) &rarr; 100A breaker, #2 or #3 copper</li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700">
+      A hardwired install always lets the EVSE pull its full rated current. A plug-in install using a NEMA 14-50 receptacle caps at 40A continuous (50A receptacle &times; 80%) regardless of the EVSE's potential, and code requires a GFCI breaker on the 14-50. Above 40A, hardwiring is mandatory.
+    </p>
+  </section>
+
+  <section id="connectors" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">4. The connector consolidation around NACS</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Until 2023, non-Tesla EVs in North America used the J1772 connector for AC (Level 1/2) and CCS1 for DC fast charging. Tesla had its own proprietary connector. Starting in 2023–2024, every major automaker announced adoption of Tesla's connector, which was rechristened the <strong>North American Charging Standard (NACS)</strong> and ratified as <strong>SAE J3400</strong> in 2024. Model-year 2025+ cars from Ford, GM, Hyundai/Kia, Volkswagen, Mercedes, BMW, Honda, Nissan, Toyota, Volvo/Polestar, Rivian, and Lucid ship native NACS.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Practical impact for home charging: most Level 2 EVSEs sold today ship in both connector variants, and adapters in both directions are widely available and inexpensive. If you're buying an EVSE in 2026, match it to your current car's connector and don't sweat it — the adapter will cover the next car.
+    </p>
+  </section>
+
+  <section id="cost" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">5. Installed-cost expectations</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li><strong>Hardware (EVSE):</strong> $300–$900 for mainstream Level 2 from ChargePoint, Wallbox, Tesla Universal Wall Connector, Grizzl-E, Emporia, Enphase, Schneider, Siemens.</li>
+      <li><strong>Plug-in via NEMA 14-50 outlet, short run (&lt;15 ft to panel):</strong> $300–$900 labor + permit.</li>
+      <li><strong>Hardwired, typical 20–30 ft run:</strong> $600–$1,800 labor + permit.</li>
+      <li><strong>Long conduit run (30–50 ft) or finished-wall fishing:</strong> $1,200–$3,500.</li>
+      <li><strong>Detached garage with trenching:</strong> $2,500–$8,000.</li>
+      <li><strong>Panel adds (if needed):</strong> $1,800–$4,500 service upgrade, or $500–$1,500 load-management device as an alternative.</li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <a href="/ev-charger-installation-cost-calculator/" class="text-brand-700">EV charger calculator</a> blends these into a low/mid/high band calibrated to your state.
+    </p>
+  </section>
+
+  <section id="service" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">6. Service life and maintenance</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      A quality wall-mounted Level 2 EVSE lasts <strong>10–15 years</strong>. The device is solid-state — no moving parts except the internal contactor relay — so failures are rare and usually electronic (control board, communications, GFCI trip). The most common reason to replace a home EVSE is physical damage to the cable from being run over in the driveway.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700"><strong>Routine maintenance:</strong> once a year, inspect the cable jacket for cracks or kinks and the connector pins for melting/corrosion; confirm the self-test on the GFCI/CCID20 still works (most units have a press-to-test button); keep the unit dry (most are IP55-rated for outdoor use, but the connector should still go back in the holster when not charging). For Wi-Fi-connected units (ChargePoint, Wallbox, Emporia, Tesla, Enphase) keep them on the network so firmware and security updates land automatically.</p>
+  </section>
+
+  <section id="tips" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">7. Tips, tricks, and the 30C credit</h2>
+    <ul class="mt-3 space-y-3 text-ink-700">
+      <li><strong>You probably don't need a panel upgrade.</strong> Run an NEC 220.83 load calc first. A 150A or 200A panel with existing major loads (heat pump, AC, electric dryer, electric range) summed below capacity has room for a 48A EVSE. On a 100A panel, a <strong>load-management device</strong> (NeoCharge, DCC-9, Span, Lumin) that sheds the EV load when other big loads run typically costs $500–$1,500 and saves you a $4,000 service upgrade.</li>
+      <li><strong>Plug-in vs hardwired.</strong> Plug-in (NEMA 14-50) is easier to remove if you move and slightly cheaper. Hardwired allows continuous current above 40A and is required for 48A and 80A units. Some condos and HOAs require hardwiring for aesthetics.</li>
+      <li><strong>Federal 30C credit.</strong> 30% of cost up to $1,000 for personal home installs. Applies to property placed in service through <strong>June 30, 2026</strong>. Eligibility is <em>conditional on the install address being in a qualifying census tract</em> — roughly two-thirds of U.S. ZIP codes qualify, but yours might not. Verify via the <a href="https://afdc.energy.gov/laws/30C" target="_blank" rel="noopener noreferrer">AFDC eligible-tract lookup tool</a>. The calculator surfaces 30C as a <em>potential</em> incentive (not subtracted from net cost) when you say "Not sure" so it doesn't overstate your savings.</li>
+      <li><strong>Time-of-use rates.</strong> If your utility offers a TOU EV plan (PG&amp;E EV2-A, ConEd Smart Home EV, etc.), charging overnight typically costs 8–14&cent;/kWh instead of the standard 22–35&cent;/kWh peak rate. Most smart EVSEs support scheduling. Always opt in if your utility offers it.</li>
+      <li><strong>Permits.</strong> Every install requires a city permit and inspection in nearly every U.S. jurisdiction. The inspector verifies wire gauge, breaker, GFCI, and bonding. Cost is $50–$250.</li>
+    </ul>
+  </section>
+
+  <section id="calc" class="container-tight py-10 border-t border-ink-100">
+    <h2 class="text-2xl font-semibold text-ink-900">Estimate your installed cost</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <a href="/ev-charger-installation-cost-calculator/" class="text-brand-700 font-medium underline-offset-2 hover:underline">EV charger cost calculator</a> takes install scenario (hardwired vs plug-in, short run vs long run vs detached garage), panel size, ZIP, and census-tract eligibility — and returns a band, an itemized breakdown, applicable federal/state/utility incentives, and a panel-risk verdict.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/ev-charger-installation-cost-calculator/" class="btn-primary">Open the calculator →</a>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

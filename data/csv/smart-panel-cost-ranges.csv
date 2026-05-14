@@ -1,0 +1,8 @@
+key,brand,model,scenario,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,permit_low,permit_mid,permit_high,notes,source_id,last_reviewed
+span_smart,Span,Drive,Full smart panel 200A,3500,4000,4500,1800,2800,4500,200,400,800,"Span Drive — 32-circuit, app-controlled, load shed during peak. Replaces traditional panel.",Span_2024,2026-05-01
+span_smart_homepanel,Span,Home Panel,Full smart panel 200A,4000,4500,5200,1800,2800,4500,200,400,800,"Span Home Panel — premium tier with integrated battery readiness",Span_2024,2026-05-01
+lumin,Lumin,Smart Panel,Add-on smart load center 200A,1800,2200,2800,800,1200,2000,150,300,650,"Lumin Smart Panel — sits beside existing panel, controls up to 12 critical circuits",Lumin_2024,2026-05-01
+schneider_square_d,Schneider,Square D Energy Center,Full smart panel 200A,3200,3800,4500,1800,2800,4500,200,400,800,"Schneider Square D Pulse Energy Center — full replacement, integrates with Wiser app",Schneider_2024,2026-05-01
+emporia_smart,Emporia,Vue Smart Panel,Monitoring-only retrofit,400,700,1200,400,700,1200,75,150,300,"Emporia Vue 2 — current sensors on existing panel, no replacement. Monitoring + minimal control",Emporia_2024,2026-05-01
+generic_smart_load_control,Generic,Smart Load Management Device,Pure load shedding device,500,900,1500,400,800,1500,75,150,300,"DCC-9-USA / Wallbox EM112 — pauses EV charger when other loads spike. Avoids panel upgrade for many EV installs.",Wallbox_2024,2026-05-01
+traditional_200a_baseline,Traditional,Square D QO/Eaton CH 200A,Baseline (for comparison),700,1100,1800,1500,2500,4000,200,400,800,"Standard 40-circuit panel — no smart features. For comparison.",Eaton_2024,2026-05-01

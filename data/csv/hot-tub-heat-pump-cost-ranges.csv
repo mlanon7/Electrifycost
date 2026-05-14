@@ -1,0 +1,7 @@
+key,scenario,tub_size,heater_type,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,annual_kwh,notes,source_id,last_reviewed
+hp_small_300gal,Heat pump heater for 300 gal hot tub,300,heat_pump,1800,2400,3200,400,800,1500,1100,"Pentair UltraTemp Hybrid, Hayward HeatPro — 25k-40k BTU air-source",Pentair_2024,2026-05-01
+hp_med_450gal,Heat pump heater for 450 gal hot tub,450,heat_pump,2200,2800,3800,500,900,1700,1500,"Mid-size tubs. AquaCal SuperQuiet, Raypak Heat Pump",Pentair_2024,2026-05-01
+hp_large_600gal,Heat pump heater for 600+ gal hot tub,600,heat_pump,2800,3500,4800,600,1100,2000,1900,"Larger swim spa or big-tub. Often paired with separate cover for efficiency",Pentair_2024,2026-05-01
+electric_resistance,Electric resistance baseline (4kW),350,electric_resistance,400,600,900,200,400,800,3800,"Standard built-in electric heater on most hot tubs. 4kW typical — slow heat-up, expensive ops",HotSpring_2024,2026-05-01
+gas_baseline,Gas baseline (for in-deck installs),350,gas,1500,2200,3200,800,1500,2800,0,"Natural gas or propane heater — fast heat-up, expensive in cold climates. 175k-400k BTU input",Raypak_2024,2026-05-01
+cover_premium,Premium insulated cover (add-on),350,cover,300,500,800,0,100,250,-700,"Aftermarket high-R cover cuts annual energy 30-50%. Cover Valet, SpaCap. Pays back in 2-4 yrs",CoverValet_2024,2026-05-01

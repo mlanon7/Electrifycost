@@ -1,0 +1,15 @@
+[
+  ["Panel 100->200A CA",                 "panel",      "upgrade_100_to_200",                "CA", "100A", "average",   "single_family", "unknown",    null,                  null],
+  ["Panel 100->200A TX",                 "panel",      "upgrade_100_to_200",                "TX", "100A", "average",   "single_family", "unknown",    null,                  null],
+  ["HP ducted 3-ton MA gas 2000",        "heat_pump",  "ducted_central_3ton",               "MA", "200A", "average",   "single_family", "unknown",    "natural_gas",         2000],
+  ["HP cold-climate ME oil 1800",        "heat_pump",  "coldclimate_ducted",                "ME", "100A", "average",   "single_family", "unknown",    "oil",                 1800],
+  ["HP minisplit FL electric condo",     "heat_pump",  "ductless_minisplit_1head",          "FL", "100A", "simple",    "condo",         "unknown",    "electric_resistance", 900],
+  ["HP HEEHRA NY lowinc gas",            "heat_pump",  "ducted_central_3ton",               "NY", "100A", "average",   "single_family", "low_income", "natural_gas",         1800],
+  ["EV hardwired CA 200A",               "ev_charger", "level2_hardwired",                  "CA", "200A", "average",   "single_family", "unknown",    null,                  null],
+  ["EV plug-in TX 100A",                 "ev_charger", "level2_plugin_nema14_50",           "TX", "100A", "simple",    "single_family", "unknown",    null,                  null],
+  ["EV trench NY 60A critical",          "ev_charger", "level2_detached_garage_trench",     "NY", "60A",  "difficult", "single_family", "unknown",    null,                  null],
+  ["HPWH 240V 50gal CA gas",             "hpwh",       "hybrid_240v_50gal",                 "CA", "100A", "average",   "single_family", "unknown",    null,                  null],
+  ["HPWH 120V plug IL electric",         "hpwh",       "plugin_120v_50gal",                 "IL", "100A", "simple",    "single_family", "unknown",    null,                  null],
+  ["Induction range CA 100A",            "induction",  "range_30in_basic",                  "CA", "100A", "average",   "single_family", "unknown",    null,                  null],
+  ["Induction cooktop NY 100A condo",    "induction",  "cooktop_30in_plugin",               "NY", "100A", "simple",    "condo",         "unknown",    null,                  null]
+]

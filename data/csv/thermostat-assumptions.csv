@@ -1,0 +1,13 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+hardware,basic,60,90,130,$,Sensi Honeywell RTH9580,manufacturer_msrp,2026-05-11
+hardware,nest_e,130,170,200,$,Nest E,manufacturer_msrp,2026-05-11
+hardware,ecobee_premium,230,250,280,$,Ecobee Premium + remote sensors,manufacturer_msrp,2026-05-11
+hardware,nest_learning,230,250,280,$,Nest Learning 4th gen,manufacturer_msrp,2026-05-11
+hardware,honeywell_t9,180,220,250,$,Honeywell T9 multi-sensor,manufacturer_msrp,2026-05-11
+pro_install,base,150,250,400,$,Pro install if not DIY,Modernize_2024,2026-05-11
+cwire_adder,base,100,200,350,$,Add C-wire if missing (electrician),NEC_300,2026-05-11
+hvac_savings,central_ac_furnace,0.08,0.10,0.12,fraction,Forced-air HVAC savings (ENERGY STAR 8% conservative),ENERGY_STAR_CT,2026-05-11
+hvac_savings,heat_pump,0.06,0.08,0.10,fraction,Heat-pump-aware mode required for best savings,ENERGY_STAR_CT,2026-05-11
+hvac_savings,boiler,0.09,0.12,0.15,fraction,Hot-water boiler responds well to setback,ENERGY_STAR_CT,2026-05-11
+utility_rebate,strong_state,50,100,150,$,Strong-program states (MA NY CA CT NJ MN CO IL),utility_avg,2026-05-11
+utility_rebate,other,0,0,50,$,Other states — varies by utility,utility_avg,2026-05-11

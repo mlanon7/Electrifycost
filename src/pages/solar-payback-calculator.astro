@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import SolarPaybackCalculator from '@/components/SolarPaybackCalculator';
+
+const faq = [
+  { q: 'How long until solar pays for itself?',
+    a: 'Typical residential solar payback in 2026 falls between 8 and 14 years depending on state, electricity rate, system cost, and net-metering policy. States with cheap electricity (WA, ID, KY, LA) and weak net metering can push payback to 18-22 years. States with expensive electricity and strong NEM (HI, MA, CT, NY, CA pre-NEM 3.0) hit 6-10 year paybacks. The federal 25D credit expired Dec 31 2025, lengthening payback by 2-4 years for 2026+ installs.' },
+  { q: 'Does solar still make sense without the federal credit?',
+    a: 'Yes, in many states. Without the 30% federal credit, an $24,000 8 kW system costs $24,000 instead of $16,800 net. Payback extends by 2-4 years, and 25-year ROI drops from ~250% to ~150%. Still positive. State-level credits (NY 25%, MD 30%, NC 35%, IA 18%, MA SMART production-based) close part of the gap in those states. The 30D residential clean energy credit died with OBBBA; some state programs survived.' },
+  { q: 'What happens to my net metering credits over time?',
+    a: 'NEM 1.0 (1:1 retail rate credit) is being phased out in many states. CA NEM 3.0 (effective April 2023) cut export rates ~75% for new installs. NV and HI have similar partial-NEM tariffs. Net metering policy is the single biggest variable in solar economics — same panels in a 1:1-NEM state vs a tariff-NEM state can have 30-50% different lifetime returns. Check your state utility&rsquo;s current NEM tariff before signing.' },
+  { q: 'Should I add a battery to improve solar payback?',
+    a: 'In strong-NEM states (1:1 credit), batteries hurt solar payback — you&rsquo;re paying $10,000–$18,000 for storage when the grid already credits exports at retail. In partial-NEM or tariff states (CA NEM 3.0, HI, NV), batteries raise self-consumption from ~35% to ~75%, materially improving solar ROI. Run both scenarios in the calculator with different self-consumption percentages.' },
+  { q: 'What about inverter replacement and maintenance?',
+    a: 'String inverters typically need replacement at year 10-15 ($1,500–$3,000 for an 8 kW system, $0.25/W typical). Microinverters carry 25-year warranties — no scheduled replacement. Annual maintenance is essentially zero for the first 10 years, then $100-300/yr for cleaning and minor repairs. Insurance is usually covered under your homeowner&rsquo;s policy; some states require a small rider for hail.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Solar Payback Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Standalone solar payback period calculator — system size, install cost, net metering tier, financing, and self-consumption. 25-year cashflow model with degradation and rate escalation.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Solar Payback Calculator 2026: When Does Solar Pay for Itself?"
+  description="Standalone solar payback calculator with 25-year cashflow model. State NEM policy aware. Cash vs loan financing. Reflects 25D credit expiration."
+  active="/solar-payback-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/solar-panel-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Solar payback calculator', href: '/solar-payback-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Solar payback</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Solar Payback Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Standalone payback calculator for residential solar. 25-year cashflow model including degradation, rate escalation, net metering tier, and inverter replacement.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> typical residential solar payback in 2026 is 8–14 years. States with cheap electricity push it to 18–22 years. States with strong net metering and expensive power hit 6–10 years. The federal 25D credit expired Dec 31 2025; install cost is higher in 2026 without it.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/solar-payback-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/solar-payback-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/solar-payback-hero-photo.png" alt="Residential rooftop solar system generating electricity"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><SolarPaybackCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to solar economics?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Solar payback is the year when cumulative electricity savings equal the net installed cost. The math depends on five things: system size (kW), installed cost per watt, your state&rsquo;s annual production (kWh per kW), your electricity rate (and how it escalates), and your net-metering policy (how much credit you get for exported power). The calculator above models all five over a 25-year horizon, including panel degradation, inverter replacement at year 12, and electricity-rate escalation.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/solar-payback/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">9-min read · 25-year math · NEM policy · cash vs loan · what changes payback</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/solar-panel-cost-calculator/">Solar panel cost calculator →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery cost calculator →</a></li>
+      <li><a href="/solar-financing-comparison/">Solar lease vs PPA vs loan comparison →</a></li>
+      <li><a href="/roof-replacement-cost-calculator/">Roof replacement calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

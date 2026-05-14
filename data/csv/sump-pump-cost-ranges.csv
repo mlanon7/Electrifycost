@@ -1,0 +1,8 @@
+key,scenario,type,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,gpm_capacity,notes,source_id,last_reviewed
+basic_primary,Basic primary sump pump (1/3 HP),primary,180,260,380,250,400,650,40,"Pedestal or submersible 1/3 HP cast-iron — Zoeller M53, Wayne CDU800. Good for typical 1500 sqft basement.",Zoeller_2024,2026-05-01
+heavy_duty_primary,Heavy-duty primary (1/2 HP),primary,280,420,650,300,500,800,60,"1/2 HP for larger basements, deeper sumps, or higher water tables — Zoeller M267, Liberty 287",Zoeller_2024,2026-05-01
+battery_backup_only,"Battery backup pump (DC, separate)",battery_backup,250,400,650,200,400,700,25,"Standalone 12V DC backup — pumps when primary fails or power out. Wayne BGSP50, Basement Watchdog Big Dog",BasementWatchdog_2024,2026-05-01
+combo_primary_plus_battery,Combo primary + battery backup,combo,500,800,1300,400,700,1200,55,"Best protection. Primary AC pump + DC backup in same basin. Most popular install pattern.",BasementWatchdog_2024,2026-05-01
+water_powered_backup,Water-powered backup (no battery),water_backup,180,300,500,250,500,900,35,"Uses municipal water pressure to pump — no electricity, no battery. Wastes ~1 gal per 2 gal pumped. Only with city water service.",Liberty_2024,2026-05-01
+smart_wifi_combo,Smart WiFi combo with monitoring,smart,800,1200,1800,500,900,1500,55,"Combo with WiFi alerts (Basement Watchdog Connect, Liberty SmartSump). Notifies via app for pump cycling, water level, battery state",BasementWatchdog_2024,2026-05-01
+generator_powered,Generator-powered primary,primary,180,260,380,1500,2500,4000,40,"Primary pump on a critical-loads circuit fed by generator transfer switch. Most reliable for long outages but $$ install.",Zoeller_2024,2026-05-01

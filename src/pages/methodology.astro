@@ -1,0 +1,79 @@
+---
+import Layout from '@/components/Layout.astro';
+
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', name: 'How ElectrifyCost Calculates Estimates', description: 'How ElectrifyCost builds low/mid/high installed cost ranges, applies state labor multipliers, computes incentives, and estimates payback.' };
+---
+<Layout
+  title="Methodology — How ElectrifyCost Calculates Estimates"
+  description="How ElectrifyCost.com builds low/mid/high installed cost ranges, applies state labor multipliers, computes incentives, and estimates payback."
+  active="/methodology/"
+  schemaJsonLd={schemaJsonLd}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Methodology</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">How we calculate estimates</h1>
+    <p class="mt-3 max-w-prose text-ink-700">
+      ElectrifyCost is a planning tool, not a quoting tool. Our goal is to give you a defensible cost range, an itemized breakdown, and a clear view of incentives — so you can have a more informed conversation with a contractor.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">The model in plain English</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      For each project we compute three independent cost paths — low, mid, and high — instead of taking a midpoint and applying a flat percentage. Each path uses its own equipment cost, labor hours, permit cost, and complexity adjustment. We then add probabilistic items (like a possible panel upgrade) and subtract eligible incentives.
+    </p>
+    <pre class="mt-4 overflow-x-auto rounded-lg border border-ink-200 bg-ink-50 p-5 font-mono text-[12.5px] leading-relaxed text-ink-800 shadow-inner-soft"><span class="text-brand-700 font-semibold">gross_cost</span> =
+  base_project_cost
+  <span class="text-ink-500">×</span> state_labor_multiplier
+  <span class="text-ink-500">×</span> install_difficulty_multiplier
+  <span class="text-ink-500">×</span> home_complexity_multiplier
+  <span class="text-ink-500">+</span> permit_cost
+  <span class="text-ink-500">+</span> panel_or_circuit_adder
+  <span class="text-ink-500">+</span> removal_or_disposal_adder
+
+<span class="text-brand-700 font-semibold">eligible_incentives</span> =
+  federal_credit_if_current_and_eligible
+  <span class="text-ink-500">+</span> state_rebate_if_available
+  <span class="text-ink-500">+</span> utility_rebate_if_available
+
+<span class="text-brand-700 font-semibold">net_cost</span> = gross_cost <span class="text-ink-500">−</span> eligible_incentives</pre>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Where the numbers come from</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li><strong>Equipment costs</strong> are anchored to DOE / NREL benchmark studies and ENERGY STAR product data, with adjustment bands for trim level and regional availability.</li>
+      <li><strong>Labor hours</strong> are anchored to BLS Occupational Employment and Wage Statistics for electricians, HVAC mechanics, and plumbers, multiplied by a per-state cost-of-living factor.</li>
+      <li><strong>Permits</strong> are typical jurisdiction averages; actual fees vary by city and project scope.</li>
+      <li><strong>Energy prices</strong> use EIA state-level retail rates for electricity and fuel, refreshed periodically.</li>
+      <li><strong>Climate</strong> uses IECC zones and heating/cooling degree days to drive operating-cost estimates and to flag when cold-climate equipment is recommended.</li>
+      <li><strong>Incentives</strong> reflect the current federal credit (IRC §30C for EV chargers, through 2026-06-30 with eligible-census-tract rules), state and utility rebate amounts, and DOE Home Energy Rebates where the state has launched. The federal §25C credit was terminated for property placed in service after 2025-12-31 and no longer reduces 2026-forward estimates. Each program shows its own eligibility caveats; potential incentives (e.g. 30C without confirmed census tract; HEEHRA in prelaunch states) are surfaced separately and <em>not</em> subtracted from net cost.</li>
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Incentive freshness policy</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Federal credits, state programs, and utility rebates change at unpredictable cadences. The calculator engine compares each program's expiration date against today's date at build time and excludes expired credits from net-cost math. Credits that depend on user-specific eligibility (30C eligible census tract; income-qualified DOE Home Energy Rebates; state-rollout status) are surfaced as <strong>potential</strong> — visible but not subtracted — until the user confirms eligibility. The intent is to avoid overstating savings the user may not actually qualify for. Every program row in <code>data/csv/rebate-programs.csv</code> and the rollout-status file at <code>data/csv/home-energy-rebate-status.csv</code> carries a <code>last_reviewed</code> date.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Panel-upgrade probability</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Adding a heat pump or EV charger may or may not require a service upgrade. We classify your panel size against the new load (per simplified NEC 220.83 thinking) into minimal, low, medium, high, or critical risk, and add the upgrade cost to the estimate weighted by that risk. The result page tells you what we assumed.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Operating cost &amp; payback</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We compute annual energy use from a heating-degree-day load model for heat pumps, then convert with a coefficient of performance (COP) appropriate to your climate zone. We then compare against a typical efficiency for your current fuel. The monthly bill impact is the annual change divided by 12, with low/mid/high variance to reflect equipment and weather uncertainty. Simple payback uses net cost after incentives divided by mid-case annual savings.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">What this tool does not do</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li>It does not replace a Manual J load calculation. Always have your contractor perform one.</li>
+      <li>It does not guarantee rebate eligibility. Programs change frequently; we show last-reviewed dates.</li>
+      <li>It does not account for every regional code variation, HOA rule, or unique site condition.</li>
+      <li>It does not include financing, lease, or contractor-financing terms.</li>
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Updates</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We re-review primary sources at least quarterly. The "last reviewed" date you see on each calculator reflects the most recent review across the data the calculator used.
+    </p>
+
+    <p class="mt-10"><a href="/sources/" class="text-brand-700">See the full sources list →</a></p>
+  </section>
+</Layout>

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# AI training crawlers — allow indexing for now (set Disallow: / per crawler if policy changes)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://electrifycost.com/sitemap.xml

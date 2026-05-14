@@ -1,0 +1,13 @@
+key,scenario,type,material,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,notes,source_id,last_reviewed
+front_steel_basic,Front door — steel basic,front,steel,200,400,650,300,500,800,"Insulated steel slab — good R-value, dent-prone. Cheapest mainstream option",HomeAdvisor_2024,2026-05-01
+front_fiberglass_mid,Front door — fiberglass mid,front,fiberglass,500,850,1300,300,600,1000,"Therma-Tru, Pella, JELD-WEN. Wood-grain look, insulated foam core. Most popular choice",ThermaTru_2024,2026-05-01
+front_fiberglass_premium,Front door — fiberglass premium,front,fiberglass,1100,1700,2400,400,700,1200,"Custom finish, sidelights, transom. Plastpro Rustic, Pella Architect",HomeAdvisor_2024,2026-05-01
+front_wood_premium,Front door — solid wood,front,wood,1500,2400,3800,500,900,1500,"Mahogany, oak, alder. Premium look. Requires refinishing every 5-7 years",HomeAdvisor_2024,2026-05-01
+front_fiberglass_with_install,Front door — full replacement kit + install,front,fiberglass,800,1300,2000,500,900,1500,"Pre-hung unit (frame + door + threshold). Adds tear-out + reframe vs slab-only",HomeAdvisor_2024,2026-05-01
+sliding_vinyl_basic,Sliding patio door — vinyl basic,sliding,vinyl,800,1200,1800,400,700,1100,"6ft 2-panel vinyl slider. JELD-WEN, ReliaBilt, Pella ProLine",HomeAdvisor_2024,2026-05-01
+sliding_fiberglass_premium,Sliding patio door — fiberglass premium,sliding,fiberglass,2000,3200,4800,600,1100,1800,"Pella Lifestyle, Andersen 200 Series. Smooth operation, low-e glass standard",HomeAdvisor_2024,2026-05-01
+sliding_wood_premium,Sliding patio door — wood premium,sliding,wood,3500,5500,8500,800,1400,2200,"Andersen 400, Marvin Elevate. Real wood interior, aluminum-clad exterior",HomeAdvisor_2024,2026-05-01
+french_double,French door — double 5ft to 6ft,french,wood_or_fiberglass,1800,2800,4500,700,1300,2200,"Inswing or outswing. More glass than sliding but smaller opening width",HomeAdvisor_2024,2026-05-01
+garage_steel_single,Garage door — steel single 8x7,garage,steel,500,850,1300,300,500,900,"Insulated steel single 8x7 or 9x7. Includes opener if needed",HomeAdvisor_2024,2026-05-01
+garage_steel_double,Garage door — steel double 16x7,garage,steel,900,1500,2400,400,700,1200,"Standard 2-car insulated steel — Clopay, Wayne Dalton, Amarr",HomeAdvisor_2024,2026-05-01
+garage_premium_double,Garage door — premium double (carriage / wood / glass),garage,premium,2500,4500,8500,500,1000,1800,"Carriage-style, wood, or full-view glass. Clopay Avante, Coachman",HomeAdvisor_2024,2026-05-01

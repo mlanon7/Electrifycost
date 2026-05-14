@@ -1,0 +1,17 @@
+rule_id,equipment_type,age_years,repair_cost_vs_replace_pct,recommendation,reasoning,source_id,last_reviewed
+furnace_young_cheap,furnace,<8,<30,repair,"Modern furnace under 8 years old with affordable repair — fix and keep running",ENERGY_STAR_2024,2026-05-01
+furnace_young_expensive,furnace,<8,30-50,repair_with_caution,"Young equipment with expensive repair — check warranty coverage before paying out-of-pocket",ENERGY_STAR_2024,2026-05-01
+furnace_mid_cheap,furnace,8-15,<25,repair,"Mid-life furnace — repair if cost is small fraction of replacement",ENERGY_STAR_2024,2026-05-01
+furnace_mid_expensive,furnace,8-15,>40,replace,"50% rule — if repair exceeds 50% of replacement and unit is 10+ years, replace",ENERGY_STAR_2024,2026-05-01
+furnace_old_any,furnace,>15,>15,replace_with_heat_pump,"Furnace at end of life — strong heat pump replacement candidate; efficiency gain alone justifies",ENERGY_STAR_2024,2026-05-01
+furnace_old_minor,furnace,>15,<15,replace_soon,"Squeaking through on minor repairs — start planning replacement now, not in failure",ENERGY_STAR_2024,2026-05-01
+ac_young_cheap,central_ac,<8,<30,repair,"Young AC — repair is cheaper if R-410A refrigerant and parts available",ENERGY_STAR_2024,2026-05-01
+ac_mid_r22,central_ac,8-15,any,replace,"R-22 (Freon) AC systems — refrigerant production banned 2020; replace rather than refill at $100+/lb",EPA_R22_2020,2026-05-01
+ac_mid_expensive,central_ac,8-15,>50,replace,"Compressor or coil replacement on mid-life AC — comparable to new system; replace",ENERGY_STAR_2024,2026-05-01
+ac_old_any,central_ac,>15,>20,replace_with_heat_pump,"AC at end of life — heat pump replaces AC + furnace work simultaneously; better ROI",ENERGY_STAR_2024,2026-05-01
+boiler_young_cheap,boiler,<10,<25,repair,"Boilers commonly last 20-30 years — repair young units",ENERGY_STAR_2024,2026-05-01
+boiler_mid_any,boiler,10-20,>50,replace,"Cracked heat exchanger or section is replace territory — boiler approaching end of life",ENERGY_STAR_2024,2026-05-01
+boiler_old_any,boiler,>25,any,replace,"25+ year old boilers are at 1-3% AFUE below modern equivalent each year — replace",ENERGY_STAR_2024,2026-05-01
+heatpump_young_cheap,heat_pump,<8,<30,repair,"Heat pump under warranty period — likely covered for compressor, expensive for board/fan",ENERGY_STAR_2024,2026-05-01
+heatpump_mid_expensive,heat_pump,8-15,>50,replace,"Compressor failure on mid-life heat pump — comparable cost to new unit including labor",ENERGY_STAR_2024,2026-05-01
+heatpump_old_any,heat_pump,>15,>20,replace,"15+ years on a heat pump exceeds typical service life; modern units are 30% more efficient (HSPF2)",ENERGY_STAR_2024,2026-05-01

@@ -1,0 +1,8 @@
+state,program_name,per_kwh_dollars,flat_dollars,cap_dollars,notes,source_id,last_reviewed
+CA,CA SGIP Equity Resiliency,150,,5000,Self-Generation Incentive Program General Market tier,CPUC_SGIP,2026-05-11
+CT,CT Energy Storage Solutions,200,,7500,CT Green Bank declining-block + performance payments,CT_GreenBank,2026-05-11
+MA,MA ConnectedSolutions,0,0,,Performance-based — pays ~$275-300/kWh-yr grid services (not upfront),MassDOER,2026-05-11
+MD,MD Energy Storage Tax Credit,0,,5000,30% state income-tax credit up to $5000 (separate from federal 25D),DSIRE_MD,2026-05-11
+NY,NY-Sun Residential Storage,250,,5000,NY-Sun Residential Storage Incentive — declining block,NYSERDA,2026-05-11
+OR,OR Solar + Storage Rebate,0,2500,,Energy Trust of Oregon combined,Energy_Trust_OR,2026-05-11
+CO,Xcel Energy Battery Pilot,0,0,,Tariff-based not upfront,DSIRE_CO,2026-05-11

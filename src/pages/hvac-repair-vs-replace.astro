@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HvacRepairReplaceCalculator from '@/components/HvacRepairReplaceCalculator';
+
+const faq = [
+  { q: 'When is HVAC repair worth it vs replacement?',
+    a: 'The industry rule is the "50% rule" — if a repair on equipment 10+ years old exceeds 50% of replacement cost, replace it. For younger equipment (under 8 years), repair is almost always right unless the manufacturer warranty has expired and the part is unusually expensive. End-of-life equipment (furnace 15+, boiler 25+, AC/HP 15+) is replacement territory regardless.' },
+  { q: 'What is the 50% rule?',
+    a: 'A long-standing HVAC industry guideline: if the cost of a single repair on equipment ten or more years old exceeds 50% of the cost to replace the unit, replace it. ENERGY STAR and ASHRAE both reference the rule in consumer guidance. It accounts for the fact that mid-life equipment fails again after a major repair, not less.' },
+  { q: 'My AC uses R-22 Freon. Repair or replace?',
+    a: 'Replace. R-22 refrigerant production ended January 2020. Recovered/recycled R-22 sells for $100–$200+ per pound; a typical refill costs $400–$800 just for refrigerant. Any meaningful repair on an R-22 system means putting good money into obsolete equipment. The replacement system also uses 30–40% less electricity for the same cooling.' },
+  { q: 'How can I tell if my heating equipment is at end of life?',
+    a: 'Look for: short-cycling (turns on and off rapidly), rising energy bills with consistent usage, yellow flame (gas) instead of blue, banging or rattling sounds, uneven temperatures room-to-room, and the unit running constantly during average winter days. Any one of these on equipment 15+ years old means replacement is overdue.' },
+  { q: 'Is it worth upgrading to a heat pump when my AC or furnace dies?',
+    a: 'Almost always, yes. A modern heat pump replaces both heating and cooling at roughly the cost of just one of them done separately. State rebates often subtract $1,000–$10,000. Operating cost is 30–60% lower than a gas furnace in most US states. The exceptions: ultra-cheap natural gas with very expensive electricity (rare), or a home with terrible ductwork that makes any ducted system underperform.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'HVAC Repair vs Replace Decision Tool',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Decision calculator: should you repair or replace HVAC equipment? Equipment age, repair cost, refrigerant type, and repair pattern feed a clear recommendation.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="HVAC Repair vs Replace Decision Tool 2026"
+  description="Decision tool for furnace, AC, heat pump, and boiler — repair or replace? Equipment age, repair cost, refrigerant, and breakdown pattern feed a clear call."
+  active="/hvac-repair-vs-replace/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'HVAC repair vs replace', href: '/hvac-repair-vs-replace/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">HVAC decision tool</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">HVAC Repair vs Replace</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Decision tool for furnaces, central AC, heat pumps, and boilers. Equipment age, repair cost, refrigerant type, and repair pattern feed a clear recommendation.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> the 50% rule — if repair cost on equipment 10+ years old exceeds 50% of replacement, replace it. R-22 AC systems are always replace. Use the tool to score your specific situation.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/hvac-repair-vs-replace-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/hvac-repair-vs-replace-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/hvac-repair-vs-replace-hero-photo.png" alt="HVAC technician inspecting an aging furnace"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><HvacRepairReplaceCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to the repair-vs-replace decision?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        The math is rarely binary. A $1,200 repair on a 6-year-old furnace is a no-brainer fix. A $2,800 repair on a 14-year-old furnace is a coin flip — and the coin is weighted toward replacement because you’re extending the life of equipment that’s already past its prime. The decision tool weights age, repair cost, refrigerant type (R-22 = automatic replace), recent repair pattern, and rising energy bills into a single recommendation with explanation.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/hvac-repair-replace/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">8-min read · the 50% rule · R-22 phase-out · heat-pump-upgrade ROI</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/gas-furnace-replacement-cost-calculator/">Gas furnace replacement →</a></li>
+      <li><a href="/boiler-replacement-cost-calculator/">Boiler replacement →</a></li>
+      <li><a href="/ac-replacement-cost-calculator/">AC replacement →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

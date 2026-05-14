@@ -1,0 +1,124 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Home Energy Audits: Tiers, Diagnostics, HOMES Rebate Path',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11', dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Home Energy Audit Guide 2026: BPI, RESNET HERS, HOMES Rebate"
+  description="Long-form guide to home energy audits in 2026: tiers, what each test measures, BPI vs RESNET HERS, utility programs, DOE HOMES rebate eligibility, what to expect at the audit."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Energy audits', href: '/guides/energy-audits/' }]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Energy audits</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Home Energy Audits, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      The four audit tiers from walkthrough to full HERS rater, what each test actually measures, the difference between BPI and RESNET, why this is step zero for the DOE HOMES rebate, and what to expect during the visit. 6-minute read.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>The four audit tiers</h2>
+      <ul>
+        <li><strong>Walkthrough ($100–$350).</strong> Auditor walks the home with a clipboard. Visual identification of insulation gaps, air leakage, equipment age. No diagnostic instruments. Useful as a first pass; unreliable for major decisions.</li>
+        <li><strong>Standard BPI ($250–$650).</strong> 2–3 hours. Blower door, infrared camera, combustion safety check on gas equipment. This is the default tier for utility programs (Mass Save, Energy Trust of Oregon, ConEd, etc.) and the right tier for most homeowners.</li>
+        <li><strong>HERS Index Rating ($450–$900).</strong> RESNET certified rater produces a numeric HERS score (lower = better; new construction targets 60; existing home median is ~100). Required for ENERGY STAR home certification and some HOMES rebate paths.</li>
+        <li><strong>Full rater audit ($600–$1,400).</strong> HERS Index + duct blaster + combustion safety + comprehensive written report with prioritized recommendations and modeled savings projections. Required for HOMES measured-savings tier.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What each diagnostic actually measures</h2>
+      <ul>
+        <li><strong>Blower door:</strong> calibrated fan pulls house to 50 Pa pressure differential. Measures CFM50 (cubic feet per minute of leakage). Divide by house volume = ACH50. Pre-1980 homes typically 12-25 ACH50; modern code-built target 3-5; Passive House ≤0.6.</li>
+        <li><strong>Infrared (IR) camera:</strong> visualizes temperature variation on walls/ceiling. Identifies insulation voids, framing thermal bridges, air leaks (cold streaks in winter). Spends most of the audit on this, walking ceiling and wall lines.</li>
+        <li><strong>Duct blaster:</strong> calibrated fan attached to ductwork while registers are masked. Measures CFM25 leakage to outside. Pre-improvement typical is 200-400+ CFM25. ENERGY STAR target ≤8% of design airflow.</li>
+        <li><strong>Combustion safety:</strong> verifies gas furnace and water heater don&rsquo;t back-draft (pull combustion products into living space). Critical when air-sealing a home — over-tight envelopes can starve combustion appliances of air and cause CO buildup.</li>
+        <li><strong>HERS rating:</strong> energy model run on house geometry, equipment specs, and infiltration measurement. Output is a single number on a scale where 100 = 2006 IECC baseline and 0 = net-zero.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>BPI vs RESNET — same equipment, different scope</h2>
+      <p>
+        <strong>BPI (Building Performance Institute)</strong> certifies contractors as Building Analysts and Building Envelope Professionals. Focus: comfort, durability, indoor air quality, safety. Best fit when "my house is uncomfortable" or "I need to know what to fix" is the question.
+      </p>
+      <p>
+        <strong>RESNET (Residential Energy Services Network)</strong> certifies HERS Raters. Focus: producing an objective energy-performance score used by lenders, builders, and rebate programs. Best fit when the audit needs to satisfy a specific eligibility requirement (HOMES rebate, ENERGY STAR home certification, energy-efficient mortgage qualification).
+      </p>
+      <p>
+        Many auditors hold both certifications. If you&rsquo;re unsure which you need, BPI Building Analyst covers most "what do I need to fix" cases at lower cost than full HERS rating.
+      </p>
+    </section>
+
+    <section>
+      <h2>Utility programs — check before paying</h2>
+      <p>
+        Most major utilities offer fully free or heavily subsidized energy audits:
+      </p>
+      <ul>
+        <li><strong>Massachusetts:</strong> Mass Save — free audit + up to 75% off insulation discovered.</li>
+        <li><strong>New York:</strong> ConEd, NYSEG, NSTAR — free or $50 audit.</li>
+        <li><strong>California:</strong> PG&amp;E, SCE, SDG&amp;E — Home Upgrade Advisor, low-cost.</li>
+        <li><strong>Oregon:</strong> Energy Trust of Oregon — free Home Energy Assessment.</li>
+        <li><strong>Colorado:</strong> Xcel Energy — Home Performance with ENERGY STAR.</li>
+        <li><strong>Illinois:</strong> ComEd, Nicor — Home Energy Assessment program.</li>
+        <li><strong>Minnesota:</strong> Xcel, CenterPoint — Home Energy Squad ($50 visit).</li>
+      </ul>
+      <p>
+        These programs use vetted BPI-certified auditors and typically include direct-install measures (LED bulbs, weatherstripping, low-flow showerheads) bundled with the audit.
+      </p>
+    </section>
+
+    <section>
+      <h2>DOE HOMES rebate path</h2>
+      <p>
+        The federal Home Energy Performance-Based, Whole-House Rebates (HOMES) program pays homeowners for measured energy reduction. Two paths:
+      </p>
+      <ul>
+        <li><strong>Modeled savings:</strong> HERS rater runs a HERS Index pre and post project, projecting 20–35%+ energy reduction. Rebate up to $2,000 (market-rate) or $4,000 (moderate-income) or $8,000 (low-income).</li>
+        <li><strong>Measured savings:</strong> utility bills compared pre and post (weather-normalized), with verification by independent rater. Larger rebate ceilings for low-income.</li>
+      </ul>
+      <p>
+        Both paths require a certified rater. Skip the rater, lose access to the rebate. Check your state&rsquo;s program status at the DOE Home Energy Rebates page.
+      </p>
+    </section>
+
+    <section>
+      <h2>What to expect at the audit</h2>
+      <p>
+        2–4 hours. Auditor arrives with blower door, IR camera, combustion analyzer. They&rsquo;ll need access to attic, basement/crawl space, all rooms, gas appliances. House should be at normal temperature; turn off bath fans / kitchen exhaust 30 min before. Pets in a separate room (loud fan can spook them).
+      </p>
+      <p>
+        Expect to receive a written report within 1–2 weeks with: blower-door numbers (pre and projected post-improvement), thermal images of problem areas, prioritized recommendations ranked by ROI, rebate program eligibility summary, contractor referrals (sometimes — depends on program).
+      </p>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.bpi.org/" target="_blank" rel="noopener">Building Performance Institute (BPI)</a></li>
+        <li><a href="https://www.resnet.us/" target="_blank" rel="noopener">RESNET (HERS Index)</a></li>
+        <li><a href="https://www.energy.gov/energysaver/professional-home-energy-assessments" target="_blank" rel="noopener">DOE Energy Saver — Professional Home Energy Assessments</a></li>
+        <li><a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener">DOE Home Energy Rebates (HOMES + HEEHRA)</a></li>
+        <li><a href="https://www.energystar.gov/saveathome/home-improvement/home-energy-audit" target="_blank" rel="noopener">ENERGY STAR Home Energy Audit</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <a href="/home-energy-audit-cost-calculator/" class="btn-primary inline-block">Open the energy audit calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

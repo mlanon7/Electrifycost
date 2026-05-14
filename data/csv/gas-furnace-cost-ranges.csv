@@ -1,0 +1,8 @@
+key,scenario,afue,btu_size,equipment_low,equipment_mid,equipment_high,labor_low,labor_mid,labor_high,permit_low,permit_mid,permit_high,notes,source_id,last_reviewed
+basic_80,Basic 80% AFUE single-stage,80,60000,1800,2400,3000,1500,2200,3000,150,300,650,"Standard single-stage 80% AFUE — minimum efficiency allowed in southern US",Modernize_2024,2026-05-01
+basic_80_large,Basic 80% AFUE single-stage (large home),80,100000,2400,3000,3800,1700,2500,3500,150,300,650,"100k BTU for 2500+ sqft homes in mild climates",Modernize_2024,2026-05-01
+mid_95,Mid-tier 95% AFUE single-stage,95,80000,2500,3300,4200,1700,2500,3500,150,300,650,"95% AFUE condensing — required minimum efficiency in northern US per 2024 DOE rule",DOE_furnace_2024,2026-05-01
+mid_95_large,Mid-tier 95% AFUE (large home),95,120000,3200,4200,5400,2000,2800,4000,150,300,650,"120k BTU for 3000+ sqft homes in cold climates",DOE_furnace_2024,2026-05-01
+premium_97,Premium 97% AFUE two-stage variable,97,80000,3800,5000,6500,1900,2800,3800,150,300,650,"Two-stage or variable-speed blower — better comfort and humidity control",Modernize_2024,2026-05-01
+premium_97_large,Premium 97% AFUE two-stage (large home),97,120000,4500,6000,7800,2200,3200,4500,150,300,650,"Premium with modulation for 3000+ sqft cold-climate homes",Modernize_2024,2026-05-01
+condensing_98,Top-tier 98% AFUE modulating,98,80000,5000,6500,8500,2200,3200,4500,150,300,650,"Fully modulating 5-stage condensing with ECM blower",Modernize_2024,2026-05-01

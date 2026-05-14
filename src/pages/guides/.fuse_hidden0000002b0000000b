@@ -1,0 +1,171 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Insulation and Air-Sealing: How Much, What Kind, Where to Start',
+  description: 'Long-form guide to home insulation in 2026: R-value targets by climate zone, materials (cellulose, fiberglass, spray foam), air-sealing, blower-door testing, DOE HOMES rebate, sequence with HVAC work.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Home Insulation Guide 2026: R-Values, Materials, Air-Sealing, Rebates"
+  description="Long-form, source-backed guide to home insulation in 2026: target R-values by climate zone, material trade-offs (cellulose vs fiberglass vs spray foam), air-sealing, blower-door testing, DOE HOMES rebate, sequence with HVAC work."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Insulation', href: '/guides/insulation/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Insulation &amp; air-sealing</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Insulation, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How R-value and air-sealing actually work, target levels by climate zone, materials (cellulose vs fiberglass vs spray foam), where the dollars go furthest, blower-door diagnostics, DOE HOMES rebate, and why this should be the first step in any electrification project. 9-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. R-value + airflow</a>
+      <a href="#targets" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. Targets by zone</a>
+      <a href="#materials" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. Materials</a>
+      <a href="#priorities" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Where to spend</a>
+      <a href="#blower" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Blower-door</a>
+      <a href="#rebates" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. HOMES rebate</a>
+      <a href="#sequence" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Sequence</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="what">
+      <h2>1. R-value and the airflow problem</h2>
+      <p>
+        Insulation slows conductive heat transfer — the molecule-to-molecule flow of energy through a solid material. R-value measures resistance per inch: cellulose ~3.7, fiberglass batts ~3.1, open-cell spray foam ~3.5, closed-cell spray foam ~6.5. Higher R = slower conduction. Compound R-values add: 6 inches of cellulose = R-22.
+      </p>
+      <p>
+        But insulation alone is only half the equation. The other half is air-sealing — stopping convective heat transfer. A house can have R-49 attic insulation and still bleed heat fast if it has a leaky envelope: gaps at the sill plate, recessed lights popped through ceiling drywall, plumbing penetrations, dryer vents not sealed, attic hatches uninsulated. The standard measurement is ACH50: air changes per hour at 50 Pascals of pressure (a blower-door test result). A leaky pre-1980 house might read 12-25 ACH50. A modern code-built house targets 3-5 ACH50. A Passive-House-tight house is &lt; 0.6.
+      </p>
+    </section>
+
+    <section id="targets">
+      <h2>2. Target R-values by climate zone (DOE / 2021 IECC)</h2>
+      <ul>
+        <li><strong>Zone 1 (hot, e.g., S. Florida, Hawaii, Guam):</strong> attic R-30, wall R-13, floor R-13.</li>
+        <li><strong>Zone 2 (hot-humid, e.g., Houston, Phoenix):</strong> attic R-49, wall R-13, floor R-13.</li>
+        <li><strong>Zone 3 (warm, e.g., Atlanta, Memphis, Dallas):</strong> attic R-49, wall R-15, floor R-19.</li>
+        <li><strong>Zone 4 (mixed, e.g., DC, NYC, Kansas City):</strong> attic R-49-60, wall R-15-20, floor R-25.</li>
+        <li><strong>Zone 5 (cool, e.g., Boston, Chicago, Denver):</strong> attic R-60, wall R-20, floor R-30.</li>
+        <li><strong>Zone 6 (cold, e.g., Burlington VT, Minneapolis, Spokane):</strong> attic R-60, wall R-20-21, floor R-30.</li>
+        <li><strong>Zone 7-8 (very cold / arctic, e.g., Alaska):</strong> attic R-60, wall R-21, floor R-38.</li>
+      </ul>
+      <p>
+        Wall R-value is fundamentally limited by stud cavity depth. A 2x4 wall maxes at about R-15 with closed-cell foam; R-13 with cellulose or fiberglass. A 2x6 wall allows R-21. To exceed that, you need exterior continuous insulation (rigid foam under new siding) — possible but typically a re-side project, not a retrofit.
+      </p>
+    </section>
+
+    <section id="materials">
+      <h2>3. Materials — cellulose, fiberglass, spray foam, mineral wool</h2>
+      <ul>
+        <li><strong>Cellulose (blown-in).</strong> Recycled paper treated with borate fire/insect retardant. R-3.7/inch. Best at filling irregular cavities and around obstructions. Settles minimally if installed dense-pack. The default for retrofit attics. ~$1.50-2.50/sqft attic.</li>
+        <li><strong>Fiberglass (blown-in or batts).</strong> R-3.1-3.4/inch loose-blown, R-3.7 in batts. Batts are cheap but leave gaps where cut around wiring/pipes; loose-blown handles obstructions better. Doesn&rsquo;t absorb moisture (fine in damp basements). ~$1.25-2.25/sqft attic for blown.</li>
+        <li><strong>Open-cell spray foam.</strong> R-3.5/inch. Expands aggressively, air-seals as it insulates. Lower density (~0.5 lb/ft³), permeable to vapor — better for cathedral ceilings where vapor needs to dry to the interior. Cheaper than closed-cell. ~$3.50-6.00/sqft attic.</li>
+        <li><strong>Closed-cell spray foam.</strong> R-6.5/inch. Dense (~2 lb/ft³), vapor-impermeable, structural. The right call for crawl-space rim joists, basement walls, and tight cavities. Two-component chemistry can be tricky to install correctly (off-ratio mix = curing failure). ~$4.50-8.50/sqft.</li>
+        <li><strong>Mineral wool (Rockwool, ThermaFiber).</strong> R-4.0-4.3/inch. Made from spun rock or slag. Fire-resistant up to 2,150°F. Excellent acoustic insulation. Premium-priced ~30% over fiberglass. Often spec&rsquo;d for exterior continuous insulation behind siding.</li>
+      </ul>
+    </section>
+
+    <section id="priorities">
+      <h2>4. Where the dollars go furthest</h2>
+      <p>
+        If you have $5,000 and aren&rsquo;t sure where to start, the empirically best return-on-investment sequence is:
+      </p>
+      <ol>
+        <li><strong>Air-sealing first ($600-2,200).</strong> Caulk and foam around penetrations: top plates, recessed lights, ductwork chases, plumbing risers. A blower-door-directed air-seal can drop ACH50 from 12 to 5 — a bigger comfort and energy win than any single insulation move.</li>
+        <li><strong>Attic insulation second ($2,000-5,000).</strong> Easiest to access, biggest delta-T (attic vs interior), highest payback. Get to R-49-60 with blown cellulose.</li>
+        <li><strong>Rim joist sealing third ($500-1,500).</strong> Crawl space or basement rim joists are leaky cold spots — closed-cell foam here is high-leverage.</li>
+        <li><strong>Walls fourth ($3,000-7,000).</strong> Drill-and-fill cellulose. Requires 2-inch hole every stud bay; patched afterward. Best done when re-siding, but standalone is feasible.</li>
+        <li><strong>Crawl space encapsulation fifth ($3,500-14,000).</strong> Seal the floor, insulate the walls instead of the floor above, install a vapor barrier. Important in humid climates; less critical in dry.</li>
+      </ol>
+      <p>
+        Skip basement floor insulation (low payback unless you live in zone 7+) and exterior continuous insulation (only viable when re-siding).
+      </p>
+    </section>
+
+    <section id="blower">
+      <h2>5. Blower-door testing — pay for it</h2>
+      <p>
+        A blower-door is a calibrated fan that pulls air out of your house at a known pressure (50 Pascals). Measure the cubic feet per minute (CFM50) the fan moves to maintain that pressure: that&rsquo;s your envelope leakage rate. Divide by house volume to get ACH50.
+      </p>
+      <p>
+        Two reasons to do this:
+      </p>
+      <ul>
+        <li><strong>Before/after diagnostic.</strong> A pre-work blower-door identifies <em>where</em> the leaks are. A post-work test verifies you got your money&rsquo;s worth. Without this, contractors can claim &quot;air-sealing done&quot; and you have no way to verify.</li>
+        <li><strong>HOMES rebate eligibility.</strong> The DOE Home Energy Rebates program requires either modeled savings (RESNET HERS or BPI-certified energy audit, including blower-door) or measured savings (pre/post utility bills + blower-door). Skipping this step disqualifies you from $2,000-$8,000 in rebates.</li>
+      </ul>
+      <p>
+        Cost of a blower-door test: $250-$500 standalone, often free as part of a utility-sponsored energy audit (Mass Save, ConEd, ComEd, Energy Trust of Oregon).
+      </p>
+    </section>
+
+    <section id="rebates">
+      <h2>6. DOE HOMES rebate — what it pays</h2>
+      <p>
+        The Inflation Reduction Act funded $4.3 billion for the Home Energy Performance-Based, Whole-House Rebates program (HOMES) and $4.275 billion for the High-Efficiency Electric Home Rebate Program (HEEHRA). DOE distributes to state energy offices, which administer locally. As of 2026, most states have launched HEEHRA; HOMES rollout is more uneven. Check the current state status at <a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener">DOE&rsquo;s Home Energy Rebates Programs page</a>.
+      </p>
+      <p>
+        HOMES rebate structure (income-tiered):
+      </p>
+      <ul>
+        <li><strong>Low income (&lt;80% AMI):</strong> up to $8,000 for 35%+ modeled energy savings; up to $4,000 for 20-34%.</li>
+        <li><strong>Moderate (80-150% AMI):</strong> up to $4,000 for 35%+; up to $2,000 for 20-34%.</li>
+        <li><strong>Market rate (&gt;150% AMI):</strong> up to $4,000 / $2,000 at lower payment tiers.</li>
+      </ul>
+      <p>
+        The federal 25C Energy Efficient Home Improvement Credit covered insulation through 2025-12-31 at 30% up to $1,200/year, but OBBBA terminated that credit for property placed in service after that date. State and utility programs (Mass Save 75% off insulation, NYSERDA Comfort Home Pilot, Energy Trust of Oregon, Xcel) often stack with HOMES.
+      </p>
+    </section>
+
+    <section id="sequence">
+      <h2>7. Why insulation is step zero for electrification</h2>
+      <p>
+        If you&rsquo;re planning <em>any</em> of the following — a heat pump, AC replacement, panel upgrade, solar, or whole-home electrification — do insulation and air-sealing <em>first</em>. Three reasons:
+      </p>
+      <ul>
+        <li><strong>Smaller heat pump.</strong> A tighter envelope with better insulation cuts design heating load 20-40%. That can drop the heat pump from a 4-ton to a 3-ton ($1,500-2,000 saved on equipment).</li>
+        <li><strong>No panel upgrade.</strong> A smaller heat pump means less amp draw. Combined with NEC 220.83 load calculation and possibly smart load management, you may avoid a $1,500-5,000 panel upgrade entirely.</li>
+        <li><strong>Lower operating costs forever.</strong> Insulation lasts the life of the building. Every winter and summer after the project, you pay less. A heat pump on top of an uninsulated house is the most expensive electrification possible.</li>
+      </ul>
+      <p>
+        Order of operations: insulation + air-sealing → heat pump → EV charger → HPWH → induction.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/types-insulation" target="_blank" rel="noopener">DOE Energy Saver — Types of Insulation</a></li>
+        <li><a href="https://www.energycodes.gov/" target="_blank" rel="noopener">DOE Building Energy Codes (IECC)</a> — climate-zone R-value tables</li>
+        <li><a href="https://www.energy.gov/scep/home-energy-rebates-programs" target="_blank" rel="noopener">DOE Home Energy Rebates (HOMES + HEEHRA)</a></li>
+        <li><a href="https://buildingscience.com/" target="_blank" rel="noopener">Building Science Corporation</a> — peer-reviewed retrofit research</li>
+        <li><a href="https://www.energystar.gov/saveathome/seal_insulate" target="_blank" rel="noopener">ENERGY STAR Seal and Insulate</a></li>
+        <li><a href="https://www.bpi.org/" target="_blank" rel="noopener">Building Performance Institute</a> — contractor certification</li>
+        <li><a href="https://www.resnet.us/" target="_blank" rel="noopener">RESNET (HERS Index)</a> — energy ratings for HOMES eligibility</li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get an installed-cost estimate by attic, walls, air-sealing, or whole-envelope scope, with DOE HOMES rebate where your state program is open.</p>
+        <a href="/insulation-cost-calculator/" class="btn-primary mt-3 inline-block">Open the insulation calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

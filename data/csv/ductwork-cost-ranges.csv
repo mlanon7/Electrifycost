@@ -1,0 +1,18 @@
+scope,material,low_per_sqft,mid_per_sqft,high_per_sqft,unit,notes,source_id,last_reviewed
+seal_insulate,any,0.80,1.30,2.00,$/sqft,Seal + insulate existing,ACCA_Manual_D,2026-05-11
+partial_replace,flex,1.80,2.80,4.20,$/sqft,Partial replace flex,ACCA_Manual_D,2026-05-11
+partial_replace,sheet_metal,2.50,3.80,5.50,$/sqft,Partial replace sheet metal,ACCA_Manual_D,2026-05-11
+partial_replace,fiber_board,2.00,3.00,4.50,$/sqft,Partial replace fiber-board,ACCA_Manual_D,2026-05-11
+full_replace,flex,3.50,5.50,8.00,$/sqft,Full replace insulated flex,ACCA_Manual_D,2026-05-11
+full_replace,sheet_metal,5.00,7.50,11.00,$/sqft,Full replace galvanized sheet metal,ACCA_Manual_D,2026-05-11
+full_replace,fiber_board,3.80,6.00,9.00,$/sqft,Full replace fiber-board,ACCA_Manual_D,2026-05-11
+new_install,flex,4.50,6.50,9.00,$/sqft,New install flex,ACCA_Manual_D,2026-05-11
+new_install,sheet_metal,6.00,9.00,13.00,$/sqft,New install sheet metal,ACCA_Manual_D,2026-05-11
+new_install,fiber_board,5.00,7.00,10.00,$/sqft,New install fiber-board,ACCA_Manual_D,2026-05-11
+story_mult,1,1.00,1.00,1.00,multiplier,Single story baseline,ACCA_Manual_D,2026-05-11
+story_mult,2,1.15,1.15,1.15,multiplier,Two stories,ACCA_Manual_D,2026-05-11
+story_mult,3,1.35,1.35,1.35,multiplier,Three+ stories,ACCA_Manual_D,2026-05-11
+access_mult,easy,0.95,0.95,0.95,multiplier,Easy access,ACCA_Manual_D,2026-05-11
+access_mult,normal,1.00,1.00,1.00,multiplier,Normal access,ACCA_Manual_D,2026-05-11
+access_mult,hard,1.25,1.25,1.25,multiplier,Hard access (finished ceilings),ACCA_Manual_D,2026-05-11
+aeroseal,base,1500,2200,3200,$,Aeroseal injection sealing,Aeroseal_dealer_avg,2026-05-11

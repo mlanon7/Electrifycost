@@ -1,0 +1,112 @@
+---
+import Layout from '@/components/Layout.astro';
+import { sources, type SourceCategory } from '@/lib/data';
+
+const groups: { key: SourceCategory; title: string; description: string }[] = [
+  { key: 'tax_credit',     title: 'Federal tax credits',          description: 'Authoritative IRS and ENERGY STAR pages for the residential energy tax credits we apply (25C, 30C, 25D where relevant).' },
+  { key: 'rebate_program', title: 'Rebate programs',              description: 'Federal, state, and program-administrator portals for rebates that stack with credits — DOE Home Energy Rebates, DSIRE, NYSERDA, Mass Save, TECH Clean California, and more.' },
+  { key: 'product_list',   title: 'Product eligibility lists',    description: 'ENERGY STAR Product Finder and NEEP databases used to verify equipment eligibility for credits and qualifying-equipment rebates.' },
+  { key: 'energy_data',    title: 'Energy price data',            description: 'EIA retail-rate datasets for electricity, natural gas, propane, heating oil, and gasoline; updated quarterly.' },
+  { key: 'labor_data',     title: 'Labor & equipment cost data',  description: 'BLS Occupational Employment & Wage Statistics for electricians, HVAC mechanics, and plumbers; PPI for equipment-price tracking.' },
+  { key: 'climate_data',   title: 'Climate & weather data',       description: 'NOAA climate normals (HDD/CDD) and ASHRAE/IECC climate-zone definitions used in our heating-load model.' },
+  { key: 'research',       title: 'Research & cost benchmarks',   description: 'NREL, LBNL, PNNL, RMI, ACEEE, and DOE Building Technologies Office studies that anchor our installed-cost ranges and operating-cost estimates.' },
+  { key: 'guide',          title: 'Consumer guides',              description: 'Plain-language explainers from DOE Energy Saver, Building America, and Consumer Reports — what we point users to when they want to read more.' },
+  { key: 'code',           title: 'Codes & standards',            description: 'NEC (NFPA 70), ACCA Manual J/S/D, NEMA panel standards, ASHRAE design data, and IECC climate-zone definitions.' },
+];
+
+const allSources = Object.entries(sources);
+const totalCount = allSources.length;
+
+function bucket(category: SourceCategory) {
+  return allSources
+    .filter(([, s]) => s.category === category)
+    .sort((a, b) => a[1].publisher.localeCompare(b[1].publisher));
+}
+
+const uncategorized = allSources.filter(([, s]) => !s.category);
+
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Sources and Data Citations', description: 'Primary sources, agency data, and product directories used by ElectrifyCost calculators.' };
+---
+<Layout
+  title="Sources — The Data Behind Every ElectrifyCost Calculator"
+  description="Primary data sources used by ElectrifyCost calculators: IRS, ENERGY STAR, DOE, EIA, BLS, NREL, LBNL, PNNL, NEEP, RMI, ACEEE, ASHRAE, NEC, ACCA, DSIRE, NOAA, and more — with last-reviewed dates."
+  active="/sources/"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Sources', href: '/sources/' },
+  ]}
+  schemaJsonLd={schemaJsonLd}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Sources</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">Sources</h1>
+    <p class="mt-3 max-w-prose text-ink-700">
+      We anchor every cost driver, energy price, incentive amount, and building-load assumption to a primary source. <strong>{totalCount} sources</strong> are catalogued below — federal agencies, national labs, code bodies, and independent research organizations. We re-review at least quarterly. The "last reviewed" badge on each calculator reflects the most recent review across the data that calculator uses.
+    </p>
+
+    <div class="mt-6 grid gap-3 rounded-xl border border-ink-200 bg-ink-50/60 p-4 text-sm sm:grid-cols-2 md:grid-cols-3">
+      <div><strong class="text-ink-900">Authority bias</strong><p class="text-ink-700">We prefer .gov, national lab (.lbl.gov, .nrel.gov, .pnnl.gov), and major-association sources. Industry sites and contractor blogs are excluded.</p></div>
+      <div><strong class="text-ink-900">Versioning</strong><p class="text-ink-700">Every source has a last-reviewed date. We don't silently move numbers — model changes ship with notes.</p></div>
+      <div><strong class="text-ink-900">Show-your-work</strong><p class="text-ink-700">Each calculator's result page lists the specific source IDs used, with publisher and review date.</p></div>
+    </div>
+
+    {groups.map(g => {
+      const items = bucket(g.key);
+      if (items.length === 0) return null;
+      return (
+        <div class="mt-10">
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-xl font-semibold text-ink-900">{g.title}</h2>
+            <span class="text-xs uppercase tracking-wider text-ink-600">{items.length} source{items.length === 1 ? '' : 's'}</span>
+          </div>
+          <p class="mt-1 max-w-prose text-sm text-ink-700">{g.description}</p>
+
+          <ul class="mt-4 space-y-3">
+            {items.map(([id, s]) => (
+              <li class="card p-4">
+                <div class="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 class="text-base font-semibold text-ink-900">
+                    <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>
+                  </h3>
+                  <span class="text-xs text-ink-600">{s.publisher}</span>
+                </div>
+                <p class="mt-1 text-xs text-ink-600">
+                  <code class="rounded bg-ink-50 px-1 py-0.5 text-[10px] text-ink-700">{id}</code>
+                  · Last reviewed {s.last_reviewed}
+                </p>
+                {s.notes && <p class="mt-2 text-sm text-ink-700">{s.notes}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })}
+
+    {uncategorized.length > 0 && (
+      <div class="mt-10">
+        <h2 class="text-xl font-semibold text-ink-900">Other</h2>
+        <ul class="mt-3 space-y-3">
+          {uncategorized.map(([id, s]) => (
+            <li class="card p-4">
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 class="text-base font-semibold text-ink-900">
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>
+                </h3>
+                <span class="text-xs text-ink-600">{s.publisher}</span>
+              </div>
+              <p class="mt-1 text-xs text-ink-600">
+                <code class="rounded bg-ink-50 px-1 py-0.5 text-[10px] text-ink-700">{id}</code>
+                · Last reviewed {s.last_reviewed}
+              </p>
+              {s.notes && <p class="mt-2 text-sm text-ink-700">{s.notes}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <p class="mt-12 text-xs text-ink-600">
+      If you spot a stale link or value, the numeric tables (cost ranges, state multipliers, rebate programs, climate zones) live in <code>data/csv/</code> and the source-notes index lives in <code>src/data/source-notes.json</code>. Every source row has a clear <code>last_reviewed</code> date.
+    </p>
+  </section>
+</Layout>

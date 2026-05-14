@@ -1,0 +1,11 @@
+factor_type,factor_key,low,mid,high,notes
+difficulty,simple,0.85,0.95,1.05,Below-average install difficulty (good access; existing infra in place)
+difficulty,average,0.95,1.05,1.20,Typical residential install
+difficulty,difficult,1.10,1.30,1.55,Tight access; long runs; finishes to protect; legacy code issues
+home_type,single_family,1.00,1.00,1.05,Baseline
+home_type,townhouse,0.95,1.00,1.10,Slightly tighter access; party-wall considerations
+home_type,condo,1.00,1.10,1.30,HOA / shared infra adds friction
+home_type,manufactured,0.85,0.95,1.05,Less complex envelope; lower equipment tier typical
+timing,planning,0.95,1.00,1.05,Quotes obtained ahead of need; competitive
+timing,this_year,1.00,1.00,1.05,Standard turnaround
+timing,emergency,1.05,1.15,1.30,Same-week emergency replacement; premium dispatch

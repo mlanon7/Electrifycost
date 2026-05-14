@@ -1,0 +1,48 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+const lastReviewed = '2026-05-01';
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Off-grid solar in 2026: cabin to homestead, battery sizing, and the grid-tied alternative', datePublished: '2026-03-12', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
+---
+<Layout title="Off-Grid Solar in 2026: Cabin, Homestead, and Battery Sizing" description="Guide to off-grid solar PV + battery systems: how to size daily loads, days of autonomy, backup heat source, and when grid-tied with backup is the better choice." active="/guides/off-grid-solar/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/solar-panel-calculator.png" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Off-grid solar', href: '/guides/off-grid-solar/' }]}>
+  <article class="container-wide max-w-3xl py-10 prose-guide">
+    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Off-grid solar in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~8 min read</p></header>
+    <p class="lede">Off-grid solar is rarely about the dollars — it&rsquo;s about location (no grid available) or values (independence, resilience). This guide explains how to size a system honestly, what battery technology won, and why most homeowners who think they want off-grid actually want grid-tied with backup capability.</p>
+
+    <h2>The five archetypes</h2>
+    <p><strong>Weekend cabin (5 kWh/day):</strong> lights, fridge, water pump, phone charging. 1.5 kW PV + 10 kWh battery. Total $10,000–$23,000.</p>
+    <p><strong>Full-time cabin (15 kWh/day):</strong> small-home electric living except heat. 4 kW PV + 20 kWh battery. $23,000–$51,000.</p>
+    <p><strong>Modest homestead (25 kWh/day):</strong> lights + appliances + well pump. Gas or propane for heat + cooking + DHW. 7 kW PV + 30 kWh battery. $40,000–$82,000.</p>
+    <p><strong>Full-electric homestead (40 kWh/day):</strong> heat pump, induction, electric DHW, no fossil fuel. 12 kW PV + 60 kWh battery. $66,000–$148,000.</p>
+    <p><strong>Grid-tied with whole-home backup:</strong> 10 kW PV + 40 kWh battery, on grid most of the time but capable of running critical loads through extended outages. $48,000–$107,000.</p>
+
+    <h2>Sizing battery — the "days of autonomy" rule</h2>
+    <p>Standard practice: <strong>2 days of average daily use</strong> for usable battery storage. A 15 kWh/day household needs 30 kWh usable, which translates to 40–60 kWh nominal capacity depending on chemistry. The 2-day rule covers cloudy stretches; extending to 3 days adds significant cost with diminishing returns.</p>
+
+    <p>Battery chemistry: lithium-iron-phosphate (LFP) dominates 2026 off-grid installs. Tesla Powerwall 3, Enphase IQ Battery 10, Sol-Ark, EG4. LFP advantages over older lead-acid: 5,000+ cycle life vs 500, no equalization charging, depth of discharge to 90%+ vs 50%, longer warranty (10–15 years). Old lead-acid off-grid setups needed 4–5× the nominal capacity to match usable LFP storage.</p>
+
+    <h2>PV array sizing</h2>
+    <p>Rule of thumb: <strong>1 kW of PV per 4 kWh of daily load</strong> in average US sunshine (CF ~14%). Higher latitudes or shaded sites push to 1 kW per 3 kWh. Sunny states (AZ, NM, NV) reach 1 kW per 5–6 kWh. Off-grid systems are sized for winter performance, not annual averages — generally 2× what a grid-tied system would need for the same kWh consumption.</p>
+
+    <h2>The backup heat problem</h2>
+    <p>The hardest off-grid challenge: heating in winter. Heat pumps work well except for the few coldest weeks when sun is also weakest. Most off-grid setups include:</p>
+    <ul>
+      <li><strong>Wood stove</strong> as supplemental winter heat (no electricity needed)</li>
+      <li><strong>Propane backup</strong> for water heating and cooking</li>
+      <li><strong>Backup generator</strong> for charging the battery during multi-week dark stretches</li>
+    </ul>
+    <p>Going fully electric off-grid in cold climates requires either oversizing the PV+battery 2-3× to handle worst-case winter, or accepting that you&rsquo;ll run a backup heat source 4-8 weeks per year. Both honest answers; pure electric off-grid in zone 6+ is rare.</p>
+
+    <h2>Grid-tied with off-grid capability</h2>
+    <p>This is the better engineering for 95% of homeowners who think they want off-grid. A hybrid inverter (Sol-Ark 15K, Outback Skybox, Schneider XW Pro) ties to grid normally — exports excess to the utility, imports during low sun. When grid drops, it auto-islands and runs critical loads from battery + PV indefinitely. You get the resilience of off-grid without the constant battle of managing every kWh.</p>
+
+    <h2>Federal credit expired</h2>
+    <p>The 30% Residential Clean Energy Credit (25D) covered off-grid systems through Dec 31 2025. 2026+ off-grid installs no longer have the federal subsidy. State programs vary: Vermont, Maine, NY still offer modest credits. The economic case for off-grid is materially worse in 2026 than in 2024.</p>
+
+    <h2>Real economics</h2>
+    <p>Off-grid kWh costs typically run 50–80¢ per delivered kWh over a 20-year system life — vs 16¢ for grid power. The financial logic for off-grid only works when (a) grid connection cost exceeds $30,000 (rural, mountainous sites), (b) you place high value on independence/resilience, or (c) the project is for a remote cabin where alternatives don&rsquo;t exist.</p>
+
+    <p class="mt-8"><a href="/off-grid-solar-cost-calculator/" class="font-medium text-brand-700">Run the off-grid solar calculator →</a></p>
+  </article>
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

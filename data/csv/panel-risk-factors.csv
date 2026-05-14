@@ -1,0 +1,6 @@
+risk_level,factor,low_spread,high_spread,notes
+minimal,0.00,0.90,1.10,No upgrade work expected; included for completeness
+low,0.00,0.90,1.10,Existing panel handles new load with margin
+medium,0.40,0.90,1.10,~40 percent probability the home needs upgrade work; load calc recommended
+high,0.75,0.90,1.10,~75 percent probability of needing upgrade; budget for it
+critical,1.00,0.90,1.10,Upgrade is essentially required for the load

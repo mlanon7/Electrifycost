@@ -1,0 +1,93 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import WindowCalculator from '@/components/WindowCalculator';
+
+const faq = [
+  { q: 'How much does window replacement cost in 2026?',
+    a: 'Per-window installed cost: vinyl double-pane Low-E $450–$900, triple-pane $650–$1,150. Fiberglass $700–$1,600. Wood-clad (Andersen, Marvin, Pella) $950–$2,200. A typical 1,800 sqft home with 14 windows: $6,500–$15,000 in vinyl, $13,000–$25,000 in fiberglass, $18,000–$35,000 in wood-clad.' },
+  { q: 'Is replacing windows worth the energy savings?',
+    a: 'On energy alone, no — payback is typically 20-40 years per ENERGY STAR data, $8–$15/yr saved per window vs single-pane. The right reasons to replace are (1) rot/air leaks you cannot fix otherwise, (2) noise reduction, (3) aesthetics, (4) full remodel context. If energy savings is your goal, insulation and air-sealing are 5-10x better $/return — see /insulation-cost-calculator/.' },
+  { q: 'Vinyl, fiberglass, wood, or aluminum?',
+    a: 'Vinyl: cheapest, no maintenance, 20-30 year life, dominant residential choice. Fiberglass: premium, longest life (40+ years), best dimensional stability for big windows. Wood-clad (aluminum or vinyl exterior + wood interior): premium aesthetic, requires interior maintenance but lasts decades. Aluminum: hot-climate or commercial, high thermal conductivity (poor insulator) unless thermal break is engineered in.' },
+  { q: 'Double-pane vs triple-pane?',
+    a: 'Double-pane Low-E with argon fill is the 2026 standard — U-factor ~0.28-0.30. Triple-pane drops U-factor to ~0.18-0.22 (35-40% better) and helps significantly in IECC zones 5+. Triple adds $200–$400/window and 25% more weight. Worth it in cold climates; overkill in zones 1-3.' },
+  { q: 'Is there a federal tax credit for windows?',
+    a: 'The 25C Energy Efficient Home Improvement Credit covered ENERGY STAR-certified windows at 30% up to $600/yr through 2025-12-31. OBBBA terminated 25C for property placed in service after that date. State and utility rebates vary — Mass Save $50–$150/window typical, Xcel programs $100/window. Check /rebates/ before assuming.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Window Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for residential window replacement by count, frame material, glazing, and install type.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Window Replacement Cost Calculator 2026: Vinyl, Fiberglass, Wood-Clad"
+  description="Installed-cost calculator for residential window replacement. Adjusts by count, frame material (vinyl, fiberglass, wood-clad, aluminum), glazing (double/triple Low-E), and install type."
+  active="/window-replacement-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/window-replacement-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Window replacement calculator', href: '/window-replacement-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Window replacement</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Window Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for residential window replacement by count, frame material, glazing, and install type.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> $450–$900/window vinyl double-pane Low-E. 14 windows ~$6,500–$13,000 vinyl, $13,000–$25,000 fiberglass, $18,000–$35,000 wood-clad. <em>Energy savings alone rarely justify the cost</em> — insulation + air-sealing is 5–10× better $/return.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/window-replacement-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/window-replacement-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/window-replacement-hero-photo.png" alt="New replacement windows installed in a home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><WindowCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">When to replace windows</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        The honest answer is: rarely on energy savings alone. ENERGY STAR-replaced windows save $8–$15/year per window vs single-pane, meaning a typical 14-window project pays back in 25–40 years on energy. The right triggers are: rot or operable hardware failure you can&rsquo;t fix, persistent drafts you&rsquo;ve been unable to seal, intolerable street/neighbor noise, or full-home remodel context. For pure energy efficiency, attic insulation + air-sealing + duct sealing return 5–10× better. Use this calculator as a planning range when the decision is already justified for other reasons.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/windows/" class="font-medium text-brand-700">Read the full guide →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/home-energy-audit-cost-calculator/">Home energy audit calculator →</a></li>
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

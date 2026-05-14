@@ -1,0 +1,17 @@
+key,value,units,notes,source_id,last_reviewed
+kwh_per_100mi_sedan,28,kwh,"Tesla Model 3, Ioniq 6, Polestar 2 - efficient sedans",EPA_FuelEconomy_2024,2026-05-01
+kwh_per_100mi_crossover,32,kwh,"Tesla Model Y, Mustang Mach-E, Ioniq 5, ID.4 - typical crossover",EPA_FuelEconomy_2024,2026-05-01
+kwh_per_100mi_suv,38,kwh,"Rivian R1S, Kia EV9, Mercedes EQS SUV - large SUVs and 3-row",EPA_FuelEconomy_2024,2026-05-01
+kwh_per_100mi_pickup,42,kwh,"Ford F-150 Lightning, Rivian R1T, Silverado EV - full-size electric trucks",EPA_FuelEconomy_2024,2026-05-01
+ac_dc_charge_loss_pct,10,percent,AC charging at home loses ~10% in onboard charger and battery management,NREL_2024,2026-05-01
+dcfc_charge_loss_pct,5,percent,DC fast charging loses ~5% in battery management,NREL_2024,2026-05-01
+gas_mpg_efficient_sedan,38,mpg,"Honda Civic, Corolla, Camry hybrid - efficient sedans",EPA_FuelEconomy_2024,2026-05-01
+gas_mpg_crossover,28,mpg,"RAV4, CR-V, Equinox - typical crossover",EPA_FuelEconomy_2024,2026-05-01
+gas_mpg_suv,22,mpg,"Suburban, Tahoe, Pilot - large SUVs",EPA_FuelEconomy_2024,2026-05-01
+gas_mpg_pickup,20,mpg,"F-150, Silverado, Ram 1500 - gas pickup average",EPA_FuelEconomy_2024,2026-05-01
+us_avg_dcfc_rate_per_kwh,0.42,usd,"Electrify America, EVgo public DCFC. Often 2-3x home rate",EVGo_pricing_2024,2026-05-01
+us_avg_tesla_supercharger_per_kwh,0.36,usd,"Tesla Supercharger US average, varies by region/peak",Tesla_pricing_2024,2026-05-01
+us_avg_gas_price_per_gal,3.70,usd,EIA April 2026 STEO forecast: $3.70/gal average 2026 (up from $3.10/gal 2025). https://www.eia.gov/outlooks/steo/,SRC_EIA_RETAIL,2026-05-13
+us_avg_residential_electricity,0.1765,usd,EIA Electric Power Monthly April 2026 Table 5.6.A - U.S. residential average 17.65 c/kWh,SRC_EIA_RETAIL,2026-05-13
+miles_per_year_typical,12000,miles,US average passenger vehicle miles per year (FHWA),FHWA_vmt_2024,2026-05-01
+miles_per_year_high,18000,miles,Above-average driver / commuter,FHWA_vmt_2024,2026-05-01

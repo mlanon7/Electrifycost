@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import ThermostatCalculator from '@/components/ThermostatCalculator';
+
+const faq = [
+  {
+    q: 'How much does a smart thermostat cost installed?',
+    a: 'Hardware ranges from $90 (basic Wi-Fi) to $280 (Nest Learning, Ecobee Premium with remote sensors). DIY install is free and takes 30 minutes for most homeowners. Pro install adds $150–$400. If your system lacks a C-wire (mostly homes with old boilers or pre-2000 furnaces), an electrician adds $100–$350.',
+  },
+  {
+    q: 'Does a smart thermostat actually save money?',
+    a: 'Yes, modestly. Nest\'s own studies show 10-12% heating savings and 15% cooling savings on average. ENERGY STAR is more conservative at ~8% combined. For a $1,500/yr HVAC household, that\'s $120–$180/year — a 1-2 year payback. If you already disciplined-setback by hand, marginal savings drop. The big wins are away/asleep occupancy detection and zone-by-zone scheduling with remote sensors.',
+  },
+  {
+    q: 'Are there rebates for smart thermostats?',
+    a: 'The federal 25C credit ended 2025-12-31 and didn\'t cover thermostats. Many utilities still offer $50–$125 rebates: Mass Save, ConEd, ComEd, PG&E, SoCal Edison, Xcel, NYSEG, and others. Check your utility bill for "EnergyWise" or "Demand Response" programs. Some pay an extra annual incentive ($25–$100) to enroll the thermostat in load-shedding events.',
+  },
+  {
+    q: 'What is a C-wire and do I need one?',
+    a: 'The C-wire (common) provides 24V continuous power to the thermostat. Smart thermostats need it because their displays and Wi-Fi radios draw more current than old mercury-bulb units. Most furnaces installed after ~2000 have one. Older boiler systems and very old furnaces often don\'t. Solutions: (1) Nest can sometimes work without one by pulse-stealing from the R-wire; (2) Ecobee includes a Power Extender Kit; (3) an electrician can add a C-wire run for $100–$300.',
+  },
+  {
+    q: 'Nest vs Ecobee vs Honeywell — which is best?',
+    a: 'Ecobee Premium is the editor\'s choice for most homes: multi-sensor support, built-in voice assistant, works without C-wire, broad ecosystem (Apple HomeKit, Google, Alexa, SmartThings). Nest Learning is the most refined hardware and works well with Google Home. Honeywell T9 is the value pick with multi-sensor support at a lower price. Avoid Honeywell\'s lower-tier RTH-series if you want multi-sensor zoning. For heat-pump-aware behavior (key for 2026 retrofits), Ecobee leads.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Smart Thermostat Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for smart thermostats by model (Nest, Ecobee, Honeywell, basic), DIY vs pro install, C-wire considerations, and utility rebate by state.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Smart Thermostat Cost Calculator 2026: Nest, Ecobee, Honeywell"
+  description="Installed-cost estimate for smart thermostats (Nest, Ecobee Premium, Honeywell T9). DIY vs pro install, C-wire considerations, utility rebate, HVAC savings payback."
+  active="/smart-thermostat-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/smart-thermostat-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Smart thermostat calculator', href: '/smart-thermostat-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Smart thermostat</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Smart Thermostat Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for Nest, Ecobee Premium, Honeywell T9, and basic Wi-Fi thermostats. DIY vs pro install, C-wire risk, utility rebates, and HVAC-savings payback.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> $90–$280 hardware + $0 (DIY) or $150–$400 (pro). Most homes save 10% on HVAC, payback in 1-2 years. If your system lacks a C-wire add $100–$350 for an electrician.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/smart-thermostat-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/smart-thermostat-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/smart-thermostat-hero-photo.png"
+      alt="Smart thermostat mounted on a home wall"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><ThermostatCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to smart thermostats?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A smart thermostat replaces your old wall-mounted control with a Wi-Fi connected device that schedules HVAC based on occupancy, learns your preferences, integrates remote sensors for true-zone control, and enrolls in utility demand-response programs. Modern units (Nest Learning, Ecobee Premium, Honeywell T9) save 8-15% of HVAC energy on average. Most install in 30 minutes if your existing thermostat has a C-wire. The big differentiator in 2026 is heat-pump-aware behavior — important for any household running or planning to run a heat pump.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/smart-thermostats/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">7-min read · how they save · model comparison · C-wire · demand response · privacy considerations</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/ac-replacement-cost-calculator/">AC replacement calculator →</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

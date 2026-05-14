@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import BoilerCalculator from '@/components/BoilerCalculator';
+
+const faq = [
+  { q: 'How much does a boiler replacement cost in 2026?',
+    a: 'A standard 85% AFUE cast-iron natural gas boiler installs for $4,500–$8,500. A condensing 95%+ AFUE wall-mounted boiler runs $7,500–$14,000. Premium modulating units (Viessmann, Lochinvar Knight, Buderus) land $10,000–$18,000. Oil boilers are $8,000–$15,000; propane is similar to natural gas plus a tank if needed.' },
+  { q: 'Is the 25C credit available for boilers in 2026?',
+    a: 'No. The federal 25C credit for high-efficiency boilers terminated 2025-12-31 (OBBBA). HEEHRA / DOE Home Energy Rebates are statutorily electric-only — no federal incentive on fuel-burning boilers in 2026. Some gas utilities still offer $300–$800 rebates on 95%+ AFUE installs; check your utility’s residential efficiency page.' },
+  { q: 'Cast-iron sectional vs condensing wall-mount — which lasts longer?',
+    a: 'Cast-iron sectional boilers (Burnham, Slant/Fin, Weil-McLain CGi) often run 25–40 years with maintenance, but at 80–85% AFUE. Condensing wall-mount boilers (Navien, Rinnai, Lochinvar Knight, Viessmann Vitodens) deliver 95–97% AFUE but have shorter lifespans (12–20 years) — the stainless heat exchanger is the failure point, and proprietary parts are expensive. The choice is durability vs efficiency.' },
+  { q: 'Can I switch from a boiler to a heat pump?',
+    a: 'Yes, but the path matters. Air-to-air heat pumps require new ductwork — a major retrofit if your home has no ducts (most boiler-heated homes don’t). Air-to-water heat pumps (SpacePak, Chiltrix, Arctic, Mitsubishi Ecodan) connect to your existing radiators or baseboard and deliver hot water at heat-pump efficiency. Capital is $14,000–$30,000, but you eliminate fuel-burning entirely.' },
+  { q: 'Why are condensing boilers cheaper to run?',
+    a: 'A condensing boiler recovers heat from the exhaust before it leaves the flue, including the latent heat in water vapor (combustion produces ~1 lb of water per cubic foot of natural gas). At 95–97% AFUE, almost all fuel energy ends up in your home. Non-condensing boilers waste 15–20% up the chimney.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Boiler Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for residential boiler replacement by fuel (gas, oil, propane, electric), efficiency tier, home size, and state. Compares with hydronic heat pump.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Boiler Replacement Cost Calculator 2026"
+  description="Installed-cost calculator for residential boiler replacement by fuel and efficiency tier. State labor adjustment, hydronic heat-pump alternative."
+  active="/boiler-replacement-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Boiler replacement cost calculator', href: '/boiler-replacement-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Boiler</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Boiler Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed cost for residential boiler replacement by fuel, efficiency tier, and state. Includes a head-to-head comparison with air-to-water heat pumps for hydronic systems.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> standard 85% AFUE cast-iron gas boiler installs for $4,500–$8,500. Condensing 95%+ runs $7,500–$14,000. Oil boilers $8,000–$15,000. The federal 25C credit expired Dec 31 2025; HEEHRA is electric-only. Hydronic heat-pump alternative: $14,000–$30,000 with no fuel combustion.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/boiler-replacement-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/boiler-replacement-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/boiler-replacement-hero-photo.png" alt="Wall-mounted condensing boiler installed in a basement"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><BoilerCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to boiler replacement?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A residential boiler heats water (or steam) that circulates through radiators, baseboard, or in-floor tubing. Unlike forced-air furnaces, boilers don’t move air — heat transfer happens through radiation and convection from the radiator surface. They’re common in the Northeast and Midwest US, mostly in homes built before 1960. Modern condensing boilers reach 95–97% AFUE; older cast-iron units are typically 80–85%. Lifespan is 15–40 years depending on construction and water quality.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/boilers/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">11-min read · condensing vs cast-iron · oil-to-gas conversions · hydronic heat pumps · brand reliability</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/gas-furnace-replacement-cost-calculator/">Gas furnace replacement calculator →</a></li>
+      <li><a href="/hvac-repair-vs-replace/">HVAC repair vs replace decision →</a></li>
+      <li><a href="/heat-pump-water-heater-cost-calculator/">Heat pump water heater calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

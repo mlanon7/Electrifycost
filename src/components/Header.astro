@@ -1,0 +1,391 @@
+---
+const { active } = Astro.props as { active?: string };
+
+// Calculators grouped by category. Order inside each category is the order
+// they appear in the dropdown panel.
+const categories = [
+  {
+    id: 'hvac',
+    label: 'HVAC',
+    items: [
+      { href: '/heat-pump-cost-calculator/',              label: 'Heat pump (central)' },
+      { href: '/mini-split-heat-pump-cost-calculator/',   label: 'Mini-split / ductless' },
+      { href: '/geothermal-heat-pump-cost-calculator/',   label: 'Geothermal' },
+      { href: '/ac-replacement-cost-calculator/',         label: 'AC replacement' },
+      { href: '/gas-furnace-replacement-cost-calculator/', label: 'Gas furnace replacement' },
+      { href: '/boiler-replacement-cost-calculator/',     label: 'Boiler replacement' },
+      { href: '/ductwork-installation-cost-calculator/',  label: 'Ductwork install' },
+      { href: '/smart-thermostat-cost-calculator/',       label: 'Smart thermostat' },
+      { href: '/hvac-repair-vs-replace/',                 label: 'HVAC repair vs replace' },
+    ],
+  },
+  {
+    id: 'solar',
+    label: 'Solar & Power',
+    items: [
+      { href: '/solar-panel-cost-calculator/',                label: 'Solar panels' },
+      { href: '/solar-payback-calculator/',                   label: 'Solar payback period' },
+      { href: '/off-grid-solar-cost-calculator/',             label: 'Off-grid solar system' },
+      { href: '/home-battery-cost-calculator/',               label: 'Home battery' },
+      { href: '/generator-cost-calculator/',                  label: 'Generator backup' },
+      { href: '/sump-pump-cost-calculator/',                  label: 'Sump pump + battery backup' },
+      { href: '/electrical-panel-upgrade-cost-calculator/',   label: 'Electrical panel upgrade' },
+      { href: '/smart-panel-cost-calculator/',                label: 'Smart electrical panel' },
+    ],
+  },
+  {
+    id: 'ev',
+    label: 'EV',
+    items: [
+      { href: '/ev-charger-installation-cost-calculator/',  label: 'EV charger install' },
+      { href: '/ev-charging-cost-calculator/',              label: 'EV charging cost (operating)' },
+      { href: '/ev-total-cost-of-ownership-calculator/',    label: 'EV total cost of ownership' },
+    ],
+  },
+  {
+    id: 'water',
+    label: 'Water Heating',
+    items: [
+      { href: '/tank-water-heater-cost-calculator/',       label: 'Tank water heater (standard)' },
+      { href: '/heat-pump-water-heater-cost-calculator/',  label: 'Heat pump water heater' },
+      { href: '/tankless-water-heater-cost-calculator/',   label: 'Tankless water heater' },
+      { href: '/hot-water-recirculation-cost-calculator/', label: 'Hot water recirculation pump' },
+      { href: '/water-treatment-cost-calculator/',         label: 'Water softener + filtration' },
+      { href: '/pool-heat-pump-cost-calculator/',          label: 'Pool heat pump' },
+      { href: '/hot-tub-heat-pump-cost-calculator/',       label: 'Hot tub heat pump' },
+    ],
+  },
+  {
+    id: 'improvements',
+    label: 'Home Improvements',
+    items: [
+      { href: '/insulation-cost-calculator/',           label: 'Insulation' },
+      { href: '/air-sealing-cost-calculator/',          label: 'Air sealing' },
+      { href: '/window-replacement-cost-calculator/',   label: 'Window replacement' },
+      { href: '/door-replacement-cost-calculator/',     label: 'Door replacement' },
+      { href: '/roof-replacement-cost-calculator/',     label: 'Roof replacement' },
+      { href: '/home-energy-audit-cost-calculator/',    label: 'Home energy audit' },
+      { href: '/induction-stove-cost-calculator/',      label: 'Induction stove' },
+      { href: '/heat-pump-dryer-cost-calculator/',      label: 'Heat pump dryer' },
+      { href: '/wood-pellet-stove-cost-calculator/',    label: 'Wood / pellet stove' },
+    ],
+  },
+];
+
+const wholeHome = { href: '/whole-home-electrification-cost-calculator/', label: 'Whole Home' };
+
+function isCategoryActive(act: string | undefined, items: { href: string }[]): boolean {
+  return !!act && items.some(i => i.href === act);
+}
+---
+<header class="sticky top-0 z-30 border-b border-ink-200 bg-white/95 backdrop-blur print:hidden">
+  <div class="container-wide flex h-16 items-center justify-between gap-4">
+    <!-- Logo -->
+    <a href="/" class="flex shrink-0 items-center no-underline hover:no-underline" aria-label="ElectrifyCost home">
+      <img
+        src="/assets/brand/logo1.png"
+        alt="ElectrifyCost"
+        width="1312" height="241"
+        class="block h-9 w-auto max-w-none shrink-0 md:h-12"
+        loading="eager" decoding="async"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-0.5 text-sm md:flex" aria-label="Primary">
+      <!-- Whole Home (direct link) -->
+      <a
+        href={wholeHome.href}
+        class={`nav-item ${active === wholeHome.href ? 'nav-item-active' : ''}`}
+      >
+        <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m3 9.5 9-7 9 7"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/>
+        </svg>
+        <span>Whole Home</span>
+      </a>
+
+      <!-- HVAC -->
+      <details class="nav-dropdown">
+        <summary class={`nav-item ${isCategoryActive(active, categories[0].items) ? 'nav-item-active' : ''}`}>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
+          </svg>
+          <span>HVAC</span>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          <ul>
+            {categories[0].items.map(it => (
+              <li><a href={it.href} class={`nav-panel-link ${active === it.href ? 'nav-panel-link-active' : ''}`}>{it.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <!-- Solar & Power -->
+      <details class="nav-dropdown">
+        <summary class={`nav-item ${isCategoryActive(active, categories[1].items) ? 'nav-item-active' : ''}`}>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <span>Solar &amp; Power</span>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          <ul>
+            {categories[1].items.map(it => (
+              <li><a href={it.href} class={`nav-panel-link ${active === it.href ? 'nav-panel-link-active' : ''}`}>{it.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <!-- EV -->
+      <details class="nav-dropdown">
+        <summary class={`nav-item ${isCategoryActive(active, categories[2].items) ? 'nav-item-active' : ''}`}>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 2v6"/><path d="M15 2v6"/><path d="M12 17v5"/><path d="M5 8h14"/><path d="M6 11V8h12v3a6 6 0 0 1-12 0Z"/>
+          </svg>
+          <span>EV</span>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          <ul>
+            {categories[2].items.map(it => (
+              <li><a href={it.href} class={`nav-panel-link ${active === it.href ? 'nav-panel-link-active' : ''}`}>{it.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <!-- Water Heating -->
+      <details class="nav-dropdown">
+        <summary class={`nav-item ${isCategoryActive(active, categories[3].items) ? 'nav-item-active' : ''}`}>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5-2 1.6-3 3.5-3 5.5a7 7 0 0 0 7 7Z"/>
+          </svg>
+          <span>Water Heating</span>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          <ul>
+            {categories[3].items.map(it => (
+              <li><a href={it.href} class={`nav-panel-link ${active === it.href ? 'nav-panel-link-active' : ''}`}>{it.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <!-- Home Improvements -->
+      <details class="nav-dropdown">
+        <summary class={`nav-item ${isCategoryActive(active, categories[4].items) ? 'nav-item-active' : ''}`}>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <span>Home Improvements</span>
+          <svg viewBox="0 0 24 24" fill="none" class="nav-chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          <ul>
+            {categories[4].items.map(it => (
+              <li><a href={it.href} class={`nav-panel-link ${active === it.href ? 'nav-panel-link-active' : ''}`}>{it.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <!-- Divider -->
+      <span class="mx-1 h-5 w-px bg-ink-200" aria-hidden="true"></span>
+
+      <!-- Guides -->
+      <a href="/guides/" class={`nav-item ${active === '/guides/' ? 'nav-item-active' : ''}`}>
+        <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <span>Guides</span>
+      </a>
+
+      <!-- Rebates -->
+      <a href="/rebates/" class={`nav-item ${active === '/rebates/' ? 'nav-item-active' : ''}`}>
+        <svg viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
+          <path d="m15 9-6 6"/>
+          <circle cx="9" cy="9" r=".5" fill="currentColor"/>
+          <circle cx="15" cy="15" r=".5" fill="currentColor"/>
+        </svg>
+        <span>Rebates</span>
+      </a>
+    </nav>
+
+    <!-- Mobile menu -->
+    <details id="mobile-menu" class="md:hidden">
+      <summary class="list-none rounded-md p-1.5 text-ink-700 hover:bg-ink-100" aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </summary>
+      <div class="absolute left-0 right-0 top-16 max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-ink-200 bg-white p-3 shadow-md">
+        <ul class="grid gap-1 text-sm">
+          <li><a class="block rounded-md px-3 py-2 font-medium text-ink-900 no-underline hover:bg-ink-100" href={wholeHome.href}>Whole Home</a></li>
+          {categories.map(cat => (
+            <li>
+              <details class="rounded-md">
+                <summary class="flex cursor-pointer items-center justify-between rounded-md px-3 py-2 font-medium text-ink-800 hover:bg-ink-100">
+                  <span>{cat.label}</span>
+                  <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </summary>
+                <ul class="mt-1 grid gap-0.5 pl-3">
+                  {cat.items.map(it => (
+                    <li><a class="block rounded-md px-3 py-1.5 text-ink-700 no-underline hover:bg-ink-100" href={it.href}>{it.label}</a></li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ))}
+          <li><a class="block rounded-md px-3 py-2 font-medium text-ink-800 no-underline hover:bg-ink-100" href="/guides/">Guides</a></li>
+          <li><a class="block rounded-md px-3 py-2 font-medium text-ink-800 no-underline hover:bg-ink-100" href="/rebates/">Rebates</a></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style is:global>
+  /* Desktop nav item — used by both <a> and <summary> */
+  .nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.375rem;
+    color: rgb(47 55 66); /* ink-700 */
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .nav-item:hover { background-color: rgb(238 240 242); color: rgb(19 23 28); }
+  .nav-item-active { background-color: rgb(240 249 244); color: rgb(32 94 57); }
+  .nav-item-active .nav-icon { color: rgb(40 118 70); }
+  .nav-icon {
+    width: 16px; height: 16px;
+    color: rgb(94 104 119); /* ink-500 */
+    flex-shrink: 0;
+  }
+  .nav-item:hover .nav-icon { color: rgb(40 118 70); }
+
+  /* Dropdown */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > summary { list-style: none; }
+  .nav-dropdown > summary::-webkit-details-marker { display: none; }
+  .nav-chevron {
+    width: 12px; height: 12px;
+    color: rgb(139 148 163); /* ink-400 */
+    transition: transform 160ms ease;
+    margin-left: 0.1rem;
+  }
+  .nav-dropdown[open] .nav-chevron { transform: rotate(180deg); }
+
+  /* Dropdown panel */
+  .nav-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 260px;
+    background: white;
+    border: 1px solid rgb(221 224 229); /* ink-200 */
+    border-radius: 0.625rem;
+    box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.18);
+    padding: 0.35rem;
+    z-index: 50;
+    animation: navPanelIn 120ms ease-out;
+  }
+  .nav-panel ul { list-style: none; padding: 0; margin: 0; }
+  .nav-panel-link {
+    display: block;
+    padding: 0.5rem 0.65rem;
+    border-radius: 0.375rem;
+    color: rgb(47 55 66); /* ink-700 */
+    text-decoration: none;
+    font-size: 0.8125rem;
+    line-height: 1.25;
+    transition: background-color 80ms ease, color 80ms ease;
+  }
+  .nav-panel-link:hover { background: rgb(238 240 242); color: rgb(19 23 28); }
+  .nav-panel-link-active { background: rgb(240 249 244); color: rgb(32 94 57); font-weight: 500; }
+
+  @keyframes navPanelIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Mobile primary menu — close on Escape, click-outside, or link click.
+    var menu = document.getElementById('mobile-menu');
+    if (menu) {
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && menu.open) menu.open = false;
+      });
+      document.addEventListener('click', function (e) {
+        if (!menu.open) return;
+        if (!menu.contains(e.target)) menu.open = false;
+      });
+      menu.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'A') menu.open = false;
+      });
+    }
+
+    // Desktop nav dropdowns — hover-to-open with grace period, click closes others.
+    var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.nav-dropdown'));
+    var isDesktop = function () { return window.matchMedia('(min-width: 768px)').matches; };
+    var closeTimers = new WeakMap();
+
+    dropdowns.forEach(function (dd) {
+      dd.addEventListener('mouseenter', function () {
+        if (!isDesktop()) return;
+        clearTimeout(closeTimers.get(dd));
+        dropdowns.forEach(function (other) { if (other !== dd) other.open = false; });
+        dd.open = true;
+      });
+      dd.addEventListener('mouseleave', function () {
+        if (!isDesktop()) return;
+        var t = setTimeout(function () { dd.open = false; }, 180);
+        closeTimers.set(dd, t);
+      });
+      // Close all on link click (so clicking a calculator link closes the menu)
+      dd.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.closest && t.closest('a')) {
+          dropdowns.forEach(function (d) { d.open = false; });
+        }
+      });
+    });
+
+    // Click outside any dropdown closes them all (desktop only — mobile uses native).
+    document.addEventListener('click', function (e) {
+      if (!isDesktop()) return;
+      var inside = dropdowns.some(function (dd) { return dd.contains(e.target); });
+      if (!inside) dropdowns.forEach(function (dd) { dd.open = false; });
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') dropdowns.forEach(function (dd) { dd.open = false; });
+    });
+  })();
+</script>

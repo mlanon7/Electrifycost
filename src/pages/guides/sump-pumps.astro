@@ -1,0 +1,49 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+const lastReviewed = '2026-05-01';
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Sump pumps in 2026: battery backup matters more than horsepower', datePublished: '2026-03-09', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
+---
+<Layout title="Sump Pumps + Battery Backup in 2026" description="Sump pump guide: why battery backup matters more than horsepower, combo vs water-powered vs smart, and how to size for your basement risk." active="/guides/sump-pumps/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/generator-calculator.png" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Sump pumps', href: '/guides/sump-pumps/' }]}>
+  <article class="container-wide max-w-3xl py-10 prose-guide">
+    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Sump pumps in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~6 min read</p></header>
+    <p class="lede">A finished basement has $20,000–$100,000 of refinishing value at stake every time it rains hard. A $1,500 sump pump combo with battery backup is the cheapest insurance policy in homeownership. This guide explains the configurations that actually protect, the failure modes that cause flooding, and the smart-pump features worth paying for.</p>
+
+    <h2>How a sump pump works</h2>
+    <p>A pit (the "sump") is excavated at the lowest point of your basement floor. Groundwater and foundation-drain runoff collect there. A pump sits in the pit; when water rises to a float switch, the pump activates and ejects the water through a discharge pipe to outside the foundation. The system runs intermittently — minutes per hour during heavy rain, never during dry weeks.</p>
+
+    <h2>The seven configurations</h2>
+    <p><strong>Basic primary 1/3 HP</strong> ($430–$1,030): pedestal or submersible. Adequate for most homes with seasonal groundwater. 40 GPM at typical lift height.</p>
+
+    <p><strong>Heavy-duty primary 1/2 HP</strong> ($580–$1,450): for larger basements, deeper sumps, or high water tables. 60 GPM. Lasts longer because it runs cooler at the same workload.</p>
+
+    <p><strong>Battery backup only</strong> ($450–$1,350): standalone 12V DC pump that activates when the primary fails OR power goes out. Sized smaller than primary (25 GPM typical). Sits in the same sump.</p>
+
+    <p><strong>Combo primary + battery backup</strong> ($900–$2,500): both pumps in one basin. The most popular configuration. Primary handles routine pumping; backup takes over during outages or primary failure.</p>
+
+    <p><strong>Water-powered backup</strong> ($430–$1,400): uses municipal water pressure to drive an ejector. No battery to maintain. Works as long as city water flows. Catch: wastes 1–2 gallons of city water per gallon pumped. Only viable if you&rsquo;re on municipal water (not well).</p>
+
+    <p><strong>Smart WiFi combo</strong> ($1,300–$3,300): primary + backup with WiFi alerts. Notifies your phone when the pump cycles, when water level rises unusually fast, when the battery is low, or when the system loses power.</p>
+
+    <p><strong>Generator-circuit primary</strong>: standard pump but wired to a critical-loads circuit fed by a transfer switch and standby generator. Most expensive setup but most reliable for long outages.</p>
+
+    <h2>The failure mode that matters</h2>
+    <p>The most common cause of basement flooding isn&rsquo;t inadequate pump capacity. It&rsquo;s power loss during the same storm that caused the flooding. Tornado, hurricane, microburst — these knock out the grid and the rain is heaviest at the same moment.</p>
+
+    <p>A 1/3 HP primary with DC battery backup outperforms a 1 HP primary alone every time. The lesson: prioritize backup over capacity. Even basic homes with finished basements should run combo systems.</p>
+
+    <h2>Battery maintenance</h2>
+    <p>Standard battery backup uses a deep-cycle lead-acid battery. Capacity degrades 20-30% by year 3 and is essentially dead by year 5. Test the system monthly by unplugging the primary; the battery should run 4–8 hours of continuous pumping. Replace the battery every 4–5 years even if it still tests OK — capacity has dropped significantly by then.</p>
+
+    <h2>Discharge gotchas</h2>
+    <p>The discharge line must exit at least 10 feet from the foundation, slope away from the house, and not be permitted to drain back into the sump (check valve required). Frozen discharge lines are a leading winter failure — bury below frost line or use insulated above-grade pipe with a freezeguard fitting that lets water exit if the main line freezes.</p>
+
+    <h2>Insurance and HOMES rebate</h2>
+    <p>Most homeowner insurance does not cover sump-pump failure flooding by default — you need a sump-pump rider ($50–$200/yr) or full flood insurance. Some insurers (Travelers, Liberty Mutual) give a 5–10% discount on the rider for smart-pump installations with monitoring.</p>
+
+    <p>DOE HOMES rebate doesn&rsquo;t cover sump pumps directly, but if you&rsquo;re doing finished-basement upgrades that include insulation + air sealing, the modeled-savings track may capture the project at $4,000–$8,000 in rebates depending on income tier.</p>
+
+    <p class="mt-8"><a href="/sump-pump-cost-calculator/" class="font-medium text-brand-700">Run the sump pump calculator →</a></p>
+  </article>
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

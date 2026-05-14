@@ -1,0 +1,92 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import GeothermalCalculator from '@/components/GeothermalCalculator';
+
+const faq = [
+  { q: 'How much does geothermal heat pump cost installed in 2026?',
+    a: 'A 3-ton vertical-bore geothermal system installs for $25,000–$40,000 gross. The federal 25D credit (30%) was terminated by OBBBA for property placed in service after 2025-12-31, so 2026 installs see no federal credit — state programs and the lower long-term operating cost (50%+ less than air-source) carry the economics. Horizontal-loop installs (if you have ~1 acre) drop $5,000–$10,000 off.' },
+  { q: 'Did geothermal qualify for the federal tax credit before 2026?',
+    a: 'Yes — historically. Section 25D (Residential Clean Energy Credit) covered "qualified geothermal heat pump property" at 30% of cost with no cap through 2025-12-31. OBBBA (signed July 2025) terminated 25D for property placed in service after that date. This calculator does not subtract a federal credit for 2026 installs; if your system was placed in service in 2025 you may still qualify on your 2025 return. Source: https://www.irs.gov/credits-deductions/residential-clean-energy-credit.' },
+  { q: 'Vertical, horizontal, pond, or open loop?',
+    a: 'Vertical (~$20-30/ft drilled, 150-400 ft per ton): most common, suits any yard size, no trenching disruption. Horizontal (~$1,000-1,800/ton): cheapest if you have ~1 acre of yard to trench at 4-6 ft depth. Pond/lake ($800-1,500/ton): least expensive when you have water ≥8 ft deep year-round. Open-loop (well discharge): increasingly restricted; risks fouling; check state regulations.' },
+  { q: 'How much does geothermal save on bills?',
+    a: 'Geothermal heat pumps have COP of 4.0-5.5 (compared to 2.5-3.5 for air-source heat pumps and ~0.95 for gas furnaces). For a 2,000 sqft cold-climate home, expect $800-1,500/year operating cost vs $2,500-3,500 for gas. Without the (expired) 25D federal credit, simple payback typically lands 13-18 years on a gross install.' },
+  { q: 'How long does a geothermal system last?',
+    a: 'The ground loop has 50+ year design life (polyethylene pipe with heat-fused joints). Indoor heat-pump unit lifespan is 25+ years (vs 15 for air-source) because it sees no weather exposure. Pumps and circulators need replacement every 10-15 years (~$500–$1,500). Total system cost of ownership over 25 years usually beats air-source despite higher upfront.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Geothermal Heat Pump Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for geothermal (ground-source) heat pumps by tonnage, loop type, ductwork status, and state. 25D credit expired after 2025-12-31.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Geothermal Heat Pump Cost Calculator 2026: Vertical, Horizontal, Pond"
+  description="Installed-cost calculator for geothermal (ground-source) heat pumps by tonnage, loop type (vertical/horizontal/pond/open), and state. 25D credit expired after 2025-12-31."
+  active="/geothermal-heat-pump-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/geothermal-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Geothermal calculator', href: '/geothermal-heat-pump-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Geothermal heat pump</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Geothermal Heat Pump Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for ground-source heat pumps by tonnage, loop type (vertical/horizontal/pond/open), ductwork, and state. 25D credit expired after 2025-12-31; state programs still apply where eligible.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> 3-ton vertical-bore system installs for $25,000–$40,000 in 2026. Operating cost 50%+ lower than air-source heat pump. 25+ year equipment lifespan. The 30% federal 25D credit expired 2025-12-31; only state programs and operating savings carry the economics now.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/geothermal-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/geothermal-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/geothermal-hero-photo.png" alt="Geothermal heat pump system at a home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><GeothermalCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to geothermal?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A geothermal heat pump uses the constant 50–55°F earth temperature (a few feet below grade) as its heat source in winter and heat sink in summer. A closed-loop polyethylene pipe filled with food-grade propylene glycol circulates through the ground, exchanging heat with the soil. COP of 4.0–5.5 means 50%+ lower operating cost than air-source. Equipment lasts 25+ years. The catch: upfront cost is high because of drilling/trenching ($1,200–$2,200 per ton just for the loop on vertical-bore installs). The federal 25D credit (30%) was terminated by OBBBA after 2025-12-31.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/geothermal/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">12-min read · loop type decision · sizing · 25D credit · brands · drilling reality · vs air-source</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Air-source heat pump calculator →</a></li>
+      <li><a href="/mini-split-heat-pump-cost-calculator/">Mini-split heat pump calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

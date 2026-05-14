@@ -1,0 +1,11 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+cost_per_kwh,paired_solar,950,1200,1500,$/kWh,Installed at same time as solar — economy of shared inverter+labor,LBNL_TTS_2024,2026-05-11
+cost_per_kwh,retrofit,1150,1400,1750,$/kWh,Standalone retrofit — duplicate integration labor,NREL_2024,2026-05-11
+chemistry_premium,lfp,1.03,1.03,1.03,multiplier,LFP slight premium for cycle life + safety,Recurrent_2024,2026-05-11
+chemistry_premium,nmc,1.00,1.00,1.00,multiplier,NMC baseline,Recurrent_2024,2026-05-11
+usecase_premium,backup_only,1.00,1.00,1.00,multiplier,Small subpanel 4-6 critical circuits,NREL_2024,2026-05-11
+usecase_premium,self_consumption,1.05,1.05,1.05,multiplier,Grid-tied no transfer switch,NREL_2024,2026-05-11
+usecase_premium,tou_arbitrage,1.05,1.05,1.05,multiplier,Grid-tied scheduling,NREL_2024,2026-05-11
+usecase_premium,full_home_backup,1.15,1.15,1.15,multiplier,Automatic transfer switch + critical load panel,NREL_2024,2026-05-11
+panel_adder_100A,backup_modes,800,1400,2200,$,Critical-load subpanel addition for backup on 100A service,NEC_220,2026-05-11
+permit_base,base,250,500,900,$,Permit + inspection,municipal_avg,2026-05-11

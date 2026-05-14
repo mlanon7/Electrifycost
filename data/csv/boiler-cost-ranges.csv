@@ -1,0 +1,9 @@
+key,scenario,fuel,afue,btu_size,equipment_low,equipment_mid,equipment_high,labor_low,labor_mid,labor_high,permit_low,permit_mid,permit_high,notes,source_id,last_reviewed
+gas_cast_iron_85,Cast-iron gas boiler 85% AFUE,natural_gas,85,100000,2500,3500,4500,2500,3500,4500,200,400,800,"Traditional cast-iron sectional boiler — long-lived but heavy and slow to heat",Modernize_2024,2026-05-01
+gas_cast_iron_85_large,Cast-iron gas boiler (large home),natural_gas,85,150000,3200,4500,5800,2800,4000,5500,200,400,800,"150k BTU for 3000+ sqft homes",Modernize_2024,2026-05-01
+gas_condensing_95,Condensing gas boiler 95% AFUE,natural_gas,95,100000,4500,6000,8000,3500,5000,6500,200,400,800,"Wall-mounted or floor condensing with stainless heat exchanger",DOE_boiler_2024,2026-05-01
+gas_modulating_96,Modulating condensing gas boiler 96%+ AFUE,natural_gas,96,120000,6000,8500,11000,4000,5500,7500,200,400,800,"Premium modulating 5:1 turndown — typical Viessmann/Buderus/Lochinvar",DOE_boiler_2024,2026-05-01
+oil_85,Oil-fired boiler 85% AFUE,heating_oil,85,140000,4500,6000,7800,3500,5000,6500,200,400,800,"Oil boiler for retrofit where gas not available — Northeast US",Modernize_2024,2026-05-01
+oil_premium_87,Premium oil boiler 87% AFUE,heating_oil,87,140000,5800,7500,9800,4000,5500,7500,200,400,800,"Three-pass premium oil boiler with extended heat exchanger",Modernize_2024,2026-05-01
+propane_95,Propane condensing boiler 95% AFUE,propane,95,120000,4800,6500,8500,3500,5000,6500,200,400,800,"Condensing boiler converted to LP — rural Northeast and Midwest",Modernize_2024,2026-05-01
+electric_resistance,Electric resistance boiler,electric,100,80000,2200,3200,4500,1800,2800,4000,200,400,800,"Last-resort fuel — high operating cost; mostly hydronic apartments",Modernize_2024,2026-05-01

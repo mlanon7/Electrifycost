@@ -1,0 +1,27 @@
+constant_id,value,units,notes
+hp_ua_per_sqft,0.22,btu_per_hr_per_F_per_sqft,Whole-house UA factor for typical existing US homes. Building Science Corp / Energy Vanguard typical existing-stock 0.20-0.30; IECC-2018 new construction 0.10-0.15. Was 0.15 - understated heating load by 33-50%.
+hp_cop_standard,3.0,dimensionless,Seasonal coefficient of performance assumed for standard ASHP equipment
+hp_cop_coldclimate,2.6,dimensionless,Seasonal COP assumed for cold-climate / dual-fuel scenarios
+hp_oversize_factor_combustion,1.18,dimensionless,Distribution and oversizing factor applied to combustion baseline (gas / propane)
+hp_oversize_factor_oil,1.20,dimensionless,Distribution and oversizing factor applied to oil baseline
+hp_btu_per_therm,100000,btu_per_unit,Conversion: BTU per therm of natural gas
+hp_btu_per_gallon_propane,91500,btu_per_unit,Conversion: BTU per gallon of propane
+hp_btu_per_gallon_oil,138500,btu_per_unit,Conversion: BTU per gallon of fuel oil #2
+hp_btu_per_kwh,3412,btu_per_kwh,Conversion: BTU per kilowatt-hour
+hpwh_baseline_kwh_per_year,4500,kwh_per_year,Anchor annual electric water-heating consumption used to size HPWH operating-cost change
+hpwh_cop,3.0,dimensionless,Assumed COP for HPWH operating cost calc
+hpwh_baseline_therms_per_year,240,therms_per_year,Annual therms used by a typical natural-gas water heater (legacy fuel baseline)
+hpwh_baseline_propane_gal_per_year,220,gallons_per_year,Annual propane gallons used by a typical propane water heater
+hpwh_baseline_oil_gal_per_year,215,gallons_per_year,Annual oil gallons used by a typical oil-fired water heater
+induction_baseline_savings_gas,-10,usd_per_year,Annual operating-cost change vs. a natural-gas range (small; mostly neutral)
+induction_baseline_savings_propane,-25,usd_per_year,Annual operating-cost change vs. a propane range
+ev_annual_kwh,3600,kwh_per_year,Anchor annual kWh delivered for typical home EV charging (~12k miles / 3.3 mi-per-kWh)
+ev_baseline_gasoline_cost,1585,usd_per_year,Anchor annual gasoline cost replaced by home EV charging (12k mi / 28 mpg x $3.70/gal per EIA April 2026 STEO). Was $1400 (based on $3.45/gal).
+spread_default_frac,0.30,dimensionless,Default fractional spread used when computing low/high uncertainty band
+spread_default_floor,30,usd_per_year,Default minimum spread floor used in low/high uncertainty band
+spread_floor_heat_pump,60,usd_per_year,Floor used for heat-pump operating-cost uncertainty band
+spread_floor_hpwh,30,usd_per_year,Floor used for HPWH operating-cost uncertainty band
+spread_floor_induction,20,usd_per_year,Floor used for induction operating-cost uncertainty band
+spread_frac_induction,0.50,dimensionless,Wider fractional spread for induction (small-magnitude differences)
+spread_frac_ev,0.20,dimensionless,Tighter fractional spread for EV operating-cost change
+neutral_threshold_usd_per_year,30,usd_per_year,If absolute annual change is below this AND the band straddles zero classify direction as neutral

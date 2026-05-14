@@ -1,0 +1,75 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import OffGridSolarCalculator from '@/components/OffGridSolarCalculator';
+
+const faq = [
+  { q: 'How much does an off-grid solar system cost?',
+    a: 'Weekend cabin basic (5 kWh/day): $10,000–$23,000. Full-time cabin (15 kWh/day): $23,000–$51,000. Modest homestead (25 kWh/day, gas heat): $40,000–$82,000. Full-electric homestead (40 kWh/day): $66,000–$148,000. Grid-tied with whole-home backup: $48,000–$107,000.' },
+  { q: 'How big a battery do I need?',
+    a: 'Industry standard: 2 days of average daily use. So a 15 kWh/day household needs ~30 kWh of usable battery storage (typically 40-60 kWh nominal). Lithium-iron-phosphate (LFP) chemistry — Tesla Powerwall, Enphase IQ Battery, Sol-Ark — is the modern standard for off-grid; replaces lead-acid which needed 4-5× nominal capacity.' },
+  { q: 'Is the 25D credit available for off-grid solar in 2026?',
+    a: 'No. The 30% Residential Clean Energy Credit (25D) for solar + battery expired Dec 31 2025 (OBBBA). 2026+ off-grid installs no longer have the federal subsidy. State programs vary — Vermont, Maine, and New York still offer modest credits.' },
+  { q: 'Off-grid vs grid-tied with backup — which makes sense?',
+    a: 'Off-grid only makes sense if you literally cannot connect to the grid (location), the grid extension cost exceeds the off-grid system cost, or you have a strong philosophical preference. For 99% of homeowners, grid-tied solar + battery with off-grid capability (Sol-Ark, Outback Skybox) is the better engineering — you get backup during outages but use the grid as a free, infinite battery the rest of the time.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Off-Grid Solar System Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Cost calculator for off-grid solar + battery systems by daily load profile. From weekend cabin to full-electric homestead.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Off-Grid Solar System Cost Calculator 2026"
+  description="Cost calculator for off-grid solar + battery systems by daily load. Cabin to full homestead. PV array, battery, inverter, install."
+  active="/off-grid-solar-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/off-grid-solar-hero-photo.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Off-grid solar calculator', href: '/off-grid-solar-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Off-grid solar</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Off-Grid Solar System Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">Cost calculator for off-grid solar + battery systems sized by daily kWh load. From weekend cabin to full-electric homestead, plus grid-tied with whole-home backup.</p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800"><strong>Quick answer:</strong> weekend cabin $10,000–$23,000. Full-time cabin $23,000–$51,000. Modest homestead $40,000–$82,000. Full-electric homestead $66,000–$148,000. The 25D credit expired Dec 31 2025.</p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/off-grid-solar-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/off-grid-solar-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/off-grid-solar-hero-photo.png" alt="Off-grid solar PV array and battery bank at a rural property"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><OffGridSolarCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to off-grid solar?</h2>
+      <p class="mt-2 text-sm text-ink-700">Off-grid systems differ from grid-tied solar in three ways: bigger battery (you can&rsquo;t export to the grid), beefier inverter (must run all loads simultaneously without grid support), and backup heat source (you can&rsquo;t run a heat pump at design temperature on solar alone in winter). Most off-grid setups include a small wood stove or propane heat for the coldest weeks of the year.</p>
+      <p class="mt-3 text-sm"><a href="/guides/off-grid-solar/" class="font-medium text-brand-700">Read the full guide →</a></p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">{faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}</div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/solar-panel-cost-calculator/">Grid-tied solar →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery →</a></li>
+      <li><a href="/wood-pellet-stove-cost-calculator/">Wood/pellet stove →</a></li>
+      <li><a href="/generator-cost-calculator/">Generator backup →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

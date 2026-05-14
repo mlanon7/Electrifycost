@@ -1,0 +1,108 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import SolarCalculator from '@/components/SolarCalculator';
+
+const faq = [
+  {
+    q: 'How much does a residential solar system cost in 2026?',
+    a: 'Median residential PV installs at $2.50–$4.50 per watt. A 7 kW system — typical for a 1,800 sqft home using 10,500 kWh/year — runs $17,500–$31,500 gross. State and utility incentives can knock $500–$4,000 off. The 30% federal 25D credit expired after 2025-12-31 — no federal credit applies to 2026-onward installs. Source: LBNL Tracking the Sun 2024, IRS 25D, EnergySage 2024–2025 marketplace data.',
+  },
+  {
+    q: 'Is there a federal solar tax credit in 2026?',
+    a: 'No. The Residential Clean Energy Credit (Section 25D) covered 30% of qualified solar PV, battery storage (≥3 kWh), and labor with no dollar cap — but OBBBA (signed July 2025) terminated the credit for property placed in service after 2025-12-31. Systems with a 2025 placed-in-service date still qualify for the 30% credit on the 2025 return. Source: IRS https://www.irs.gov/credits-deductions/residential-clean-energy-credit.',
+  },
+  {
+    q: 'How long does payback take?',
+    a: 'Typical residential solar pays back in 7–12 years depending on your electricity rate, system size, and offset percentage. High-rate states like California, Massachusetts, and Hawaii see paybacks under 8 years. Low-rate states like Washington, Louisiana, and Idaho can take 12–15 years. Battery storage extends payback by 3–5 years on its own but enables resilience and self-consumption value not captured in simple payback math.',
+  },
+  {
+    q: 'What size system do I need?',
+    a: 'Multiply your annual usage (kWh on your utility bill, last 12 months) by 0.0008 to estimate kW. A 10,500 kWh/year U.S.-average home needs about 7–9 kW depending on sun. Most installers size to offset 80–110% of annual usage. Going larger than ~110% is usually uneconomic under net-metering successor tariffs that pay export at sub-retail rates (CA NEM 3.0, MA SMART export, similar successor programs in NY and AZ).',
+  },
+  {
+    q: 'Do I need a battery?',
+    a: 'Not for bill savings — net-metering or its successor tariff handles that. You need a battery for backup power during outages or to time-shift solar into peak-rate evening hours. Under CA NEM 3.0 a battery dramatically improves economics because export rates are much lower than retail. Powerwall-class (~13.5 kWh) installs at $13,000–$19,000 in 2026. The federal 25D credit (30%) covered standalone batteries ≥3 kWh through 2025-12-31; OBBBA terminated it for 2026-onward installs.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Solar Panel Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for residential solar PV: $/W by state, roof type, complexity, inverter, optional battery storage. 25D credit expired 2025-12-31.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Solar Panel Cost Calculator 2026: Installed Cost, 25D Credit, Payback"
+  description="Residential solar PV installed cost by state, system size, roof, inverter, battery. 25D credit expired 2025-12-31; state programs modeled."
+  active="/solar-panel-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/solar-panel-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Solar panel cost calculator', href: '/solar-panel-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Solar PV</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Solar Panel Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for residential rooftop or ground-mount solar PV. Adjusts by state, roof type, site complexity, inverter, and battery storage. <strong>Federal 25D credit (30%) expired 2025-12-31</strong>; state programs still apply where eligible.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a typical 7 kW system installs for $17,500–$31,500 gross in 2026. <strong>Federal 25D credit expired 2025-12-31</strong> — no federal credit for new installs. State + utility programs (NY-Sun, MD Clean Energy Grant, MA SMART, CT RRES, Austin Energy) still apply where eligible. Payback now depends heavily on local electricity rate and export compensation. Add $13,000–$19,000 for Powerwall-class battery.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/solar-panel-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/solar-panel-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/solar-panel-hero-photo.png"
+      alt="Home with rooftop solar panels and inverter connection"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><SolarCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to residential solar?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Solar PV converts sunlight directly into DC electricity through silicon cells. An inverter converts that DC into 240V AC your panel feeds back into the house. Modern modules are 400–450W each, so a 7 kW system is roughly 16–18 panels covering ~400 sqft of roof. Three things drive cost: per-Watt installed price (state labor + product class), system size (your usage divided by local sun yield), and optional add-ons (battery storage, premium inverters, ground mount). The federal 25D credit (30%) was terminated by OBBBA for property placed in service after 2025-12-31; 2026-forward economics depend on state programs and your utility&rsquo;s export-compensation tariff.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/solar/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">12-min read · how PV works · sizing · NEM successor tariffs · battery decision · 25-year economics</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

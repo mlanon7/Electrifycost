@@ -1,0 +1,13 @@
+material,glazing,low_per_window,mid_per_window,high_per_window,unit,notes,source_id,last_reviewed
+vinyl,double_lowE,450,650,900,$/window,Vinyl double-pane Low-E argon (typical 36×60),NFRC_directory,2026-05-11
+vinyl,triple_lowE,650,850,1150,$/window,Vinyl triple-pane Low-E,NFRC_directory,2026-05-11
+vinyl,storm_addon,200,350,500,$/window,Exterior storm over existing single-pane,NFRC_directory,2026-05-11
+fiberglass,double_lowE,700,950,1250,$/window,Marvin Essential Pella Impervia Milgard Ultra,NFRC_directory,2026-05-11
+fiberglass,triple_lowE,900,1200,1600,$/window,Fiberglass triple-pane,NFRC_directory,2026-05-11
+wood_clad,double_lowE,950,1300,1750,$/window,Andersen 400 Marvin Ultimate Pella Architect,NFRC_directory,2026-05-11
+wood_clad,triple_lowE,1200,1650,2200,$/window,Wood-clad triple-pane,NFRC_directory,2026-05-11
+aluminum,double_lowE,600,850,1150,$/window,Hot-climate thermally broken,NFRC_directory,2026-05-11
+aluminum,triple_lowE,800,1100,1500,$/window,Aluminum triple-pane,NFRC_directory,2026-05-11
+install_mult,retrofit,1.00,1.00,1.00,multiplier,Pocket install reusing existing trim,NFRC_directory,2026-05-11
+install_mult,new_construction,1.15,1.15,1.15,multiplier,Full frame replacement,NFRC_directory,2026-05-11
+hvac_savings_per_window,base,8,8,8,$/window/yr,Avg HVAC savings vs single-pane (ENERGY STAR estimate),ENERGY_STAR_Windows,2026-05-11

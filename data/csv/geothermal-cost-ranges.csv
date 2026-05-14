@@ -1,0 +1,7 @@
+parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
+loop_per_ton,vertical,3500,4500,6500,$/ton,Fully-loaded $/ton (indoor unit + vertical bore loop + plumbing tie-in). Industry consolidates indoor+loop into single per-ton figure - HomeGuide 2026: $3500-$5500/ton typical; Bryant 2026: up to $11700/ton premium. 3-ton typical $10500-$19500. https://homeguide.com/costs/geothermal-heat-pump-cost,SRC_NREL_BENCHMARK,2026-05-13
+loop_per_ton,horizontal,2500,3500,5000,$/ton,Fully-loaded $/ton with horizontal trench loop (needs ~1 acre yard). Cheaper than vertical because trenching displaces drilling. https://www.angi.com/articles/geothermal-heating-and-cooling-cost.htm,SRC_NREL_BENCHMARK,2026-05-13
+loop_per_ton,pond,2200,3200,4500,$/ton,Fully-loaded $/ton with pond/lake loop. Requires pond at least 8ft deep year-round. Cheapest loop when available.,SRC_NREL_BENCHMARK,2026-05-13
+loop_per_ton,open,2800,3800,5200,$/ton,Fully-loaded $/ton with open-loop well + discharge. Restricted in many jurisdictions; well-fouling risk.,SRC_NREL_BENCHMARK,2026-05-13
+duct_reuse_credit,base,-1500,-2500,-4000,$,Savings if existing ducts reused,SRC_NREL_BENCHMARK,2026-05-13
+permit_design,base,800,1500,2800,$,Engineering + drilling permit,SRC_NREL_BENCHMARK,2026-05-13

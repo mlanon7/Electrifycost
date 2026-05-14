@@ -1,0 +1,11 @@
+tier,per_ton_low,per_ton_mid,per_ton_high,seer2_typical,labor_hours_per_ton,notes,source_id,last_reviewed
+single,1600,2100,2700,15.0,6,Single-stage 14.3-16 SEER2 baseline,AHRI_directory,2026-05-11
+two_stage,2100,2700,3400,17.5,7,Two-stage 16-19 SEER2,AHRI_directory,2026-05-11
+variable,2700,3400,4400,21.0,8.5,Variable-speed inverter 18-26 SEER2,AHRI_directory,2026-05-11
+duct_adder,400,800,1500,,,Seal + insulate trunk,ACCA_Manual_D,2026-05-11
+duct_replace,2500,4500,7500,,,Full duct replacement,ACCA_Manual_D,2026-05-11
+furnace_bundle,2400,3500,5000,,,Gas furnace 80-95% AFUE bundled,DOE_Energy_Saver,2026-05-11
+refrigerant_premium,200,400,700,,,A2L tooling + R-32/R-454B training,EPA_SNAP_2025,2026-05-11
+permit_base,200,400,700,,,Permit + disposal of old equipment,municipal_avg,2026-05-11
+blc_btu_per_sqft_cdd,18,18,18,,,Building load coefficient for cooling kWh estimate,ASHRAE_HOF,2026-05-11
+labor_rate_usd,95,95,95,,,HVAC tech national average,BLS_OEWS,2026-05-11

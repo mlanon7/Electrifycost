@@ -1,0 +1,1430 @@
+{
+  "SRC_IRS_25C": {
+    "title": "IRS Energy Efficient Home Improvement Credit (Section 25C)",
+    "url": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01",
+    "notes": "Qualifying improvements through December 31, 2025. 30 percent of cost with annual category caps."
+  },
+  "SRC_IRS_5695": {
+    "title": "IRS Form 5695 — Residential Energy Credits",
+    "url": "https://www.irs.gov/forms-pubs/about-form-5695",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_IRS_8911": {
+    "title": "IRS Form 8911 — Alternative Fuel Vehicle Refueling Property Credit",
+    "url": "https://www.irs.gov/forms-pubs/about-form-8911",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01",
+    "notes": "Property placed in service through June 30, 2026 with eligible-census-tract requirements."
+  },
+  "SRC_IRS_8911_INSTRUCTIONS": {
+    "title": "IRS Form 8911 Instructions",
+    "url": "https://www.irs.gov/instructions/i8911",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_IRS_NOTICE_2024_30": {
+    "title": "IRS Notice 2024-30 — 30C eligible census tract guidance",
+    "url": "https://www.irs.gov/pub/irs-drop/n-24-20.pdf",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01",
+    "notes": "Clarifies eligible census tract definitions for the Alternative Fuel Vehicle Refueling Property Credit (30C)."
+  },
+  "SRC_IRS_PUB_5886": {
+    "title": "IRS Publication 5886 — Residential Clean Energy Credit Quick Reference",
+    "url": "https://www.irs.gov/pub/irs-pdf/p5886a.pdf",
+    "publisher": "Internal Revenue Service",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR_FED_CREDITS": {
+    "title": "ENERGY STAR Federal Tax Credits Overview",
+    "url": "https://www.energystar.gov/about/federal-tax-credits",
+    "publisher": "ENERGY STAR (U.S. EPA)",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR_HP": {
+    "title": "ENERGY STAR Air Source Heat Pumps Tax Credit",
+    "url": "https://www.energystar.gov/about/federal-tax-credits/air-source-heat-pumps",
+    "publisher": "ENERGY STAR",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR_HPWH": {
+    "title": "ENERGY STAR Heat Pump Water Heaters Tax Credit",
+    "url": "https://www.energystar.gov/about/federal-tax-credits/heat-pump-water-heaters",
+    "publisher": "ENERGY STAR",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR_PRODUCT_FINDER_HP": {
+    "title": "ENERGY STAR Product Finder — Air Source Heat Pumps",
+    "url": "https://www.energystar.gov/productfinder/product/certified-air-source-heat-pumps/results",
+    "publisher": "ENERGY STAR",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01",
+    "notes": "Authoritative list of qualifying heat pump models for federal tax credit eligibility."
+  },
+  "SRC_ENERGYSTAR_PRODUCT_FINDER_HPWH": {
+    "title": "ENERGY STAR Product Finder — Heat Pump Water Heaters",
+    "url": "https://www.energystar.gov/productfinder/product/certified-water-heaters/results",
+    "publisher": "ENERGY STAR",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR_RANGES": {
+    "title": "ENERGY STAR Cooktop & Range Resources",
+    "url": "https://www.energystar.gov/products",
+    "publisher": "ENERGY STAR",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_HOMES": {
+    "title": "DOE Home Energy Rebates Programs (HOMES & HEEHRA)",
+    "url": "https://www.energy.gov/scep/home-energy-rebates-programs",
+    "publisher": "U.S. Department of Energy",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01",
+    "notes": "Administered by states; rollout dates and amounts vary by state energy office."
+  },
+  "SRC_DOE_HOMES_FAQ": {
+    "title": "DOE Home Energy Rebates Frequently Asked Questions",
+    "url": "https://www.energy.gov/scep/home-energy-rebates-frequently-asked-questions",
+    "publisher": "U.S. Department of Energy",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_HPWH": {
+    "title": "DOE Energy Saver — Heat Pump Water Heaters",
+    "url": "https://www.energy.gov/energysaver/heat-pump-water-heaters",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_WATER_HEATER_COSTS": {
+    "title": "DOE — Estimating Water Heater Costs and Efficiency",
+    "url": "https://www.energy.gov/energysaver/estimating-costs-and-efficiency-storage-demand-and-heat-pump-water-heaters",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_HP_BENCHMARK": {
+    "title": "DOE & NREL Residential Heat Pump Cost Studies",
+    "url": "https://www.nrel.gov/buildings/residential-cost-models.html",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01",
+    "notes": "Used as anchor for installed cost ranges; adjusted by state labor multipliers."
+  },
+  "SRC_DOE_BTO_HP_ROADMAP": {
+    "title": "DOE Building Technologies Office — Residential Heat Pump Roadmap",
+    "url": "https://www.energy.gov/eere/buildings/residential-heat-pumps",
+    "publisher": "U.S. Department of Energy",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_PV_BENCHMARKS": {
+    "title": "DOE Solar PV System Cost Benchmarks",
+    "url": "https://www.energy.gov/cmei/systems/solar-photovoltaic-system-cost-benchmarks",
+    "publisher": "U.S. Department of Energy",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_DOE_BUILDING_AMERICA": {
+    "title": "Building America Solution Center — DOE",
+    "url": "https://basc.pnnl.gov/",
+    "publisher": "U.S. Department of Energy / PNNL",
+    "category": "guide",
+    "last_reviewed": "2026-05-01",
+    "notes": "Detailed install guides for HVAC, insulation, water heating, and electrification retrofits."
+  },
+  "SRC_EIA_RETAIL": {
+    "title": "EIA Electricity Retail Sales (state-level)",
+    "url": "https://www.eia.gov/electricity/data.php",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-04-01"
+  },
+  "SRC_EIA_API": {
+    "title": "EIA Open Data API",
+    "url": "https://www.eia.gov/opendata/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_EIA_NATGAS": {
+    "title": "EIA Natural Gas Residential Prices",
+    "url": "https://www.eia.gov/dnav/ng/ng_pri_sum_dcu_nus_m.htm",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-04-01"
+  },
+  "SRC_EIA_HEATING_OIL": {
+    "title": "EIA Weekly Heating Oil & Propane Prices",
+    "url": "https://www.eia.gov/petroleum/heatingoilpropane/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-04-01"
+  },
+  "SRC_EIA_GASOLINE": {
+    "title": "EIA Weekly Retail Gasoline Prices",
+    "url": "https://www.eia.gov/petroleum/gasdiesel/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-04-01",
+    "notes": "Used as the gasoline-cost baseline for EV operating-cost comparisons."
+  },
+  "SRC_BLS_ELECTRICIAN": {
+    "title": "BLS OEWS — Electricians (47-2111)",
+    "url": "https://www.bls.gov/oes/current/oes472111.htm",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "category": "labor_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_BLS_HVAC": {
+    "title": "BLS OEWS — HVAC Mechanics & Installers (49-9021)",
+    "url": "https://www.bls.gov/oes/current/oes499021.htm",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "category": "labor_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_BLS_PLUMBER": {
+    "title": "BLS OEWS — Plumbers (47-2152)",
+    "url": "https://www.bls.gov/oes/current/oes472152.htm",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "category": "labor_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_BLS_PPI_HVAC": {
+    "title": "BLS Producer Price Index — HVAC Equipment",
+    "url": "https://www.bls.gov/ppi/",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "category": "labor_data",
+    "last_reviewed": "2026-05-01",
+    "notes": "Used to track equipment price inflation between cost-data refreshes."
+  },
+  "SRC_NREL_SOLAR": {
+    "title": "NREL Solar Installed System Cost Analysis",
+    "url": "https://www.nrel.gov/solar/market-research-analysis/solar-installed-system-cost.html",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NREL_RES_COST_MODELS": {
+    "title": "NREL Residential Building Cost Models",
+    "url": "https://www.nrel.gov/buildings/residential-cost-models.html",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_AFDC_LAWS": {
+    "title": "AFDC Laws & Incentives Database",
+    "url": "https://afdc.energy.gov/laws",
+    "publisher": "Alternative Fuels Data Center (DOE)",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_AFDC_30C_TRACT_TOOL": {
+    "title": "AFDC 30C Eligible Census Tract Lookup Tool",
+    "url": "https://afdc.energy.gov/laws/30c-tract-lookup",
+    "publisher": "Alternative Fuels Data Center",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-01",
+    "notes": "Address-level eligibility check for the federal 30C EV charging credit."
+  },
+  "SRC_DSIRE": {
+    "title": "DSIRE — Database of State Incentives for Renewables & Efficiency",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01",
+    "notes": "Authoritative source for state, utility, and local incentive programs across the U.S."
+  },
+  "SRC_NEEP_CCHP": {
+    "title": "NEEP Cold-Climate Heat Pump Specification & Product List",
+    "url": "https://ashp.neep.org/",
+    "publisher": "Northeast Energy Efficiency Partnerships",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01",
+    "notes": "Capacity at 5°F and HSPF2 verification for cold-climate heat pump models."
+  },
+  "SRC_NEEP_GUIDE": {
+    "title": "NEEP Guide — Buying a Cold-Climate Air-Source Heat Pump",
+    "url": "https://neep.org/heating-electrification/buying-cold-climate-air-source-heat-pumps",
+    "publisher": "Northeast Energy Efficiency Partnerships",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NEEA_HPWH": {
+    "title": "NEEA Heat Pump Water Heater Resources",
+    "url": "https://neea.org/initiatives/heat-pump-water-heaters",
+    "publisher": "Northwest Energy Efficiency Alliance",
+    "category": "research",
+    "last_reviewed": "2026-05-01",
+    "notes": "Field studies of HPWH performance and Tier-3 specification."
+  },
+  "SRC_RMI_ELECTRIFY": {
+    "title": "RMI — The Economics of Electrifying Buildings",
+    "url": "https://rmi.org/insight/economics-of-electrifying-buildings/",
+    "publisher": "Rocky Mountain Institute",
+    "category": "research",
+    "last_reviewed": "2026-05-01",
+    "notes": "Operating-cost benchmarks for heat pump retrofits across U.S. cities."
+  },
+  "SRC_RMI_INDUCTION": {
+    "title": "RMI — Cooking with Gas vs. Induction",
+    "url": "https://rmi.org/insight/health-effects-from-gas-stove-pollution/",
+    "publisher": "Rocky Mountain Institute",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ACEEE_HP_GUIDE": {
+    "title": "ACEEE Consumer Guide to Heat Pump Tax Credits",
+    "url": "https://www.aceee.org/topic/residential-energy-efficiency",
+    "publisher": "American Council for an Energy-Efficient Economy",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_LBNL_HOME_ENERGY_SAVER": {
+    "title": "LBNL Home Energy Saver — Building load methodology",
+    "url": "https://homeenergysaver.lbl.gov/",
+    "publisher": "Lawrence Berkeley National Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01",
+    "notes": "Reference for HDD-based heating load calculation used in our operating-cost model."
+  },
+  "SRC_LBNL_HEAT_DECARB": {
+    "title": "LBNL — Heating Sector Decarbonization Study",
+    "url": "https://buildings.lbl.gov/publications",
+    "publisher": "Lawrence Berkeley National Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_PNNL_RES_PANEL": {
+    "title": "PNNL — Residential Service Panel Sizing & Electrification Readiness",
+    "url": "https://www.pnnl.gov/projects/grid-modernization-laboratory-consortium",
+    "publisher": "Pacific Northwest National Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NOAA_NORMALS": {
+    "title": "NOAA U.S. Climate Normals (1991–2020) — HDD/CDD",
+    "url": "https://www.ncei.noaa.gov/products/land-based-station/us-climate-normals",
+    "publisher": "NOAA National Centers for Environmental Information",
+    "category": "climate_data",
+    "last_reviewed": "2026-05-01",
+    "notes": "Authoritative source for heating- and cooling-degree-day values used in load modeling."
+  },
+  "SRC_ASHRAE_169": {
+    "title": "ASHRAE Standard 169 — Climatic Data for Building Design",
+    "url": "https://www.ashrae.org/technical-resources/standards-and-guidelines",
+    "publisher": "ASHRAE",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ASHRAE_FUNDAMENTALS": {
+    "title": "ASHRAE Handbook of Fundamentals — Residential Heating Loads",
+    "url": "https://www.ashrae.org/technical-resources/ashrae-handbook",
+    "publisher": "ASHRAE",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ICC_IECC": {
+    "title": "International Energy Conservation Code (IECC) — Climate Zone Map",
+    "url": "https://codes.iccsafe.org/content/IECC2021P1",
+    "publisher": "International Code Council",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NFPA_70": {
+    "title": "NFPA 70 — National Electrical Code (NEC)",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "National Fire Protection Association",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NEC_LOAD_MGMT": {
+    "title": "NFPA NEC 750 — Energy Management & Load Management Systems",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ACCA_MANUAL_J": {
+    "title": "ACCA Manual J — Residential Load Calculation",
+    "url": "https://www.acca.org/standards/technical-manuals",
+    "publisher": "Air Conditioning Contractors of America",
+    "category": "code",
+    "last_reviewed": "2026-05-01",
+    "notes": "Industry-standard residential heating/cooling load calculation that contractors should perform before sizing equipment."
+  },
+  "SRC_ACCA_MANUAL_S": {
+    "title": "ACCA Manual S — Residential Equipment Selection",
+    "url": "https://www.acca.org/standards/technical-manuals",
+    "publisher": "Air Conditioning Contractors of America",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ACCA_MANUAL_D": {
+    "title": "ACCA Manual D — Residential Duct Systems",
+    "url": "https://www.acca.org/standards/technical-manuals",
+    "publisher": "Air Conditioning Contractors of America",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NEMA_PANEL": {
+    "title": "NEMA Residential Service Panel Standards",
+    "url": "https://www.nema.org/standards",
+    "publisher": "National Electrical Manufacturers Association",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_FUELECONOMY_GOV": {
+    "title": "FuelEconomy.gov — Vehicle Fuel & Energy Cost Comparison",
+    "url": "https://www.fueleconomy.gov/feg/Find.do?action=sbs",
+    "publisher": "U.S. EPA / DOE",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01",
+    "notes": "Used for EV vs. gasoline operating-cost reference."
+  },
+  "SRC_DRIVE_ELECTRIC_PROGRAMS": {
+    "title": "Drive Electric U.S. — State Incentive Database",
+    "url": "https://driveelectric.gov/",
+    "publisher": "DOE Joint Office of Energy & Transportation",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NYSERDA_CLEAN_HEAT": {
+    "title": "NYSERDA New York State Clean Heat Program",
+    "url": "https://www.nyserda.ny.gov/All-Programs/NYS-Clean-Heat",
+    "publisher": "NY State Energy Research & Development Authority",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_MASS_SAVE": {
+    "title": "Mass Save — Massachusetts Energy Efficiency Programs",
+    "url": "https://www.masssave.com/",
+    "publisher": "Mass Save (Massachusetts utilities consortium)",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_TECH_CLEAN_CA": {
+    "title": "TECH Clean California — Heat Pump Incentives",
+    "url": "https://techcleanca.com/",
+    "publisher": "California Energy Commission",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_CONSUMER_REPORTS_HP": {
+    "title": "Consumer Reports — Heat Pump Buying Guide",
+    "url": "https://www.consumerreports.org/heat-pumps/heat-pump-buying-guide-a8076716077/",
+    "publisher": "Consumer Reports",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_GREATER_THAN_ZERO": {
+    "title": "Rewiring America — Personal Electrification Planner",
+    "url": "https://www.rewiringamerica.org/app/ira-calculator",
+    "publisher": "Rewiring America",
+    "category": "guide",
+    "last_reviewed": "2026-05-01",
+    "notes": "Independent IRA-incentive calculator widely cited by media; useful cross-check for rebate amounts."
+  },
+  "IRS_25C": {
+    "title": "IRS Energy Efficient Home Improvement Credit (Section 25C)",
+    "url": "https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit",
+    "publisher": "IRS",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-12",
+    "notes": "OBBBA terminated for property placed in service after 2025-12-31"
+  },
+  "IRS_25D": {
+    "title": "IRS Residential Clean Energy Credit (Section 25D)",
+    "url": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit",
+    "publisher": "IRS",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-12",
+    "notes": "OBBBA terminated for property placed in service after 2025-12-31"
+  },
+  "IRS_30C": {
+    "title": "IRS Alternative Fuel Vehicle Refueling Property Credit (30C)",
+    "url": "https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit",
+    "publisher": "IRS",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-12",
+    "notes": "Personal use 30% up to $1000 through 2026-06-30 in eligible census tracts"
+  },
+  "IRS_30D": {
+    "title": "IRS Clean Vehicle Credit (30D)",
+    "url": "https://www.irs.gov/clean-vehicle-tax-credits",
+    "publisher": "IRS",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-12",
+    "notes": "OBBBA accelerated termination; not available for vehicles acquired after 2025-09-30"
+  },
+  "IRS_25E": {
+    "title": "IRS Used Clean Vehicle Credit (25E)",
+    "url": "https://www.irs.gov/clean-vehicle-tax-credits",
+    "publisher": "IRS",
+    "category": "tax_credit",
+    "last_reviewed": "2026-05-12",
+    "notes": "30% of price up to $4000; expired for acquisitions after 2025-09-30"
+  },
+  "DOE_Energy_Saver": {
+    "title": "DOE Energy Saver Guides",
+    "url": "https://www.energy.gov/energysaver/",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "ENERGY_STAR": {
+    "title": "ENERGY STAR Product Database",
+    "url": "https://www.energystar.gov/products",
+    "publisher": "EPA / DOE",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "ENERGY_STAR_Seal_Insulate": {
+    "title": "ENERGY STAR Seal and Insulate",
+    "url": "https://www.energystar.gov/saveathome/seal_insulate/why-seal-and-insulate",
+    "publisher": "EPA",
+    "category": "guide",
+    "last_reviewed": "2026-05-12",
+    "notes": "Average 15% heating/cooling savings or 11% total energy savings from air sealing + insulation"
+  },
+  "ENERGY_STAR_Windows": {
+    "title": "ENERGY STAR Residential Windows",
+    "url": "https://www.energystar.gov/products/residential_windows_doors_skylights",
+    "publisher": "EPA",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "ENERGY_STAR_CT": {
+    "title": "ENERGY STAR Smart Thermostat FAQ",
+    "url": "https://www.energystar.gov/products/heating_cooling/smart_thermostats/smart_thermostat_faq",
+    "publisher": "EPA",
+    "category": "guide",
+    "last_reviewed": "2026-05-12",
+    "notes": "Average $50/year HVAC savings or ~8% of HVAC bill"
+  },
+  "ENERGY_STAR_HPwES": {
+    "title": "ENERGY STAR Home Performance with ENERGY STAR",
+    "url": "https://www.energystar.gov/saveathome",
+    "publisher": "EPA",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "NREL_PVWATTS": {
+    "title": "NREL PVWatts Calculator",
+    "url": "https://pvwatts.nrel.gov/",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-12",
+    "notes": "Per-state PV specific yield used for solar production estimates"
+  },
+  "NREL_2024": {
+    "title": "NREL U.S. Solar PV System and Storage Cost Benchmark 2024",
+    "url": "https://www.nrel.gov/docs/fy24osti/89610.pdf",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "LBNL_TTS_2024": {
+    "title": "LBNL Tracking the Sun 2024",
+    "url": "https://emp.lbl.gov/tracking-the-sun",
+    "publisher": "Lawrence Berkeley National Lab",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "ACCA_Manual_J": {
+    "title": "ACCA Manual J Residential Load Calculation",
+    "url": "https://www.acca.org/standards/technical-manuals/manual-j",
+    "publisher": "Air Conditioning Contractors of America",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "ACCA_Manual_D": {
+    "title": "ACCA Manual D Duct Design Standard",
+    "url": "https://www.acca.org/standards/technical-manuals/manual-d",
+    "publisher": "Air Conditioning Contractors of America",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_220": {
+    "title": "NEC 220 Branch Circuit, Feeder, and Service Calculations",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_220.83": {
+    "title": "NEC 220.83 Optional Method for Dwellings",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_300": {
+    "title": "NEC 300 Wiring Methods",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_440": {
+    "title": "NEC 440 Air-Conditioning and Refrigerating Equipment",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_625.41": {
+    "title": "NEC 625.41 EV Charging Circuit Rating",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_680": {
+    "title": "NEC 680 Swimming Pools and Fountains",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_702": {
+    "title": "NEC 702 Optional Standby Systems",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_702.5": {
+    "title": "NEC 702.5 Transfer Equipment",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEC_750": {
+    "title": "NEC 750 Energy Management Systems",
+    "url": "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70",
+    "publisher": "NFPA",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NFRC_directory": {
+    "title": "NFRC Certified Products Directory",
+    "url": "https://search.nfrc.org/search/CommonSearch.aspx",
+    "publisher": "National Fenestration Rating Council",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NEEP_CCASHP": {
+    "title": "NEEP Cold Climate Heat Pump Specification",
+    "url": "https://neep.org/heating-electrification/ccashp-specification-product-list",
+    "publisher": "Northeast Energy Efficiency Partnerships",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "IGSHPA_2024": {
+    "title": "IGSHPA Residential Ground-Source Heat Pump Cost Survey",
+    "url": "https://igshpa.org/",
+    "publisher": "IGSHPA",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "AHRI_directory": {
+    "title": "AHRI Directory of Certified Product Performance",
+    "url": "https://www.ahridirectory.org/",
+    "publisher": "Air-Conditioning Heating and Refrigeration Institute",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "ASHRAE_HOF": {
+    "title": "ASHRAE Handbook of Fundamentals",
+    "url": "https://www.ashrae.org/technical-resources/ashrae-handbook",
+    "publisher": "ASHRAE",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "BPI": {
+    "title": "Building Performance Institute (BPI)",
+    "url": "https://www.bpi.org/",
+    "publisher": "Building Performance Institute",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "RESNET": {
+    "title": "RESNET HERS Index",
+    "url": "https://www.resnet.us/",
+    "publisher": "RESNET",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "NAIMA_2024": {
+    "title": "NAIMA Insulation Cost Survey 2024",
+    "url": "https://insulationinstitute.org/",
+    "publisher": "NAIMA",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "Building_Science_Corp": {
+    "title": "Building Science Corporation Research",
+    "url": "https://buildingscience.com/",
+    "publisher": "Building Science Corporation",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "DOE_Building_America": {
+    "title": "DOE Building America Solution Center",
+    "url": "https://basc.pnnl.gov/",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "DOE_Geothermal": {
+    "title": "DOE Geothermal Heat Pumps",
+    "url": "https://www.energy.gov/energysaver/geothermal-heat-pumps",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "EPA_SNAP_2025": {
+    "title": "EPA SNAP Rule 23 — R-410A Phase-out",
+    "url": "https://www.epa.gov/snap",
+    "publisher": "U.S. Environmental Protection Agency",
+    "category": "standard",
+    "last_reviewed": "2026-05-12"
+  },
+  "EPA_fueleconomy": {
+    "title": "fueleconomy.gov",
+    "url": "https://fueleconomy.gov/",
+    "publisher": "EPA / DOE",
+    "category": "guide",
+    "last_reviewed": "2026-05-12"
+  },
+  "Consumer_Reports_2024": {
+    "title": "Consumer Reports 2024 EV Reliability & Maintenance",
+    "url": "https://www.consumerreports.org/cars/types/hybrids-evs/",
+    "publisher": "Consumer Reports",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "AAA_TrueCost_2024": {
+    "title": "AAA Your Driving Costs 2024",
+    "url": "https://www.aaa.com/AAA/common/AAR/files/AAA-Your-Driving-Costs.pdf",
+    "publisher": "American Automobile Association",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "Recurrent_2024": {
+    "title": "Recurrent Auto — EV Battery Health Research",
+    "url": "https://www.recurrentauto.com/research",
+    "publisher": "Recurrent",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "Edmunds_KBB_2024": {
+    "title": "Edmunds and Kelley Blue Book Residual Value Data 2024",
+    "url": "https://www.edmunds.com/",
+    "publisher": "Edmunds / KBB",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "III_2024": {
+    "title": "Insurance Information Institute — Auto Insurance Costs",
+    "url": "https://www.iii.org/",
+    "publisher": "Insurance Information Institute",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "BLS_OEWS": {
+    "title": "BLS Occupational Employment and Wage Statistics",
+    "url": "https://www.bls.gov/oes/",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "CPUC_NEM3": {
+    "title": "CPUC NEM 3.0 Successor Tariff",
+    "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering/nem-2.0-to-nem-3.0",
+    "publisher": "California Public Utilities Commission",
+    "category": "regulation",
+    "last_reviewed": "2026-05-12"
+  },
+  "CPUC_SGIP": {
+    "title": "CA SGIP Self-Generation Incentive Program",
+    "url": "https://www.selfgenca.com/",
+    "publisher": "CPUC",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "CT_GreenBank": {
+    "title": "CT Energy Storage Solutions (CT Green Bank)",
+    "url": "https://www.energizect.com/your-home/solutions-list/energy-storage-solutions",
+    "publisher": "CT Green Bank",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "NYSERDA": {
+    "title": "NYSERDA Residential Storage Incentive",
+    "url": "https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Residential-Energy-Storage",
+    "publisher": "NYSERDA",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "MassDOER": {
+    "title": "MA Department of Energy Resources / SMART / ConnectedSolutions",
+    "url": "https://www.mass.gov/orgs/department-of-energy-resources",
+    "publisher": "MA DOER",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "Energy_Trust_OR": {
+    "title": "Energy Trust of Oregon",
+    "url": "https://www.energytrust.org/",
+    "publisher": "Energy Trust of Oregon",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_CA": {
+    "title": "DSIRE California — Renewable & Efficiency Incentives",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_NY": {
+    "title": "DSIRE New York",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_NJ": {
+    "title": "DSIRE New Jersey",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_TX": {
+    "title": "DSIRE Texas",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_MA": {
+    "title": "DSIRE Massachusetts",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_CT": {
+    "title": "DSIRE Connecticut",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_CO": {
+    "title": "DSIRE Colorado",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_IL": {
+    "title": "DSIRE Illinois",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_MD": {
+    "title": "DSIRE Maryland",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_RI": {
+    "title": "DSIRE Rhode Island",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_DE": {
+    "title": "DSIRE Delaware",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_ME": {
+    "title": "DSIRE Maine",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_OR": {
+    "title": "DSIRE Oregon",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_VT": {
+    "title": "DSIRE Vermont",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "DSIRE_PA": {
+    "title": "DSIRE Pennsylvania",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-12"
+  },
+  "EIA_fueleconomy": {
+    "title": "EIA Weekly Retail Gasoline Prices",
+    "url": "https://www.eia.gov/petroleum/gasdiesel/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "research",
+    "last_reviewed": "2026-05-12"
+  },
+  "manufacturer_msrp": {
+    "title": "Manufacturer MSRP (Generac, Kohler, Rinnai, Navien, Rheem, Bosch, Tesla, Enphase, Franklin, Mitsubishi, Daikin, Fujitsu, LG, Pioneer)",
+    "url": "https://example.com/manufacturer-msrp",
+    "publisher": "Various manufacturers",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Modernize_2024": {
+    "title": "Modernize 2024 Contractor Pricing Surveys",
+    "url": "https://modernize.com/",
+    "publisher": "Modernize",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Honda_MSRP": {
+    "title": "Honda Generator MSRP",
+    "url": "https://powerequipment.honda.com/generators",
+    "publisher": "Honda Power Equipment",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Generac_MSRP": {
+    "title": "Generac Standby Generator MSRP",
+    "url": "https://www.generac.com/",
+    "publisher": "Generac",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Kohler_MSRP": {
+    "title": "Kohler Standby Generator MSRP",
+    "url": "https://www.kohlerhomeenergy.com/",
+    "publisher": "Kohler",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Generac_dealer_avg": {
+    "title": "Generac Dealer Installed-Price Averages",
+    "url": "https://www.generac.com/",
+    "publisher": "Generac dealer network",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "plumber_avg": {
+    "title": "Licensed plumber install + permit averages",
+    "url": "https://www.bls.gov/oes/2023/may/oes472152.htm",
+    "publisher": "BLS / contractor surveys",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "municipal_avg": {
+    "title": "Municipal permit + inspection averages",
+    "url": "https://www.energy.gov/eere/buildings/permitting",
+    "publisher": "DOE BTO + city permit office surveys",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "utility_avg": {
+    "title": "Utility program survey (rebates, demand response, audits)",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "DSIRE / utility programs",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Mitsubishi_dealer_avg": {
+    "title": "Mitsubishi M-Series + Hyper-Heat dealer install averages",
+    "url": "https://www.mitsubishicomfort.com/",
+    "publisher": "Mitsubishi Electric Trane HVAC",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Daikin_dealer_avg": {
+    "title": "Daikin Aurora dealer install averages",
+    "url": "https://www.daikinac.com/",
+    "publisher": "Daikin Industries",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Fujitsu_dealer_avg": {
+    "title": "Fujitsu Halcyon dealer install averages",
+    "url": "https://www.fujitsugeneral.com/us/",
+    "publisher": "Fujitsu General",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "LG_dealer_avg": {
+    "title": "LG Multi V/F dealer install averages",
+    "url": "https://www.lg.com/us/business/built-in-air-conditioning",
+    "publisher": "LG Electronics",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Pioneer_MSRP": {
+    "title": "Pioneer / Senville / MrCool DIY mini-split MSRP",
+    "url": "https://www.pioneerminisplit.com/",
+    "publisher": "Pioneer Diversified",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "Aeroseal_dealer_avg": {
+    "title": "Aeroseal Duct Injection dealer survey",
+    "url": "https://aeroseal.com/",
+    "publisher": "Aeroseal LLC",
+    "category": "market_data",
+    "last_reviewed": "2026-05-12"
+  },
+  "DOE_furnace_2024": {
+    "title": "DOE 2023 Final Rule on Residential Gas Furnace Efficiency (95% AFUE)",
+    "url": "https://www.energy.gov/eere/buildings/articles/biden-harris-administration-finalizes-cost-saving-efficiency-standards-gas",
+    "publisher": "U.S. Department of Energy",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "DOE_boiler_2024": {
+    "title": "DOE Residential Boiler Efficiency Standards",
+    "url": "https://www.energy.gov/energysaver/home-heating-systems/furnaces-and-boilers",
+    "publisher": "U.S. Department of Energy",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "HomeAdvisor_2024": {
+    "title": "HomeAdvisor roof replacement cost guide 2024",
+    "url": "https://www.homeadvisor.com/cost/roofing/",
+    "publisher": "HomeAdvisor / Angi",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "GAF_2024": {
+    "title": "GAF Materials shingle product specifications and warranties",
+    "url": "https://www.gaf.com/en-us/roofing-products",
+    "publisher": "GAF Materials Corporation",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "MRA_2024": {
+    "title": "Metal Roofing Alliance installed-cost benchmarks",
+    "url": "https://www.metalroofing.com/",
+    "publisher": "Metal Roofing Alliance",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "NRCA_2024": {
+    "title": "National Roofing Contractors Association pricing references",
+    "url": "https://www.nrca.net/",
+    "publisher": "National Roofing Contractors Association",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "DaVinci_2024": {
+    "title": "DaVinci Roofscapes synthetic slate product specs",
+    "url": "https://www.davinciroofscapes.com/",
+    "publisher": "DaVinci Roofscapes",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "ENERGY_STAR_2024": {
+    "title": "ENERGY STAR product specifications and consumer guidance",
+    "url": "https://www.energystar.gov/",
+    "publisher": "U.S. Environmental Protection Agency",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "EPA_R22_2020": {
+    "title": "EPA Phaseout of Class II Ozone-Depleting Substances (R-22)",
+    "url": "https://www.epa.gov/section608/phaseout-class-ii-ods",
+    "publisher": "U.S. Environmental Protection Agency",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "GE_Profile_2024": {
+    "title": "GE Profile Heat Pump Clothes Dryer product specifications",
+    "url": "https://www.geappliances.com/appliance/heat-pump-dryers",
+    "publisher": "GE Appliances",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "MieleDryer_2024": {
+    "title": "Miele T1 Heat Pump Dryer product specifications and warranty",
+    "url": "https://www.mieleusa.com/c/heat-pump-tumble-dryers-1452.htm",
+    "publisher": "Miele",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "LG_WashCombo_2024": {
+    "title": "LG WashCombo all-in-one washer-dryer product specs",
+    "url": "https://www.lg.com/us/washer-dryer-combos",
+    "publisher": "LG Electronics",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "DOE_appliance_2024": {
+    "title": "DOE Appliance Standards Clothes Dryers",
+    "url": "https://www.energy.gov/eere/buildings/clothes-dryers",
+    "publisher": "U.S. Department of Energy",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "DOE_air_sealing_2023": {
+    "title": "DOE Energy Saver Air Sealing Your Home",
+    "url": "https://www.energy.gov/energysaver/air-sealing-your-home",
+    "publisher": "U.S. Department of Energy",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "BPI_2024": {
+    "title": "Building Performance Institute (BPI) Air Sealing Standards",
+    "url": "https://www.bpi.org/standards",
+    "publisher": "Building Performance Institute",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "BPI_deep_2024": {
+    "title": "BPI Deep Energy Retrofit Pricing Survey 2024",
+    "url": "https://www.bpi.org/",
+    "publisher": "Building Performance Institute",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "Aeroseal_2024": {
+    "title": "Aeroseal Duct Sealing installed cost data",
+    "url": "https://aeroseal.com/",
+    "publisher": "Aeroseal LLC",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "IECC_2021": {
+    "title": "2021 International Energy Conservation Code (IECC) Residential",
+    "url": "https://www.energycodes.gov/sites/default/files/2021-08/2021_IECC_Residential.pdf",
+    "publisher": "International Code Council / DOE",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "NREL_PVMRP_2023": {
+    "title": "NREL Photovoltaic Module Reliability Program Degradation Data",
+    "url": "https://www.nrel.gov/pv/module-reliability.html",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "NREL_O_M_2024": {
+    "title": "NREL Solar O&M Costs Benchmarks",
+    "url": "https://www.nrel.gov/docs/fy20osti/76772.pdf",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "NREL_self_consumption_2023": {
+    "title": "NREL Self-Consumption of Residential Solar PV",
+    "url": "https://www.nrel.gov/docs/fy23osti/85107.pdf",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "DSIRE_NEM_2024": {
+    "title": "DSIRE Net Metering Policy Tracking",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "N.C. Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-05-01"
+  },
+  "EIA_AEO_2024": {
+    "title": "EIA Annual Energy Outlook 2024 Electricity Price Forecasts",
+    "url": "https://www.eia.gov/outlooks/aeo/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "WQA_2024": {
+    "title": "Water Quality Association — Residential Treatment Guidance",
+    "url": "https://wqa.org/",
+    "publisher": "Water Quality Association",
+    "category": "guide",
+    "last_reviewed": "2026-05-01"
+  },
+  "Kinetico_2024": {
+    "title": "Kinetico Premier Series water softener specifications",
+    "url": "https://www.kinetico.com/",
+    "publisher": "Kinetico Water",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Aquasana_2024": {
+    "title": "Aquasana whole-house water filtration product specs",
+    "url": "https://www.aquasana.com/",
+    "publisher": "Aquasana",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Grundfos_2024": {
+    "title": "Grundfos Comfort System recirculation pumps",
+    "url": "https://www.grundfos.com/us",
+    "publisher": "Grundfos",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Watts_2024": {
+    "title": "Watts Premier on-demand recirculation systems",
+    "url": "https://www.watts.com/",
+    "publisher": "Watts Water Technologies",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Taco_2024": {
+    "title": "Taco Comfort circulator pumps",
+    "url": "https://www.tacocomfort.com/",
+    "publisher": "Taco Inc.",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Rinnai_2024": {
+    "title": "Rinnai Continuum tankless with recirculation",
+    "url": "https://www.rinnai.us/",
+    "publisher": "Rinnai Corporation",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Zoeller_2024": {
+    "title": "Zoeller sump pump specifications",
+    "url": "https://www.zoeller.com/",
+    "publisher": "Zoeller Pump Company",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "BasementWatchdog_2024": {
+    "title": "Basement Watchdog battery backup sump pumps",
+    "url": "https://basementwatchdog.com/",
+    "publisher": "Glentronics Inc.",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Liberty_2024": {
+    "title": "Liberty Pumps sump and backup specifications",
+    "url": "https://www.libertypumps.com/",
+    "publisher": "Liberty Pumps",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "ThermaTru_2024": {
+    "title": "Therma-Tru fiberglass door product specifications",
+    "url": "https://www.thermatru.com/",
+    "publisher": "Therma-Tru Doors",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "EPA_woodstove_2024": {
+    "title": "EPA NSPS Residential Wood Heaters certified list",
+    "url": "https://www.epa.gov/compliance/list-epa-certified-wood-heaters",
+    "publisher": "U.S. Environmental Protection Agency",
+    "category": "code",
+    "last_reviewed": "2026-05-01"
+  },
+  "HPBA_2024": {
+    "title": "Hearth, Patio + Barbecue Association industry data",
+    "url": "https://www.hpba.org/",
+    "publisher": "HPBA",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "MHA_2024": {
+    "title": "Masonry Heater Association of North America",
+    "url": "https://www.mha-net.org/",
+    "publisher": "Masonry Heater Association",
+    "category": "market_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "NREL_off_grid_2024": {
+    "title": "NREL Off-Grid Solar+Storage System Cost Benchmarks",
+    "url": "https://www.nrel.gov/solar/",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SolArk_2024": {
+    "title": "Sol-Ark 15K hybrid inverter specifications",
+    "url": "https://www.sol-ark.com/",
+    "publisher": "Sol-Ark",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Pentair_2024": {
+    "title": "Pentair UltraTemp Hybrid heat pump heater specs",
+    "url": "https://www.pentair.com/",
+    "publisher": "Pentair",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "HotSpring_2024": {
+    "title": "HotSpring Spas standard heater specifications",
+    "url": "https://www.hotspring.com/",
+    "publisher": "Watkins Wellness",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Raypak_2024": {
+    "title": "Raypak pool and spa heater product specifications",
+    "url": "https://www.raypak.com/",
+    "publisher": "Raypak (Rheem)",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "CoverValet_2024": {
+    "title": "Cover Valet insulated hot tub covers",
+    "url": "https://www.covervalet.com/",
+    "publisher": "Cover Valet",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "EPA_FuelEconomy_2024": {
+    "title": "EPA FuelEconomy.gov vehicle ratings",
+    "url": "https://www.fueleconomy.gov/",
+    "publisher": "U.S. EPA",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "EVGo_pricing_2024": {
+    "title": "EVgo public DCFC pricing",
+    "url": "https://www.evgo.com/charging-plans/",
+    "publisher": "EVgo",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "Tesla_pricing_2024": {
+    "title": "Tesla Supercharger network pricing",
+    "url": "https://www.tesla.com/support/charging",
+    "publisher": "Tesla Inc.",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "EIA_petroleum_2024": {
+    "title": "EIA Weekly Retail Gasoline and Diesel Prices",
+    "url": "https://www.eia.gov/petroleum/gasdiesel/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "EIA_electricity_2024": {
+    "title": "EIA Electric Power Monthly Table 5.6.A",
+    "url": "https://www.eia.gov/electricity/monthly/",
+    "publisher": "U.S. Energy Information Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "FHWA_vmt_2024": {
+    "title": "FHWA Highway Statistics Series annual vehicle miles",
+    "url": "https://www.fhwa.dot.gov/policyinformation/statistics.cfm",
+    "publisher": "Federal Highway Administration",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "Span_2024": {
+    "title": "Span Drive smart electrical panel specifications",
+    "url": "https://www.span.io/",
+    "publisher": "Span.IO Inc.",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Lumin_2024": {
+    "title": "Lumin Smart Panel add-on load center",
+    "url": "https://www.luminsmart.com/",
+    "publisher": "Lumin",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Schneider_2024": {
+    "title": "Schneider Square D Pulse Energy Center",
+    "url": "https://www.se.com/us/en/product-range/65420-square-d-pulse-energy-management-system/",
+    "publisher": "Schneider Electric",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Emporia_2024": {
+    "title": "Emporia Vue 2 Smart Panel monitoring",
+    "url": "https://www.emporiaenergy.com/",
+    "publisher": "Emporia Energy",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Wallbox_2024": {
+    "title": "Wallbox EM112 load management device",
+    "url": "https://wallbox.com/",
+    "publisher": "Wallbox",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "Eaton_2024": {
+    "title": "Eaton CH series traditional panel specifications",
+    "url": "https://www.eaton.com/us/en-us/products/electrical-circuit-protection.html",
+    "publisher": "Eaton Corporation",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NREL_BENCHMARK": {
+    "title": "NREL Residential Cost Benchmark Studies",
+    "url": "https://www.nrel.gov/buildings/residential-cost-models.html",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01",
+    "notes": "Used as anchor for residential HVAC/geothermal installed cost ranges."
+  },
+  "SRC_LBNL_TTS": {
+    "title": "LBNL Tracking the Sun 2024 — Solar PV cost benchmarks",
+    "url": "https://emp.lbl.gov/tracking-the-sun",
+    "publisher": "Lawrence Berkeley National Laboratory",
+    "category": "research",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_NREL_PVWATTS": {
+    "title": "NREL PVWatts Calculator — solar production by state",
+    "url": "https://pvwatts.nrel.gov/",
+    "publisher": "National Renewable Energy Laboratory",
+    "category": "energy_data",
+    "last_reviewed": "2026-05-01"
+  },
+  "SRC_ENERGYSTAR": {
+    "title": "ENERGY STAR — equipment specifications and consumer guidance",
+    "url": "https://www.energystar.gov/",
+    "publisher": "U.S. EPA / DOE",
+    "category": "product_list",
+    "last_reviewed": "2026-05-01"
+  }
+}

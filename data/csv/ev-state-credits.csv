@@ -1,0 +1,15 @@
+state,program_name,amount_dollars,note,source_id,last_reviewed
+CA,CVRP / CC4A / CalCAP-EV,0,CVRP paused 2023; CalCAP-EV and CC4A income-tested replacements,DSIRE_CA,2026-05-11
+CO,CO Innovative Motor Vehicle Credit,5000,Refundable income-tax credit through 2026,DSIRE_CO,2026-05-11
+CT,CT CHEAPR,4250,Base + income-tier adders up to $9500 for low-income,DSIRE_CT,2026-05-11
+DE,DE Clean Vehicle Rebate Program,2500,Limited budget; first-come,DSIRE_DE,2026-05-11
+IL,IL EV Rebate Program,4000,Eligibility windows; check current funding,DSIRE_IL,2026-05-11
+ME,Efficiency Maine EV rebate,2000,Income-tiered,DSIRE_ME,2026-05-11
+MD,MD Excise Tax Credit,3000,Limited budget,DSIRE_MD,2026-05-11
+MA,MA MOR-EV,3500,Base + income tier adder,DSIRE_MA,2026-05-11
+NJ,NJ Charge Up,4000,Limited budget; check status,DSIRE_NJ,2026-05-11
+NY,NYS Drive Clean Rebate,2000,Standard rebate,DSIRE_NY,2026-05-11
+OR,OR Clean Vehicle Rebate,2500,Standard + Charge Ahead income-tier up to $5000,DSIRE_OR,2026-05-11
+PA,PA AFV Rebate,2000,Alternative Fuel Vehicle Rebate,DSIRE_PA,2026-05-11
+RI,RI DRIVE EV rebate,2500,Income-tiered,DSIRE_RI,2026-05-11
+VT,VT EV Incentive Program,4000,Income-tiered,DSIRE_VT,2026-05-11

@@ -1,0 +1,9 @@
+key,scenario,type,btu_capacity,equipment_low,equipment_mid,equipment_high,install_low,install_mid,install_high,annual_fuel_low,annual_fuel_mid,annual_fuel_high,notes,source_id,last_reviewed
+wood_small,Small EPA wood stove (1500 sqft),wood,40000,1400,2200,3200,1500,2500,4500,400,600,900,"EPA 2020-certified — Pacific Energy Super 27, Drolet HT3000. Cordwood, hand-load",EPA_woodstove_2024,2026-05-01
+wood_medium,Medium EPA wood stove (2000 sqft),wood,55000,1800,2800,4000,1600,2700,4800,500,800,1200,"Common house-heating size. Catalytic or non-catalytic options",EPA_woodstove_2024,2026-05-01
+wood_large_catalytic,Large catalytic wood stove (2500+ sqft),wood,80000,2800,4200,6000,1800,3000,5200,700,1100,1600,"Catalytic stoves run longer — 12-18 hr burn. BlazeKing Princess, Woodstock Ideal Steel",EPA_woodstove_2024,2026-05-01
+pellet_small,Small pellet stove (1500 sqft),pellet,40000,1800,2600,3800,1200,2000,3500,500,750,1100,"40-lb hopper, auto-feed. Harman P43, Quadra-Fire CB1200",HPBA_2024,2026-05-01
+pellet_medium,Medium pellet stove (2000 sqft),pellet,55000,2200,3200,4500,1300,2200,3800,650,1000,1500,"Most common size. 60-100 lb hoppers — 1-2 day refill cadence",HPBA_2024,2026-05-01
+pellet_freestanding_large,Large pellet stove (2500+ sqft),pellet,65000,2800,4000,5500,1400,2400,4200,800,1200,1800,"Larger hopper (120+ lb). Harman Allure, Quadra-Fire Mt Vernon",HPBA_2024,2026-05-01
+pellet_insert,Pellet insert (fireplace retrofit),pellet,45000,2500,3500,5000,1500,2500,4000,600,900,1300,"Slides into existing masonry fireplace. Requires chimney liner",HPBA_2024,2026-05-01
+masonry_heater,Russian/masonry heater,masonry,80000,8000,15000,28000,5000,10000,18000,400,600,900,"Premium one-time install. 20-30hr burn with thermal mass. Tulikivi, Temp-Cast",MHA_2024,2026-05-01

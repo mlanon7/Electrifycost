@@ -1,0 +1,9 @@
+key,scenario,sqft_low,sqft_high,starting_ach50,target_ach50,cost_low,cost_mid,cost_high,hvac_savings_pct,notes,source_id,last_reviewed
+diy_basic,DIY caulk + weatherstrip basics,1000,4000,12,9,80,150,300,3,"Caulk, foam, weatherstrip — visible gaps. No blower-door diagnostic — limited improvement",DOE_air_sealing_2023,2026-05-01
+pro_targeted_small,Professional targeted (small home),1000,1800,12,5,500,800,1300,8,"Pro audit + targeted sealing — attic plane, rim joists, recessed cans, plumbing penetrations",BPI_2024,2026-05-01
+pro_targeted_med,Professional targeted (mid-size home),1800,3000,12,5,800,1300,2000,10,"Standard whole-house sealing scope for 1800-3000 sqft",BPI_2024,2026-05-01
+pro_targeted_large,Professional targeted (large home),3000,5500,12,5,1300,2000,3200,12,"Larger envelope — more man-hours but per-sqft cost drops",BPI_2024,2026-05-01
+deep_sealing_med,Deep sealing + blower-door verify (mid),1800,3000,15,3,2000,3000,4500,18,"Aggressive sealing to passive-house levels — multi-day, blower-door iterations",BPI_deep_2024,2026-05-01
+deep_sealing_large,Deep sealing + blower-door verify (large),3000,5500,15,3,2800,4200,6500,20,"Same scope on larger home — typically 4-6 days of crew time",BPI_deep_2024,2026-05-01
+ducts_only,Duct sealing (aerosolized),1000,5500,0,0,1200,1800,2800,10,"Aeroseal or mastic duct sealing — separate from envelope; cuts duct losses 15-30%",Aeroseal_2024,2026-05-01
+new_construction_target,New-construction tight target,1000,5500,0,0,1500,2500,4000,0,"For new builds — meet 2021 IECC ACH50 ≤ 5 in CZ 1-2, ≤ 3 in CZ 3-8",IECC_2021,2026-05-01

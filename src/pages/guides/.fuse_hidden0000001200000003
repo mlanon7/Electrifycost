@@ -1,0 +1,205 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'Heat Pumps: The Complete Homeowner Guide',
+  description: 'How heat pumps work, the four main types, real-world efficiency, lifespan, maintenance schedule, sizing rules, refrigerant transition, and practical tips before you sign a contractor quote.',
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+};
+---
+<Layout
+  title="Heat Pumps Explained: How They Work, Types, Cost, Maintenance | ElectrifyCost"
+  description="A plain-English, source-backed guide to home heat pumps — refrigerant cycle, ducted vs ductless vs cold-climate vs geothermal, HSPF2 vs SEER2, sizing, install red flags, lifespan, and maintenance."
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Heat pumps', href: '/guides/heat-pumps/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Guide</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+      Heat Pumps: The Complete Homeowner Guide
+    </h1>
+    <p class="mt-3 max-w-prose text-base text-ink-700">
+      A heat pump is one of the biggest single decisions in a modern home — it replaces your furnace, your air conditioner, and a big chunk of your bills, all with one electric box. This is the long-form explainer. If you just want a planning-range cost, the <a href="/heat-pump-cost-calculator/" class="text-brand-700 underline-offset-2 hover:underline">heat pump cost calculator</a> is two scrolls away.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs text-ink-600">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#types" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">2. Types</a>
+      <a href="#how" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">3. How it works</a>
+      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">4. Sizing &amp; selection</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">5. Cost</a>
+      <a href="#service" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">6. Service &amp; lifespan</a>
+      <a href="#tips" class="rounded-full border border-ink-200 bg-white px-3 py-1 no-underline hover:bg-ink-50">7. Tips &amp; red flags</a>
+      <a href="#calc" class="rounded-full border border-brand-300 bg-brand-50 px-3 py-1 text-brand-700 no-underline hover:bg-brand-100">Open the calculator →</a>
+    </div>
+  </section>
+
+  <section id="what" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">1. What a heat pump actually is</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      A heat pump is a single piece of equipment that does the work of a furnace <em>and</em> an air conditioner. The breakthrough is that it doesn't <strong>create</strong> heat by burning a fuel — it <strong>moves</strong> heat from one place to another using a refrigerant cycle, the same physics that runs your refrigerator. In winter the system pulls heat out of the outdoor air (yes, even at sub-freezing temperatures — there's still latent heat in cold air down to roughly &minus;15&deg;F for cold-climate units) and releases it indoors. In summer the cycle runs in reverse and the indoor heat gets dumped outside, which is just air conditioning. One machine, two seasons, no combustion.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Because moving heat takes far less energy than making it, a modern heat pump delivers 2.5&ndash;4&times; the heating output of the electricity it consumes. That ratio is the <strong>Coefficient of Performance (COP)</strong>. A 95% AFUE gas furnace tops out at COP &asymp; 0.95. A baseboard electric heater is COP = 1.0. A reasonable air-source heat pump in a moderate climate averages COP &asymp; 3.0 across a heating season. That's why heat pumps cut bills against oil, propane, and electric-resistance heat in every state, and against natural gas in roughly two-thirds of states once you account for current retail prices.
+    </p>
+
+    <figure class="mt-6 rounded-lg border border-ink-200 bg-white p-4">
+      <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" class="w-full" aria-label="Refrigerant cycle diagram showing compressor, condenser, expansion valve, and evaporator with arrows">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#287646"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="600" height="280" fill="#f6f9f7" rx="8"/>
+        <!-- Outdoor side -->
+        <text x="30" y="30" font-family="sans-serif" font-size="13" fill="#5e6877" font-weight="600">OUTDOOR (winter source / summer sink)</text>
+        <rect x="40" y="80" width="180" height="120" fill="#e6f0eb" stroke="#287646" stroke-width="1.5" rx="6"/>
+        <text x="130" y="115" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1b3a28" font-weight="600">Outdoor coil</text>
+        <text x="130" y="135" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">(condenser in summer,</text>
+        <text x="130" y="150" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">evaporator in winter)</text>
+        <text x="130" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">⟲ Fan</text>
+        <!-- Indoor side -->
+        <text x="380" y="30" font-family="sans-serif" font-size="13" fill="#5e6877" font-weight="600">INDOOR (winter sink / summer source)</text>
+        <rect x="380" y="80" width="180" height="120" fill="#e6f0eb" stroke="#287646" stroke-width="1.5" rx="6"/>
+        <text x="470" y="115" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1b3a28" font-weight="600">Indoor coil</text>
+        <text x="470" y="135" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">(evaporator in summer,</text>
+        <text x="470" y="150" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">condenser in winter)</text>
+        <text x="470" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877">⟲ Air handler</text>
+        <!-- Compressor + valve in middle -->
+        <circle cx="300" cy="100" r="22" fill="#fff" stroke="#287646" stroke-width="1.5"/>
+        <text x="300" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1b3a28" font-weight="600">Comp</text>
+        <rect x="280" y="170" width="40" height="20" fill="#fff" stroke="#287646" stroke-width="1.5" rx="3"/>
+        <text x="300" y="184" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1b3a28">Expansion</text>
+        <!-- Arrows -->
+        <line x1="220" y1="100" x2="278" y2="100" stroke="#287646" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="322" y1="100" x2="380" y2="100" stroke="#287646" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="380" y1="180" x2="322" y2="180" stroke="#287646" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="278" y1="180" x2="220" y2="180" stroke="#287646" stroke-width="2" marker-end="url(#arr)"/>
+        <!-- Labels -->
+        <text x="250" y="92" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">hot gas</text>
+        <text x="350" y="92" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">hot gas</text>
+        <text x="350" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">warm liquid</text>
+        <text x="250" y="200" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#5e6877">cold liquid/gas</text>
+        <text x="300" y="245" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5e6877" font-style="italic">Reversing valve flips the flow between heating and cooling modes</text>
+      </svg>
+      <figcaption class="mt-3 text-xs text-ink-600">The refrigerant cycle in heating mode: outdoor air gives up heat to the cold refrigerant in the outdoor coil; the compressor raises pressure and temperature; the indoor coil dumps that heat into your home; the expansion valve drops pressure and the cycle restarts. In summer a reversing valve flips the roles.</figcaption>
+    </figure>
+  </section>
+
+  <section id="types" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">2. Types you'll actually see quoted</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2">
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Ducted central (air-source)</h3>
+        <p class="mt-1 text-sm text-ink-700">One outdoor condenser + one indoor air handler tied into your existing supply/return ductwork. The "drop-in" replacement for a central furnace + AC. Best for homes with healthy ducts.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Ductless mini-split</h3>
+        <p class="mt-1 text-sm text-ink-700">Outdoor condenser feeds one to eight wall-mounted or ceiling-cassette indoor heads via refrigerant lines — no ducts. Per-room control, very high efficiency, slightly higher per-zone cost.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Cold-climate heat pump</h3>
+        <p class="mt-1 text-sm text-ink-700">A subset of ducted or ductless units engineered to hold capacity at low outdoor temperatures. Look for <a href="https://ashp.neep.org/" target="_blank" rel="noopener noreferrer">NEEP-listed</a> models — these maintain 70&ndash;100% rated capacity at 5&deg;F.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Dual-fuel (hybrid)</h3>
+        <p class="mt-1 text-sm text-ink-700">A heat pump paired with your existing gas/oil furnace. The heat pump handles 80&ndash;95% of hours; the furnace covers the coldest few days. Cheapest path for cold-climate homes that already have working combustion equipment.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Geothermal (ground-source)</h3>
+        <p class="mt-1 text-sm text-ink-700">Exchanges heat with the ground (~55&deg;F year-round) instead of the air. Higher COP (4&ndash;5), but $25,000&ndash;$45,000 installed because of the loop field. Rare for retrofits; common in custom builds.</p>
+      </div>
+      <div class="card p-4">
+        <h3 class="text-sm font-semibold text-ink-900">Air-to-water (hydronic)</h3>
+        <p class="mt-1 text-sm text-ink-700">Heats water that then feeds radiators or radiant floors. Niche in the U.S. but mainstream in Europe. A retrofit option if your home already has a hydronic distribution system.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">3. How efficiency is rated</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Two ratings dominate residential heat pumps after the 2023 DOE rule change: <strong>HSPF2</strong> for heating and <strong>SEER2</strong> for cooling. Both are measured on a more rigorous test stand than the older HSPF/SEER and run roughly 85% of the old numbers for the same hardware &mdash; so HSPF2 8.5 is comparable to HSPF 10, and SEER2 16 is comparable to SEER 19. The minimum for new ENERGY STAR equipment varies by form factor: a typical air-source split unit needs HSPF2 &ge; 7.5 with regional variation; <a href="https://www.energystar.gov/products/heating_cooling/heat_pumps_air_source/key_product_criteria" target="_blank" rel="noopener noreferrer">ENERGY STAR's key product criteria</a> is the authoritative source. Cold-climate models routinely exceed HSPF2 8.1 with capacity ratings at 5&deg;F and even &minus;15&deg;F.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Two numbers matter more than the headline rating: <strong>capacity at 5&deg;F</strong> (specifically, the percentage of rated capacity the unit holds at that outdoor temperature) and <strong>modulation range</strong> (how low the compressor can dial down before short-cycling). A variable-speed unit that runs 30&ndash;100% capacity is dramatically better at humidity control and comfort than a single-stage unit that can only do 0% or 100%.
+    </p>
+  </section>
+
+  <section id="sizing" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">4. Sizing and selection</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The single biggest determinant of comfort and bill savings is correct sizing. The industry standard is <a href="https://www.acca.org/standards/manual-j" target="_blank" rel="noopener noreferrer">ACCA Manual J</a> &mdash; a room-by-room heating and cooling load calculation that accounts for insulation, windows, infiltration, orientation, and design temperature. A reputable contractor performs Manual J before quoting a tonnage; if they're sizing by square footage or "match the old furnace," walk away. Oversized heat pumps short-cycle, dehumidify poorly, and wear out faster. Right-sized heat pumps are a different product than oversized ones.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Selection is then Manual S (equipment selection) followed by Manual D (duct design) if you're going ducted. These three documents &mdash; Manual J, S, and D &mdash; should accompany every quote you sign. If a contractor refuses to share them, that's a meaningful red flag.
+    </p>
+  </section>
+
+  <section id="cost" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">5. Cost expectations</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li><strong>Ducted central, 3 ton:</strong> $7,500&ndash;$16,500 installed in most states; $11,000&ndash;$22,000 in high-cost-of-living states.</li>
+      <li><strong>Ducted central, 4 ton:</strong> $9,500&ndash;$20,000.</li>
+      <li><strong>Ductless mini-split, single zone:</strong> $3,500&ndash;$7,500.</li>
+      <li><strong>Ductless mini-split, three zone:</strong> $9,000&ndash;$18,000.</li>
+      <li><strong>Cold-climate ducted:</strong> add $1,500&ndash;$3,500 over a standard ducted unit.</li>
+      <li><strong>Dual-fuel:</strong> usually slightly less than a standalone heat pump because the existing furnace stays.</li>
+      <li><strong>Geothermal:</strong> $25,000&ndash;$45,000 retrofit; $20,000&ndash;$35,000 in new construction.</li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700">
+      All of those are <em>before</em> rebates. State and utility programs can take $1,000&ndash;$10,000 off the top depending on where you live. The federal 25C credit (30% up to $2,000) was terminated by OBBBA for systems placed in service after December 31, 2025, so it no longer reduces 2026-forward estimates. The DOE Home Energy Rebates (income-qualified, $4,000&ndash;$8,000 cap for HP) are state-administered with rolling availability.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Use the <a href="/heat-pump-cost-calculator/" class="text-brand-700">heat pump cost calculator</a> to get a number calibrated to your state, square footage, and panel size.
+    </p>
+  </section>
+
+  <section id="service" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">6. Service life and maintenance</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Typical service life is <strong>15 years for ducted central</strong> and <strong>15&ndash;20 years for ductless mini-splits</strong> per <a href="https://www.energy.gov/energysaver/heat-pump-systems" target="_blank" rel="noopener noreferrer">DOE Energy Saver</a>. Compressor warranties from major brands run 10&ndash;12 years; labor warranties from contractors are usually 1&ndash;10 years. Geothermal ground loops last 50+ years; the indoor heat-pump unit gets replaced once or twice over that span.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700"><strong>Routine maintenance you can do:</strong></p>
+    <ul class="mt-2 space-y-1 text-ink-700 text-sm">
+      <li>&bull; Change or wash the air filter every 1&ndash;3 months. This is the single most-skipped item, and a clogged filter costs efficiency every day it's dirty.</li>
+      <li>&bull; Hose down the outdoor condenser coil once or twice a year. Cottonwood, lawn clippings, and pet hair clog the fins.</li>
+      <li>&bull; Clear the condensate drain at the indoor air handler each spring. A backed-up drain triggers a safety switch and shuts the system down.</li>
+      <li>&bull; Keep 2&ndash;3 feet of clearance around the outdoor unit. Shrubs and snowdrifts kill airflow.</li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700"><strong>Professional maintenance every 1&ndash;2 years:</strong> refrigerant-charge verification, static-pressure measurement, airflow check across the indoor coil, electrical-connection torque, and an inspection of the reversing valve. <em>Refrigerant should never need topping up on a sealed system.</em> If a contractor adds refrigerant every visit, you have a leak that needs to be found and repaired, not refilled annually.</p>
+  </section>
+
+  <section id="tips" class="container-tight pb-10">
+    <h2 class="text-2xl font-semibold text-ink-900">7. Tips, tricks, and red flags</h2>
+    <ul class="mt-3 space-y-3 text-ink-700">
+      <li><strong>Refrigerant transition.</strong> R-410A is being phased out. New residential equipment from 2025 forward uses lower-GWP refrigerants R-454B and R-32. Service parts for older R-410A systems will be available for years, but if you're buying new in 2026+, your unit should be on a current refrigerant.</li>
+      <li><strong>Sound rating.</strong> Cheap units run 70+ dB at the outdoor unit and you'll hate them next to a bedroom window. Quiet units rate 50&ndash;58 dB. Manufacturers publish the spec; ask for it.</li>
+      <li><strong>Smart controls.</strong> Ecobee, Nest, Sensi, Honeywell, and the manufacturer's own apps all let you set schedules, geofencing, and demand-response participation. Variable-speed heat pumps benefit most because they can hold a steady setpoint instead of cycling.</li>
+      <li><strong>Insulation comes first.</strong> A well-sealed, well-insulated home needs less heat-pump tonnage and saves on every line of the install &mdash; equipment, ductwork, electrical. If your attic is undersealed and underinsulated, an air-sealing + insulation upgrade ($1,500&ndash;$5,000) often pays back faster than the heat pump itself.</li>
+      <li><strong>The bid-padding tactic to watch for.</strong> Some contractors quote a full panel upgrade ($3,000&ndash;$6,000) "just in case." If your existing panel is 150A or 200A and you're not adding an EV charger at the same time, a heat pump alone usually doesn't require an upgrade. Ask whether load management or a NEC 220.83 calc was considered.</li>
+      <li><strong>Permits and inspection are not optional.</strong> An unpermitted heat-pump install voids many state and utility rebates, fails AHJ inspection on resale, and complicates your homeowner's insurance. The $150&ndash;$650 permit is cheap insurance.</li>
+    </ul>
+  </section>
+
+  <section id="calc" class="container-tight py-10 border-t border-ink-100">
+    <h2 class="text-2xl font-semibold text-ink-900">Ready to estimate your cost?</h2>
+    <p class="mt-3 max-w-prose text-ink-700">
+      The <a href="/heat-pump-cost-calculator/" class="text-brand-700 font-medium underline-offset-2 hover:underline">heat pump cost calculator</a> takes your state, home size, current fuel, and panel size and returns a low / mid / high installed-cost band, monthly bill impact vs. your current fuel, an applicable-rebates list, and a panel-risk verdict. Type your ZIP and the state field auto-detects. Save or print the result before getting contractor quotes.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/heat-pump-cost-calculator/" class="btn-primary">Open the calculator →</a>
+      <a href="/heat-pump-cost-by-state/" class="btn-ghost border border-ink-200">Cost by state</a>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

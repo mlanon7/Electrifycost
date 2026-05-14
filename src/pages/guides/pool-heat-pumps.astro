@@ -1,0 +1,119 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', name: 'Pool Heat Pumps Guide', description: 'Cost, sizing, climate limits, and operating economics for residential pool heat pumps.' };
+---
+<Layout
+  title="Pool Heat Pump Guide 2026: Sizing, vs Gas, Operating Cost"
+  description="Long-form guide to residential pool heat pumps: sizing, vs gas heater comparison, operating cost, climate limits, brand options, install requirements."
+  ogImage="/assets/topic-images/heat-pump-calculator.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Pool heat pumps', href: '/guides/pool-heat-pumps/' }]}
+  schemaJsonLd={schemaJsonLd}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Pool heat pumps</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Pool Heat Pumps, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      How a pool heat pump works, sizing math (BTU/hr per pool size), the climate cutoff where heat pumps stop making sense, head-to-head vs gas heaters, brand-by-brand options, and install requirements. 6-minute read.
+    </p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section>
+      <h2>How they work</h2>
+      <p>
+        A pool heat pump is functionally identical to an air-source home heat pump, with two key differences: the heat exchanger is titanium (resists chlorine corrosion), and the refrigerant cycle is tuned to heat water rather than air. Pool water cycles through the titanium exchanger inside the unit. The heat pump extracts heat from outdoor air and transfers it to the water. COP of 4-6 in heating mode, much better than the 0.82-0.85 AFUE of a gas pool heater.
+      </p>
+      <p>
+        Practical implication: you pay 1 kWh of electricity ($0.16) to deliver 13,650-20,475 BTU of pool heat. A gas heater paying 1 therm ($1.50) delivers 82,000 BTU. So the heat pump delivers heat at $0.012 per 1,000 BTU vs gas at $0.018 per 1,000 BTU — 33% lower fuel cost. Combined with electrification rebates and rising gas prices, the gap widens.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sizing — BTU/hr per pool</h2>
+      <p>
+        The standard sizing formula: BTU/hr needed = pool surface area (sqft) × desired temperature rise (°F) × 12. For a 20,000 gallon, 400 sqft surface pool warming 10°F:
+      </p>
+      <ul>
+        <li>Continuous requirement: 400 × 10 × 12 = 48,000 BTU/hr</li>
+        <li>Recovery margin (2x): 96,000 BTU/hr → choose 110,000 BTU/hr unit</li>
+        <li>Cool climate or high desired temp: 125,000–140,000 BTU/hr</li>
+      </ul>
+      <p>
+        Common 2026 sizes: 85k BTU/hr (small pools, warm climates), 110k BTU/hr (typical), 125k BTU/hr (larger pools or cool climates), 140k BTU/hr (premium / spa applications). Avoid undersizing — heat pumps run continuously to recover; an undersized unit never reaches setpoint on cool nights.
+      </p>
+    </section>
+
+    <section>
+      <h2>The climate cutoff</h2>
+      <p>
+        Pool heat pumps work efficiently down to ~50°F ambient. Between 50°F and 40°F, capacity drops 30-50% and efficiency degrades. Below 40°F, the units typically lock out to prevent freezing.
+      </p>
+      <p>
+        Implications by climate:
+      </p>
+      <ul>
+        <li><strong>Warm states (FL, TX coast, AZ, HI, S. CA):</strong> heat pump alone works year-round. Solar pool cover recommended to reduce evaporation losses.</li>
+        <li><strong>Mild climates (CA, NC, AZ inland, GA):</strong> heat pump extends pool season from June-August to April-October.</li>
+        <li><strong>Cool climates (Northeast, Mid-Atlantic, Mountain West):</strong> heat pump usable May-October only. Some homeowners pair with a gas heater for shoulder seasons or use a solar cover.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Heat pump vs gas pool heater</h2>
+      <p>
+        Comparing on three axes:
+      </p>
+      <ul>
+        <li><strong>Upfront cost.</strong> Heat pump $4,000–$8,500 installed. Gas heater $2,500–$5,500 installed. Heat pump is $1,500–$3,000 more expensive up front.</li>
+        <li><strong>Operating cost.</strong> Heat pump 50-70% less than gas for the same heating output. Over a 10-year service life that&rsquo;s typically $5,000–$10,000 savings.</li>
+        <li><strong>Speed.</strong> Gas heats faster — 90-120 min vs 8-14 hours for a 10°F rise on a 20k gal pool. Gas wins for short-notice weekend use; heat pump wins for continuous-setpoint use.</li>
+      </ul>
+      <p>
+        Net: for any pool used regularly (3+ months per year), heat pump wins on total cost of ownership in most climates. Gas wins for occasional-use pools or cold-climate shoulder seasons.
+      </p>
+    </section>
+
+    <section>
+      <h2>Brand options (2026)</h2>
+      <ul>
+        <li><strong>Pentair UltraTemp.</strong> Premium brand, variable speed, excellent service network. Models 90k-140k BTU/hr. ~10% price premium for the build quality.</li>
+        <li><strong>Hayward HeatPro.</strong> Mid-tier, good value, strong dealer network. The default choice for budget-conscious installs.</li>
+        <li><strong>Raypak Crosswind.</strong> Solid mid-tier, made in USA. Good warranty support.</li>
+        <li><strong>AquaCal HeatWave.</strong> Long history (one of the original pool heat pump makers). Solid mid-tier.</li>
+        <li><strong>Aquatic Energy E-Series.</strong> Premium full-inverter (variable speed) option for the lowest operating cost. ~20% price premium.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Install requirements</h2>
+      <ul>
+        <li><strong>Pad:</strong> level concrete or composite, away from foliage that drops debris on coil.</li>
+        <li><strong>Clearance:</strong> 24-inch clearance on all sides for airflow; manufacturer specs vary.</li>
+        <li><strong>Electrical:</strong> dedicated 240V circuit, typically 50A (40A breaker for 85-110k units, 50A for 125-140k). Run from main panel or pool sub-panel.</li>
+        <li><strong>Plumbing:</strong> tied into existing pool pump loop after filter, before chlorinator. Bypass valve for backwashing.</li>
+        <li><strong>Flow rate:</strong> minimum 30 GPM for most residential units. Verify your pool pump delivers it.</li>
+        <li><strong>Drainage:</strong> condensate forms on the evaporator coil in heating mode (yes, even though water is being heated). Route to deck drain or yard.</li>
+      </ul>
+    </section>
+
+    <section class="guide-sources">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/heat-pump-pool-heaters" target="_blank" rel="noopener">DOE Energy Saver — Heat Pump Pool Heaters</a></li>
+        <li><a href="https://www.energystar.gov/products/pool_heaters" target="_blank" rel="noopener">ENERGY STAR Pool Heaters</a></li>
+        <li><a href="https://www.pentair.com/" target="_blank" rel="noopener">Pentair UltraTemp documentation</a></li>
+        <li><a href="https://www.hayward-pool.com/" target="_blank" rel="noopener">Hayward HeatPro documentation</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <a href="/pool-heat-pump-cost-calculator/" class="btn-primary inline-block">Open the pool heat pump calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

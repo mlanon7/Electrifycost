@@ -1,0 +1,13 @@
+credit_code,credit_name,category,rate,annual_cap,lifetime_cap,start_date,end_date,status,source_id,last_reviewed,notes
+25C,Energy Efficient Home Improvement Credit,heat_pump,0.30,2000,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,OBBBA terminated for property placed in service after 2025-12-31; covered heat pump 30% up to $2000
+25C,Energy Efficient Home Improvement Credit,hpwh,0.30,2000,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,Shared $2000 cap with heat pumps under 25C
+25C,Energy Efficient Home Improvement Credit,panel,0.30,600,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,Electrical panel upgrade covered under 25C through 2025-12-31
+25C,Energy Efficient Home Improvement Credit,insulation,0.30,1200,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,Insulation + air-sealing under 25C $1200 cap
+25C,Energy Efficient Home Improvement Credit,window,0.30,600,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,Windows under 25C $600 annual cap
+25C,Energy Efficient Home Improvement Credit,tankless,0.30,600,,2023-01-01,2025-12-31,expired,IRS_25C,2026-05-11,Gas tankless / storage water heaters under 25C $600 cap
+25D,Residential Clean Energy Credit,solar,0.30,,,2022-01-01,2025-12-31,expired,IRS_25D,2026-05-11,OBBBA terminated 25D for property placed in service after 2025-12-31
+25D,Residential Clean Energy Credit,battery,0.30,,,2022-01-01,2025-12-31,expired,IRS_25D,2026-05-11,Standalone battery >=3kWh under 25D — terminated after 2025-12-31
+25D,Residential Clean Energy Credit,geothermal,0.30,,,2022-01-01,2025-12-31,expired,IRS_25D,2026-05-11,Geothermal heat pump under 25D — terminated after 2025-12-31
+30C,Alternative Fuel Vehicle Refueling Property Credit,ev_charger,0.30,1000,,2023-01-01,2026-06-30,active,IRS_30C,2026-05-11,Personal-use 30C remains active through 2026-06-30; requires eligible census tract
+30D,Clean Vehicle Credit New,ev_new,1.00,7500,,2023-01-01,2025-09-30,expired,IRS_30D,2026-05-11,OBBBA accelerated 30D termination; not available for vehicles acquired after 2025-09-30
+25E,Used Clean Vehicle Credit,ev_used,0.30,4000,,2023-01-01,2025-09-30,expired,IRS_25E,2026-05-11,30% of sale price up to $4000; expired for acquisitions after 2025-09-30

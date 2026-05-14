@@ -1,0 +1,118 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import InsulationCalculator from '@/components/InsulationCalculator';
+
+const faq = [
+  {
+    q: 'How much does home insulation cost in 2026?',
+    a: 'For a 1,800 sqft home in climate zone 5 (Northeast / Midwest), attic + walls + air-sealing typically runs $4,500–$8,500 installed. Attic-only is $2,700–$4,500. Whole-envelope (adding crawl/basement encapsulation) is $10,000–$22,000. Per-sqft attic pricing: blown cellulose $1.50–$2.50; blown fiberglass $1.25–$2.25; open-cell spray foam $3.50–$6.00; closed-cell $4.50–$8.50.',
+  },
+  {
+    q: 'What R-value should I target?',
+    a: 'DOE / 2021 IECC residential targets by climate zone: Zone 1 attic R-30 / wall R-13; Zone 2 R-49 / R-13; Zone 3 R-49 / R-15; Zones 4-5 R-49-60 / R-15-20; Zones 6-8 R-60 / R-20-21. Walls are limited by stud cavity depth (~R-15 for 2x4, ~R-21 for 2x6). Source: https://www.energy.gov/energysaver/types-insulation and https://www.energycodes.gov/.',
+  },
+  {
+    q: 'Is the 25C tax credit available for insulation in 2026?',
+    a: 'No. The federal Energy Efficient Home Improvement Credit (25C) covered insulation and air-sealing at 30% of cost up to $1,200/year, but OBBBA (signed July 4, 2025) terminated the credit for property placed in service after 2025-12-31. Income-qualified households may still qualify for DOE Home Energy Rebates (HOMES) program — up to $4,000 (moderate income) or $8,000 (low income) for projects with 35%+ modeled energy savings. Status varies by state; check /rebates/.',
+  },
+  {
+    q: 'Why do insulation first?',
+    a: 'A tighter envelope shrinks every downstream HVAC estimate. If you do insulation first, the heat pump quote may drop a half-ton (~$1,500 less), the panel may not need an upgrade ($1,500-5,000 saved), and your operating bills are lower for the next 20+ years. The right sequence for whole-home electrification is: insulation + air-sealing → heat pump → EV charger → HPWH → induction.',
+  },
+  {
+    q: 'Cellulose, fiberglass, or spray foam?',
+    a: 'Blown-in cellulose is the most cost-effective attic upgrade — recycled paper treated with fire retardant, R-3.7 per inch, settles less than fiberglass, fills gaps around joists. Blown-in fiberglass is slightly cheaper but doesn\'t pack as well. Spray foam (open or closed cell) is the most expensive but air-seals as it insulates, valuable for cathedral ceilings, knee-walls, and rim joists. Most homes do best with cellulose attic + foam at rim joists + drill-and-fill walls.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Insulation Cost Calculator',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for attic blown-in, wall drill-and-fill, air-sealing, and whole-envelope insulation upgrades by climate zone and state. Includes DOE HOMES rebate where state program is open.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Insulation Cost Calculator 2026: Attic, Walls, Air-Sealing"
+  description="Estimate the installed cost of attic blown-in, wall drill-and-fill, air-sealing, and whole-envelope insulation upgrades. R-value targets by climate zone, DOE HOMES rebate, payback estimate."
+  active="/insulation-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/insulation-calculator.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Insulation cost calculator', href: '/insulation-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Insulation &amp; air-sealing</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Insulation Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for attic blown-in, wall drill-and-fill, air-sealing, and whole-envelope upgrades. R-value targets by climate zone, with DOE HOMES rebate where your state program is open.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> attic + walls + air-sealing for a typical 1,800 sqft home runs $4,500–$8,500 installed. Income-qualified DOE HOMES rebate can subtract $2,000–$8,000 in open states. Cuts heating + cooling bills 15–30%. <em>Do insulation before any heat-pump or panel work — it shrinks every downstream estimate.</em>
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/insulation-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/insulation-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/insulation-hero-photo.png"
+      alt="Attic and wall insulation being installed in a home"
+      width="1200" height="675"
+      class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"
+     />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><InsulationCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to insulation upgrades?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Insulation slows conductive heat transfer — measured in R-value (resistance per inch). Air-sealing stops convective heat transfer — drafts through gaps, holes, recessed light fixtures, plumbing penetrations. Both matter. A house with R-49 attic insulation and ACH50 = 12 (leaky) still bleeds heat fast. A house with R-30 attic and ACH50 = 3 (tight) holds heat much better. DOE/IECC targets attic R-49 to R-60 in most U.S. climates, with walls limited by stud depth (R-13 to R-21).
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/insulation/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">9-min read · materials · attic vs walls vs basement · air sealing · blower door · DOE HOMES rebate</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator →</a></li>
+      <li><a href="/ac-replacement-cost-calculator/">AC replacement calculator →</a></li>
+      <li><a href="/whole-home-electrification-cost-calculator/">Whole-home electrification calculator →</a></li>
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Electrical panel upgrade calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

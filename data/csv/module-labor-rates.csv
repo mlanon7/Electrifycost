@@ -1,0 +1,7 @@
+module,hourly_rate_usd,notes
+heat_pump,130,HVAC mechanic blended rate (BLS OEWS 49-9021 + overhead)
+hpwh,120,Blended HVAC + plumber rate (HPWHs touch both trades)
+ev_charger,110,Electrician rate (BLS OEWS 47-2111 + overhead)
+panel,110,Electrician rate (BLS OEWS 47-2111 + overhead)
+induction,100,Electrician rate (BLS OEWS 47-2111); slightly lower because most work is straightforward 240V receptacle / circuit
+ac,110,HVAC mechanic for cooling-only work (BLS OEWS 49-9021 + overhead); aligned with module-labor-rates pattern instead of CSV-internal labor_rate_usd row

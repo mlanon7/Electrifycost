@@ -1,0 +1,143 @@
+---
+import '@/styles/global.css';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { siteLastReviewed } from '@/lib/data';
+
+interface BreadcrumbCrumb {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  active?: string;
+  schemaJsonLd?: object | object[];
+  ogImage?: string;
+  breadcrumbs?: BreadcrumbCrumb[];
+  lastReviewed?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  active,
+  schemaJsonLd,
+  ogImage,
+  breadcrumbs,
+  lastReviewed,
+} = Astro.props as Props;
+
+// Default to the site-wide freshness stamp when a page doesn't pass its own.
+const reviewedAt = lastReviewed || siteLastReviewed;
+
+const siteOrigin = (Astro.site ?? new URL('https://electrifycost.com/')).toString().replace(/\/$/, '');
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'https://electrifycost.com').toString();
+
+// Default OG image. Lives at /og-default.png; until that asset is shipped,
+// we still emit the meta tag so social platforms have a stable target.
+const resolvedOgImage = ogImage
+  ? (ogImage.startsWith('http') ? ogImage : `${siteOrigin}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`)
+  : `${siteOrigin}/og-default.png`;
+
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 1
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((b, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: b.name,
+        item: b.href.startsWith('http') ? b.href : `${siteOrigin}${b.href}`,
+      })),
+    }
+  : null;
+
+const baseSchemas = schemaJsonLd ? (Array.isArray(schemaJsonLd) ? schemaJsonLd : [schemaJsonLd]) : [];
+const schemas = breadcrumbSchema ? [...baseSchemas, breadcrumbSchema] : baseSchemas;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {reviewedAt && <meta name="article:modified_time" content={reviewedAt} />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="ElectrifyCost" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="theme-color" content="#059669" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Use media-swap pattern to avoid render-blocking the Google Fonts request. */}
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" />
+    </noscript>
+    {schemas.map(s => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <Header active={active} />
+    {breadcrumbs && breadcrumbs.length > 1 && (
+      <nav aria-label="Breadcrumb" class="border-b border-ink-100 bg-ink-50/60 print:hidden">
+        <div class="container-wide flex flex-wrap items-center justify-between gap-2 py-2 text-xs text-ink-600">
+          <ol class="flex flex-wrap items-center gap-1.5">
+            {breadcrumbs.map((b, i) => {
+              const isLast = i === breadcrumbs.length - 1;
+              return (
+                <li class="flex items-center gap-1.5">
+                  {i > 0 && <span aria-hidden="true" class="text-ink-400">›</span>}
+                  {isLast ? (
+                    <span class="font-medium text-ink-800" aria-current="page">{b.name}</span>
+                  ) : (
+                    <a href={b.href} class="text-ink-600 hover:text-brand-700 hover:underline underline-offset-2">{b.name}</a>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+          {reviewedAt && (
+            <p class="hidden tabular-nums text-ink-500 sm:block">
+              <span class="text-ink-400">Reviewed</span>{' '}
+              <time datetime={reviewedAt}>{reviewedAt}</time>
+            </p>
+          )}
+        </div>
+      </nav>
+    )}
+    <main id="main" class="flex-1" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

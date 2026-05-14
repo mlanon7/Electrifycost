@@ -1,0 +1,89 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import EvChargingCostCalculator from '@/components/EvChargingCostCalculator';
+
+const faq = [
+  { q: 'How much does it cost to charge an EV per month?',
+    a: 'For 1,000 miles per month at home in an efficient crossover (32 kWh/100mi) at the US average 16¢/kWh, you spend ~$57/month. For 1,000 miles in a pickup (42 kWh/100mi) at California rates (33¢/kWh), about $150/month. Compared to a gas crossover at 28 mpg and $3.45/gal: $123/month — so the EV saves roughly $66/month at average rates.' },
+  { q: 'Is home charging much cheaper than public DCFC?',
+    a: 'Yes — typically 2-3× cheaper. US home electricity averages 16¢/kWh; public DCFC averages $0.42/kWh (Electrify America, EVgo) and Tesla Superchargers $0.36/kWh. A driver who DC-fast-charges 50% of their miles spends roughly double what an all-home charger spends.' },
+  { q: 'How can I cut charging costs further?',
+    a: 'Three biggest levers: (1) Enroll in your utility&rsquo;s EV time-of-use rate (PG&amp;E EV2-A, ConEd VoltageReady, ComEd Hourly Pricing) — overnight rates drop to 6-12¢/kWh. (2) Schedule charging for those overnight windows. (3) Minimize public DCFC use, especially Electrify America during peak hours.' },
+  { q: 'Are EVs cheaper to run than hybrids?',
+    a: 'Yes in nearly all cases. A Prius at 55 mpg costs ~$6.30/100mi at $3.45/gal. A Model 3 at 28 kWh/100mi costs ~$4.50/100mi at 16¢/kWh. EVs widen the lead at higher gas prices and with cheap overnight TOU rates.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'EV Charging Operating Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Operating-cost-only calculator for EV charging. State electricity rate, vehicle class, charging mix (home vs public DCFC), annual miles. Head-to-head with gas car.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="EV Charging Cost Calculator 2026"
+  description="EV charging operating cost — state electricity rate, vehicle class, home vs public DCFC mix. Compares to a gas equivalent. Excludes purchase + install."
+  active="/ev-charging-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/ev-charging-cost-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'EV charging cost calculator', href: '/ev-charging-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">EV charging cost</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">EV Charging Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Operating-cost-only calculator: how much does it cost to charge your EV per month or year. State electricity rate, home vs public mix, vehicle class, annual miles.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a typical crossover EV costs $40–$80/month to charge at home for 12,000 miles/year. A gas equivalent costs $130–$180/month. Public DCFC is 2–3× more expensive than home charging — keep it under 25% of miles for best economics.
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/ev-charging-cost-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/ev-charging-cost-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/ev-charging-cost-hero-photo.png" alt="Home EV charger plugged into a vehicle"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><EvChargingCostCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to EV charging economics?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        EVs are priced by kWh, not gallons. The conversion: kWh per 100 miles × electricity rate (cents/kWh) gives cost per 100 miles. A typical sedan uses 28 kWh/100mi; crossovers 32; SUVs 38; pickups 42. At the US average 16¢/kWh, that&rsquo;s $4.50–$6.70 per 100 miles charged at home — compared to $12–$18 for the gas equivalent. The two big variables are your state&rsquo;s electricity rate (CA is 2× the national average) and how much you DC fast-charge in public (3× the rate of home).
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/ev-charging-cost/" class="font-medium text-brand-700">Read the full guide →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/ev-total-cost-of-ownership-calculator/">EV total cost of ownership →</a></li>
+      <li><a href="/ev-charger-installation-cost-calculator/">EV charger installation →</a></li>
+      <li><a href="/solar-panel-cost-calculator/">Solar panels (offset EV charging) →</a></li>
+      <li><a href="/home-battery-cost-calculator/">Home battery →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,10 @@
+state,program_name,per_kw_dollars,flat_dollars,cap_dollars,notes,source_id,last_reviewed
+NY,NY-Sun Residential Block,200,,,$0.20-0.40/W declining-block,DSIRE_NY,2026-05-11
+MA,MA SMART,0,,,Production-based 10-yr incentive payment — not upfront,DSIRE_MA,2026-05-11
+NJ,NJ SuSI,0,,,SREC-II $90/MWh × 15 yr,DSIRE_NJ,2026-05-11
+IL,IL Shines Adjustable Block,0,,,SRECs over 15 yr,DSIRE_IL,2026-05-11
+MD,MD Residential Clean Energy Grant,,1000,,$1000 flat grant,DSIRE_MD,2026-05-11
+CT,CT RRES,0,,,Net-metering successor tariff,DSIRE_CT,2026-05-11
+RI,RI Renewable Energy Growth,0,,,Production-based tariff,DSIRE_RI,2026-05-11
+TX,Austin Energy / CPS,,2500,,City-specific Austin Energy rebate,DSIRE_TX,2026-05-11
+CA,CA NEM 3.0 / SGIP,0,,,Battery incentives via SGIP; export rates much lower under NEM 3.0,CPUC_NEM3,2026-05-11

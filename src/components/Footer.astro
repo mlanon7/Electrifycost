@@ -1,0 +1,52 @@
+---
+import { siteLastReviewed } from '@/lib/data';
+const year = new Date().getFullYear();
+---
+<footer class="mt-16 border-t border-ink-200 bg-ink-50 print:hidden">
+  <div class="container-wide grid gap-8 py-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <a href="/" class="inline-flex shrink-0" aria-label="ElectrifyCost home">
+        <img
+          src="/assets/brand/logo1.png"
+          alt="ElectrifyCost"
+          width="1312" height="241"
+          class="block h-8 w-auto max-w-none shrink-0"
+          loading="lazy" decoding="async"
+        />
+      </a>
+      <p class="mt-3 max-w-prose text-sm text-ink-700">
+        Practical, source-backed cost calculators for U.S. homeowners thinking about heat pumps, EV chargers, panel upgrades, heat pump water heaters, and induction ranges. Estimates are planning ranges, not contractor quotes.
+      </p>
+    </div>
+    <div>
+      <h4 class="text-sm font-semibold text-ink-900">Calculators</h4>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        <li><a href="/heat-pump-cost-calculator/">Heat pump</a></li>
+        <li><a href="/ev-charger-installation-cost-calculator/">EV charger</a></li>
+        <li><a href="/electrical-panel-upgrade-cost-calculator/">Panel upgrade</a></li>
+        <li><a href="/heat-pump-water-heater-cost-calculator/">Heat pump water heater</a></li>
+        <li><a href="/induction-stove-cost-calculator/">Induction stove</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-sm font-semibold text-ink-900">Trust</h4>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        <li><a href="/methodology/">Methodology</a></li>
+        <li><a href="/sources/">Sources</a></li>
+        <li><a href="/rebates/">Rebates &amp; credits</a></li>
+        <li><a href="/glossary/">Glossary</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-ink-200">
+    <div class="container-wide flex flex-col items-start justify-between gap-3 py-5 text-xs text-ink-600 md:flex-row md:items-center">
+      <p>&copy; {year} ElectrifyCost. Estimates are planning ranges, not contractor quotes.</p>
+      <p>Not affiliated with any utility, installer, or government agency. Tax credit and rebate eligibility, caps, and timelines are subject to change &mdash; verify with the linked primary source before claiming.</p>
+    </div>
+    {siteLastReviewed && (
+      <div class="container-wide pb-5 text-xs text-ink-500">
+        <p class="tabular-nums">Data last refreshed <time datetime={siteLastReviewed}>{siteLastReviewed}</time>. Source-by-source review dates are listed at <a href="/sources/" class="text-brand-700 hover:underline">/sources/</a>.</p>
+      </div>
+    )}
+  </div>
+</footer>

@@ -1,0 +1,77 @@
+{
+  "heat_pump": {
+    "title": "Questions to ask your heat pump contractor",
+    "items": [
+      "Is this quote for ducted, ductless, or dual-fuel?",
+      "What heating load (Manual J) calculation did you use, and can I see it?",
+      "Is the equipment cold-climate rated (HSPF2 / capacity at 5°F)?",
+      "Is ductwork inspection, sealing, or replacement included?",
+      "Is electrical work, including any required circuit or panel work, included?",
+      "Are permits and inspection included?",
+      "Which rebates and tax credits are included, and who files for them?",
+      "What is the manufacturer warranty and labor warranty?",
+      "Is there a sound-rated outdoor unit option, and what is the dB rating?",
+      "What sizing methodology did you use (Manual S equipment selection)?"
+    ]
+  },
+  "ev_charger": {
+    "title": "Questions to ask your EV charger installer",
+    "items": [
+      "What amperage will the charger run at (40A, 48A, etc.)?",
+      "Is the panel load calculation per NEC 220.83 included?",
+      "Is trenching, drywall repair, or conduit run included?",
+      "Is the charger hardwired or plug-in (NEMA 14-50)?",
+      "Are permit and inspection included?",
+      "Does this address qualify for the federal 30C credit (eligible census tract)?",
+      "Does my utility require a specific charger or rate plan, and is that addressed?",
+      "What is the labor warranty on the install?",
+      "Will load management be used to avoid a panel upgrade?",
+      "Is the breaker, GFCI/AFCI as required, and any subpanel work included?"
+    ]
+  },
+  "panel": {
+    "title": "Questions to ask your panel upgrade electrician",
+    "items": [
+      "Is this a panel replacement, service upgrade, or subpanel install?",
+      "Is utility coordination and disconnect/reconnect included?",
+      "Is the meter and main being replaced?",
+      "Is grounding and bonding work included to current code?",
+      "Will this support future EV charging and heat pump loads?",
+      "Are smart load management devices an alternative to a full upgrade?",
+      "Is permit and inspection included, and how long is the typical wait?",
+      "What is the warranty on labor and the panel itself?",
+      "Will any drywall repair, paint, or fire patching be needed?",
+      "How long will my power be off during the upgrade?"
+    ]
+  },
+  "hpwh": {
+    "title": "Questions to ask your heat pump water heater installer",
+    "items": [
+      "Is a 120V plug-in or 240V hybrid model being quoted?",
+      "Is condensate drain work included (drain pan, pump, or gravity routing)?",
+      "Is the install location large enough for proper airflow (typically ≥700 cu ft)?",
+      "Is sound rating (dB) acceptable for the location?",
+      "Is old water heater removal and disposal included?",
+      "Which rebates require pre-approval, and have they been applied for?",
+      "Is the 240V circuit, outlet, or breaker work included if needed?",
+      "Are permits and inspection included?",
+      "Will the cold-air output affect any nearby living space?",
+      "What is the warranty on tank, compressor, and labor?"
+    ]
+  },
+  "induction": {
+    "title": "Questions to ask before your induction stove install",
+    "items": [
+      "Is a new 240V circuit required, or can I use existing wiring?",
+      "Is the 240V outlet (NEMA 14-50 or similar) included?",
+      "Will my panel support the new induction load?",
+      "Is gas line capping by a licensed plumber included if I'm switching from gas?",
+      "Is the range, cooktop, or only the wiring included in the quote?",
+      "Does the quote include permit and inspection?",
+      "Is there a separate cookware allowance for induction-compatible pans?",
+      "What is the labor warranty?",
+      "Are any countertop modifications needed?",
+      "Is removal and disposal of the old range included?"
+    ]
+  }
+}

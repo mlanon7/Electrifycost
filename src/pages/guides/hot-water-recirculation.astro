@@ -1,0 +1,49 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+const lastReviewed = '2026-05-01';
+const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Hot water recirculation pumps in 2026: comfort, water savings, and why timer pumps actually waste energy', datePublished: '2026-03-07', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
+---
+<Layout title="Hot Water Recirculation Pumps: Dedicated, Crossover, Demand-Activated" description="Guide to hot water recirculation: dedicated return vs crossover vs demand-activated, water and energy savings, tankless compatibility." active="/guides/hot-water-recirculation/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/heat-pump-water-heater-calculator.png" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Hot water recirculation', href: '/guides/hot-water-recirculation/' }]}>
+  <article class="container-wide max-w-3xl py-10 prose-guide">
+    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Hot water recirculation pumps in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~6 min read</p></header>
+    <p class="lede">A recirculation pump gives you hot water at the tap in 1–2 seconds instead of 30–60. That&rsquo;s the headline benefit. Energy and water savings are real but often overstated — and one common configuration actually <em>increases</em> your energy bill. This guide walks through the five mainstream approaches and tells you which makes sense for your situation.</p>
+
+    <h2>How recirculation works</h2>
+    <p>In a normal hot-water system, the water in your supply pipes cools between uses. When you open the tap, that cooled water flows out (wasted) before hot water from the heater arrives. The further your fixture is from the heater, the worse it gets. A recirculation system keeps hot water moving through the pipes so it&rsquo;s always available at the tap.</p>
+
+    <p>Two physical configurations achieve this: a <strong>dedicated return line</strong> (a separate plumbed loop back to the heater) or a <strong>crossover</strong> (using the cold supply line as a return path during recirc cycles). Dedicated is more effective but only practical during construction or major renovation.</p>
+
+    <h2>The five mainstream approaches</h2>
+    <p><strong>Dedicated return loop with continuous pump</strong> ($1,000–$2,800 installed): the best comfort. Pump runs continuously or on schedule, keeping hot water moving through dedicated piping. Water saved: 10,000–14,000 gal/yr. Energy use: the pump itself uses ~250 kWh/yr but standby losses on the heater can add another 800–1,500 kWh/yr.</p>
+
+    <p><strong>Crossover with continuous timer pump</strong> ($400–$1,200): cheapest. Pump runs on a schedule (typically 6am–10pm). Uses cold supply line as return — pump at heater, thermostatic valve at farthest fixture. Net energy use: <strong>typically negative</strong> — i.e., increases your energy bill by 5–15%.</p>
+
+    <p><strong>Crossover with demand activation</strong> ($600–$1,800): the goldilocks option. Same hardware as timer crossover but with a button or motion sensor at the bathroom — pump only runs for 30–90 seconds when you press the button. Saves water (8,000–10,000 gal/yr) AND minimizes energy use (pump only 80–150 kWh/yr).</p>
+
+    <p><strong>Tankless-compatible kit</strong> ($900–$2,400): some tankless water heaters (Navien NPE-A2, Rinnai SE+, Noritz EZTR50) have built-in recirculation modes with a buffer tank. Aftermarket recirc on a non-recirc-ready tankless causes "cold water sandwiches" — bursts of cold water mid-shower. Don&rsquo;t retrofit recirc onto a standard tankless without the manufacturer-approved kit.</p>
+
+    <p><strong>Time-and-motion smart pump</strong>: a few newer products (Taco SmartPlug, Watts Premier Hot Water Recirc) learn your usage patterns and only run when statistically likely to be needed. Best efficiency; ~$200 premium over basic crossover.</p>
+
+    <h2>Water savings — real but modest</h2>
+    <p>EPA WaterSense estimates a typical 4-person household wastes 5,000–10,000 gallons/year waiting for hot water at the tap. At US average water+sewer rates ($8.50 per 1,000 gallons), that&rsquo;s $40–$85/yr. A recirc system captures 80–95% of that waste. So water-bill savings are typically $30–$80/yr — meaningful but not transformative.</p>
+
+    <h2>The energy trap</h2>
+    <p>Continuously circulating hot water through your supply pipes means those pipes are now thermally connected to your living space. In summer, that&rsquo;s heat dumped into your house that the AC has to remove. In winter, it&rsquo;s essentially supplemental heating but at the cost of running the water heater more.</p>
+
+    <p>Real-world data from Lawrence Berkeley National Lab shows timer-pump systems often increase annual water-heating energy 10–20%. Demand-activated systems show neutral or slightly negative net energy. Only dedicated-loop systems with good pipe insulation come out clearly net positive on energy.</p>
+
+    <h2>Pair with tankless or HPWH?</h2>
+    <p>Tankless: only use manufacturer-approved recirc kits or you&rsquo;ll get cold-water sandwiches. The right answer is to buy a tankless with built-in recirc (small buffer tank) when you&rsquo;re replacing the heater.</p>
+    <p>HPWH: standard recirc works fine. Demand-activated is best — minimizes the standby losses that a HPWH&rsquo;s lower temperature output is more sensitive to than a gas tank.</p>
+
+    <h2>Sources</h2>
+    <ul class="text-sm">
+      <li><a href="https://www.epa.gov/watersense/showerheads">EPA WaterSense water-use data</a></li>
+      <li><a href="https://www.grundfos.com/us/products/find-product/comfort-system-pm-pumps">Grundfos Comfort System recirc pumps</a></li>
+      <li><a href="https://www.tacocomfort.com/">Taco Comfort recirc products</a></li>
+    </ul>
+    <p class="mt-8"><a href="/hot-water-recirculation-cost-calculator/" class="font-medium text-brand-700">Run the recirculation calculator →</a></p>
+  </article>
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

@@ -1,0 +1,100 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import RoofCalculator from '@/components/RoofCalculator';
+
+const faq = [
+  { q: 'How much does a new roof cost in 2026?',
+    a: 'A typical architectural-asphalt-shingle roof for a 2,000 sqft home runs $9,000–$19,000 installed. Premium asphalt with 50-year warranty: $14,000–$25,000. Metal standing-seam: $22,000–$42,000. Concrete tile: $18,000–$36,000. Slate: $36,000–$80,000. State labor multipliers, roof pitch, and tear-off vs overlay all swing the final number 20–40%.' },
+  { q: 'Should I replace my roof before installing solar?',
+    a: 'If your roof is 15+ years old or showing wear, yes. Solar panels and racking weigh ~3 lb/sqft and last 25+ years. Installing on a worn roof costs you $2,000–$4,000 in panel removal-and-replace fees when the roof eventually fails. Architectural asphalt with a fresh 25-year warranty pairs cleanly with a 25-year solar lifespan.' },
+  { q: 'Tear off the old roof, or overlay?',
+    a: 'Most manufacturer warranties require tear-off — installing new shingles directly over old ones voids the warranty in most cases. Tear-off adds $1,500–$5,000 to the project but is the right call unless the existing roof is in great shape and only one layer thick. Building codes in most jurisdictions limit asphalt to two layers maximum.' },
+  { q: 'Is asphalt or metal the better long-term value?',
+    a: 'Per dollar per year of lifespan, metal usually wins. Architectural asphalt at $7/sqft and 25-year lifespan = $0.28/sqft/year. Standing-seam metal at $15/sqft and 50-year lifespan = $0.30/sqft/year. Metal is essentially the same cost per year but doesn’t need a re-roof in 25 years. Asphalt wins if you’re moving in under 10 years and don’t care about resale.' },
+  { q: 'What about energy efficiency — does the roof material matter?',
+    a: 'Cool roofs (light-colored, reflective shingles, or metal with reflective coating) cut cooling costs 7–15% in southern climates. ENERGY STAR certifies specific shingles and metal coatings. In northern climates the heating-cost advantage of darker roofs absorbing solar gain is small but exists.' },
+  { q: 'Is there a federal tax credit for roofing?',
+    a: 'No — the 25C credit for energy-efficient roofs ended in 2014. Some states (CA Title 24, FL HB 7) require minimum reflective ratings on roofs in certain zones, but they’re not subsidies. The 25D solar credit covers solar panels and the integrated solar shingles (like Tesla Solar Roof and GAF Energy Timberline) but not the underlying roof.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Roof Replacement Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Installed-cost calculator for roof replacement by material (asphalt, metal, tile, slate, flat), pitch, stories, and state. Solar-ready prep included.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Roof Replacement Cost Calculator 2026: Asphalt, Metal, Tile, Slate"
+  description="Installed-cost calculator for roof replacement by material, pitch, and state. Solar-readiness scoring. Tear-off, deck repair, gutters modeled separately."
+  active="/roof-replacement-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Roof replacement cost calculator', href: '/roof-replacement-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Roof replacement</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Roof Replacement Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+        Installed-cost estimate for residential roof replacement by material, pitch, stories, and state. Solar-readiness scoring built in.
+      </p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+        <strong>Quick answer:</strong> a typical architectural-asphalt-shingle roof for a 2,000 sqft home installs for $9,000–$19,000 in 2026. Premium asphalt $14,000–$25,000. Metal standing-seam $22,000–$42,000. Tile $18,000–$36,000. Slate $36,000+. <em>Replace the roof before adding solar if it&rsquo;s older than 15 years.</em>
+      </p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/roof-replacement-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/roof-replacement-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/roof-replacement-hero-photo.png" alt="Roofers installing a new roof on a residential home"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+      loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><RoofCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to roof replacement?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        Most residential roofs are sloped asphalt-shingle with a 20–30 year lifespan. Costs are driven by the material, the roof’s pitch (steepness changes labor 25–50%), accessibility (1 vs 2+ stories), and whether the existing roof is torn off (almost always the right call). Tear-off adds $1,500–$5,000 to the project but preserves manufacturer warranties. Architectural asphalt is the modern standard; metal, tile, and slate are premium options with 40–100+ year lifespans.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href="/guides/roof-replacement/" class="font-medium text-brand-700">Read the full guide →</a>
+        <span class="ml-2 text-ink-500">10-min read · material comparison · solar timing · code requirements · contractor red flags</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/solar-panel-cost-calculator/">Solar panel cost calculator →</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator →</a></li>
+      <li><a href="/window-replacement-cost-calculator/">Window replacement calculator →</a></li>
+      <li><a href="/air-sealing-cost-calculator/">Air sealing cost calculator →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

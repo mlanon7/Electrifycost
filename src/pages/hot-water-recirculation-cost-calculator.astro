@@ -1,0 +1,73 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HotWaterRecirculationCalculator from '@/components/HotWaterRecirculationCalculator';
+
+const faq = [
+  { q: 'How much does a hot water recirculation pump cost installed?',
+    a: 'Crossover undersink (most common retrofit): $400–$1,200 installed. Demand-activated (button or motion): $600–$1,800. Dedicated return loop (best performance, renovation only): $1,000–$2,800. Timer-only continuous pump: $400–$1,200. Tankless-compatible kit: $900–$2,400.' },
+  { q: 'Does a recirculation pump save money?',
+    a: 'It saves water (3,000–12,000 gallons/yr) but the financial savings are small — usually $30–$110/yr on water+sewer. Timer-pump systems can actually INCREASE energy use through standby tank losses. Only demand-activated systems reliably save both water AND energy. The real reason most people install one is comfort: hot water at the tap in 1-2 seconds instead of 30-60.' },
+  { q: 'Will a recirculation system work with tankless?',
+    a: 'Yes but with caveats. Most tankless water heaters from 2015+ have built-in recirculation modes (Navien NPE-A2, Rinnai SE+, Noritz EZTR50) — best path. Aftermarket kits (Watts Premier, Grundfos Comfort) work but require a buffer tank or you&rsquo;ll get cold-water sandwiches. Demand-activated is essentially the only sensible retrofit for non-recirc-ready tankless.' },
+];
+
+const schemaJsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Hot Water Recirculation Pump Cost Calculator',
+    applicationCategory: 'BusinessApplication', operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Cost calculator for hot water recirculation pumps — dedicated return, crossover undersink, demand-activated, timer, tankless-compatible.' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<Layout
+  title="Hot Water Recirculation Pump Cost Calculator 2026"
+  description="Cost calculator for hot water recirculation pumps. Dedicated return, crossover, demand-activated, timer, and tankless-compatible types compared with water + energy savings."
+  active="/hot-water-recirculation-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/hot-water-recirculation-hero-photo.png"
+  breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Hot water recirculation pump', href: '/hot-water-recirculation-cost-calculator/' }]}
+>
+  <section class="container-wide grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-center md:py-10">
+    <div>
+      <p class="eyebrow">Hot water recirculation</p>
+      <h1 class="mt-1 text-3xl md:text-4xl">Hot Water Recirculation Pump Cost Calculator</h1>
+      <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">Cost calculator for dedicated-return, crossover, demand-activated, and timer-based hot water recirculation pumps. Water + energy savings modeled.</p>
+      <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800"><strong>Quick answer:</strong> crossover undersink (most common retrofit) $400–$1,200 installed. Demand-activated $600–$1,800. Dedicated return loop $1,000–$2,800. Mostly a comfort upgrade — financial savings are modest.</p>
+    </div>
+    <picture>
+        <source srcset="/assets/topic-images/hot-water-recirculation-hero-photo.avif" type="image/avif" />
+        <source srcset="/assets/topic-images/hot-water-recirculation-hero-photo.webp" type="image/webp" />
+        <img  src="/assets/topic-images/hot-water-recirculation-hero-photo.png" alt="Hot water recirculation pump installed near a water heater"
+      width="1200" height="675" class="w-full rounded-lg border border-ink-200 bg-white shadow-card" loading="eager" decoding="async"  />
+      </picture>
+  </section>
+
+  <section class="container-wide pb-10"><HotWaterRecirculationCalculator client:load /></section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">New to recirculation?</h2>
+      <p class="mt-2 text-sm text-ink-700">A recirculation pump keeps hot water moving through your supply pipes so you don&rsquo;t wait 30-60 seconds at the tap. Five mainstream approaches exist, each with its own water-vs-energy tradeoff. The right choice depends on whether you&rsquo;re renovating (dedicated return wins), retrofitting (crossover), or optimizing for efficiency (demand-activated).</p>
+      <p class="mt-3 text-sm"><a href="/guides/hot-water-recirculation/" class="font-medium text-brand-700">Read the full guide →</a></p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">{faq.map(f => (<details class="card p-4"><summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary><p class="mt-2 text-sm text-ink-700">{f.a}</p></details>))}</div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/tank-water-heater-cost-calculator/">Tank water heater →</a></li>
+      <li><a href="/tankless-water-heater-cost-calculator/">Tankless water heater →</a></li>
+      <li><a href="/heat-pump-water-heater-cost-calculator/">HPWH →</a></li>
+      <li><a href="/water-treatment-cost-calculator/">Water softener →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

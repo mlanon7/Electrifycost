@@ -1,0 +1,182 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Residential Solar: How It Works, What It Costs, How to Buy It',
+  description: 'Long-form explainer on residential solar PV: how the system works, sizing, inverter choices, NEM successor tariffs, battery decision, 25D credit step-down, and 25-year economics.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-05-11',
+  dateModified: '2026-05-11',
+};
+---
+<Layout
+  title="Residential Solar Guide: How It Works, What It Costs, How to Buy It"
+  description="A long-form, source-backed guide to residential solar PV in 2026: how the system actually works, sizing, inverters, NEM successor tariffs, battery decision, 25D credit step-down, and 25-year economics."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/whole-home-electrification.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Solar', href: '/guides/solar/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Solar PV</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Residential Solar, Properly Explained</h1>
+    <p class="mt-3 text-base text-ink-700">
+      What it is, how it works, what it costs, how to size it, the inverter and battery decisions, the net-metering successor-tariff problem that is changing the math in 2025–2026, and how to read a contractor bid without getting taken. 12-minute read.
+    </p>
+    <div class="guide-toc">
+      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. What it is</a>
+      <a href="#how" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. How PV works</a>
+      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. Sizing</a>
+      <a href="#inverters" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Inverters</a>
+      <a href="#nem" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. NEM successors</a>
+      <a href="#battery" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Battery decision</a>
+      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Real-world cost</a>
+      <a href="#bids" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">8. Reading bids</a>
+    </div>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <section id="what">
+      <h2>1. What "residential solar" actually is</h2>
+      <p>
+        A residential solar system is roughly five components: <strong>modules</strong> (the panels on your roof), <strong>racking</strong> (the aluminum hardware that holds them down and resists wind uplift), an <strong>inverter</strong> or set of inverters (which convert DC from the panels into the 240V AC your house uses), a <strong>monitoring</strong> system (so you can see what each panel is producing), and the <strong>balance-of-system</strong>: conduit, wire, the rapid-shutdown device required by NEC 690.12, the production meter, and the interconnection to your main panel.
+      </p>
+      <p>
+        A typical 2026 install is 16–22 panels in the 400–450W range, totaling 7–10 kW DC. That covers roughly 80–110% of the U.S. average home's 10,500 kWh/year usage (EIA Residential Energy Consumption Survey 2024). Modules carry a 25-year performance warranty (typically 86% retained output at year 25); inverters carry 10 years for string-style or 25 years for microinverters.
+      </p>
+    </section>
+
+    <section id="how">
+      <h2>2. How a PV system actually works</h2>
+      <p>
+        Photovoltaic cells are silicon wafers doped with phosphorus on one side and boron on the other. When a photon with enough energy hits the cell, it knocks an electron loose; the dopant junction creates an electric field that drives the freed electron through an external circuit. That's it — sunlight directly displaces an electron. No moving parts, no fuel, no maintenance other than occasional cleaning if you live somewhere dusty.
+      </p>
+      <p>
+        Each cell produces about 0.6V at low current. 60–72 cells wired in series form a panel ("module") at 30–40V open circuit, ~400W peak. Panels are wired in series into <em>strings</em> (boosting voltage to 400–600V for the inverter input) or paralleled at lower voltage if you use microinverters. The inverter handles maximum power point tracking, anti-islanding (it disconnects in milliseconds if the grid goes down, per UL 1741), and DC-to-AC conversion at 96–98% efficiency.
+      </p>
+    </section>
+
+    <section id="sizing">
+      <h2>3. How to size your system</h2>
+      <p>
+        Pull your last 12 months of electricity bills. Add up annual kWh. Divide by your state's specific yield (kWh per kW DC per year — varies from ~1,100 in Washington to ~1,700 in Arizona; see <a href="https://pvwatts.nrel.gov/" target="_blank" rel="noopener">NREL PVWatts</a> for your ZIP). The quotient is the kW DC you need to offset 100%.
+      </p>
+      <p>
+        Example: a Massachusetts home uses 11,000 kWh/year. MA specific yield ≈ 1,300 kWh/kW/yr. 11,000 ÷ 1,300 = 8.5 kW. Round up to 9 kW for a small reserve, or down to 7.5 kW if your utility's NEM successor pays poorly for exports (more on that below).
+      </p>
+      <p>
+        Two common sizing mistakes: (1) under-sizing to chase the lowest sticker price, then realizing you bought a system that meets 60% of your needs and discovers a heat pump or EV is coming next year, and (2) over-sizing past 110% on net-metering-successor tariffs where exports earn 4–6¢/kWh instead of retail. The calculator on this page warns when you're sized past 110% of stated usage.
+      </p>
+    </section>
+
+    <section id="inverters">
+      <h2>4. Inverter architecture — string, optimizer, or microinverter</h2>
+      <p>
+        <strong>String inverters</strong> (SMA, Fronius, Sungrow) are one centralized box, usually wall-mounted near the main panel. Cheapest at the bid line. Trade-offs: any shaded or dirty panel drags the whole string down, and one inverter failure takes the entire array offline.
+      </p>
+      <p>
+        <strong>DC optimizers</strong> (SolarEdge) put a small power-electronics box behind each panel that does per-panel maximum power point tracking, then feeds a centralized string inverter. Shade-tolerant; per-panel monitoring. Costs about $0.10/W more than a plain string system.
+      </p>
+      <p>
+        <strong>Microinverters</strong> (Enphase IQ8) put a full grid-tied inverter behind each panel. Each panel is its own independent AC source. Most shade-tolerant; longest warranty (25 yr); easiest expansion later. Costs about $0.20/W more — roughly $1,400 on a 7 kW system. If your roof has any shade at all, or you plan to add a battery later (Enphase's ecosystem integrates tightly with their IQ Battery), microinverters typically pay for themselves through better lifetime production.
+      </p>
+    </section>
+
+    <section id="nem">
+      <h2>5. The net-metering successor problem (CA NEM 3.0 and friends)</h2>
+      <p>
+        For 25 years residential solar economics rested on <em>net metering</em>: any kWh your system exported to the grid earned the same retail rate as the kWh you imported at night. That was the deal in nearly every state.
+      </p>
+      <p>
+        That deal is ending. California moved to <strong>NEM 3.0</strong> in April 2023, paying exports at the Avoided Cost Calculator rate (4–8¢/kWh, time-varying) instead of the 25–55¢/kWh retail rate. Massachusetts SMART, New York Value of Distributed Energy Resources (VDER), Arizona's export rate, and Hawaii's Customer Self-Supply program all moved similarly. The mechanics differ but the direction is the same: <em>exports are worth dramatically less than imports</em>, which makes solar-only systems less attractive in those states and makes paired battery storage essential to recover the previous economics.
+      </p>
+      <p>
+        Practical implications: in NEM 3.0 states, size for self-consumption (60–80% of annual use) rather than 100% offset. Add a battery to time-shift midday production into evening peak hours. Ask your installer specifically which tariff your system will be enrolled under, and have them model production hour-by-hour against your load shape — not just annual offset percentage.
+      </p>
+    </section>
+
+    <section id="battery">
+      <h2>6. Should you add a battery?</h2>
+      <p>
+        Three reasons to add a battery:
+      </p>
+      <ol>
+        <li><strong>Resilience.</strong> Your roof solar disconnects during a grid outage unless you have a battery (or a grid-forming inverter with manual transfer switch). A 13.5 kWh Powerwall-class system carries an average home through 12–24 hours of essentials.</li>
+        <li><strong>NEM successor economics.</strong> In CA NEM 3.0 territory, storing midday excess and discharging at the 4–9pm peak captures the retail-rate import you'd otherwise pay, instead of accepting a 5¢/kWh export.</li>
+        <li><strong>Time-of-use arbitrage.</strong> In states with steep TOU rates (CA, MA, AZ, FL), a battery can save $400–$800/year just by shifting consumption from peak to off-peak windows.</li>
+      </ol>
+      <p>
+        Cost: a Powerwall-3 (13.5 kWh, integrated inverter) installs at $13,000–$17,000 in 2026. Enphase IQ Battery 5P comparable. The federal 25D credit covers 30% of battery cost including labor for standalone storage ≥3 kWh — that's a meaningful change post-IRA. Payback on the battery alone is 7–15 years depending on tariff structure; resilience value is harder to quantify but matters in hurricane and wildfire regions.
+      </p>
+    </section>
+
+    <section id="cost">
+      <h2>7. What it actually costs in 2026</h2>
+      <p>
+        Here's how the per-Watt math works. <a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL's Tracking the Sun 2024</a> reports a median installed cost of $3.40/W for residential PV, with the 20th percentile at $2.70/W and the 80th at $4.30/W. EnergySage's Q4 2024 marketplace median was $2.92/W. NREL's 2024 benchmark study for a 7.15 kW residential system was $3.06/W modeled cost.
+      </p>
+      <p>
+        Component shares (NREL 2024 benchmark): modules 14%, inverter 9%, racking + balance-of-system 14%, installation labor 7%, permitting + interconnection + inspection 8%, sales + marketing + overhead + profit 48%. That last category is why high-pressure sales operations charge $4.50+/W on systems that should be $3.00/W — door-knock and lead-gen costs land in your contract.
+      </p>
+      <p>
+        Concrete examples (mid-band, before incentives):
+      </p>
+      <ul>
+        <li>7 kW simple shingle roof in Texas: ~$22,000 gross → ~$15,400 net after federal 25D.</li>
+        <li>9 kW complex multi-plane shingle roof in Massachusetts: ~$33,000 gross → ~$23,100 net.</li>
+        <li>10 kW tile roof in California with shade: ~$42,000 gross → ~$29,400 net.</li>
+        <li>12 kW ground mount in upstate New York with one Powerwall: ~$55,000 gross → ~$38,500 net plus an NY-Sun upfront payment.</li>
+      </ul>
+    </section>
+
+    <section id="bids">
+      <h2>8. How to read a solar bid without getting taken</h2>
+      <p>
+        Get 3 quotes from independent local installers, not door-knockers. Compare line-by-line:
+      </p>
+      <ul>
+        <li><strong>$/W installed.</strong> Total contract price divided by DC kW × 1,000. The number that matters. National median is $2.90–$3.40/W; anything over $4.50/W needs a justification.</li>
+        <li><strong>Module make and model.</strong> Tier-1 brands (Q-Cells, Silfab, REC, LG (residual), Panasonic (residual), Hyundai, Trina). Avoid no-name modules — warranty is only as good as the company surviving 25 years.</li>
+        <li><strong>Inverter type and warranty.</strong> Confirmed in writing. String 10-yr, microinverters 25-yr.</li>
+        <li><strong>Production estimate</strong> in kWh/year with an explicit performance guarantee (e.g., "We guarantee 11,500 kWh in year 1, with degradation per panel warranty"). Reject vague "save up to X" pitches.</li>
+        <li><strong>Roof penetration warranty.</strong> Separate document covering leaks from racking attachments. 10-yr workmanship is standard.</li>
+        <li><strong>Critter guard</strong> (mesh under the array perimeter). Squirrels chew DC wire. Get this included.</li>
+        <li><strong>Tariff enrolled.</strong> Which net-metering successor program your interconnection paperwork will file under, and the per-kWh export rate.</li>
+        <li><strong>Main service panel</strong> work. Many systems need a 200A panel and a load-side breaker; verify your existing panel supports the back-feed breaker per NEC 705.12.</li>
+        <li><strong>Sales pressure.</strong> If they want a same-day signature, walk. Reputable installers give you 30 days to decide.</li>
+      </ul>
+      <p>
+        For the federal 25D credit, save: the installer's invoice with cost breakdown, the permission-to-operate (PTO) letter from your utility, and the IRS Form 5695 prepared for the tax year you got PTO (not the year you signed the contract). The credit is non-refundable but unused portion carries forward.
+      </p>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL Tracking the Sun 2024</a> — residential PV installed cost benchmark</li>
+        <li><a href="https://www.nrel.gov/docs/fy24osti/89610.pdf" target="_blank" rel="noopener">NREL U.S. Solar PV System and Storage Cost Benchmark 2024</a></li>
+        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit (Section 25D)</a></li>
+        <li><a href="https://pvwatts.nrel.gov/" target="_blank" rel="noopener">NREL PVWatts calculator</a> — production estimates by ZIP</li>
+        <li><a href="https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering/nem-2.0-to-nem-3.0" target="_blank" rel="noopener">CPUC NEM 3.0 reference</a></li>
+        <li><a href="https://www.eia.gov/consumption/residential/" target="_blank" rel="noopener">EIA Residential Energy Consumption Survey</a></li>
+        <li><a href="https://www.dsireusa.org/" target="_blank" rel="noopener">DSIRE — state and utility renewable incentives database</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Try the calculator</p>
+        <p class="mt-1 text-sm text-ink-700">Get a $/W and net-cost estimate for your state, system size, roof type, and battery option in 30 seconds.</p>
+        <a href="/solar-panel-cost-calculator/" class="btn-primary mt-3 inline-block">Open the solar calculator →</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
