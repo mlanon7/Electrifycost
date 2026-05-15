@@ -1,0 +1,90 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import PanelCalculator from '@/components/PanelCalculator';
+
+const faq = [
+  {
+    q: 'What is a smart load-management device and how does it work?',
+    a: 'A NEC 750-listed Energy Management System monitors total panel load in real time and sheds large loads (EV charger, heat pump, electric dryer, electric range) when total demand approaches the panel rating. The result: a 100A panel can support an EV + heat pump + induction range without an upgrade, because the device guarantees they never all run at full draw simultaneously. NEC reference: https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=70',
+  },
+  {
+    q: 'How much does load management cost vs. a panel upgrade?',
+    a: 'A NEC 750-listed load-management device runs $500–$1,500 installed (Span, Lumin, DCC, Wallbox load-share). A full 100A→200A service upgrade runs $2,000–$4,500 in most markets, $4,500–$7,500 in high-cost markets. Load management is typically a $2,000–$5,000 savings vs. an upgrade.',
+  },
+  {
+    q: 'Which load-management brands should I look at?',
+    a: 'Four mainstream options: (1) Span — replaces the entire panel with a smart panel that meters and controls every circuit, $5,000–$9,000 installed; (2) Lumin Smart Panel — a separate sub-panel that overlays an existing panel, $4,500–$7,500; (3) DCC-9 / DCC-12 by RVE — dedicated EV-load-management module, $500–$900; (4) Wallbox Pulsar Plus with Power Boost — load-share built into the EV charger itself, $200–$300 for the metering CT. For most homeowners, DCC or Wallbox load-share is the value pick; Span/Lumin are premium full-home solutions.',
+  },
+  {
+    q: 'When does a full panel upgrade make more sense than load management?',
+    a: 'Three cases: (1) the existing panel has reached end of life (rust, corrosion, obsolete brand like Federal Pacific or Zinsco, or recalled bus bar), (2) you need many additional breaker slots and your current panel is full, or (3) you\'re planning a multi-EV household where load shedding would routinely slow charging. For most single-EV all-electric homes, load management on the existing 100A or 150A panel is the right call.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Load Management vs Panel Upgrade',
+    description: 'Comparison of smart load-management devices vs. a full electrical panel upgrade, with cost ranges, NEC 750 explainer, and brand-by-brand options.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="Load Management vs Panel Upgrade Cost 2026"
+  description="Cost comparison: NEC 750-listed smart load-management ($500-$1,500) vs. a full 100A to 200A panel upgrade ($2,000-$7,500). Span, Lumin, DCC, Wallbox brands."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/panel-upgrade-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Panel upgrade calculator', href: '/electrical-panel-upgrade-cost-calculator/' },
+    { name: 'Load management vs upgrade', href: '/load-management-vs-panel-upgrade/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Panel upgrade · Smart load management</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Load Management vs Panel Upgrade</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A NEC 750-listed smart load-management device can replace a $4,000 panel upgrade for $500–$1,500. When it works, when it doesn\'t, and how to pick a brand.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> for most single-EV all-electric homes on a 100A or 150A panel, load management saves $2,000–$5,000 vs. a full upgrade. Premium options (Span, Lumin) cost more than a basic upgrade but add per-circuit metering and outage management.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><PanelCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Main panel upgrade calculator →</a></li>
+      <li><a href="/smart-panel-cost-calculator/">Smart electrical panel calculator →</a></li>
+      <li><a href="/100a-to-200a-panel-upgrade-cost/">100A to 200A upgrade cost →</a></li>
+      <li><a href="/subpanel-cost/">Subpanel install cost →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

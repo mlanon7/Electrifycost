@@ -1,16 +1,16 @@
 module,scenario,unit,base_low,base_mid,base_high,material_low,material_mid,material_high,labor_hours_low,labor_hours_mid,labor_hours_high,permit_low,permit_mid,permit_high,notes,source_id,last_reviewed
-heat_pump,ducted_central_3ton,system,7500,11500,16500,4500,6500,9000,16,22,30,150,300,600,Replacement of central system with ducted heat pump; assumes existing ductwork usable,SRC_DOE_HP_BENCHMARK,2026-05-01
-heat_pump,ducted_central_4ton,system,9500,14000,20000,5500,8000,11000,18,26,34,150,300,600,4-ton ducted system for larger home,SRC_DOE_HP_BENCHMARK,2026-05-01
+heat_pump,ducted_central_3ton,system,8500,13500,18500,5200,7800,10500,18,24,32,150,300,600,Replacement of central system with ducted heat pump; assumes existing ductwork usable; refreshed 2026-05 to align w/ EnergySage 2025 national avg $14.5K + R-32 transition,SRC_DOE_HP_BENCHMARK,2026-05-14
+heat_pump,ducted_central_4ton,system,10500,15500,22000,6500,9500,13000,20,28,36,150,300,600,4-ton ducted system for larger home; refreshed 2026-05 for R-32 transition,SRC_DOE_HP_BENCHMARK,2026-05-14
 heat_pump,ductless_minisplit_1head,system,3500,5500,8000,2000,3000,4500,6,10,16,100,200,400,Single-zone mini-split,SRC_DOE_HP_BENCHMARK,2026-05-01
-heat_pump,ductless_minisplit_3head,system,7500,11000,16000,4500,6500,9500,14,22,30,150,300,600,Three-zone multi-head mini-split,SRC_DOE_HP_BENCHMARK,2026-05-01
-heat_pump,coldclimate_ducted,system,9500,14500,21000,5500,8500,12000,18,26,36,150,350,650,Cold-climate rated ducted heat pump for cold zones,SRC_DOE_HP_BENCHMARK,2026-05-01
-heat_pump,dual_fuel_with_gas_furnace,system,8500,13000,19500,5000,7500,11000,16,24,34,150,350,650,Dual-fuel system retaining existing gas furnace as backup,SRC_DOE_HP_BENCHMARK,2026-05-01
+heat_pump,ductless_minisplit_3head,system,8500,12500,17500,5200,7800,11000,16,24,32,150,300,600,Three-zone multi-head mini-split; refreshed 2026-05 for installer pricing,SRC_DOE_HP_BENCHMARK,2026-05-14
+heat_pump,coldclimate_ducted,system,10500,16000,22500,6500,9500,13000,20,28,38,150,350,650,Cold-climate rated ducted heat pump for cold zones; refreshed 2026-05,SRC_DOE_HP_BENCHMARK,2026-05-14
+heat_pump,dual_fuel_with_gas_furnace,system,9500,14500,21000,5800,8500,12000,18,26,36,150,350,650,Dual-fuel system retaining existing gas furnace as backup; refreshed 2026-05,SRC_DOE_HP_BENCHMARK,2026-05-14
 ev_charger,level2_hardwired,unit,800,1500,2800,400,650,1100,4,7,12,75,175,350,Level 2 hardwired install with new 240V circuit; assumes panel capacity available,SRC_AFDC_LAWS,2026-05-01
 ev_charger,level2_plugin_nema14_50,unit,650,1200,2200,350,500,900,3,5,9,75,175,350,Level 2 plug-in via NEMA 14-50 outlet,SRC_AFDC_LAWS,2026-05-01
 ev_charger,level2_long_run_50ft,unit,1100,1900,3500,500,800,1400,5,9,15,75,200,400,Adds long conduit run typically 30-50ft from panel,SRC_AFDC_LAWS,2026-05-01
 ev_charger,level2_detached_garage_trench,unit,2200,3800,6500,700,1200,2000,10,18,32,150,300,600,Detached garage with trenching for buried conduit,SRC_AFDC_LAWS,2026-05-01
-panel,upgrade_100_to_200,service,1800,2900,4500,700,1100,1700,8,12,18,150,300,600,Replace 100A panel with 200A; common scenario,SRC_BLS_ELECTRICIAN,2026-05-01
-panel,upgrade_150_to_200,service,1500,2400,3700,650,950,1500,7,10,15,150,300,600,150A to 200A; sometimes only meter/main work needed,SRC_BLS_ELECTRICIAN,2026-05-01
+panel,upgrade_100_to_200,service,1800,2900,4500,700,1100,1700,7,10,14,150,300,600,Replace 100A panel with 200A; common scenario. Labor hours capped 2026-05-14 to keep CA-difficult high band within industry $7.5K cap (was 8/12/18; Pass 3 audit Panel CA double-compounding finding),SRC_BLS_ELECTRICIAN,2026-05-14
+panel,upgrade_150_to_200,service,1500,2400,3700,650,950,1500,6,9,12,150,300,600,150A to 200A; sometimes only meter/main work needed. Labor hours capped 2026-05-14 to align with industry $3.5K typical,SRC_BLS_ELECTRICIAN,2026-05-14
 panel,upgrade_200_to_320,service,3500,5200,7800,1500,2400,3500,12,18,28,200,400,800,200A to 320/400A; more utility coordination required,SRC_BLS_ELECTRICIAN,2026-05-01
 panel,subpanel_add,service,800,1400,2400,300,500,900,4,7,12,75,150,300,Add subpanel without main service upgrade,SRC_BLS_ELECTRICIAN,2026-05-01
 panel,load_management_device,service,500,900,1500,300,500,800,2,4,6,0,75,150,Smart load management instead of full upgrade,SRC_NEC_LOAD_MGMT,2026-05-01

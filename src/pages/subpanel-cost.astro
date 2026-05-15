@@ -1,0 +1,90 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import PanelCalculator from '@/components/PanelCalculator';
+
+const faq = [
+  {
+    q: 'How much does it cost to add a subpanel?',
+    a: 'Most residential subpanel adds run $800–$2,400 installed when the main panel has spare amperage and the run is short. Long conduit runs (50+ ft, detached structures, trenched runs to garages or workshops) push the total to $1,500–$4,500. The work is usually a half-day for an electrician.',
+  },
+  {
+    q: 'When does a subpanel make sense vs. upgrading the main panel?',
+    a: 'A subpanel is the right answer when (1) you need more breaker slots but have spare capacity on the main, (2) you\'re feeding a detached structure (garage, workshop, ADU), or (3) you want to consolidate a circuit zone (kitchen, basement, EV charger area) for code/logistics reasons. It is NOT a substitute for a main panel upgrade if your service amperage is insufficient — adding a subpanel to a 100A main does not give you more total capacity.',
+  },
+  {
+    q: 'Can I add a subpanel without a permit?',
+    a: 'No. Subpanel work is permitted electrical work in every U.S. jurisdiction. Pulling a permit triggers an inspection that confirms wire sizing, grounding/bonding, breaker compatibility, and feeder neutral isolation (NEC 250.32 for detached structures). Skipping it creates insurance, resale, and safety problems.',
+  },
+  {
+    q: 'What size subpanel do I need?',
+    a: 'For a typical residential add: a 60A or 100A subpanel covers most use cases including an EV charger + a couple of large appliances. Workshops with welders or large compressors may want 100A or 125A. For detached structures, size the subpanel and feeder to the calculated load per NEC 220.83 plus reasonable future-proofing. Your electrician will spec the right amperage.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Subpanel Install Cost',
+    description: 'Planning-range cost for adding an electrical subpanel for a detached structure, kitchen zone, or EV charger circuit.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="Subpanel Install Cost 2026"
+  description="Plan-level cost for adding an electrical subpanel: detached garage, workshop, kitchen zone, or EV-charger circuit. NEC feeder + grounding aware."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/panel-upgrade-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Panel upgrade calculator', href: '/electrical-panel-upgrade-cost-calculator/' },
+    { name: 'Subpanel install', href: '/subpanel-cost/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Panel upgrade · Subpanel</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Subpanel Install Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      Plan-level cost for adding an electrical subpanel — feeder run, breaker box, grounding/bonding, and the cases where a subpanel is the right answer vs. a main panel upgrade.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $800–$2,400 for a short run; $1,500–$4,500 for long runs to detached structures. A subpanel does NOT increase total service capacity — confirm your main panel has spare amperage first.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><PanelCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Main panel upgrade calculator →</a></li>
+      <li><a href="/100a-to-200a-panel-upgrade-cost/">100A to 200A upgrade cost →</a></li>
+      <li><a href="/200a-to-400a-panel-upgrade-cost/">200A to 320/400A upgrade cost →</a></li>
+      <li><a href="/load-management-vs-panel-upgrade/">Load management vs panel upgrade →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

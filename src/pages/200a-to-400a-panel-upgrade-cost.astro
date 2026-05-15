@@ -1,0 +1,90 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import PanelCalculator from '@/components/PanelCalculator';
+
+const faq = [
+  {
+    q: 'How much does it cost to upgrade from 200A to 320/400A service?',
+    a: 'A 200A→320A or 200A→400A upgrade typically runs $5,000–$10,000 installed, often double a 100A→200A upgrade. The work involves a higher-capacity meter base, a 320/400A main panel (often paired with a 200A subpanel), upgraded service-entrance conductors, and significant utility coordination — the utility may need to upgrade the transformer or service drop on its side.',
+  },
+  {
+    q: 'When is 320/400A actually necessary?',
+    a: 'Honest answer: rarely for residential. The cases where it makes sense are (1) multiple Level 2 EV chargers running simultaneously plus a heat pump plus an electric pool/spa, (2) a home with electric resistance backup heat plus full electrification, (3) a workshop or detached structure with substantial loads, or (4) building from scratch where the marginal cost is small. For most all-electric retrofits, a 200A panel + smart load management is the better answer.',
+  },
+  {
+    q: 'Does a 320A service really mean 400A capacity?',
+    a: 'Yes. "320A" service uses the industry-standard 320A continuous-rating meter base with two 200A main breakers, giving 400A total capacity. The 320A rating is the continuous-load number per NEC; the panel itself is sometimes labeled as 400A or as a "320/400A" combo. The terminology is confusing but they refer to the same hardware.',
+  },
+  {
+    q: 'Are there federal incentives for a 320/400A service upgrade?',
+    a: 'No. The federal 25C credit ended December 31, 2025 (OBBBA, signed July 4, 2025). Even when 25C applied, the panel cap was $600 — small relative to a $7,000+ service upgrade. State and utility programs vary; check /rebates/. IRS reference: https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: '200A to 320/400A Panel Upgrade Cost',
+    description: 'Planning-range cost for a 200A to 320/400A service upgrade, including utility coordination and the when-it-is-actually-needed reality check.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="200A to 320/400A Service Upgrade Cost 2026"
+  description="Plan-level cost for a 200A to 320/400A service upgrade, with utility coordination, NEC sizing, and a reality-check on when 400A is actually needed."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/panel-upgrade-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Panel upgrade calculator', href: '/electrical-panel-upgrade-cost-calculator/' },
+    { name: '200A to 320/400A', href: '/200a-to-400a-panel-upgrade-cost/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Panel upgrade · 200A → 320/400A</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">200A to 320/400A Service Upgrade Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      Plan-level cost for the premium service upgrade. State labor multipliers, utility-side work, and when 400A is actually necessary vs. 200A + smart load management.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $5,000–$10,000 installed, roughly double a 100A→200A. Rarely necessary for residential — verify with an NEC 220.83 load calc before committing.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><PanelCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/electrical-panel-upgrade-cost-calculator/">Main panel upgrade calculator →</a></li>
+      <li><a href="/100a-to-200a-panel-upgrade-cost/">100A to 200A upgrade cost →</a></li>
+      <li><a href="/subpanel-cost/">Subpanel install cost →</a></li>
+      <li><a href="/load-management-vs-panel-upgrade/">Load management vs panel upgrade →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

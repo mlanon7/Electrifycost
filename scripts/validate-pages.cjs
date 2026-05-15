@@ -1,5 +1,6 @@
 // Validates every .astro page:
 //   - <Layout opens == </Layout> closes (catches truncation)
+//   - <section opens == </section> closes (catches unclosed sections)
 //   - File ends with </Layout> followed by optional whitespace
 //   - No <digit Astro Fragment parse traps in body text
 // Wired into npm test so truncations never escape again.
@@ -45,6 +46,15 @@ for (const f of files) {
 
   const frontEnd = text.indexOf('---', 4);
   const body = frontEnd >= 0 ? text.slice(frontEnd + 3) : text;
+
+  // <section> balance check — catches unclosed sections (a third-party audit caught one)
+  const sectionOpens = (body.match(/<section[\s>]/g) || []).length;
+  const sectionCloses = (body.match(/<\/section>/g) || []).length;
+  if (sectionOpens !== sectionCloses) {
+    console.error('  SECTION ' + rel + ' opens=' + sectionOpens + ' closes=' + sectionCloses);
+    errs++;
+  }
+
   const stripped = body
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
     .replace(/\{[\s\S]*?\}/g, '')

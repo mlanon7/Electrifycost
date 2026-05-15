@@ -413,7 +413,7 @@ const schemaJsonLd = [
         </div>
       </div>
 
-      <div class="hidden md:block" aria-hidden="true">
+      <div>
         <picture>
           <source srcset="/assets/topic-images/homepage-hero-electrified-home.avif" type="image/avif" />
           <source srcset="/assets/topic-images/homepage-hero-electrified-home.webp" type="image/webp" />
@@ -421,7 +421,7 @@ const schemaJsonLd = [
             src="/assets/topic-images/homepage-hero-electrified-home.png"
             alt="Cutaway view of a fully electrified home — solar, EV charger, heat pump, HPWH, battery, smart panel"
             width="900" height="1200"
-            class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
+            class="mx-auto w-full max-w-xs rounded-lg border border-ink-200 bg-white shadow-card sm:max-w-sm md:max-w-none"
             loading="eager" decoding="async"
           />
         </picture>
@@ -532,6 +532,9 @@ const schemaJsonLd = [
             <p class="mt-0.5 text-xs text-ink-700">51 state pages with net-metering tier, irradiance, and state credits.</p>
           </div>
         </a>
- 
+      </div>
+    </div>
+  </section>
+
   <div class="container-wide"><AdSlot /></div>
 </Layout>

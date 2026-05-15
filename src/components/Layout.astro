@@ -84,23 +84,8 @@ const schemas = breadcrumbSchema ? [...baseSchemas, breadcrumbSchema] : baseSche
     <meta name="twitter:image" content={resolvedOgImage} />
     <meta name="theme-color" content="#059669" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {/* Use media-swap pattern to avoid render-blocking the Google Fonts request. */}
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" />
-    </noscript>
+    {/* Inter + Source Serif 4 are self-hosted via @fontsource and imported in
+        src/styles/global.css. No more third-party fetch in <head>. */}
     {schemas.map(s => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}

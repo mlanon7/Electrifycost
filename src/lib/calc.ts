@@ -436,7 +436,15 @@ export function runCalculator(args: CalcArgs): CalculatorResult {
     { label: 'Permit & inspection', amount: bandFromTriple(sc.permit_low, sc.permit_mid, sc.permit_high) },
   ];
 
-  const adjustment = subtractBand(gross, addBand(addBand(itemized[0].amount, itemized[1].amount), itemized[2].amount));
+  // Band-consistent subtraction: low-minus-low, mid-minus-mid, high-minus-high.
+  // (subtractBand inverts low/high — correct for net-after-incentives, wrong here:
+  //  using subtractBand inflated adjustment.high by absorbing the full band spread.)
+  const components = addBand(addBand(itemized[0].amount, itemized[1].amount), itemized[2].amount);
+  const adjustment: CostBand = {
+    low: Math.max(0, gross.low - components.low),
+    mid: Math.max(0, gross.mid - components.mid),
+    high: Math.max(0, gross.high - components.high),
+  };
   if (adjustment.mid > 25) {
     itemized.push({
       label: 'Job complexity adjustment',

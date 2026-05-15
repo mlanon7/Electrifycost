@@ -1,4 +1,0 @@
-# DEPRECATED — This file is no longer read by the build. The live data lives in data/csv/rebate-programs.csv.
-# Delete this file at next maintenance window. Editing it has no effect on the calculators.
-# See audit/CHANGES_2026-05-13.md for context.
-deprecated_marker,no_op,1,1,1

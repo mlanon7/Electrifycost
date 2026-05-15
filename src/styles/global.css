@@ -1,3 +1,13 @@
+/* Self-hosted fonts. Replaces the Google Fonts fetch that was in Layout.astro;
+   bundled by Vite so they ship under our origin + immutable cache rule. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/source-serif-4/500.css';
+@import '@fontsource/source-serif-4/600.css';
+@import '@fontsource/source-serif-4/700.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

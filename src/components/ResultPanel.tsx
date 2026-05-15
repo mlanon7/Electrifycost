@@ -265,7 +265,9 @@ export default function ResultPanel({
                         {i.scope === 'federal' ? 'Federal' : i.scope === 'state' ? 'State' : 'Utility'}
                       </span>
                       <span className="badge">{i.incentiveType === 'tax_credit' ? 'Tax credit' : 'Rebate'}</span>
-                      {i.expiration && <span className="text-ink-600">Expires {i.expiration}</span>}
+                      {i.expiration && i.expiration !== 'unspecified' && i.expiration !== 'none' && (
+                        <span className="text-ink-600">Expires {i.expiration}</span>
+                      )}
                     </div>
                     {i.caveat && <p className="mt-1 text-xs text-amber-700">{i.caveat}</p>}
                   </div>

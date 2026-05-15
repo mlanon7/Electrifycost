@@ -395,6 +395,29 @@ run('HEEHRA in open state (NY) → applied', { ...heehraBase, state: 'NY' }, [
    'DOE_HOMES missing from applied in NY (status=open)'],
 ]);
 
+// Pass 3 audit §1.4: panel CA-difficult must stay within industry $7.5K cap.
+// Previously the labor_hours_high=18 compounded with state×difficulty×home×timing
+// multipliers and rendered ~$8,700 high for CA difficult — well above the $7,350
+// industry hard-cap. Labor hours rebased to 7/10/14 in project-cost-ranges.csv.
+run('Panel CA difficult stays in industry cap', {
+  module: 'panel', scenario: 'upgrade_100_to_200', state: 'CA',
+  panel: '100A', difficulty: 'difficult', homeType: 'single_family', income: 'unknown',
+}, [
+  ['Panel CA difficult high ≤ $8,000', r => r.gross[2] <= 8000,
+   'Panel CA difficult high band exceeds industry $7.5K cap'],
+  ['Panel CA difficult mid in range', r => r.gross[1] >= 3000 && r.gross[1] <= 5500,
+   'Panel CA difficult mid out of industry $3K-$5.5K range'],
+]);
+
+// Verify low-cost state didn't regress below industry floor.
+run('Panel WA average stays in industry range', {
+  module: 'panel', scenario: 'upgrade_100_to_200', state: 'WA',
+  panel: '100A', difficulty: 'average', homeType: 'single_family', income: 'unknown',
+}, [
+  ['Panel WA average mid in range', r => r.gross[1] >= 2200 && r.gross[1] <= 4000,
+   'Panel WA average mid out of industry $2.2K-$4K typical range'],
+]);
+
 run('25C: with asOf=2025-06-01 it still applies (historical)', {
   ...heehraBase, state: 'OH', income: 'standard', asOf: '2025-06-01',
 }, [
@@ -422,4 +445,4 @@ if (assertionFailures > 0 || failures.length > 0) {
   console.error('FAILED: ' + assertionFailures + ' scenario assertion(s), ' + failures.length + ' data-load failure(s)');
   process.exit(1);
 }
-console.log('OK: ' + cases.length + ' scenarios + 7 targeted assertion groups passed.');
+console.log('OK: ' + cases.length + ' scenarios + 9 targeted assertion groups passed.');
