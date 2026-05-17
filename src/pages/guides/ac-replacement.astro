@@ -30,21 +30,22 @@ const schemaJsonLd = {
     <p class="mt-3 text-base text-ink-700">
       What changed in 2023 (SEER2) and 2025 (R-32 refrigerant transition), how to size correctly with Manual J, why most homeowners should consider a heat pump instead, and how to read a bid without paying for sales overhead. 10-minute read.
     </p>
-    <div class="guide-toc">
-      <a href="#how" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. How AC works</a>
-      <a href="#seer2" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. SEER2 explained</a>
-      <a href="#refrigerant" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. R-32 transition</a>
-      <a href="#tiers" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Tier choice</a>
-      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Sizing (Manual J)</a>
-      <a href="#hp" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Heat pump alt</a>
-      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Real cost</a>
-      <a href="#bids" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">8. Reading bids</a>
-    </div>
-  </section>
+</section>
 
   <article class="container-tight guide-prose pb-12">
-    <section id="how">
-      <h2>1. How a central AC actually works</h2>
+    <div class="guide-toc not-prose">
+      <a href="#how-a-central-ac-actually-works">1. How a central AC actually works</a>
+      <a href="#seer2-the-2023-efficiency-standard">2. SEER2 — the 2023 efficiency standard</a>
+      <a href="#the-r-410a-r-32-r-454b-transition">3. The R-410A → R-32 / R-454B transition</a>
+      <a href="#single-stage-two-stage-or-variable-speed">4. Single-stage, two-stage, or variable-speed</a>
+      <a href="#sizing-manual-j-is-non-negotiable">5. Sizing — Manual J is non-negotiable</a>
+      <a href="#the-heat-pump-alternative">6. The heat pump alternative</a>
+      <a href="#what-it-actually-costs-in-2026">7. What it actually costs in 2026</a>
+      <a href="#how-to-read-an-ac-bid">8. How to read an AC bid</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+    </div>
+<section id="how">
+      <h2 id="how-a-central-ac-actually-works">1. How a central AC actually works</h2>
       <p>
         Air conditioning is a refrigeration cycle, identical to your refrigerator&apos;s. Refrigerant in a copper loop absorbs heat from indoor air (at the evaporator coil), is compressed into a high-pressure gas, releases that heat outdoors (at the condenser coil), expands back to a low-pressure liquid, and returns indoors to absorb more heat. The compressor is the outdoor unit; the evaporator coil sits on top of your furnace or air handler; a copper &quot;line set&quot; connects them.
       </p>
@@ -54,7 +55,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="seer2">
-      <h2>2. SEER2 — the 2023 efficiency standard</h2>
+      <h2 id="seer2-the-2023-efficiency-standard">2. SEER2 — the 2023 efficiency standard</h2>
       <p>
         DOE adopted a revised test procedure for residential central AC and heat pumps effective 2023-01-01 (Federal Register 87 FR 56500). The new test runs at higher external static pressure than the old SEER test, simulating the resistance of real ductwork. The result: SEER ratings drop ~5% when re-rated as SEER2. A SEER 16 unit becomes roughly SEER2 15.2.
       </p>
@@ -71,7 +72,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="refrigerant">
-      <h2>3. The R-410A → R-32 / R-454B transition</h2>
+      <h2 id="the-r-410a-r-32-r-454b-transition">3. The R-410A → R-32 / R-454B transition</h2>
       <p>
         EPA&apos;s Significant New Alternatives Policy (SNAP) rule under the AIM Act phases R-410A (HFC, GWP 2,088) out of new residential equipment manufactured after 2025-01-01. Manufacturers chose two replacements:
       </p>
@@ -85,7 +86,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="tiers">
-      <h2>4. Single-stage, two-stage, or variable-speed</h2>
+      <h2 id="single-stage-two-stage-or-variable-speed">4. Single-stage, two-stage, or variable-speed</h2>
       <ul>
         <li><strong>Single-stage (~14.3-16 SEER2).</strong> Compressor is either on at 100% or off. Cheapest equipment, simplest controls. Trade-off: short-cycles in mild weather (poor dehumidification), peak electrical draw matches nameplate. Good for tight budgets in moderate climates.</li>
         <li><strong>Two-stage (~16-19 SEER2).</strong> Compressor runs at ~65% or 100%. Longer run times = better dehumidification, lower electrical bills. Sweet spot for most homeowners. Adds ~$1,200–$2,000 over single-stage.</li>
@@ -97,7 +98,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="sizing">
-      <h2>5. Sizing — Manual J is non-negotiable</h2>
+      <h2 id="sizing-manual-j-is-non-negotiable">5. Sizing — Manual J is non-negotiable</h2>
       <p>
         ACCA Manual J is the load calculation standard. It accounts for square footage, ceiling height, insulation R-values, window area and orientation, infiltration rate, internal heat gain, and design temperature. The output is BTU/hr of cooling load. Divide by 12,000 to get tons.
       </p>
@@ -110,7 +111,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="hp">
-      <h2>6. The heat pump alternative</h2>
+      <h2 id="the-heat-pump-alternative">6. The heat pump alternative</h2>
       <p>
         A central air-source heat pump <em>is</em> a central AC that can run in reverse. Same condenser, same indoor coil, same ductwork, same installation labor. The difference is a reversing valve and slightly larger compressor + outdoor coil for cold-weather performance. Cost premium: $1,500–$2,500 per ton over a comparable AC.
       </p>
@@ -129,7 +130,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="cost">
-      <h2>7. What it actually costs in 2026</h2>
+      <h2 id="what-it-actually-costs-in-2026">7. What it actually costs in 2026</h2>
       <p>
         Concrete examples (3-ton system, existing good ductwork, R-32 or R-454B refrigerant, mid-band):
       </p>
@@ -146,7 +147,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="bids">
-      <h2>8. How to read an AC bid</h2>
+      <h2 id="how-to-read-an-ac-bid">8. How to read an AC bid</h2>
       <ul>
         <li><strong>Manual J load calculation</strong> — written, in the proposal.</li>
         <li><strong>AHRI-matched system certificate</strong> — outdoor + indoor coil + air handler combination with the rated SEER2/EER2/HSPF2. Mis-matched coils kill efficiency and void warranty.</li>
@@ -160,7 +161,7 @@ const schemaJsonLd = {
     </section>
 
     <section class="guide-sources">
-      <h2>Sources</h2>
+      <h2 id="sources">Sources</h2>
       <ul>
         <li><a href="https://www.federalregister.gov/documents/2022/09/16/2022-19704/energy-conservation-program-energy-conservation-standards-for-central-air-conditioners-and-heat" target="_blank" rel="noopener">DOE / Federal Register — SEER2 final rule (87 FR 56500)</a></li>
         <li><a href="https://www.epa.gov/snap/snap-final-rule-23" target="_blank" rel="noopener">EPA SNAP Rule 23 — R-410A phase-out</a></li>

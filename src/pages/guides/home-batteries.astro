@@ -30,20 +30,21 @@ const schemaJsonLd = {
     <p class="mt-3 text-base text-ink-700">
       What a battery actually is, why LFP took over from NMC, the three use cases (backup, self-consumption under NEM 3.0, time-of-use arbitrage), how to size it, brand-by-brand options for 2026, and how to read a bid without paying for a sales operation's overhead. 11-minute read.
     </p>
-    <div class="guide-toc">
-      <a href="#what" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">1. What it is</a>
-      <a href="#chemistry" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">2. Chemistry</a>
-      <a href="#usecase" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">3. Three use cases</a>
-      <a href="#sizing" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">4. Sizing</a>
-      <a href="#brands" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">5. Brand options</a>
-      <a href="#cost" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">6. Real-world cost</a>
-      <a href="#bids" class="rounded-full border border-ink-200 bg-white px-3 py-1 text-ink-700 no-underline hover:bg-ink-50">7. Reading bids</a>
-    </div>
-  </section>
+</section>
 
   <article class="container-tight guide-prose pb-12">
-    <section id="what">
-      <h2>1. What a home battery actually is</h2>
+    <div class="guide-toc not-prose">
+      <a href="#what-a-home-battery-actually-is">1. What a home battery actually is</a>
+      <a href="#lfp-vs-nmc-chemistry-and-why-lfp-won-residential">2. LFP vs NMC chemistry — and why LFP won residential</a>
+      <a href="#the-three-use-cases-and-which-one-you-actually-hav">3. The three use cases — and which one you actually have</a>
+      <a href="#how-to-size-a-battery">4. How to size a battery</a>
+      <a href="#brand-by-brand-reality-check-2026">5. Brand-by-brand reality check (2026)</a>
+      <a href="#what-it-actually-costs-in-2026">6. What it actually costs in 2026</a>
+      <a href="#how-to-read-a-battery-bid">7. How to read a battery bid</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+    </div>
+<section id="what">
+      <h2 id="what-a-home-battery-actually-is">1. What a home battery actually is</h2>
       <p>
         A residential energy storage system is four things: a <strong>stack of lithium-ion cells</strong> (typically 14-280 individual cells, depending on capacity), a <strong>battery management system</strong> (BMS) that balances cell voltages and prevents over-charge / over-discharge, a <strong>power electronics</strong> stage (a hybrid inverter that handles AC-DC bidirectionally), and a <strong>communication + transfer switch</strong> layer that talks to the grid, your loads, and your solar inverter (if any).
       </p>
@@ -53,7 +54,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="chemistry">
-      <h2>2. LFP vs NMC chemistry — and why LFP won residential</h2>
+      <h2 id="lfp-vs-nmc-chemistry-and-why-lfp-won-residential">2. LFP vs NMC chemistry — and why LFP won residential</h2>
       <p>
         Residential storage uses two chemistries:
       </p>
@@ -67,7 +68,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="usecase">
-      <h2>3. The three use cases — and which one you actually have</h2>
+      <h2 id="the-three-use-cases-and-which-one-you-actually-hav">3. The three use cases — and which one you actually have</h2>
       <h3>Use case A: outage backup</h3>
       <p>
         You live somewhere with frequent or prolonged outages: hurricane country (FL, NC, TX coast, LA), wildfire shut-offs (CA PSPS, OR), ice-storm territory (TX, OK, the southeast). The battery's job is to power critical loads — refrigerator, lights, internet, well pump, medical equipment — for 12–48 hours.
@@ -94,7 +95,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="sizing">
-      <h2>4. How to size a battery</h2>
+      <h2 id="how-to-size-a-battery">4. How to size a battery</h2>
       <p>
         For <strong>outage backup</strong>: list your critical loads (refrigerator 1.5 kWh/day, lights 0.5 kWh, internet 0.5 kWh, well pump 1 kWh, electronics 0.5 kWh = ~4 kWh/day baseline). Multiply by the longest outage you want to ride through. A 13.5 kWh Powerwall covers ~3 days of essentials. 5 kWh covers ~1 day.
       </p>
@@ -110,7 +111,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="brands">
-      <h2>5. Brand-by-brand reality check (2026)</h2>
+      <h2 id="brand-by-brand-reality-check-2026">5. Brand-by-brand reality check (2026)</h2>
       <ul>
         <li><strong>Tesla Powerwall 3.</strong> 13.5 kWh usable, integrated solar inverter, $13,500–$17,000 installed. Strengths: integration, Tesla app, time-of-use scheduling. Trade-off: locks you into the Tesla ecosystem for future expansion.</li>
         <li><strong>Enphase IQ Battery 5P.</strong> 5 kWh per unit, modular, $5,000–$7,000 installed. Strengths: stack as needed, microinverter-grade reliability, 15-year warranty. Trade-off: requires Enphase microinverters or an IQ8 System Controller — not a great retrofit unless your solar is already Enphase.</li>
@@ -121,7 +122,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="cost">
-      <h2>6. What it actually costs in 2026</h2>
+      <h2 id="what-it-actually-costs-in-2026">6. What it actually costs in 2026</h2>
       <p>
         Per-kWh installed cost has stabilized at $1,100–$1,500/kWh for 10–15 kWh systems in 2026, per LBNL Tracking the Sun data and NREL's 2024 residential storage benchmark. Standalone retrofit installs run 10–15% more than co-installed solar-plus-storage because integration labor is duplicated.
       </p>
@@ -137,7 +138,7 @@ const schemaJsonLd = {
     </section>
 
     <section id="bids">
-      <h2>7. How to read a battery bid</h2>
+      <h2 id="how-to-read-a-battery-bid">7. How to read a battery bid</h2>
       <p>
         Three bids minimum. Compare:
       </p>
@@ -156,7 +157,7 @@ const schemaJsonLd = {
     </section>
 
     <section class="guide-sources">
-      <h2>Sources</h2>
+      <h2 id="sources">Sources</h2>
       <ul>
         <li><a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL Tracking the Sun 2024</a> — paired storage and standalone storage installed cost</li>
         <li><a href="https://www.nrel.gov/docs/fy24osti/89610.pdf" target="_blank" rel="noopener">NREL U.S. Solar PV System and Storage Cost Benchmark 2024</a></li>

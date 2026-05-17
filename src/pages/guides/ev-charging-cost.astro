@@ -9,8 +9,18 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
   <article class="container-wide max-w-3xl py-10 prose-guide">
     <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">EV charging cost in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~7 min read</p></header>
     <p class="lede">"How much will it cost me to charge?" is the most common question new EV owners ask. The honest answer is that it&rsquo;s 60–80% cheaper than gas at home, but 2–3× more expensive than home at public DC fast chargers. This guide breaks down the math and the levers you control.</p>
+    <div class="guide-toc not-prose">
+      <a href="#the-basic-math">1. The basic math</a>
+      <a href="#home-vs-public-the-big-spread">2. Home vs public — the big spread</a>
+      <a href="#the-tou-plan-multiplier">3. The TOU plan multiplier</a>
+      <a href="#cold-weather-costs-more">4. Cold weather costs more</a>
+      <a href="#charging-losses">5. Charging losses</a>
+      <a href="#plug-in-hybrid-phev-economics">6. Plug-in hybrid (PHEV) economics</a>
+      <a href="#charging-cost-vs-total-cost-of-ownership">7. Charging cost vs total cost of ownership</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+    </div>
 
-    <h2>The basic math</h2>
+<h2 id="the-basic-math">1. The basic math</h2>
     <p>EVs are priced by kWh, not gallons. The conversion: <strong>kWh per 100 miles × electricity rate ($/kWh) = cost per 100 miles</strong>. Modern EVs by class:</p>
     <ul>
       <li>Efficient sedan (Model 3, Ioniq 6, Polestar 2): <strong>28 kWh/100mi</strong></li>
@@ -20,12 +30,12 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
     </ul>
     <p>At the US average 16¢/kWh, that crossover costs $5.10 per 100 miles charged at home — compared to about $12 for a 28-mpg gas crossover at $3.45/gallon. Driving 12,000 miles/year, the difference is about $830.</p>
 
-    <h2>Home vs public — the big spread</h2>
+    <h2 id="home-vs-public-the-big-spread">2. Home vs public — the big spread</h2>
     <p>US average residential electricity is 16¢/kWh. Public DC fast charging averages $0.42/kWh on Electrify America and EVgo; Tesla Superchargers $0.36/kWh. That&rsquo;s 2–3× the home rate. A driver who DC-fast-charges 50% of miles spends roughly twice what an all-home charger spends — eliminating most of the EV vs gas savings.</p>
 
     <p>The fix: structure your driving around home charging. A typical L2 charger adds 25–40 miles of range per hour — enough to refill any commute overnight. Save public DCFC for road trips and occasional emergencies.</p>
 
-    <h2>The TOU plan multiplier</h2>
+    <h2 id="the-tou-plan-multiplier">3. The TOU plan multiplier</h2>
     <p>Most utilities now offer EV-specific time-of-use rates that drop overnight rates dramatically:</p>
     <ul>
       <li><strong>PG&amp;E EV2-A (CA):</strong> peak ~57¢/kWh, off-peak (midnight–3pm) ~31¢/kWh — for CA, still high but the spread matters.</li>
@@ -35,19 +45,19 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
     </ul>
     <p>Switching to a TOU plan with overnight charging can cut your charging bill 40–60% in many states. The downside: your non-charging usage may be more expensive on TOU. Run the numbers on your last bill before switching.</p>
 
-    <h2>Cold weather costs more</h2>
+    <h2 id="cold-weather-costs-more">4. Cold weather costs more</h2>
     <p>EVs lose 10–25% efficiency below 32°F due to battery heating, cabin heating, and increased rolling resistance. A 28 kWh/100mi sedan becomes 32–35 kWh/100mi at 20°F. Plan for cold-weather charging cost ~15% higher than the annual average if you live in a cold climate.</p>
 
-    <h2>Charging losses</h2>
+    <h2 id="charging-losses">5. Charging losses</h2>
     <p>You always pay for slightly more electricity than your battery receives. AC home charging loses ~10% in the onboard charger and battery management system. DC fast charging loses ~5%. Built into the calculator above. The kWh-per-100mi number on the EPA window sticker is "from the wall" — already includes charging losses.</p>
 
-    <h2>Plug-in hybrid (PHEV) economics</h2>
+    <h2 id="plug-in-hybrid-phev-economics">6. Plug-in hybrid (PHEV) economics</h2>
     <p>PHEVs (Prius Prime, RAV4 Prime, Ford Escape PHEV) charge electric for the first 25–40 miles per day, then run on gas. If your typical drive is &lt;40 miles and you can charge at home daily, you operate as an EV. If you regularly exceed the EV range or can&rsquo;t charge at home, you operate as a hybrid. PHEV operating cost falls between BEV and hybrid; meaningful only if home-charged daily.</p>
 
-    <h2>Charging cost vs total cost of ownership</h2>
+    <h2 id="charging-cost-vs-total-cost-of-ownership">7. Charging cost vs total cost of ownership</h2>
     <p>This calculator covers operating cost only. For full TCO including purchase price, residual value, insurance, and maintenance, see the <a href="/ev-total-cost-of-ownership-calculator/">EV TCO calculator</a>. Operating cost is roughly 25-40% of total ownership cost, so it&rsquo;s a major but not dominant factor.</p>
 
-    <h2>Sources</h2>
+    <h2 id="sources">Sources</h2>
     <ul class="text-sm">
       <li><a href="https://www.fueleconomy.gov/feg/Find.do?action=sbs&id=44878">EPA FuelEconomy.gov — vehicle kWh/100mi data</a></li>
       <li><a href="https://www.eia.gov/electricity/monthly/">EIA Electric Power Monthly — residential rates</a></li>

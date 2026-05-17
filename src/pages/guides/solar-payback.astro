@@ -31,8 +31,19 @@ const schemaJsonLd = {
     </header>
 
     <p class="lede">"How long until my solar pays for itself?" is the question that determines whether residential solar is a financial decision or an environmental one. In 2026, the answer ranges from six years to never depending on your state — and the variables are not the ones most homeowners think they are. This guide walks through the actual math, the net-metering policy that drives most of the variance, and why the federal credit expiration changes the calculation more than panel costs.</p>
+    <div class="guide-toc not-prose">
+      <a href="#the-basic-math-slowly">1. The basic math, slowly</a>
+      <a href="#a-worked-example">2. A worked example</a>
+      <a href="#what-changed-in-2026-the-25d-expiration">3. What changed in 2026: the 25D expiration</a>
+      <a href="#why-nem-is-the-variable-that-matters-most">4. Why NEM is the variable that matters most</a>
+      <a href="#adding-a-battery-when-it-helps-and-when-it-doesnt">5. Adding a battery — when it helps and when it doesnt</a>
+      <a href="#cash-vs-loan-financing">6. Cash vs loan financing</a>
+      <a href="#what-inverter-replacement-actually-costs">7. What inverter replacement actually costs</a>
+      <a href="#what-doesnt-matter-as-much-as-you-think">8. What doesnt matter as much as you think</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+    </div>
 
-    <h2>The basic math, slowly</h2>
+<h2 id="the-basic-math-slowly">1. The basic math, slowly</h2>
     <p>Solar payback is the year in which cumulative electricity savings equal the net installed cost of the system. The inputs:</p>
     <ul>
       <li><strong>System size</strong> in kW DC. US median residential install is 8 kW (LBNL 2024).</li>
@@ -46,7 +57,7 @@ const schemaJsonLd = {
       <li><strong>Panel degradation.</strong> Tier-1 modern panels degrade ~0.5%/yr (LBNL 2024).</li>
     </ul>
 
-    <h2>A worked example</h2>
+    <h2 id="a-worked-example">2. A worked example</h2>
     <p>An 8 kW system in Massachusetts at $3.50/W:</p>
     <ul>
       <li>Gross cost: $28,000</li>
@@ -71,12 +82,12 @@ const schemaJsonLd = {
 
     <p>Same hardware, same cost — payback differs by 13 years. The variable that swings the result hardest isn’t panel cost or sunshine; it’s the combination of electricity rate and NEM policy.</p>
 
-    <h2>What changed in 2026: the 25D expiration</h2>
+    <h2 id="what-changed-in-2026-the-25d-expiration">3. What changed in 2026: the 25D expiration</h2>
     <p>OBBBA (signed July 4, 2025) terminated the Residential Clean Energy Credit (25D) for property placed in service after December 31, 2025. This was the 30% federal credit with no cap that had been the cornerstone of residential solar economics for two decades. For a typical $24,000 system, that&rsquo;s $7,200 added to net cost — and 2-4 years added to typical payback.</p>
 
     <p>This doesn&rsquo;t kill solar economics in strong-NEM, high-rate states. A 9-year payback becomes 11-12. But it materially shortens the "solar is a no-brainer" geography. In low-rate states (TX, FL, LA, MS, AL), the math now requires either a state credit (none in those states), aggressive utility rates rising fast, or a willingness to accept 18-25-year payback for the long-term value.</p>
 
-    <h2>Why NEM is the variable that matters most</h2>
+    <h2 id="why-nem-is-the-variable-that-matters-most">4. Why NEM is the variable that matters most</h2>
     <p>Net metering — how the utility credits you for power you export to the grid — is the most overlooked variable in solar economics. A homeowner who installs solar exports about 65% of generation back to the grid (with no battery), keeping only 35% for direct self-consumption. So the credit rate on those exports dominates lifetime returns.</p>
 
     <p>Full NEM (1:1 credit at retail rate) is the friendliest policy. Most US states had this through the 2010s. Several states have moved to partial NEM or tariff-based credits since 2018:</p>
@@ -90,7 +101,7 @@ const schemaJsonLd = {
 
     <p>Your state&rsquo;s current NEM tariff is more important than your system&rsquo;s panel brand, inverter type, or installer. Check DSIRE (dsireusa.org) for current rules.</p>
 
-    <h2>Adding a battery — when it helps and when it doesn&rsquo;t</h2>
+    <h2 id="adding-a-battery-when-it-helps-and-when-it-doesnt">5. Adding a battery — when it helps and when it doesn&rsquo;t</h2>
     <p>Batteries raise self-consumption from ~35% to ~75%. That matters in different ways depending on your NEM tier:</p>
     <ul>
       <li><strong>Full NEM:</strong> battery doesn&rsquo;t help solar economics directly because exports are already credited at retail. Battery value is in resilience (backup during outages) and peak-rate avoidance. Solar payback unchanged or slightly worse.</li>
@@ -98,22 +109,22 @@ const schemaJsonLd = {
     </ul>
     <p>Battery has its own 10-year cycle life consideration — most home batteries warranty 10-15 years and need replacement at year 12-15. The lifetime math has to include that.</p>
 
-    <h2>Cash vs loan financing</h2>
+    <h2 id="cash-vs-loan-financing">6. Cash vs loan financing</h2>
     <p>Cash buyers see the cleanest math: pay $24,000, save the future bills, accumulate $40-60K of net savings over 25 years. Solar loans (5-9% APR, 12-25 years) shift the cashflow. Year-1 typically isn&rsquo;t cash-positive — the monthly payment is bigger than the monthly avoided electric bill. Years 8-15 are cash-positive as electricity rates rise faster than the fixed loan payment.</p>
 
     <p>Compare with cash if you have it: investing the $24,000 in a broad-market index fund returns ~7% real annually. Solar returns 8-15% real over 25 years in good states, 4-7% real in mediocre states. A homeowner choosing between solar and S&amp;P 500 should look closely at the state-level NEM policy before assuming solar wins.</p>
 
-    <h2>What inverter replacement actually costs</h2>
+    <h2 id="what-inverter-replacement-actually-costs">7. What inverter replacement actually costs</h2>
     <p>String inverters (one or two inverters serving all panels) typically need replacement at year 10-15. Cost: $1,500–$3,000 for an 8 kW system, or about $0.25/W including labor. Microinverters (one per panel) carry 25-year warranties matching the panels — no scheduled replacement. The microinverter premium ($0.30-0.50/W) often pays back through the avoided inverter replacement and higher production from per-panel MPPT optimization.</p>
 
-    <h2>What doesn&rsquo;t matter as much as you think</h2>
+    <h2 id="what-doesnt-matter-as-much-as-you-think">8. What doesn&rsquo;t matter as much as you think</h2>
     <p>Panel brand: Tier-1 panels (LG, REC, Q Cells, Maxeon, JA Solar, Hanwha) all warranty 80-92% production at year 25. The performance differences are 1-3%, not 10-20%. Don&rsquo;t pay a $0.50/W premium for "best panels."</p>
 
     <p>Roof orientation: south is optimal but east and west are 85-90% as productive. Don&rsquo;t skip solar because your roof is east-west.</p>
 
     <p>Shading: matters more than people realize. Even 10% shading on a string-inverter system can cut production 30%. Microinverters fix this.</p>
 
-    <h2>Sources</h2>
+    <h2 id="sources">Sources</h2>
     <ul class="text-sm">
       <li><a href="https://emp.lbl.gov/tracking-the-sun">LBNL Tracking the Sun 2024 — installed cost benchmarks</a></li>
       <li><a href="https://www.dsireusa.org/">DSIRE — Database of State Incentives for Renewables and Efficiency</a></li>

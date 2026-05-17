@@ -33,8 +33,16 @@ const schemaJsonLd = {
   </section>
 
   <article class="container-tight guide-prose pb-12">
-    <section>
-      <h2>1. How smart thermostats save energy</h2>
+    <div class="guide-toc not-prose">
+      <a href="#how-smart-thermostats-save-energy">1. How smart thermostats save energy</a>
+      <a href="#model-comparison-2026">2. Model comparison (2026)</a>
+      <a href="#the-c-wire-problem">3. The C-wire problem</a>
+      <a href="#demand-response-programs">4. Demand-response programs</a>
+      <a href="#privacy-considerations">5. Privacy considerations</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+    </div>
+<section>
+      <h2 id="how-smart-thermostats-save-energy">1. How smart thermostats save energy</h2>
       <p>
         Four mechanisms, in rough order of contribution:
       </p>
@@ -50,7 +58,7 @@ const schemaJsonLd = {
     </section>
 
     <section>
-      <h2>2. Model comparison (2026)</h2>
+      <h2 id="model-comparison-2026">2. Model comparison (2026)</h2>
       <ul>
         <li><strong>Nest Learning (4th gen).</strong> $230-280. Most refined hardware; clean industrial design (Tony Fadell, ex-Apple). Best with Google Home / Pixel / Wear OS. Trade-off: limited multi-sensor support (only one Nest Temperature Sensor at a time, vs Ecobee&rsquo;s simultaneous group).</li>
         <li><strong>Nest E (3rd gen).</strong> $130-200. Plastic chassis, fewer features, no Farsight display. Same algorithm under the hood. Best value in the Nest line.</li>
@@ -61,7 +69,7 @@ const schemaJsonLd = {
     </section>
 
     <section>
-      <h2>3. The C-wire problem</h2>
+      <h2 id="the-c-wire-problem">3. The C-wire problem</h2>
       <p>
         Old thermostats (mercury bulb, mechanical) used the heat call itself as a momentary contact closure — they didn&rsquo;t need continuous power. Smart thermostats have always-on displays, Wi-Fi radios, and microprocessors that need 24V DC continuously. That power comes through a 5th wire called the <strong>C-wire</strong> (common), drawn from the air handler&rsquo;s transformer secondary.
       </p>
@@ -76,7 +84,7 @@ const schemaJsonLd = {
     </section>
 
     <section>
-      <h2>4. Demand-response programs</h2>
+      <h2 id="demand-response-programs">4. Demand-response programs</h2>
       <p>
         Most major utilities (PG&amp;E, SCE, ConEd, NYSEG, Eversource, ComEd, NSTAR, Xcel, others) run demand-response programs that pay $25–$125 enrollment + $25–$100/year to let the utility briefly adjust your thermostat during grid-stress events. Typical events: 5-15 per summer, 2-4 hours each, 3-4°F setpoint shift. You can usually opt out of any single event from the app.
       </p>
@@ -86,7 +94,7 @@ const schemaJsonLd = {
     </section>
 
     <section>
-      <h2>5. Privacy considerations</h2>
+      <h2 id="privacy-considerations">5. Privacy considerations</h2>
       <p>
         Smart thermostats know when you&rsquo;re home, how many people are home, your sleep schedule, your travel patterns. Nest data goes to Google; Ecobee data to Ecobee/Generac. Both companies publish privacy policies and offer data-export. Demand-response enrollment shares HVAC runtime with the utility (no personally identifiable data beyond your account).
       </p>
@@ -96,7 +104,7 @@ const schemaJsonLd = {
     </section>
 
     <section class="guide-sources">
-      <h2>Sources</h2>
+      <h2 id="sources">Sources</h2>
       <ul>
         <li><a href="https://www.energystar.gov/products/connected_thermostats" target="_blank" rel="noopener">ENERGY STAR Connected Thermostat program</a></li>
         <li><a href="https://nest.com/-downloads/press/documents/energy-savings-white-paper.pdf" target="_blank" rel="noopener">Nest energy savings white paper</a></li>
