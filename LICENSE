@@ -1,0 +1,38 @@
+MIT License
+
+Copyright (c) 2026 Martin Lashgari / ElectrifyCost
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Content vs. code
+
+This license covers the **source code** of ElectrifyCost (Astro components,
+TypeScript engine, CSV data structure, build scripts, configurations).
+
+The **written content** (FAQ answers, guide prose, site copy on
+electrifycost.com) is © 2026 Martin Lashgari and is NOT released under MIT.
+Forking the codebase to build a similar calculator-first site for a different
+niche is encouraged. Republishing the editorial content verbatim is not.
+
+The **calculator output values** (cost ranges, rebate amounts, state energy
+prices, climate data) are derived from public-domain primary sources (IRS,
+DOE, EIA, BLS, NREL, NEEP, ENERGY STAR). Those source URLs are cited at
+/sources/ and the underlying public-domain data is freely reusable.
