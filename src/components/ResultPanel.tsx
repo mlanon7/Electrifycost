@@ -1,7 +1,14 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import type { CalculatorResult } from '@/lib/calc';
 import { sources, checklists } from '@/lib/data';
 import { fmtUSD, fmtUSDRange, fmtMonths } from '@/lib/format';
+
+// Fire a GA4 custom event when the calculator produces a valid result.
+// Debounced via ref so we don't fire on every keystroke. Single event per
+// result-module change.
+declare global {
+  interface Window { gtag?: (...args: unknown[]) => void; }
+}
 
 interface Props {
   result: CalculatorResult | null;
@@ -34,6 +41,24 @@ export default function ResultPanel({
   const [openWhy, setOpenWhy] = useState<string | null>(null);
 
   const checklist = useMemo(() => result ? checklists[result.contractorChecklistKey] : undefined, [result]);
+
+  // GA4 calculator_used event. Fires once per distinct (module, scenario) the
+  // user lands on. Captures which calculators are converting and from which
+  // state — the single most useful signal for Mediavine/affiliate decisions.
+  const lastEventRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!result) return;
+    if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+    const key = result.module + ':' + result.scenario;
+    if (lastEventRef.current === key) return;
+    lastEventRef.current = key;
+    window.gtag('event', 'calculator_used', {
+      module: result.module,
+      scenario: result.scenario,
+      gross_mid: result.gross?.mid,
+      net_mid: result.netAfterIncentives?.mid,
+    });
+  }, [result]);
 
   if (loading) {
     return (

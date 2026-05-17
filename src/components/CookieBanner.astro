@@ -1,0 +1,72 @@
+---
+// Minimal cookie banner that pairs with GA4 Consent Mode v2 in Layout.astro.
+// Hidden by default (display:none); inline script unhides it only when the
+// visitor has no prior decision stored in localStorage. No banner render on
+// the server means no CLS, no flash, no banner-shows-then-disappears flicker.
+---
+<div
+  id="ec-cookie-banner"
+  class="fixed inset-x-4 bottom-4 z-50 hidden max-w-2xl rounded-lg border border-ink-200 bg-white p-4 shadow-card print:hidden md:inset-x-auto md:right-6"
+  role="region"
+  aria-label="Cookie consent"
+>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-sm text-ink-700">
+      We use cookies for traffic analytics so we can keep improving the calculators. No personal data sold, no ad targeting outside Google's standard signals. <a href="/about/" class="text-brand-700 underline-offset-2 hover:underline">More on our methodology</a>.
+    </p>
+    <div class="flex shrink-0 gap-2">
+      <button
+        type="button"
+        id="ec-cookie-decline"
+        class="rounded-md border border-ink-200 bg-white px-3 py-1.5 text-sm font-medium text-ink-700 hover:bg-ink-50"
+      >
+        Decline
+      </button>
+      <button
+        type="button"
+        id="ec-cookie-accept"
+        class="rounded-md bg-brand-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-800"
+      >
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var KEY = 'ec_consent_v1';
+    var banner = document.getElementById('ec-cookie-banner');
+    if (!banner) return;
+    try {
+      if (localStorage.getItem(KEY) === null) {
+        banner.classList.remove('hidden');
+      }
+    } catch (e) { /* localStorage unavailable; leave banner hidden */ }
+
+    function setConsent(decision) {
+      try { localStorage.setItem(KEY, decision); } catch (e) {}
+      banner.classList.add('hidden');
+      if (typeof gtag === 'function') {
+        if (decision === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
+        } else {
+          gtag('consent', 'update', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied'
+          });
+        }
+      }
+    }
+
+    document.getElementById('ec-cookie-accept').addEventListener('click', function () { setConsent('granted'); });
+    document.getElementById('ec-cookie-decline').addEventListener('click', function () { setConsent('denied'); });
+  })();
+</script>
