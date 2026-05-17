@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 
 const schemaJsonLd = {
   '@context': 'https://schema.org', '@type': 'Article',
@@ -120,5 +121,6 @@ const schemaJsonLd = {
     </section>
   </article>
 
+  <RelatedGuides slug="energy-audits" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

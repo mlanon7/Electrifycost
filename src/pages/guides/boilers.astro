@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = {
@@ -95,5 +96,6 @@ const schemaJsonLd = {
       <a href="/boiler-replacement-cost-calculator/" class="font-medium text-brand-700">Run the boiler cost calculator →</a>
     </p>
   </article>
+  <RelatedGuides slug="boilers" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Hot water recirculation pumps in 2026: comfort, water savings, and why timer pumps actually waste energy', datePublished: '2026-03-07', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -45,5 +46,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
     </ul>
     <p class="mt-8"><a href="/hot-water-recirculation-cost-calculator/" class="font-medium text-brand-700">Run the recirculation calculator →</a></p>
   </article>
+  <RelatedGuides slug="hot-water-recirculation" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

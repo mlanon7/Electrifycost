@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = {
@@ -108,5 +109,6 @@ const schemaJsonLd = {
       <a href="/heat-pump-dryer-cost-calculator/" class="font-medium text-brand-700">Run the heat-pump dryer calculator →</a>
     </p>
   </article>
+  <RelatedGuides slug="heat-pump-dryers" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

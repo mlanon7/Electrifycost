@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'EV charging cost in 2026: kWh-per-mile, TOU rates, and how to keep it cheap', datePublished: '2026-03-05', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -54,5 +55,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
     </ul>
     <p class="mt-8"><a href="/ev-charging-cost-calculator/" class="font-medium text-brand-700">Run the EV charging cost calculator →</a></p>
   </article>
+  <RelatedGuides slug="ev-charging-cost" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

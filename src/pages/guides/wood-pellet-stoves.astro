@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Wood and pellet stoves in 2026: EPA certification, install costs, and when they make sense', datePublished: '2026-03-11', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -40,5 +41,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
 
     <p class="mt-8"><a href="/wood-pellet-stove-cost-calculator/" class="font-medium text-brand-700">Run the wood/pellet stove calculator →</a></p>
   </article>
+  <RelatedGuides slug="wood-pellet-stoves" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

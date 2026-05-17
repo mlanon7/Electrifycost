@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Door replacement in 2026: fiberglass vs steel vs wood, sliding patio, garage', datePublished: '2026-03-10', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -38,5 +39,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
 
     <p class="mt-8"><a href="/door-replacement-cost-calculator/" class="font-medium text-brand-700">Run the door replacement calculator →</a></p>
   </article>
+  <RelatedGuides slug="door-replacement" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Smart electrical panels in 2026: Span, Lumin, Schneider, and when load shedding beats them all', datePublished: '2026-03-06', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -50,5 +51,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
     </ul>
     <p class="mt-8"><a href="/smart-panel-cost-calculator/" class="font-medium text-brand-700">Run the smart panel calculator →</a></p>
   </article>
+  <RelatedGuides slug="smart-panels" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

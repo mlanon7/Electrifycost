@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Off-grid solar in 2026: cabin to homestead, battery sizing, and the grid-tied alternative', datePublished: '2026-03-12', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -44,5 +45,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
 
     <p class="mt-8"><a href="/off-grid-solar-cost-calculator/" class="font-medium text-brand-700">Run the off-grid solar calculator →</a></p>
   </article>
+  <RelatedGuides slug="off-grid-solar" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

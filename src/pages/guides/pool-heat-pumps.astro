@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', name: 'Pool Heat Pumps Guide', description: 'Cost, sizing, climate limits, and operating economics for residential pool heat pumps.' };
 ---
@@ -115,5 +116,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', nam
     </section>
   </article>
 
+  <RelatedGuides slug="pool-heat-pumps" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

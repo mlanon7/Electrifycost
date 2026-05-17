@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Water softeners + whole-house filtration in 2026: salt vs salt-free, HPWH pairing', datePublished: '2026-03-08', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -39,5 +40,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
 
     <p class="mt-8"><a href="/water-treatment-cost-calculator/" class="font-medium text-brand-700">Run the water treatment calculator →</a></p>
   </article>
+  <RelatedGuides slug="water-treatment" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

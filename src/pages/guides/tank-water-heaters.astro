@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article',
@@ -85,5 +86,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article',
 
     <p class="mt-8"><a href="/tank-water-heater-cost-calculator/" class="font-medium text-brand-700">Run the tank water heater calculator →</a></p>
   </article>
+  <RelatedGuides slug="tank-water-heaters" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>

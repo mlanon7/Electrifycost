@@ -1,6 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Hot tub heat pumps in 2026: when they pay back, climate limits, and the cover that beats them all', datePublished: '2026-03-13', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
@@ -47,5 +48,6 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
 
     <p class="mt-8"><a href="/hot-tub-heat-pump-cost-calculator/" class="font-medium text-brand-700">Run the hot tub heat pump calculator →</a></p>
   </article>
+  <RelatedGuides slug="hot-tub-heat-pumps" />
   <div class="container-wide"><AdSlot /></div>
 </Layout>
