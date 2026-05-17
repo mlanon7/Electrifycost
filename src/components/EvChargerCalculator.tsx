@@ -28,8 +28,8 @@ const HOME_TYPES: { value: HomeType; label: string }[] = [
   { value: 'manufactured', label: 'Manufactured home' },
 ];
 
-export default function EvChargerCalculator() {
-  const [state, setState] = useState('CA');
+export default function EvChargerCalculator({ initialState = 'CA' }: { initialState?: string }) {
+  const [state, setState] = useState(initialState);
   const [zip, setZip] = useState('');
   const [scenario, setScenario] = useState('level2_hardwired');
   const [panelSize, setPanelSize] = useState<PanelSize>('200A');

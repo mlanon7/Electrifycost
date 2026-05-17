@@ -1,7 +1,7 @@
 ---
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
-import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+import PanelCalculator from '@/components/PanelCalculator';
 import {
   ALL_STATES,
   findStateEnergy,
@@ -26,7 +26,7 @@ const labor  = findStateLabor(stateCode);
 const climate = findClimate(stateCode);
 
 const stateRebates = rebatePrograms.filter(
-  r => (r.module === 'heat_pump' || r.module === '') &&
+  r => (r.module === 'panel' || r.module === '') &&
        (r.state === stateCode || r.scope === 'federal')
 );
 
@@ -40,22 +40,20 @@ const description = `Estimate the installed cost of a heat pump in ${stateName} 
 
 const faq = [
   {
-    q: `How much does a heat pump cost in ${stateName}?`,
-    a: `In ${stateName}, a typical ducted central heat pump runs ${labor ? fmtUSD(7500 * labor.hvac_multiplier) : '$7,500'}–${labor ? fmtUSD(20000 * labor.hvac_multiplier) : '$20,000'} installed. Cold-climate equipment runs higher. Use the calculator above to refine for your home size, panel, and ductwork.`,
+    q: `How much does a 100A to 200A panel upgrade cost in ${stateName}?`,
+    a: `In ${stateName}, a 100A to 200A panel upgrade typically runs ${fmtUSD(1800 * (labor?.electrician_multiplier ?? 1))}–${fmtUSD(4500 * (labor?.electrician_multiplier ?? 1))} installed. The work includes a new 200A main breaker, meter base, service-entrance conductors, and utility coordination. Use the calculator above to refine for your existing panel and install difficulty.`,
   },
   {
-    q: `Is a heat pump worth it in ${stateName}?`,
-    a: isCold
-      ? `${stateName} is in a cold climate zone (${climate?.iecc_zone ?? '—'}, ${climate?.heating_degree_days?.toLocaleString() ?? '—'} HDD). A cold-climate-rated or dual-fuel heat pump is the most reliable choice. Vs. heating oil at ~$${oilPrice.toFixed(2)}/gal, savings are typically substantial; vs. cheap natural gas, savings are smaller but still positive in most cases.`
-      : `${stateName} is in a moderate climate zone (${climate?.iecc_zone ?? '—'}, ${climate?.heating_degree_days?.toLocaleString() ?? '—'} HDD). Standard air-source heat pumps work well year-round. Operating-cost change vs. your current fuel depends on local electricity (${electricityCents.toFixed(1)}¢/kWh) vs. gas (${gasPrice ? '$'+gasPrice.toFixed(2)+'/therm' : 'n/a'}).`,
+    q: `Is a panel upgrade necessary for an EV charger or heat pump in ${stateName}?`,
+    a: `Not always. NEC 220.83 load calculations frequently show a 100A panel handles a heat pump + EV charger + induction range if existing loads are modest. A smart load-management device ($500 to $1,500) often replaces a $4,000 upgrade by scheduling large loads so the home never exceeds the existing service capacity. ${stateName} licensed electricians can run the load calc for $100 to $300.`,
   },
   {
-    q: `What rebates are available for a heat pump in ${stateName}?`,
-    a: `In 2026 the federal Energy Efficient Home Improvement Credit (25C) no longer applies — it was terminated by OBBBA for systems placed in service after Dec 31 2025. ${stateName} homeowners can still combine applicable state programs and DOE Home Energy Rebates where the state has launched the program. The calculator surfaces ${stateRebates.length} programs for your state and clearly separates confirmed credits from potential ones (e.g. HEEHRA in prelaunch states).`,
+    q: `What permits and rebates apply in ${stateName}?`,
+    a: `Permit fees in ${stateName} average about $${labor?.permit_avg ?? 300} for a residential service upgrade. The federal 25C credit expired Dec 31 2025 under OBBBA, so federal credits no longer apply to panel work placed in service in 2026. The calculator surfaces ${stateRebates.length} programs for ${stateName}.`,
   },
   {
-    q: `Do I need a panel upgrade for a heat pump in ${stateName}?`,
-    a: 'Not always. A 200A panel is usually fine. A 100A panel often works after a load calculation. A 60A service almost always needs an upgrade. The calculator above includes a panel-risk verdict for your selection.',
+    q: `How long does the work take in ${stateName}?`,
+    a: 'A typical 100A to 200A service upgrade is a one-day job, but power is off for 4 to 8 hours during the cutover. If the utility has to replace the service drop or relocate the meter, the calendar can stretch to 2 to 3 weeks because the utility schedules its part separately. The utility-side work is usually free.',
   },
 ];
 
@@ -81,15 +79,15 @@ const schemaJsonLd = [
 ];
 ---
 <Layout
-  title={`Heat Pump Cost in ${stateName} — Installed Price, Rebates, Payback`}
+  title={`Panel Upgrade Cost in ${stateName} — 100A to 200A Installation`}
   description={description}
-  active="/heat-pump-cost-calculator/"
+  active="/electrical-panel-upgrade-cost-calculator/"
   schemaJsonLd={schemaJsonLd}
 >
   <section class="container-wide py-8 md:py-10">
     <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">{stateName}</p>
     <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
-      Heat Pump Cost in {stateName}
+      Panel Upgrade Cost in {stateName}
     </h1>
     <p class="mt-2 max-w-2xl text-sm text-ink-600 md:text-base">
       Estimate the installed cost, applicable rebates, and operating-cost change for a heat pump in {stateName}. Calibrated to local labor rates ({labor?.electrician_multiplier?.toFixed(2) ?? '—'}× HVAC multiplier), retail electricity ({electricityCents.toFixed(1)}¢/kWh), and {climate?.heat_pump_class === 'coldclimate' ? 'cold' : 'standard'} climate.
@@ -120,7 +118,7 @@ const schemaJsonLd = [
   </section>
 
   <section class="container-wide pb-10">
-    <HeatPumpCalculator client:load initialState={stateCode} />
+    <PanelCalculator client:load initialState={stateCode} />
   </section>
 
   <section class="container-wide py-10">
@@ -171,10 +169,10 @@ const schemaJsonLd = [
   </section>
 
   <section class="container-wide pb-12">
-    <h2 class="text-xl font-semibold text-ink-900">Heat pump cost by state</h2>
+    <h2 class="text-xl font-semibold text-ink-900">Panel upgrade cost by state</h2>
     <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
       {ALL_STATES.map(s => (
-        <li><a href={`/heat-pump-cost-${s.code.toLowerCase()}/`}>{s.name}</a></li>
+        <li><a href={`/electrical-panel-upgrade-cost-${s.code.toLowerCase()}/`}>{s.name}</a></li>
       ))}
     </ul>
   </section>

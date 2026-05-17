@@ -55,8 +55,8 @@ function ductworkPenaltyFor(ductwork: string, scenario: string): CostBand | unde
   return undefined;
 }
 
-export default function HeatPumpCalculator() {
-  const [state, setState] = useState('CA');
+export default function HeatPumpCalculator({ initialState = 'CA' }: { initialState?: string }) {
+  const [state, setState] = useState(initialState);
   const [zip, setZip] = useState('');
   const [scenario, setScenario] = useState('ducted_central_3ton');
   const [panelSize, setPanelSize] = useState<PanelSize>('100A');

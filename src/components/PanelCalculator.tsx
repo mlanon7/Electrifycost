@@ -22,8 +22,8 @@ const HOME_TYPES: { value: HomeType; label: string }[] = [
   { value: 'manufactured', label: 'Manufactured home' },
 ];
 
-export default function PanelCalculator() {
-  const [state, setState] = useState('CA');
+export default function PanelCalculator({ initialState = 'CA' }: { initialState?: string }) {
+  const [state, setState] = useState(initialState);
   const [zip, setZip] = useState('');
   const [scenario, setScenario] = useState('upgrade_100_to_200');
   const [panelSize, setPanelSize] = useState<PanelSize>('100A');

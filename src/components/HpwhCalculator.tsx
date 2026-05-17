@@ -52,8 +52,8 @@ function tightSpacePenaltyFor(location: string): CostBand | undefined {
   return { low: a.low, mid: a.mid, high: a.high };
 }
 
-export default function HpwhCalculator() {
-  const [state, setState] = useState('CA');
+export default function HpwhCalculator({ initialState = 'CA' }: { initialState?: string }) {
+  const [state, setState] = useState(initialState);
   const [zip, setZip] = useState('');
   const [scenario, setScenario] = useState('hybrid_240v_50gal');
   const [panelSize, setPanelSize] = useState<PanelSize>('100A');

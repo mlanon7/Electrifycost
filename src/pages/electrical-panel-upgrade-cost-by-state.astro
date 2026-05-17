@@ -1,0 +1,102 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { ALL_STATES, findStateLabor } from '@/lib/data';
+
+const rows = ALL_STATES.map(s => {
+  const labor = findStateLabor(s.code);
+  return {
+    code: s.code,
+    name: s.name,
+    elec:   labor?.electrician_multiplier ?? 1,
+    permit: labor?.permit_avg ?? 300,
+  };
+}).sort((a, b) => a.name.localeCompare(b.name));
+
+const highCost = [...rows].sort((a, b) => b.elec - a.elec).slice(0, 5);
+const lowCost  = [...rows].sort((a, b) => a.elec - b.elec).slice(0, 5);
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Electrical Panel Upgrade Cost by State',
+    description: 'Installed-cost estimates, local electrician labor multipliers, and typical permit fees for 100A to 200A panel upgrades in every U.S. state plus DC.',
+  },
+];
+---
+<Layout
+  title="Panel Upgrade Cost by State 2026"
+  description="100A to 200A electrical panel upgrade installed cost, electrician labor multipliers, and typical permit fees for every U.S. state plus DC."
+  active="/electrical-panel-upgrade-cost-calculator/"
+  ogImage="/assets/topic-images/panel-upgrade-hero-photo.png"
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Panel upgrade calculator', href: '/electrical-panel-upgrade-cost-calculator/' },
+    { name: 'By state', href: '/electrical-panel-upgrade-cost-by-state/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Panel upgrade</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Electrical Panel Upgrade Cost by State</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A 100A→200A panel upgrade runs $1,800–$4,500 nationally, but the local electrician labor rate and permit fees can shift the high end above $7,000 in California, Hawaii, and the NYC metro. Below: 51 state pages with calibrated ranges.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $1,800–$4,500 typical; $4,500–$7,500 in high-cost markets. A smart load-management device ($500–$1,500) often replaces a $4,000 upgrade — see <a href="/load-management-vs-panel-upgrade/" class="text-brand-700 hover:underline">load management vs panel upgrade</a>.
+    </p>
+  </section>
+
+  <section class="container-wide pb-8">
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="card p-4">
+        <p class="eyebrow">Highest electrician labor</p>
+        <ul class="mt-2 space-y-1 text-sm text-ink-700">
+          {highCost.map(s => <li class="flex justify-between"><a href={`/electrical-panel-upgrade-cost-${s.code.toLowerCase()}/`}>{s.name}</a><span class="tabular-nums">{s.elec.toFixed(2)}×</span></li>)}
+        </ul>
+      </div>
+      <div class="card p-4">
+        <p class="eyebrow">Lowest electrician labor</p>
+        <ul class="mt-2 space-y-1 text-sm text-ink-700">
+          {lowCost.map(s => <li class="flex justify-between"><a href={`/electrical-panel-upgrade-cost-${s.code.toLowerCase()}/`}>{s.name}</a><span class="tabular-nums">{s.elec.toFixed(2)}×</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-wide pb-10">
+    <h2 class="text-xl">All 50 states + DC</h2>
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="border-b border-ink-200 text-xs uppercase tracking-wider text-ink-500">
+          <tr>
+            <th class="py-2 pr-3">State</th>
+            <th class="py-2 pr-3 tabular-nums">Electrician labor</th>
+            <th class="py-2 pr-3 tabular-nums">Permit (avg)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr class="border-b border-ink-100">
+              <td class="py-2 pr-3"><a href={`/electrical-panel-upgrade-cost-${r.code.toLowerCase()}/`} class="font-medium">{r.name}</a></td>
+              <td class="py-2 pr-3 tabular-nums text-ink-700">{r.elec.toFixed(2)}×</td>
+              <td class="py-2 pr-3 tabular-nums text-ink-700">${r.permit}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <div class="card p-5">
+      <h2 class="text-lg">Next steps</h2>
+      <p class="mt-2 max-w-prose text-sm text-ink-700">
+        Use the <a href="/electrical-panel-upgrade-cost-calculator/" class="text-brand-700 font-medium">main calculator</a> for a planning-range cost calibrated to your panel size, difficulty, and home type. For background on NEC 220.83 load calculations and when a panel upgrade is actually necessary, read the <a href="/guides/electrical-panels/" class="text-brand-700 font-medium">electrical panels guide</a>.
+      </p>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

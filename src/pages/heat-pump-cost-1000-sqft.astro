@@ -1,0 +1,88 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'What size heat pump does a 1,000 sqft home need?',
+    a: 'A 1,000 sqft home typically needs a 1- to 1.5-ton heat pump (12,000–18,000 BTU/hr). Smaller homes are usually well-served by a single-zone ductless mini-split rather than a ducted central system — simpler install, lower cost, easier zoning. A Manual J load calculation by a licensed contractor confirms the right size; rules of thumb over-size most small homes.',
+  },
+  {
+    q: 'How much does a heat pump cost for a 1,000 sqft home?',
+    a: 'A single-zone ductless mini-split (1 head, 12-18K BTU) typically runs $3,500–$8,000 installed. A ducted central 1.5-ton system runs $5,500–$12,000 if ductwork already exists. Cold-climate equipment adds $1,000–$2,500.',
+  },
+  {
+    q: 'Is a heat pump worth it for a small home?',
+    a: 'Yes — small homes have the best heat-pump economics. The fixed-cost portion of any HVAC install (truck roll, permit, electrician) is smaller relative to a small home\'s low energy bills, but the operating-cost savings vs. electric resistance or propane scale with house size. A 1,000 sqft home heated by oil or propane often sees 40-60% bill reduction.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Heat Pump Cost for 1,000 sqft Home',
+    description: 'Planning-range installed cost for a 1- to 1.5-ton heat pump in a 1,000 sqft home, with mini-split vs ducted central trade-off.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title="Heat Pump Cost for 1,000 sqft Home 2026"
+  description="Plan-level cost for a 1-1.5 ton heat pump in a 1,000 sqft home. Mini-split vs ducted central, Manual J sizing, cold-climate add-ons."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: '1,000 sqft', href: '/heat-pump-cost-1000-sqft/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · 1,000 sqft</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Cost for a 1,000 sqft Home</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A 1,000 sqft home typically needs a 1- to 1.5-ton heat pump. Plan-level installed cost ranges and the mini-split-vs-ducted trade-off.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $3,500–$8,000 for single-zone mini-split; $5,500–$12,000 for ducted 1.5-ton if ducts exist.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">By square footage</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+      <li><a href="/heat-pump-cost-1500-sqft/">1,500 sqft (2 ton) →</a></li>
+      <li><a href="/heat-pump-cost-2000-sqft/">2,000 sqft (2.5 ton) →</a></li>
+      <li><a href="/heat-pump-cost-2500-sqft/">2,500 sqft (3 ton) →</a></li>
+      <li><a href="/heat-pump-cost-3000-sqft/">3,000 sqft (3.5-4 ton) →</a></li>
+      <li><a href="/heat-pump-cost-calculator/">Main calculator →</a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

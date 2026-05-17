@@ -33,8 +33,8 @@ const FUEL_OPTIONS: { value: FuelType; label: string }[] = [
   { value: 'electric_resistance', label: 'Electric coil/resistance range' },
 ];
 
-export default function InductionCalculator() {
-  const [state, setState] = useState('CA');
+export default function InductionCalculator({ initialState = 'CA' }: { initialState?: string }) {
+  const [state, setState] = useState(initialState);
   const [zip, setZip] = useState('');
   const [scenario, setScenario] = useState('range_30in_basic');
   const [panelSize, setPanelSize] = useState<PanelSize>('100A');
