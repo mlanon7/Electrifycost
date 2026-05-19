@@ -22,5 +22,7 @@ pnpm-debug.log*
 .idea/
 .DS_Store
 
-# claude harness
-.claude/
+# claude harness — keep workflow docs committed, ignore runtime worktrees
+.claude/worktrees/
+.claude/.cache/
+.claude/tasks/
