@@ -19,6 +19,7 @@ import operatingCostConstantsCsv from '../../data/csv/operating-cost-constants.c
 import homeEnergyRebateStatusCsv from '../../data/csv/home-energy-rebate-status.csv?raw';
 import zipToStateCsv from '../../data/csv/zip-to-state.csv?raw';
 import topCitiesCsv from '../../data/csv/top-cities.csv?raw';
+import brandProfilesCsv from '../../data/csv/brand-profiles.csv?raw';
 
 // Wave-2 calculator-specific CSV imports — loaded so build fails fast if a file is missing.
 // Components can switch from hardcoded constants to these CSVs incrementally; the import here
@@ -444,6 +445,36 @@ export function findCity(slug: string): CityRow | undefined {
 /** Full state name for a 2-letter code, or the code itself if unknown. */
 export function stateName(code: string): string {
   return ALL_STATES.find(s => s.code === code)?.name ?? code;
+}
+
+// Brand profiles for brand-level cost pages (e.g. /mitsubishi-heat-pump-cost/).
+// One row per (category, brand). The slug is the URL prefix for that category's
+// brand template. See data/csv/brand-profiles.csv.
+export interface BrandProfile {
+  category: string;   // heat_pump | hpwh | ev_charger | battery
+  brand: string;      // display name
+  slug: string;       // url slug, e.g. 'mitsubishi'
+  tier: string;       // value | mid | premium
+  positioning: string;
+  models: string;     // '/'-separated model examples
+  price_note: string;
+  last_reviewed: string;
+}
+export const BRAND_PROFILES: BrandProfile[] =
+  requireRows(parseCsv(brandProfilesCsv), 'brand-profiles').map(r => ({
+    category: r.category,
+    brand: r.brand,
+    slug: r.slug,
+    tier: r.tier,
+    positioning: r.positioning,
+    models: r.models,
+    price_note: r.price_note,
+    last_reviewed: r.last_reviewed,
+  }));
+
+/** All brand rows for a given category. */
+export function brandsByCategory(category: string): BrandProfile[] {
+  return BRAND_PROFILES.filter(b => b.category === category);
 }
 
 /**

@@ -1,0 +1,23 @@
+category,brand,slug,tier,positioning,models,price_note,last_reviewed
+heat_pump,Mitsubishi,mitsubishi,premium,Premium cold-climate ductless leader; gold standard for mini-splits,Hyper-Heat / M-Series / P-Series,Runs 10-20% above value brands; best low-temperature performance,2026-05-19
+heat_pump,Carrier,carrier,premium,Premium ducted-central brand with wide dealer network,Infinity / Performance / Comfort,High-efficiency 3-ton installs commonly $10k+,2026-05-19
+heat_pump,Trane,trane,premium,Premium durable ducted systems; strong reliability reputation,XV / XR / XL series,Basic models from ~$5.2k installed; premium well over $10k,2026-05-19
+heat_pump,Daikin,daikin,mid,Largest global HVAC maker; broad ducted and ductless lineup,Fit / Aurora / VRV,Mid-premium; typically 10-15% under Mitsubishi,2026-05-19
+heat_pump,Bosch,bosch,mid,Value-premium inverter heat pumps; strong price-to-efficiency,IDS / BOVA / Climate 5000,Inverter systems run roughly 25-30% under Trane at same SEER,2026-05-19
+heat_pump,Lennox,lennox,premium,Premium high-SEER systems; among the highest efficiency ratings,Signature / Elite / Merit,Top-tier efficiency commands premium pricing,2026-05-19
+heat_pump,Goodman,goodman,value,Value brand; budget-friendly with solid warranty,GLZS / GSZH / GSZC,Among the lowest installed cost; good value per ton,2026-05-19
+heat_pump,Rheem,rheem,value,Value-to-mid ducted heat pumps; widely available,Endeavor / Classic / Prestige,Mid-market pricing; good availability through supply houses,2026-05-19
+hpwh,Rheem,rheem,mid,Market-leading hybrid heat pump water heater line,ProTerra / Performance Platinum,Most popular HPWH; 50-gal hybrid commonly $2.2k-$4.2k installed,2026-05-19
+hpwh,AO Smith,ao-smith,mid,Major HPWH brand; widely stocked hybrid models,Voltex / Voltex AL,Comparable to Rheem; strong availability,2026-05-19
+hpwh,Bradford White,bradford-white,mid,Contractor-favored HPWH; pro install channel,AeroTherm,Pro-channel pricing; install cost similar to Rheem,2026-05-19
+hpwh,Rinnai,rinnai,mid,Hybrid HPWH from a major water-heating brand,SENSEI hybrid,Mid-market; pairs with their tankless lineup,2026-05-19
+hpwh,Sanden,sanden,premium,Premium CO2 split-system HPWH; cold-climate champion,SanCO2,Split system runs $5.5k-$12k installed; premium niche,2026-05-19
+ev_charger,ChargePoint,chargepoint,mid,Popular smart Level 2 home charger with strong app,Home Flex,Hardware ~$550-$700; install $800-$2.8k typical,2026-05-19
+ev_charger,Wallbox,wallbox,mid,Compact smart charger with Power Boost load management,Pulsar Plus,Hardware ~$550-$700; load-share avoids panel upgrades,2026-05-19
+ev_charger,Tesla,tesla,mid,Wall Connector; NACS native plus J1772 adapter support,Wall Connector / Universal Wall Connector,Hardware ~$420-$595; among the lowest hardware cost,2026-05-19
+ev_charger,Emporia,emporia,value,Value smart charger with energy monitoring,Emporia Level 2,Hardware ~$350-$450; budget pick with smart features,2026-05-19
+ev_charger,Grizzl-E,grizzl-e,value,Rugged value charger built for harsh weather,Classic / Smart / Duo,Hardware ~$400-$500; durable budget option,2026-05-19
+battery,Tesla Powerwall,tesla-powerwall,premium,Best-known home battery; 13.5 kWh integrated unit,Powerwall 3,$11.5k-$16.5k installed for 13.5 kWh,2026-05-19
+battery,Enphase,enphase,premium,Modular AC-coupled battery; pairs with Enphase microinverters,IQ Battery 5P / 10C,Modular sizing; roughly $1.2k-$1.5k per kWh installed,2026-05-19
+battery,LG,lg,mid,Established battery maker; resi storage lineup,RESU / Home 8,Mid-market per-kWh pricing; widely installed,2026-05-19
+battery,Franklin,franklin,mid,Whole-home battery with integrated backup management,aPower 2,Competitive per-kWh; strong whole-home backup features,2026-05-19

@@ -1,0 +1,97 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+import { brandsByCategory } from '@/lib/data';
+
+export async function getStaticPaths() {
+  return brandsByCategory('heat_pump').map(b => ({ params: { brand: b.slug }, props: { b } }));
+}
+
+const { b } = Astro.props as { b: import('@/lib/data').BrandProfile };
+const siblings = brandsByCategory('heat_pump').filter(x => x.slug !== b.slug);
+
+const description = `${b.brand} heat pump cost in 2026: installed price, model lineup, and where ${b.brand} sits on price vs. other brands. ${b.positioning}.`;
+
+const faq = [
+  {
+    q: `How much does a ${b.brand} heat pump cost installed?`,
+    a: `A ${b.brand} heat pump typically runs $8,000 to $20,000 installed for a 3-ton ducted system, per NREL benchmark data and 2026 installer surveys. ${b.price_note}. ${b.brand} is positioned as a ${b.tier} brand. Use the calculator below to refine for your home size, state labor rate, and current fuel — brand affects equipment cost more than labor.`,
+  },
+  {
+    q: `Which ${b.brand} heat pump models should I look at?`,
+    a: `${b.brand}'s common residential lines are: ${b.models}. ${b.positioning}. Ask your contractor for the specific model number and its HSPF2 / SEER2 ratings, and cross-check cold-climate performance on the NEEP ASHP database before signing.`,
+  },
+  {
+    q: `Is ${b.brand} worth the price vs. other brands?`,
+    a: `${b.tier === 'premium' ? `${b.brand} is a premium brand — you pay more upfront for build quality, efficiency, or cold-climate performance. Worth it if you value those, but a value brand installed well by a great contractor often beats a premium brand installed poorly.` : b.tier === 'value' ? `${b.brand} is a value brand — lower installed cost with solid performance. The contractor's install quality matters more than the brand badge for day-to-day reliability.` : `${b.brand} is a mid-tier brand — a balance of price and performance. Install quality from your contractor matters more than small brand differences.`} The biggest cost lever is always a correct Manual J sizing and a clean install, not the logo.`,
+  },
+  {
+    q: `What rebates apply to a ${b.brand} heat pump?`,
+    a: `Rebates key off equipment efficiency and household income, not the brand. The federal 25C credit expired Dec 31 2025 under OBBBA; state and utility programs plus DOE Home Energy Rebates (where launched) still apply to qualifying ${b.brand} models. The calculator below surfaces programs for your state.`,
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${b.brand} Heat Pump Cost`,
+    description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title={`${b.brand} Heat Pump Cost 2026 — Installed Price & Models`}
+  description={description}
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: b.brand, href: `/${b.slug}-heat-pump-cost/` },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · {b.brand}</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">{b.brand} Heat Pump Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      {b.positioning}. Plan-level installed cost, model lineup, and where {b.brand} sits on price vs. other brands. Brand affects equipment cost more than labor — the calculator below keys the estimate to your home and state.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> a {b.brand} 3-ton ducted heat pump runs about $8,000-$20,000 installed. {b.price_note}.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Compare other heat pump brands</h2>
+    <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
+      {siblings.map(s => (
+        <li><a href={`/${s.slug}-heat-pump-cost/`}>{s.brand} heat pump cost →</a></li>
+      ))}
+      <li><a href="/heat-pump-cost-calculator/">Main calculator →</a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
