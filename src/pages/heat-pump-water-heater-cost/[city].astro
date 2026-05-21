@@ -35,7 +35,7 @@ const plumberMult = labor?.plumber_multiplier ?? 1;
 const blendedMult = (hvacMult + plumberMult) / 2;
 const monthlyOp = (1500 * electricityCents) / 1200;
 
-const description = `Estimate heat pump water heater installed cost in ${cityName}, ${stateCode}. Calibrated to ${stName} HVAC + plumber labor (${blendedMult.toFixed(2)}x) and retail electricity ${electricityCents.toFixed(1)} cents/kWh. ${stateRebates.length} applicable programs.`;
+const description = `Heat pump water heater installed cost in ${cityName}, ${stateCode}: ${stName} HVAC+plumber labor ${blendedMult.toFixed(2)}×, ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} programs.`;
 
 const faq = [
   {

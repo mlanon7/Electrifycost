@@ -36,7 +36,7 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `Estimate the installed cost of an induction range, cooktop, or 240V circuit in ${stateName} (${stateCode}). State electrician labor multiplier ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}, ${stateRebates.length} applicable programs incl. DOE HEEHRA.`;
+const description = `Induction range, cooktop & 240V circuit installed cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ${stateRebates.length} rebate programs (incl. DOE HEEHRA).`;
 
 const faq = [
   {

@@ -36,7 +36,7 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `Estimate the installed cost of a 100A to 200A electrical panel upgrade in ${stateName} (${stateCode}). State electrician labor multiplier ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}, typical permit fee $${labor?.permit_avg ?? 300}, ${stateRebates.length} applicable programs.`;
+const description = `100A-to-200A electrical panel upgrade cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ~$${labor?.permit_avg ?? 300} permit, ${stateRebates.length} rebate programs.`;
 
 const faq = [
   {
@@ -79,7 +79,7 @@ const schemaJsonLd = [
 ];
 ---
 <Layout
-  title={`Panel Upgrade Cost in ${stateName} — 100A to 200A Installation`}
+  title={`Panel Upgrade Cost in ${stateName} — 100A to 200A`}
   description={description}
   active="/electrical-panel-upgrade-cost-calculator/"
   schemaJsonLd={schemaJsonLd}

@@ -35,7 +35,7 @@ const isCold = climate?.heat_pump_class === 'coldclimate';
 const electricityCents = energy?.electricity_cents_per_kwh ?? 0;
 const hvacMult = labor?.hvac_multiplier ?? 1;
 
-const description = `Estimate heat pump installed cost in ${cityName}, ${stateCode}. Calibrated to ${stName} HVAC labor (${hvacMult.toFixed(2)}x), retail electricity ${electricityCents.toFixed(1)} cents/kWh, and ${isCold ? 'cold' : 'standard'} climate. ${stateRebates.length} applicable incentive programs.`;
+const description = `Heat pump installed cost in ${cityName}, ${stateCode}: ${stName} HVAC labor ${hvacMult.toFixed(2)}×, ${electricityCents.toFixed(1)}¢/kWh, ${isCold ? 'cold' : 'standard'} climate, ${stateRebates.length} rebate programs.`;
 
 const faq = [
   {
@@ -80,7 +80,7 @@ const schemaJsonLd = [
 ];
 ---
 <Layout
-  title={`Heat Pump Cost in ${cityName}, ${stateCode} — Install Price & Rebates`}
+  title={`Heat Pump Cost in ${cityName}, ${stateCode} (2026)`}
   description={description}
   active="/heat-pump-cost-calculator/"
   schemaJsonLd={schemaJsonLd}

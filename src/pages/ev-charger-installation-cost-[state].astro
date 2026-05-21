@@ -36,7 +36,7 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `Estimate the installed cost of a Level 2 EV charger in ${stateName} (${stateCode}). State electrician labor multiplier ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}, retail electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} applicable programs incl. the federal 30C credit.`;
+const description = `Level 2 EV charger installed cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} programs incl. the 30C credit.`;
 
 const faq = [
   {
@@ -79,7 +79,7 @@ const schemaJsonLd = [
 ];
 ---
 <Layout
-  title={`EV Charger Install Cost in ${stateName} — Level 2 Installation`}
+  title={`EV Charger Install Cost in ${stateName} — Level 2`}
   description={description}
   active="/ev-charger-installation-cost-calculator/"
   schemaJsonLd={schemaJsonLd}

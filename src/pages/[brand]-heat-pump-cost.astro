@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 const { b } = Astro.props as { b: import('@/lib/data').BrandProfile };
 const siblings = brandsByCategory('heat_pump').filter(x => x.slug !== b.slug);
 
-const description = `${b.brand} heat pump cost in 2026: installed price, model lineup, and where ${b.brand} sits on price vs. other brands. ${b.positioning}.`;
+const description = `${b.brand} heat pump cost in 2026: installed price by tonnage, model lineup, and how ${b.brand} compares with other brands on price and efficiency.`;
 
 const faq = [
   {
@@ -51,7 +51,7 @@ const schemaJsonLd = [
   description={description}
   active="/heat-pump-cost-calculator/"
   schemaJsonLd={schemaJsonLd}
-  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.jpg"
   breadcrumbs={[
     { name: 'Home', href: '/' },
     { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },

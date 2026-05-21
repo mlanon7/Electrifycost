@@ -37,7 +37,7 @@ const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
 const blendedMult = ((labor?.hvac_multiplier ?? 1) + (labor?.plumber_multiplier ?? 1)) / 2;
-const description = `Estimate the installed cost of a heat pump water heater (HPWH) in ${stateName} (${stateCode}). State HVAC + plumber labor blend ${blendedMult.toFixed(2)}, retail electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} applicable programs.`;
+const description = `Heat pump water heater (HPWH) installed cost in ${stateName}: state HVAC+plumber labor ${blendedMult.toFixed(2)}×, electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} rebate programs.`;
 
 const faq = [
   {
