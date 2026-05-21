@@ -6,7 +6,7 @@ import HeatPumpCalculator from '@/components/HeatPumpCalculator';
 const faq = [
   {
     q: 'How much does it cost to install a heat pump?',
-    a: 'Most ducted central heat pumps cost $7,500 to $20,000 installed; ductless mini-splits range from $3,500 for a single zone to $16,000+ for a multi-zone system. Cold-climate equipment runs higher. Your state, install difficulty, and ductwork condition can shift the range significantly. Use the calculator above for a state-specific estimate.',
+    a: 'Most ducted central heat pumps cost $7,500 to $20,000 installed, per NREL benchmark data and 2026 installer surveys; ductless mini-splits range from $3,500 for a single zone to $16,000+ for a multi-zone system. Cold-climate equipment runs higher. Your state, install difficulty, and ductwork condition can shift the range significantly. Use the calculator above for a state-specific estimate.',
   },
   {
     q: 'Will a heat pump work in a cold climate?',
@@ -150,6 +150,18 @@ const schemaJsonLd = [
         </details>
       ))}
     </div>
+  </section>
+
+  <section class="container-wide pb-8">
+    <h2 class="text-xl font-semibold text-ink-900">Heat pump cost near you</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+      <li><a href="/heat-pump-cost-by-state/">Heat pump cost by state →</a></li>
+      <li><a href="/heat-pump-cost-by-city/">Heat pump cost by city →</a></li>
+      <li><a href="/hvac-repair-vs-replace/">Heat pump repair vs. replace →</a></li>
+      <li><a href="/heat-pump-cost-2000-sqft/">Cost by home size (sqft) →</a></li>
+      <li><a href="/mini-split-heat-pump-cost-calculator/">Mini-split cost calculator →</a></li>
+      <li><a href="/geothermal-heat-pump-cost-calculator/">Geothermal cost calculator →</a></li>
+    </ul>
   </section>
 
   <section class="container-wide pb-12">
