@@ -21,9 +21,11 @@ These have direct GSC evidence, low competition, and the data/engine already exi
 
 ---
 
-## TIER 2 — Brand pages (zero current coverage, high commercial intent)
+## TIER 2 — Brand pages (STRATEGIC EXPANSION — not directly GSC-proven)
 
-We have ZERO brand pages. Brand + cost queries are high-intent and moderate-competition. Requires brand-specific cost data (a new CSV: `brand-cost-multipliers.csv` keyed by brand, OR brand pages that frame the existing cost bands with brand-specific context). More research per brand, but high payoff.
+**Provenance note:** unlike Tier 1, brand pages are NOT evidenced by the current GSC export — it had no meaningful brand-query rows (no Mitsubishi/Carrier/Tesla/ChargePoint impressions yet, because the site is days old and had no brand pages to surface). Tier 2 is a **strategic bet** based on (a) general industry knowledge that "{brand} cost" is a high-intent query class with moderate competition, and (b) WebSearch confirmation of real brand price spread. Treat brand-page performance as a hypothesis to validate with the now-connected Ahrefs MCP (real volume/difficulty) and post-launch GSC data — NOT as GSC-driven the way Tier 1 is.
+
+We had ZERO brand pages. Brand pages frame the existing NREL/industry cost bands with brand-specific positioning context (premium/mid/value tier, model lineup) rather than inventing precise per-brand price multipliers — the per-brand percentage spreads are too fuzzy to source authoritatively, so the data layer (`brand-profiles.csv`) uses qualitative positioning, and the dollar ranges in the FAQ stay NREL-anchored.
 
 | Cluster | URL pattern | Brands (priority order) |
 |---|---|---|

@@ -1,9 +1,9 @@
 category,brand,slug,tier,positioning,models,price_note,last_reviewed
-heat_pump,Mitsubishi,mitsubishi,premium,Premium cold-climate ductless leader; gold standard for mini-splits,Hyper-Heat / M-Series / P-Series,Runs 10-20% above value brands; best low-temperature performance,2026-05-19
+heat_pump,Mitsubishi,mitsubishi,premium,Premium cold-climate ductless leader; gold standard for mini-splits,Hyper-Heat / M-Series / P-Series,Priced above value brands; best low-temperature performance,2026-05-19
 heat_pump,Carrier,carrier,premium,Premium ducted-central brand with wide dealer network,Infinity / Performance / Comfort,High-efficiency 3-ton installs commonly $10k+,2026-05-19
 heat_pump,Trane,trane,premium,Premium durable ducted systems; strong reliability reputation,XV / XR / XL series,Basic models from ~$5.2k installed; premium well over $10k,2026-05-19
-heat_pump,Daikin,daikin,mid,Largest global HVAC maker; broad ducted and ductless lineup,Fit / Aurora / VRV,Mid-premium; typically 10-15% under Mitsubishi,2026-05-19
-heat_pump,Bosch,bosch,mid,Value-premium inverter heat pumps; strong price-to-efficiency,IDS / BOVA / Climate 5000,Inverter systems run roughly 25-30% under Trane at same SEER,2026-05-19
+heat_pump,Daikin,daikin,mid,Largest global HVAC maker; broad ducted and ductless lineup,Fit / Aurora / VRV,Mid-premium; typically priced below Mitsubishi,2026-05-19
+heat_pump,Bosch,bosch,mid,Value-premium inverter heat pumps; strong price-to-efficiency,IDS / BOVA / Climate 5000,Inverter systems typically priced below premium brands at the same SEER,2026-05-19
 heat_pump,Lennox,lennox,premium,Premium high-SEER systems; among the highest efficiency ratings,Signature / Elite / Merit,Top-tier efficiency commands premium pricing,2026-05-19
 heat_pump,Goodman,goodman,value,Value brand; budget-friendly with solid warranty,GLZS / GSZH / GSZC,Among the lowest installed cost; good value per ton,2026-05-19
 heat_pump,Rheem,rheem,value,Value-to-mid ducted heat pumps; widely available,Endeavor / Classic / Prestige,Mid-market pricing; good availability through supply houses,2026-05-19

@@ -36,7 +36,7 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `Estimate the installed cost of a heat pump in ${stateName} (${stateCode}). State labor multiplier ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}, electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} applicable incentive programs.`;
+const description = `Estimate the installed cost of a Level 2 EV charger in ${stateName} (${stateCode}). State electrician labor multiplier ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}, retail electricity ${electricityCents.toFixed(1)}¢/kWh, ${stateRebates.length} applicable programs incl. the federal 30C credit.`;
 
 const faq = [
   {
@@ -61,7 +61,7 @@ const schemaJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: `Heat Pump Cost Calculator — ${stateName}`,
+    name: `EV Charger Installation Cost Calculator — ${stateName}`,
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -90,14 +90,14 @@ const schemaJsonLd = [
       EV Charger Install Cost in {stateName}
     </h1>
     <p class="mt-2 max-w-2xl text-sm text-ink-600 md:text-base">
-      Estimate the installed cost, applicable rebates, and operating-cost change for a heat pump in {stateName}. Calibrated to local labor rates ({labor?.electrician_multiplier?.toFixed(2) ?? '—'}× HVAC multiplier), retail electricity ({electricityCents.toFixed(1)}¢/kWh), and {climate?.heat_pump_class === 'coldclimate' ? 'cold' : 'standard'} climate.
+      Estimate the installed cost of a Level 2 home EV charger in {stateName}. Calibrated to local electrician labor ({labor?.electrician_multiplier?.toFixed(2) ?? '—'}× the U.S. average) and retail electricity ({electricityCents.toFixed(1)}¢/kWh). Includes the federal 30C credit logic and state programs.
     </p>
 
-    <div class="mt-4 grid gap-3 sm:grid-cols-4">
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
       <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Climate zone</div>
-        <div class="mt-1 text-base font-semibold text-ink-900">{climate?.iecc_zone ?? '—'}</div>
-        <div class="text-xs text-ink-500">{climate?.heating_degree_days?.toLocaleString() ?? '—'} HDD</div>
+        <div class="text-xs uppercase tracking-wider text-ink-500">Electrician labor</div>
+        <div class="mt-1 text-base font-semibold text-ink-900">{labor?.electrician_multiplier?.toFixed(2) ?? '—'}×</div>
+        <div class="text-xs text-ink-500">vs. U.S. average (BLS)</div>
       </div>
       <div class="card p-3">
         <div class="text-xs uppercase tracking-wider text-ink-500">Electricity</div>
@@ -105,14 +105,9 @@ const schemaJsonLd = [
         <div class="text-xs text-ink-500">EIA retail average</div>
       </div>
       <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Natural gas</div>
-        <div class="mt-1 text-base font-semibold text-ink-900">${gasPrice.toFixed(2)}/therm</div>
-        <div class="text-xs text-ink-500">if available</div>
-      </div>
-      <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Heat pump class</div>
-        <div class="mt-1 text-base font-semibold text-ink-900">{isCold ? 'Cold-climate' : 'Standard'}</div>
-        <div class="text-xs text-ink-500">recommended</div>
+        <div class="text-xs uppercase tracking-wider text-ink-500">Home charging</div>
+        <div class="mt-1 text-base font-semibold text-ink-900">${(3600 * electricityCents / 1200).toFixed(0)}/mo</div>
+        <div class="text-xs text-ink-500">at 12,000 mi/yr</div>
       </div>
     </div>
   </section>
@@ -122,7 +117,7 @@ const schemaJsonLd = [
   </section>
 
   <section class="container-wide py-10">
-    <h2 class="text-xl font-semibold text-ink-900">Heat pump rebates &amp; credits in {stateName}</h2>
+    <h2 class="text-xl font-semibold text-ink-900">EV charger rebates &amp; credits in {stateName}</h2>
     <div class="mt-3 overflow-x-auto">
       <table class="w-full text-left text-sm">
         <thead class="border-b border-ink-200 text-xs uppercase tracking-wider text-ink-500">

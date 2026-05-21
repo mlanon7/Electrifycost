@@ -8,6 +8,12 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
+### Fixed (post-review of GPT audit, 2026-05-19)
+- **Heat-pump content leaked onto 4 non-HP state templates.** The panel / EV / HPWH / induction `[state]` templates (204 pages) had heat-pump meta descriptions, schema names ("Heat Pump Cost Calculator"), hero subtitles, stat grids (Climate zone / Natural gas / Heat pump class), and "Heat pump rebates" headings — leftover from the clone-then-differentiate build. Each now has module-correct description, schema name, subtitle, a module-appropriate 3-card stat grid, and rebates heading.
+- **Structured data silently dropped on 12 keyword templates.** `ducted-heat-pump-cost`, `electric-furnace-cost-calculator`, the 5 tonnage pages, `heat-pump-operating-cost-calculator`, and all 4 `[brand]-*` templates defined `schemaJsonLd` but never passed it to `<Layout>`, so FAQPage/WebPage JSON-LD didn't reach the HTML. Added `schemaJsonLd={schemaJsonLd}` to all 12.
+- **Brand CSV had unsourceable precise percentages** ("10-20% above value brands", "25-30% under Trane"). Softened to qualitative positioning to match the site's source-cited standard.
+- **Sump-pump battery-backup intent strengthened** on the existing position-15 page (added 3 exact-intent FAQ on backup cost / runtime / selection) rather than creating a competing `/sump-pump-battery-backup-cost/` URL that would cannibalize the ranking.
+
 ### Planned
 - Keyword Tier 3 (audit/KEYWORD_OPPORTUNITIES_2026-05.md): replace-furnace-with-heat-pump, dual-fuel, generic heating-cost calculator, AC-by-tonnage
 - Inline SVG diagrams for the 32 non-Template-A guides (per-topic design work)
@@ -19,9 +25,11 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [2026.05.19] — Keyword expansion: size + brand dimensions (Tier 1 + Tier 2)
 
-Driven by GSC data analysis (audit/KEYWORD_OPPORTUNITIES_2026-05.md): the site
-ranks for long-tail/local/specific queries but not head terms. Added the two
-next programmatic dimensions — **size** and **brand** — both thin-competition.
+Tier 1 (size) is GSC-proven (the export had tonnage/operating-cost queries).
+Tier 2 (brand) is a **strategic bet, NOT GSC-proven** — the export had no brand
+queries (site was days old with no brand pages to surface). Validate brand-page
+performance with Ahrefs + post-launch GSC, not as GSC-driven the way Tier 1 is.
+See audit/KEYWORD_OPPORTUNITIES_2026-05.md.
 
 ### Added — Tier 2 brand pages (22 pages)
 - `data/csv/brand-profiles.csv` — 22 brand rows (category, brand, slug, tier, positioning, models, price_note)
