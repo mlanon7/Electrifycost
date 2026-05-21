@@ -18,6 +18,7 @@ import addonsBandsCsv from '../../data/csv/addons-bands.csv?raw';
 import operatingCostConstantsCsv from '../../data/csv/operating-cost-constants.csv?raw';
 import homeEnergyRebateStatusCsv from '../../data/csv/home-energy-rebate-status.csv?raw';
 import zipToStateCsv from '../../data/csv/zip-to-state.csv?raw';
+import topCitiesCsv from '../../data/csv/top-cities.csv?raw';
 
 // Wave-2 calculator-specific CSV imports — loaded so build fails fast if a file is missing.
 // Components can switch from hardcoded constants to these CSVs incrementally; the import here
@@ -416,6 +417,34 @@ export const zipToState: ZipToStateRow[] =
   requireRows(coerceZip(parseCsv(zipToStateCsv)), 'zip-to-state');
 
 void zipToStateNumeric;
+
+// Top U.S. cities for city-level programmatic pages. Each city maps to a
+// state code so the page reuses state-level labor multipliers, energy prices,
+// and climate data (those datasets are state-keyed). City adds geo-specificity
+// to title/H1/copy. See data/csv/top-cities.csv.
+export interface CityRow {
+  slug: string;
+  city: string;
+  state: string;
+  rank: number;
+}
+export const ALL_CITIES: CityRow[] =
+  requireRows(parseCsv(topCitiesCsv), 'top-cities').map(r => ({
+    slug: r.slug,
+    city: r.city,
+    state: r.state,
+    rank: parseInt(r.rank, 10) || 0,
+  }));
+
+/** Look up a city row by its slug (e.g. 'houston-tx'). */
+export function findCity(slug: string): CityRow | undefined {
+  return ALL_CITIES.find(c => c.slug === slug);
+}
+
+/** Full state name for a 2-letter code, or the code itself if unknown. */
+export function stateName(code: string): string {
+  return ALL_STATES.find(s => s.code === code)?.name ?? code;
+}
 
 /**
  * Returns the state code for a US ZIP, or undefined if no range matches.

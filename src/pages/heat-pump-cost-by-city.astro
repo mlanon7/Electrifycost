@@ -1,0 +1,88 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import { ALL_CITIES, findStateLabor, findStateEnergy, stateName } from '@/lib/data';
+
+const rows = ALL_CITIES.map(c => {
+  const labor = findStateLabor(c.state);
+  const energy = findStateEnergy(c.state);
+  return {
+    slug: c.slug,
+    city: c.city,
+    state: c.state,
+    stName: stateName(c.state),
+    hvac: labor?.hvac_multiplier ?? 1,
+    ecents: energy?.electricity_cents_per_kwh ?? 0,
+    rank: c.rank,
+  };
+}).sort((a, b) => a.rank - b.rank);
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Heat Pump Cost by City',
+    description: 'Heat pump installed-cost estimates for the 100 largest U.S. cities, each calibrated to local state labor rates, electricity prices, and climate zone.',
+  },
+];
+---
+<Layout
+  title="Heat Pump Cost by City 2026 — 100 Largest U.S. Metros"
+  description="Heat pump installed cost for the 100 largest U.S. cities, calibrated to local labor rates and electricity prices. Houston, Phoenix, Chicago, and more."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: 'By city', href: '/heat-pump-cost-by-city/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pumps</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Cost by City</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      Heat pump installed cost for the 100 largest U.S. cities. Each city page is calibrated to its state's HVAC labor rate, retail electricity price, and climate zone. For a planning-range estimate tuned to your home, open any city below.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> a 3-ton ducted heat pump runs ~$7,500 in low-labor metros to $22,000+ in high-cost markets like San Francisco, New York, and Boston. Climate and ductwork shift the number further. Also see <a href="/heat-pump-cost-by-state/" class="text-brand-700 hover:underline">heat pump cost by state</a>.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10">
+    <h2 class="text-xl">100 largest U.S. cities</h2>
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="border-b border-ink-200 text-xs uppercase tracking-wider text-ink-500">
+          <tr>
+            <th class="py-2 pr-3">City</th>
+            <th class="py-2 pr-3">State</th>
+            <th class="py-2 pr-3 tabular-nums">Electricity</th>
+            <th class="py-2 pr-3 tabular-nums">HVAC labor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr class="border-b border-ink-100">
+              <td class="py-2 pr-3"><a href={`/heat-pump-cost/${r.slug}/`} class="font-medium">{r.city}</a></td>
+              <td class="py-2 pr-3 text-ink-700">{r.stName}</td>
+              <td class="py-2 pr-3 tabular-nums text-ink-700">{r.ecents.toFixed(1)} cents/kWh</td>
+              <td class="py-2 pr-3 tabular-nums text-ink-700">{r.hvac.toFixed(2)}x</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <div class="card p-5">
+      <h2 class="text-lg">Next steps</h2>
+      <p class="mt-2 max-w-prose text-sm text-ink-700">
+        Use the <a href="/heat-pump-cost-calculator/" class="text-brand-700 font-medium">main calculator</a> for a planning-range cost calibrated to your home, or browse <a href="/heat-pump-cost-by-state/" class="text-brand-700 font-medium">heat pump cost by state</a>. For background on how heat pumps work, read the <a href="/guides/heat-pumps/" class="text-brand-700 font-medium">heat pumps guide</a>.
+      </p>
+    </div>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
