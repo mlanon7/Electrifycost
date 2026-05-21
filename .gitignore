@@ -26,3 +26,7 @@ pnpm-debug.log*
 .claude/worktrees/
 .claude/.cache/
 .claude/tasks/
+
+# local analysis exports (GSC/Ahrefs CSV drops — not site code)
+google - search -performance/
+*-export/

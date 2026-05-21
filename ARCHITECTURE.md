@@ -19,7 +19,7 @@ System design for human developers. Complements `CLAUDE.md` (AI-focused working 
                                   ▼
               ┌──────────────────────────────────────┐
               │     Astro 4 static build output      │
-              │  (dist/ — 409 HTML pages, ~5 MB JS)  │
+              │  (dist/ — 642 HTML pages, ~5 MB JS)  │
               └─────────────────┬────────────────────┘
                                 │ at build time
                                 ▼
@@ -33,7 +33,7 @@ System design for human developers. Complements `CLAUDE.md` (AI-focused working 
                          │ reads
                          ▼
        ┌─────────────────────────────────────────────────┐
-       │            data/csv/ (49 files)                 │
+       │            data/csv/ (51 files)                 │
        │  Single source of truth for every numeric input │
        └─────────────────────────────────────────────────┘
 ```
@@ -46,7 +46,7 @@ The site ships as **fully static HTML + a small amount of hydrated React** (only
 
 ### 1. CSV-first data layer
 
-Every numeric input — equipment cost, labor hours, state multipliers, climate data, rebate amounts, expiration dates, energy prices, federal-credit caps — lives in `data/csv/*.csv` (49 files). **Not in TypeScript, not in JSON, not in a database.**
+Every numeric input — equipment cost, labor hours, state multipliers, climate data, rebate amounts, expiration dates, energy prices, federal-credit caps — lives in `data/csv/*.csv` (51 files). **Not in TypeScript, not in JSON, not in a database.**
 
 **Why CSVs:**
 - A non-engineer (the founder, a contractor, a research intern) can open any file in Google Sheets, edit, and download back as CSV.
@@ -95,6 +95,27 @@ Astro renders each page to static HTML at build time. The five flagship calculat
 
 **The catch:** when a calculator hydrates, it has to re-fetch the full CSV bundle to compute. That's the 104 KB cost mentioned in §1.
 
+### 4. Programmatic SEO dimensions + the routing rule
+
+The site scales URL count by multiplying a calculator across **dimensions**. As of 2026-05 there are four live dimensions (642 built pages):
+
+| Dimension | Data source | URL shape | Example |
+|---|---|---|---|
+| **State** | `state-*.csv` (51 rows) | prefix, dynamic | `/heat-pump-cost-tx/` |
+| **City** | `top-cities.csv` (100 rows) | subpath, dynamic | `/heat-pump-cost/houston-tx/` |
+| **Size** (sqft, tonnage) | static files | prefix, static | `/heat-pump-cost-3-ton/` |
+| **Brand** | `brand-profiles.csv` (22 rows) | suffix, dynamic | `/mitsubishi-heat-pump-cost/` |
+
+**The routing rule that makes this work without collisions:** the dynamic `<module>-cost-[state].astro` route is GREEDY — it matches any `/<module>-cost-<single-segment>/`. To add more dimensions without colliding with it:
+
+- **Prefix-form statics** (`heat-pump-cost-3-ton.astro`, `heat-pump-cost-by-state.astro`) coexist because Astro resolves static routes before dynamic ones, and the `[state]` `getStaticPaths` only emits real state codes (never "3-ton").
+- **Subpath** (`heat-pump-cost/[city].astro` → `/heat-pump-cost/<city>/`) is a different path level entirely — no overlap with the hyphenated `heat-pump-cost-X` routes.
+- **Suffix-form dynamic** (`[brand]-heat-pump-cost.astro` → `/<brand>-heat-pump-cost/`) is a different URL SHAPE — the `[state]` route matches `heat-pump-cost-<x>` (prefix), this matches `<x>-heat-pump-cost` (suffix), so they never overlap.
+
+See `.claude/lessons/08-astro-route-collision-patterns.md` for the full decision tree. Adding a new dimension? Pick one of these three shapes; never add a second greedy single-segment dynamic at the same prefix.
+
+The dimensions compose: state × module = 306 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 642 pages came from ~10 template files.
+
 ---
 
 ## Directory layout (key files only)
@@ -111,7 +132,7 @@ Astro renders each page to static HTML at build time. The five flagship calculat
 │   ├── og-default.png          — 1200×630 social card
 │   ├── favicon.svg
 │   └── assets/topic-images/    — 27 hero photos × (AVIF + WebP + PNG)
-├── data/csv/                   — 49 CSVs (THE source of truth)
+├── data/csv/                   — 51 CSVs (THE source of truth)
 ├── scripts/
 │   ├── build-sitemap.cjs       — postbuild: walks dist/ → emits sitemap.xml
 │   ├── validate-csvs.cjs       — pre-test

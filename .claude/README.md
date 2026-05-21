@@ -28,7 +28,8 @@ Treat this directory as a **toolkit you can clone**: copy `.claude/` into a new 
 │   ├── 04-three-guide-templates-drift.md
 │   ├── 05-csv-as-single-source-of-truth.md
 │   ├── 06-cold-start-mediavine-timing.md
-│   └── 07-no-funnel-brand-position.md
+│   ├── 07-no-funnel-brand-position.md
+│   └── 08-astro-route-collision-patterns.md
 ├── prompts/                 — drop-in prompts for any AI assistant (Manus, ChatGPT, Claude.ai)
 │   ├── full-site-audit.md   — comprehensive audit brief (~30 min agent runtime)
 │   ├── content-quality-review.md

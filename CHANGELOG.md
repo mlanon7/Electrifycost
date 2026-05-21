@@ -8,11 +8,67 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
-### Planned (Phase 3)
+### Planned
+- Keyword Tier 3 (audit/KEYWORD_OPPORTUNITIES_2026-05.md): replace-furnace-with-heat-pump, dual-fuel, generic heating-cost calculator, AC-by-tonnage
 - Inline SVG diagrams for the 32 non-Template-A guides (per-topic design work)
 - Custom callout cards on non-flagship guides ("red flags", "key insight", "bid-padding tactics")
 - Per-module CSV chunking refactor to drop the 104 KB shared `?raw` bundle
 - About page reviewer pattern: add a named licensed electrician / HVAC tech as quarterly content reviewer
+
+---
+
+## [2026.05.19] — Keyword expansion: size + brand dimensions (Tier 1 + Tier 2)
+
+Driven by GSC data analysis (audit/KEYWORD_OPPORTUNITIES_2026-05.md): the site
+ranks for long-tail/local/specific queries but not head terms. Added the two
+next programmatic dimensions — **size** and **brand** — both thin-competition.
+
+### Added — Tier 2 brand pages (22 pages)
+- `data/csv/brand-profiles.csv` — 22 brand rows (category, brand, slug, tier, positioning, models, price_note)
+- `src/lib/data.ts` — `BRAND_PROFILES` + `brandsByCategory()` exports
+- `[brand]-heat-pump-cost.astro` → 8 pages (Mitsubishi, Carrier, Trane, Daikin, Bosch, Lennox, Goodman, Rheem)
+- `[brand]-heat-pump-water-heater-cost.astro` → 5 (Rheem, AO Smith, Bradford White, Rinnai, Sanden)
+- `[brand]-ev-charger-installation-cost.astro` → 5 (ChargePoint, Wallbox, Tesla, Emporia, Grizzl-E)
+- `[brand]-home-battery-cost.astro` → 4 (Tesla Powerwall, Enphase, LG, Franklin)
+- "Cost by brand" link sections added to the 4 parent calculator pages (discoverability)
+- Suffix-form URLs (`/mitsubishi-heat-pump-cost/`) — collision-free with the prefix-form `heat-pump-cost-[state]` route
+
+### Added — Tier 1 size/type/operating pages (8 pages)
+- Heat pump by tonnage: `/heat-pump-cost-{1-5,2,3,4,5}-ton/` (5 static, prefix form)
+- `/heat-pump-operating-cost-calculator/` — "cost to run" intent
+- `/ducted-heat-pump-cost/` — ducted vs ductless framing
+- `/electric-furnace-cost-calculator/` — content page, recommends heat pump alternative
+
+### Fixed
+- `brand-profiles.csv` price-note commas (`$2,200`) broke CSV parsing → switched to k-notation (`$2.2k`)
+
+### Site totals
+- 612 → **642 built pages**, 611 → **641 sitemap URLs**
+
+---
+
+## [2026.05.19] — City programmatic pages + content gaps + HN kit
+
+### Added
+- **200 city programmatic pages**: `heat-pump-cost/[city].astro` + `heat-pump-water-heater-cost/[city].astro` for the 100 largest U.S. metros (subpath URLs to avoid route collision)
+- `data/csv/top-cities.csv` (100 cities → state) + `ALL_CITIES`/`findCity`/`stateName` in data.ts
+- `/heat-pump-cost-by-city/` + `/heat-pump-water-heater-cost-by-city/` hubs
+- `/water-heater-installation-cost-calculator/` — exact-match for the recurring "75 gallon water heater installation cost" query (20 GSC impressions, no prior exact page)
+- Named gov-source citations (NREL/DOE/EIA) on 6 flagship FAQ pages — replicating the DOE-page-1 ranking pattern
+- Internal links from the flagship heat-pump page to striking-distance + geo pages
+- `.claude/prompts/hackernews-launch.md` — Show HN launch kit
+
+### Fixed
+- HPWH city cluster was orphaned (sitemap-only) → added by-city hub + calculator/homepage links
+
+---
+
+## [2026.05.17] — Documentation set + .claude/ toolkit
+
+### Added
+- Root docs: CONTRIBUTING, CHANGELOG, ARCHITECTURE, STYLEGUIDE, TEMPLATE, SECURITY, ROADMAP, LICENSE
+- `.claude/` toolkit: README + 9 commands + 7 lessons + 4 reusable prompts
+- `.gitignore`: keep `.claude/` workflow docs committed, ignore only `worktrees/`/`cache`/`tasks`
 
 ---
 

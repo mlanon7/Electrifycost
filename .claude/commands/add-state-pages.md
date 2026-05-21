@@ -2,6 +2,19 @@
 
 When the user wants 51 per-state pages for a new module (one per U.S. state + DC).
 
+> **Other programmatic dimensions** (city, size/tonnage/sqft, brand) follow the
+> same data-CSV + template pattern but use DIFFERENT URL shapes to avoid route
+> collisions. Before adding any new dimension, read
+> `.claude/lessons/08-astro-route-collision-patterns.md`. Quick reference:
+> - **State** → prefix-form dynamic `<module>-cost-[state].astro` → `/<module>-cost-tx/`
+> - **City** → subpath dynamic `<module>-cost/[city].astro` → `/<module>-cost/houston-tx/` (data: `top-cities.csv`)
+> - **Size** → prefix-form STATIC files `<module>-cost-3-ton.astro` → `/<module>-cost-3-ton/`
+> - **Brand** → suffix-form dynamic `[brand]-<module>-cost.astro` → `/mitsubishi-<module>-cost/` (data: `brand-profiles.csv`, helper `brandsByCategory()`)
+>
+> NEVER add a second greedy single-segment dynamic at an existing prefix —
+> `<module>-cost-[state]` + `<module>-cost-[anything]` collides. Build after the
+> FIRST new page to confirm no collision before scaling.
+
 ## Step 0 — Verify prerequisites
 
 The new module must already have:

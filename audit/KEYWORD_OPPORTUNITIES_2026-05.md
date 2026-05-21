@@ -1,5 +1,7 @@
 # Keyword / page opportunities — 2026-05
 
+> **STATUS (updated 2026-05-19):** Tier 1 ✅ SHIPPED (commit 54ee47e — tonnage ×5, operating-cost, ducted, electric-furnace). Tier 2 ✅ SHIPPED (commit fa72559 — 22 brand pages via brand-profiles.csv). Tier 3 ⬜ pending. See CHANGELOG.md for details. Ahrefs MCP is now connected for real volume/difficulty data to validate Tier 3 priority.
+
 Derived from: (1) the GSC export (150 real queries the site already gets impressions for), (2) WebSearch industry validation, (3) systematic long-tail modifier patterns. No paid-tool volume data — prioritization is by **winnability for a young site** (low competition) + **GSC-proven demand** + **existing data-readiness**, NOT raw volume.
 
 Guiding principle (from GSC analysis): the site ranks for long-tail/local/specific queries (pages 1-3) but NOT head terms (pages 7-9). Build more long-tail; don't chase head terms until domain authority arrives.

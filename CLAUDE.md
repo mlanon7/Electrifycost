@@ -30,11 +30,36 @@ Competitors fall into three buckets: (1) lead-gen funnels (Modernize, Networx, A
 - **Astro 4.15** — static-first rendering with React island hydration (`client:load` on calculators)
 - **React 18.3 + TypeScript 5.5** — calculator islands
 - **Tailwind 3.4** — utility-first styling. Brand palette: `brand-*` (emerald), `ink-*` (slate), `amber-*`/`rose-*` for warnings/errors. Defined in `tailwind.config.mjs`.
-- **CSV-first data** — every numeric input lives in `data/csv/*.csv` (49 files). Loaded via Vite `?raw` imports at build time. NO duplicate numbers in TS/JS.
+- **CSV-first data** — every numeric input lives in `data/csv/*.csv` (51 files). Loaded via Vite `?raw` imports at build time. NO duplicate numbers in TS/JS.
 - **Vercel** — static deploy, clean URLs, trailing slashes, immutable cache headers, security headers. Config in `vercel.json`.
 - **Self-hosted fonts** — Inter + Source Serif 4 via `@fontsource/*`. NO Google Fonts third-party fetch.
-- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with 408 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16.
+- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with ~641 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16. **The xmlns must be `http://www.sitemaps.org/schemas/sitemap/0.9` (slash, not hyphen)** — see lessons/01.
 - **Analytics:** GA4 (`G-5CMBX2RBY4`) with Consent Mode v2 + cookie banner. Wired in `Layout.astro` + `CookieBanner.astro`. `calculator_used` custom event fires from `ResultPanel.tsx` when a valid result renders.
+- **Ahrefs MCP** — connected (the `mcp__...keywords-explorer-*`, `gsc-*`, `site-explorer-*`, `rank-tracker-*` tools). Use for keyword volume/difficulty, GSC query history, backlink + rank-tracking data. See `.claude/prompts/data-verification.md` and the keyword-research workflow.
+
+---
+
+## Page inventory (642 built pages as of 2026-05-19)
+
+The site grew from 5 flagship calculators to 642 built HTML pages via **four programmatic-SEO dimensions**. Understand these before adding pages:
+
+| Dimension | URL shape | Count | Template |
+|---|---|---|---|
+| **Calculators** | `/<module>-cost-calculator/` | 38 | one `.astro` per module |
+| **Guides** | `/guides/<topic>/` | 37 | one per topic + RelatedGuides |
+| **State** (heat pump, solar, EV, panel, HPWH, induction) | `/<module>-cost-<state>/` (prefix form) | 6 × 51 = 306 | `<module>-cost-[state].astro` |
+| **City** (heat pump, HPWH) | `/heat-pump-cost/<city>/` (SUBPATH) | 2 × 100 = 200 | `heat-pump-cost/[city].astro` |
+| **Size — sqft** (heat pump) | `/heat-pump-cost-<n>-sqft/` (static) | 5 | individual static files |
+| **Size — tonnage** (heat pump) | `/heat-pump-cost-<n>-ton/` (prefix, static) | 5 | individual static files |
+| **Brand** (HP, HPWH, EV, battery) | `/<brand>-<module>-cost/` (SUFFIX form) | 22 | `[brand]-<module>-cost.astro` |
+| **Per-amp panel** | `/100a-to-200a-panel-upgrade-cost/` etc. | 4 | individual static files |
+| **By-state / by-city hubs** | `/<module>-cost-by-state/`, `/-by-city/` | 8 | individual static files |
+| **Comparison** | `/<a>-vs-<b>/` | ~8 | individual static files |
+
+**Routing rule (critical — see lessons/08):** to avoid collisions with the greedy `<module>-cost-[state]` dynamic route (which matches any `/<module>-cost-<x>/`):
+- **State / sqft / tonnage** use **prefix form** (`heat-pump-cost-X`) as STATIC files — Astro static-priority lets them coexist with `[state]`.
+- **City** uses a **SUBPATH** (`heat-pump-cost/[city]`) — distinct from the hyphenated prefix routes.
+- **Brand** uses **SUFFIX form** (`X-heat-pump-cost`) as a dynamic `[brand]-...` route — a different URL shape that never overlaps the prefix routes.
 
 ---
 
@@ -57,7 +82,8 @@ electrifycost/
 │   ├── og-default.png
 │   ├── robots.txt                      — Sitemap: /sitemap.xml + GPTBot/ClaudeBot Allow
 │   └── assets/topic-images/            — 27 hero photos (AVIF + WebP + PNG triples)
-├── data/csv/                           — 49 CSVs; SINGLE source of truth for numbers
+├── data/csv/                           — 51 CSVs; SINGLE source of truth for numbers
+│                                          (incl. top-cities.csv, brand-profiles.csv)
 │   ├── README.md                       — per-column docs + edit checklist
 │   ├── project-cost-ranges.csv         — 25 cost scenarios across 5 modules
 │   ├── state-labor-multipliers.csv     — 51 rows (50 states + DC)
@@ -94,7 +120,10 @@ electrifycost/
     │   └── 33 non-flagship calculators — bespoke math, own result UI
     ├── lib/
     │   ├── calc.ts                     — SHARED ENGINE: runCalculator(args): CalculatorResult
-    │   ├── data.ts                     — CSV loaders + lookup helpers (435 LOC)
+    │   ├── data.ts                     — CSV loaders + lookup helpers. Key exports:
+    │   │                                 ALL_STATES, findStateLabor/Energy/Climate,
+    │   │                                 ALL_CITIES + findCity + stateName (city pages),
+    │   │                                 BRAND_PROFILES + brandsByCategory (brand pages)
     │   ├── format.ts                   — fmtUSD / fmtUSDRange / fmtMonths
     │   ├── use-url-state.ts            — hash-state hooks for shareable calculator URLs
     │   └── guide-relationships.ts      — 37 guide-slug → siblings + calculator map
@@ -286,14 +315,22 @@ When working on a task, read the most-recent audit for context. When closing a t
 
 | SHA | Summary |
 |---|---|
+| `fa72559` | Tier 2 keyword pages: 22 brand cost pages (HP/HPWH/EV/battery) via brand-profiles.csv + 4 dynamic `[brand]-...` templates |
+| `54ee47e` | Tier 1 keyword pages: heat pump by tonnage (5) + operating-cost + ducted + electric-furnace |
+| `7c3d9ca` | HPWH-by-city hub; fix HPWH city-cluster orphan path |
+| `790b9cd` | Named gov-source citations on flagship FAQs + internal linking to striking-distance pages |
+| `a2c0074` | Water-heater-installation page + 200 city programmatic pages (HP+HPWH) + HN launch kit |
+| `59d2e09` | `.claude/` toolkit: 9 commands, 7 lessons, 4 prompts |
+| `3cd9f06` | Good-practice docs: CONTRIBUTING, CHANGELOG, ARCHITECTURE, STYLEGUIDE, TEMPLATE, SECURITY, ROADMAP, LICENSE |
+| `c7082eb` | Add CLAUDE.md |
 | `9490474` | Phase 2: numbered H2s + TOC bars on 32 non-canonical guides |
 | `cebbfc2` | Phase 1: unify guide formatting (eyebrow, prose, Related-guides footer) |
-| `0533253` | Reduce header logo by 15% |
 | `3bf55c7` | Fix sitemap.xml namespace typo (sitemap-0.9 → sitemap/0.9) |
 | `57bc69b` | Wire Google Analytics 4 with Consent Mode v2 + cookie banner |
-| `973a426` | Pass 5: About page + 215 new programmatic pages (4 state templates × 51 + 5 sqft pages + 4 hub pages + state-default bug fix) |
+| `973a426` | Pass 5: About page + 215 new programmatic pages + state-default bug fix |
 | `9b9c318` | Pass 4 audit fixes (EV regression, panel CA, per-amp pages, self-host fonts) |
-| `d81ca8e` | Pre-release audit fixes (asset references, header overflow, SEO, contrast) |
+
+Keyword strategy + opportunity backlog: `audit/KEYWORD_OPPORTUNITIES_2026-05.md` (Tier 1+2 shipped; Tier 3 pending).
 
 ---
 
@@ -329,4 +366,4 @@ If you edit one of these surfaces, keep the disclaimers in place. They're load-b
 
 ---
 
-Last reviewed: 2026-05-17.
+Last reviewed: 2026-05-19.

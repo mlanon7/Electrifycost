@@ -11,14 +11,24 @@ Items here are loosely ordered by priority (top = sooner). When something ships,
 ### Acquisition + indexing
 
 - **Reddit seeding.** Genuinely useful answers in r/heatpumps, r/electricvehicles, r/solar, r/HomeImprovement, r/HVAC — link the calculator when it's the actual best resource for the OP's question. 2–3 posts/week.
-- **HackerNews "Show HN" launch post.** One-shot, big traffic + backlink potential. The "no-funnel, source-cited, OBBBA-current" angle has genuine HN appeal.
+- **HackerNews "Show HN" launch post.** One-shot, big traffic + backlink potential. Kit is drafted at `.claude/prompts/hackernews-launch.md`. The "no-funnel, source-cited, OBBBA-current" angle has genuine HN appeal.
 - **Newsletter outreach.** Email ~30 climate / electrification newsletters and blogs (Canary Media, Heatmap, Volts, Distilled, The Cool Down, Electrify This). "Free source-backed calculator, no funnel, would your readers find this useful?" Expect 1–3% reply rate; each yes is a high-DA backlink.
-- **Manually request indexing in GSC** on the top-10 highest-value URLs (already prioritized; see `CLAUDE.md` § "When indexing fails").
+- **Manually request indexing in GSC** on the highest-value new pages after each batch (see `CLAUDE.md` § "When indexing fails").
+- **Use the connected Ahrefs MCP** for keyword volume/difficulty + rank tracking now that real data is available — cross-reference against `audit/KEYWORD_OPPORTUNITIES_2026-05.md`.
+
+### Keyword expansion — Tier 3 (Tier 1 + 2 SHIPPED 2026-05-19)
+
+- ✅ **Tier 1** (size/type/operating) — shipped: tonnage ×5, operating-cost, ducted, electric-furnace.
+- ✅ **Tier 2** (brand) — shipped: 22 brand pages (HP/HPWH/EV/battery) via `brand-profiles.csv`.
+- ⬜ **Tier 3** — pending: `/replace-furnace-with-heat-pump-cost/`, `/dual-fuel-heat-pump-cost/`, generic `/heating-cost-calculator/`, AC-by-tonnage. Hold until Tier 1+2 index and you can measure which dimension converts.
+- ⬜ **Extend brand pages to more brands** once the first 22 prove out (more HP brands, water-heater brands beyond HPWH, more EV/battery brands).
+- ⬜ **Extend city pages to more modules** (EV charger, panel, induction by city) and more metros (currently HP + HPWH × 100 cities).
 
 ### Quality
 
-- **Fix the HPWH state template FAQ.** The `heat-pump-water-heater-cost-[state].astro` file uses plain-string FAQ (no `${stateName}` interpolation) as a workaround for an esbuild parser bug. Find the trigger and re-introduce state-specific FAQ content like the other 5 state templates.
+- **Fix the HPWH state template FAQ.** The `heat-pump-water-heater-cost-[state].astro` file uses plain-string FAQ (no `${stateName}` interpolation) as a workaround for an esbuild parser bug (see lessons/02). Find the trigger and re-introduce state-specific FAQ content like the other 5 state templates.
 - **State-specific paragraph per state page.** Currently the per-state prose is generic ("Texas is in a moderate climate zone, standard ASHPs work well…"). Replace with named utility programs, HEEHRA rollout status, contractor density, climate quirks — one paragraph per state × per module.
+- **City-page prose deepening.** City pages currently reuse state-level data with city-name framing. Add genuinely city-specific context (metro permit quirks, local utility programs) to the top metros.
 
 ---
 
