@@ -1,0 +1,88 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does a 1.5-ton heat pump cost installed?',
+    a: 'A 1.5-ton (18,000 BTU/hr) heat pump runs $5,500 to $11,000 installed nationally, per NREL benchmark data and 2026 installer surveys. At this small capacity a single-zone ductless mini-split is often the better value, landing in the lower half of that band. Cold-climate (NEEP-listed) equipment adds $1,500 to $3,000. State labor rates shift the range — California, Hawaii, and the Northeast run highest.',
+  },
+  {
+    q: 'What size home does a 1.5-ton heat pump heat and cool?',
+    a: 'A 1.5-ton unit is sized for roughly 600 to 900 sqft in a moderate climate (IECC zones 3 to 5), which makes it a fit for small homes, condos, additions, garages, or a single open zone. Tighter, newer spaces may be comfortable toward the top of that range; older, leaky rooms toward the bottom. A Manual J load calculation by a licensed contractor is the proper sizing method — the per-sqft rule of thumb is a starting point, not a spec.',
+  },
+  {
+    q: 'Is a mini-split better than a ducted system at this size?',
+    a: 'Often yes. For 600 to 900 sqft, a single-zone ductless mini-split usually beats a ducted central system on both upfront cost and efficiency, because there are no ducts to install or seal and the inverter compressor modulates well at low loads. ENERGY STAR notes ductless systems avoid the 20 to 30 percent duct losses common in central setups. Ducted only wins here if you already have good ductwork serving the space.',
+  },
+  {
+    q: 'What rebates apply to a 1.5-ton heat pump?',
+    a: 'The federal 25C credit expired Dec 31 2025 under OBBBA. State and utility programs plus DOE Home Energy Rebates (where launched) still apply and are not capacity-dependent — they key off equipment efficiency and household income, not tonnage. Use the calculator above to see programs for your state.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: '1.5-Ton Heat Pump Cost',
+    description: 'Planning-range installed cost for a 1.5-ton (18,000 BTU/hr) heat pump, suited to small 600-900 sqft homes, condos, and additions.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="1.5-Ton Heat Pump Cost 2026 — Installed Price by Home & State"
+  description="A 1.5-ton heat pump runs $5,500-$11,000 installed (small homes, 600-900 sqft). A single-zone mini-split is often the better value. State-calibrated estimate and rebates."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: '1.5-ton', href: '/heat-pump-cost-1-5-ton/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · 1.5-ton</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">1.5-Ton Heat Pump Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A 1.5-ton (18,000 BTU/hr) heat pump is a small-capacity unit suited to roughly 600-900 sqft — small homes, condos, and additions. Plan-level installed cost, sizing guidance, and the rebates that still apply in 2026.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $5,500-$11,000 installed; single-zone mini-split often the better value at this size. Refine by state and home below.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Heat pump cost by size</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+      <li><a href="/heat-pump-cost-2-ton/">2-ton (~900-1,300 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-3-ton/">3-ton (~1,500-2,000 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-4-ton/">4-ton (~2,000-2,600 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-5-ton/">5-ton (~2,600-3,200 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-1000-sqft/">By home size (sqft) →</a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

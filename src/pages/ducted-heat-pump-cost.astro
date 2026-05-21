@@ -1,0 +1,86 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does a ducted heat pump cost installed?',
+    a: 'A ducted central heat pump runs $8,000 to $22,000 installed, depending on tonnage and the condition of your ductwork, per NREL benchmark data and 2026 installer surveys. A 2-ton system for a small home sits near the bottom; a 5-ton system for a large home near the top. Cold-climate (NEEP-listed) equipment and high-cost states (CA, HI, NY, MA) push toward the upper end. Ductwork repairs or replacement are a separate line item.',
+  },
+  {
+    q: 'Ducted or ductless — which is right for me?',
+    a: 'Ducted is the better choice when you already have sound ductwork: the system reuses your distribution network and keeps every register on one unit. Ductless (mini-split) wins when you have no ducts, since adding ductwork to a ducted system can cost $1,500 to $8,000 and central ducts lose 20 to 30 percent of conditioned air to leakage and conduction, per ENERGY STAR. With no existing ducts, a ductless mini-split is usually the cheaper, more efficient path.',
+  },
+  {
+    q: 'Does my ductwork need replacing?',
+    a: 'It depends on condition. Sealing and minor repairs to serviceable ducts typically run $500 to $2,000. Partial replacement of damaged runs adds $2,000 to $5,000, and a full duct replacement for a typical home runs $4,000 to $8,000 or more. The DOE estimates duct leakage wastes 20 to 30 percent of airflow in many homes, so a duct evaluation before install often pays back through lower bills and better comfort.',
+  },
+  {
+    q: 'What rebates apply to a ducted heat pump?',
+    a: 'The federal 25C credit expired Dec 31 2025 under OBBBA. State and utility programs plus DOE Home Energy Rebates (where launched) still apply — they key off equipment efficiency and household income, not whether the system is ducted or ductless. Some utility programs also offer separate incentives for duct sealing. Use the calculator above to see programs for your state.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Ducted Heat Pump Cost',
+    description: 'Planning-range installed cost for a ducted central heat pump using existing or new ductwork — $8,000-$22,000 depending on tonnage and duct condition.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Ducted Heat Pump Cost 2026 — Central System Installed Price"
+  description="A ducted central heat pump runs $8,000-$22,000 installed depending on tonnage and ductwork condition. Poor ducts add $1,500-$8,000. State-calibrated estimate and rebates."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: 'Ducted', href: '/ducted-heat-pump-cost/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · Ducted</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Ducted Heat Pump Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A ducted central heat pump uses existing or new ductwork to condition the whole home from one unit. Cost depends mostly on tonnage and the condition of your ducts. Plan-level installed cost and the rebates that still apply in 2026.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $8,000-$22,000 installed; ductwork in poor condition adds $1,500-$8,000. If you have no ducts, a ductless mini-split is usually cheaper. Refine by state and home below.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/mini-split-heat-pump-cost-calculator/">Mini-split heat pump cost calculator</a></li>
+      <li><a href="/ductwork-installation-cost-calculator/">Ductwork installation cost calculator</a></li>
+      <li><a href="/heat-pump-cost-3-ton/">3-ton heat pump cost</a></li>
+      <li><a href="/heat-pump-cost-by-state/">Heat pump cost by state</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

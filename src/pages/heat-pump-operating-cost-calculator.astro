@@ -1,0 +1,86 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does it cost to run a heat pump per month?',
+    a: 'Most homes spend $80 to $200 a month to run a heat pump for heating and cooling combined. As a heating-season benchmark, a home using about 4,500 kWh per year for heat at the EIA U.S. average residential rate of roughly 17.6 cents per kWh spends near $66 a month across the heating season. Your actual figure depends on climate, home size, insulation, and your local electricity rate, which the calculator above applies for your state.',
+  },
+  {
+    q: 'How much electricity does a heat pump use?',
+    a: 'A whole-home heat pump typically uses 4,000 to 8,000 kWh per year, per DOE figures, with cold climates and larger or leakier homes at the high end and mild climates at the low end. Because heat pumps move heat instead of generating it, they deliver 2.5 to 4 units of heat per unit of electricity, so they use far less energy than electric resistance heating for the same comfort. The calculator above estimates usage and cost for your inputs.',
+  },
+  {
+    q: 'Does a heat pump raise my electric bill?',
+    a: 'Yes, the electric portion of your bill rises because the heat pump runs on electricity, but your total energy bill usually falls. If you are switching from oil, propane, or gas, you stop buying that fuel entirely, and the high efficiency of a heat pump means the added electricity costs less than the fuel it replaces. The DOE notes heat pumps cut heating energy use versus resistance heat and most fossil systems, so the net household bill typically drops.',
+  },
+  {
+    q: 'How can I lower my heat pump operating cost?',
+    a: 'Start with the building envelope: insulation and air-sealing cut the load the heat pump has to meet, which lowers runtime and bills, per ENERGY STAR. Use a set-and-forget thermostat strategy rather than deep setbacks, since heat pumps run most efficiently at steady temperatures. Make sure the system is right-sized via a Manual J calculation so it modulates instead of short-cycling, and keep filters and coils clean. Together these steps can meaningfully reduce monthly running cost.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Heat Pump Operating Cost Calculator',
+    description: 'Estimate the monthly cost to run a heat pump for heating and cooling — typically $80-$200/month — based on climate, home size, and your electricity rate.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Heat Pump Operating Cost Calculator 2026 — Monthly Cost to Run"
+  description="Estimate the monthly cost to run a heat pump ($80-$200/mo) for heating and cooling. Heat pumps cut bills vs. oil, propane, and electric resistance in every state."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: 'Operating cost', href: '/heat-pump-operating-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · Operating cost</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Operating Cost Calculator</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      This page is about the cost to run a heat pump — the monthly impact on your electric bill — not the install price. Estimate your running cost by state and home, and see how it compares to the fuel you use today.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> A typical heat pump costs $80-$200/month to run for heating + cooling, depending on climate, home size, and your electricity rate. Heat pumps cut bills vs. oil, propane, and electric resistance in every state, and vs. gas in most.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator (install)</a></li>
+      <li><a href="/heat-pump-vs-gas-furnace/">Heat pump vs. gas furnace</a></li>
+      <li><a href="/guides/heat-pumps/">Heat pumps guide</a></li>
+      <li><a href="/heat-pump-cost-by-state/">Heat pump cost by state</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

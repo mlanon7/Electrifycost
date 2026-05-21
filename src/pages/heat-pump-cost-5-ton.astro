@@ -1,0 +1,88 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does a 5-ton heat pump cost installed?',
+    a: 'A 5-ton (60,000 BTU/hr) heat pump runs $11,000 to $22,000 installed nationally, per NREL benchmark data and 2026 installer surveys. A 5-ton system suits roughly 2,600 to 3,200 sqft in a moderate climate and is the largest standard residential single unit. Cold-climate (NEEP-listed) equipment adds $2,000 to $4,000. State labor rates shift the band — California, Hawaii, and the Northeast run highest.',
+  },
+  {
+    q: 'What size home does a 5-ton heat pump heat and cool?',
+    a: 'A 5-ton unit is sized for about 2,600 to 3,200 sqft in a moderate climate (IECC zones 3 to 5), assuming average insulation. Homes this size are frequently multi-story with uneven loads, so many are served by two smaller systems rather than one 5-ton unit. A Manual J load calculation by a licensed contractor is the proper sizing method — the per-sqft rule of thumb is a starting point, not a spec.',
+  },
+  {
+    q: 'Is a 5-ton heat pump too big for a single zone?',
+    a: 'Usually, yes. Five tons is the largest standard residential single unit, and forcing that capacity into one zone tends to cause short-cycling, uneven temperatures, and poor humidity control. Most homes in the 2,600 to 3,200 sqft range split the load into two systems or a multi-zone design so equipment can modulate. The DOE notes right-sizing and zoning improve both comfort and efficiency. A single 5-ton makes sense only with an open layout and even load.',
+  },
+  {
+    q: 'Do I need a 200A panel and what rebates apply?',
+    a: 'A 5-ton heat pump draws significant current, so homes with older 100A or 125A service often need a 200A panel upgrade, adding roughly $1,500 to $4,000. On rebates: the federal 25C credit expired Dec 31 2025 under OBBBA, but state and utility programs plus DOE Home Energy Rebates (where launched) still apply and key off equipment efficiency and household income, not tonnage. Use the calculator above to see programs for your state.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: '5-Ton Heat Pump Cost',
+    description: 'Planning-range installed cost for a 5-ton (60,000 BTU/hr) heat pump, the largest standard residential single unit, suited to roughly 2,600-3,200 sqft.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="5-Ton Heat Pump Cost 2026 — Installed Price by Home & State"
+  description="A 5-ton heat pump runs $11,000-$22,000 installed (2,600-3,200 sqft) — the largest standard residential unit. Most homes this size use multi-zone designs. Estimate, sizing, rebates."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: '5-ton', href: '/heat-pump-cost-5-ton/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · 5-ton</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">5-Ton Heat Pump Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      A 5-ton (60,000 BTU/hr) heat pump is the largest standard residential single unit, suited to roughly 2,600-3,200 sqft. Plan-level installed cost, sizing guidance, and the rebates that still apply in 2026.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $11,000-$22,000 installed; 5-ton is the largest standard residential single unit — most homes this size use multi-zone designs. Refine by state and home below.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Heat pump cost by size</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+      <li><a href="/heat-pump-cost-1-5-ton/">1.5-ton (~600-900 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-2-ton/">2-ton (~900-1,300 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-3-ton/">3-ton (~1,500-2,000 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-4-ton/">4-ton (~2,000-2,600 sqft) →</a></li>
+      <li><a href="/heat-pump-cost-3000-sqft/">By home size (sqft) →</a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

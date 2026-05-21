@@ -1,0 +1,98 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+
+const faq = [
+  {
+    q: 'How much does an electric furnace cost to install?',
+    a: 'An electric resistance furnace runs $1,600 to $4,000 installed, per 2026 installer surveys and NREL benchmark cost data. The equipment itself is inexpensive and the install is simple — there is no combustion, flue, or gas line — which is why upfront cost is low compared with a heat pump or a gas furnace. Adding or upgrading a circuit for the unit can add a few hundred dollars. Operating cost, not install cost, is where electric resistance gets expensive.',
+  },
+  {
+    q: 'Why is an electric furnace cheap to install but expensive to run?',
+    a: 'Electric resistance heat converts electricity to heat at a coefficient of performance (COP) of about 1.0 — one unit of electricity yields one unit of heat. A heat pump moves heat instead of generating it, reaching a COP of roughly 3.0 or higher, so it delivers about three times the heat per unit of electricity, per the DOE. The simple resistance design is cheap to build and install, but because it is the least efficient way to heat, the monthly running cost is the highest of any common system.',
+  },
+  {
+    q: 'Should I replace an electric furnace with a heat pump?',
+    a: 'Usually yes — it is one of the biggest operating-cost wins in home heating. Because a heat pump runs at a COP near 3.0 versus 1.0 for resistance heat, the DOE notes switching from electric resistance to a heat pump can cut heating electricity use by roughly 50 to 70 percent. A heat pump costs more upfront, but the lower running cost typically pays back the difference, and you gain efficient air conditioning in the same system. Compare both before you buy.',
+  },
+  {
+    q: 'What rebates apply to an electric furnace?',
+    a: 'The federal 25C credit expired Dec 31 2025 under OBBBA, and electric resistance furnaces were never strong candidates for efficiency incentives anyway. If you switch to a heat pump instead, you may qualify for state and utility programs plus DOE Home Energy Rebates (where launched), which key off equipment efficiency and household income. Those incentives can narrow the upfront gap between a heat pump and a furnace — see the heat pump calculator for programs in your state.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Electric Furnace Cost',
+    description: 'Electric resistance furnaces cost $1,600-$4,000 installed but run at COP 1.0 — the most expensive heat to operate. A heat pump costs more upfront and runs 50-70% cheaper.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Electric Furnace Cost 2026 — Install Price vs. a Heat Pump"
+  description="An electric furnace costs $1,600-$4,000 installed but runs at COP 1.0 — the most expensive heat to operate. A heat pump costs more upfront and runs 50-70% cheaper."
+  active="/heat-pump-cost-calculator/"
+  ogImage="/assets/topic-images/heat-pump-hero-photo.png"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: 'Electric furnace', href: '/electric-furnace-cost-calculator/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heating · Electric furnace</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Electric Furnace Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      An electric resistance furnace is cheap to install but the most expensive common system to run. Here is the honest math — and why a heat pump, though pricier upfront, almost always wins on total cost.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $1,600-$4,000 installed, but electric resistance heat is the most expensive to run (COP 1.0). A heat pump costs more upfront and runs 50-70% cheaper — compare before you buy.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10">
+    <div class="card p-5 md:p-6">
+      <h2 class="text-xl font-semibold text-ink-900">What an electric furnace costs — and what it really costs you</h2>
+      <p class="mt-3 text-sm text-ink-700">
+        Installed price runs $1,600 to $4,000 (per NREL benchmark data and 2026 installer surveys). The catch is efficiency: electric resistance heat operates at a coefficient of performance (COP) of about 1.0, while a modern heat pump reaches roughly 3.0 or higher. The DOE notes switching from electric resistance to a heat pump can cut heating electricity use by about 50 to 70 percent — so the higher upfront cost of a heat pump is typically repaid through far lower running cost, plus you get efficient cooling in the same unit.
+      </p>
+      <p class="mt-4 text-sm text-ink-700">
+        Before you buy a resistance furnace on price alone, run the numbers on a heat pump for your state and home:
+      </p>
+      <p class="mt-4">
+        <a href="/heat-pump-cost-calculator/" class="btn btn-primary">Compare with the heat pump cost calculator →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related calculators</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+      <li><a href="/heat-pump-cost-calculator/">Heat pump cost calculator</a></li>
+      <li><a href="/gas-furnace-replacement-cost-calculator/">Gas furnace replacement cost calculator</a></li>
+      <li><a href="/heat-pump-vs-gas-furnace/">Heat pump vs. gas furnace</a></li>
+      <li><a href="/insulation-cost-calculator/">Insulation cost calculator</a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
