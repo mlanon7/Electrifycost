@@ -21,7 +21,10 @@ const faq = [
 const schemaJsonLd = [
   {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'WebApplication',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     name: 'Heat Pump Cost for 3,000 sqft Home',
     description: 'Planning-range installed cost for a 3.5-4 ton heat pump in a 3,000 sqft home, with multi-zone design guidance.',
   },
@@ -75,12 +78,12 @@ const schemaJsonLd = [
   <section class="container-wide pb-12">
     <h2 class="text-xl font-semibold text-ink-900">By square footage</h2>
     <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
-      <li><a href="/heat-pump-cost-1000-sqft/">1,000 sqft (1-1.5 ton) →</a></li>
-      <li><a href="/heat-pump-cost-1500-sqft/">1,500 sqft (2 ton) →</a></li>
-      <li><a href="/heat-pump-cost-2000-sqft/">2,000 sqft (2.5 ton) →</a></li>
-      <li><a href="/heat-pump-cost-2500-sqft/">2,500 sqft (3 ton) →</a></li>
-      <li><a href="/heat-pump-cost-calculator/">Main calculator →</a></li>
-      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+      <li><a href="/heat-pump-cost-1000-sqft/">1,000 sqft (1-1.5 ton) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-1500-sqft/">1,500 sqft (2 ton) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-2000-sqft/">2,000 sqft (2.5 ton) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-2500-sqft/">2,500 sqft (3 ton) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-calculator/">Main calculator <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state <span aria-hidden="true">→</span></a></li>
     </ul>
   </section>
 

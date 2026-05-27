@@ -199,7 +199,7 @@ export default function ResultPanel({
       <div className="card p-4">
         <div className="flex items-baseline justify-between gap-2">
           <h3 className="text-sm font-semibold text-ink-900">Itemized cost breakdown</h3>
-          <span className="text-xs text-ink-500">Click a row for math &amp; sources</span>
+          <span className="text-xs text-ink-600">Click a row for math &amp; sources</span>
         </div>
         <table className="mt-2 w-full text-sm">
           <thead className="text-xs text-ink-600">
@@ -256,7 +256,7 @@ export default function ResultPanel({
                                 </span>
                               );
                             })}
-                            {result.sourceIds.length > 3 && <span className="text-ink-500"> and {result.sourceIds.length - 3} more below</span>}
+                            {result.sourceIds.length > 3 && <span className="text-ink-600"> and {result.sourceIds.length - 3} more below</span>}
                             .
                           </p>
                         )}

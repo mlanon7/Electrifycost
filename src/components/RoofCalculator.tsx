@@ -98,13 +98,13 @@ export default function RoofCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
           <label className="label" htmlFor="roofSqft">Roof area (sqft)</label>
           <input id="roofSqft" className="input" type="number" min={500} max={10000} step={50} value={roofSqft} onChange={e => setRoofSqft(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">Roof area ≈ floor area × 1.1–1.4 depending on pitch and overhangs.</p>
+          <p className="mt-1 text-[10px] text-ink-600">Roof area ≈ floor area × 1.1–1.4 depending on pitch and overhangs.</p>
         </div>
         <div>
           <label className="label" htmlFor="material">Material</label>
@@ -208,7 +208,7 @@ export default function RoofCalculator() {
                 : ' This roof type adds complexity — clay/wood shake adds $1–$3/W to solar costs because of special flashing.'}
             </p>
             {solarPlanned && (
-              <p className="mt-2 text-[11px] text-ink-500">
+              <p className="mt-2 text-[11px] text-ink-600">
                 Solar-ready prep adds an attic conduit run and a labeled main-panel breaker — saves $300–$1,500 when solar is installed later. <a href="/solar-panel-cost-calculator/" className="text-brand-700 font-medium">Run the solar calculator →</a>
               </p>
             )}

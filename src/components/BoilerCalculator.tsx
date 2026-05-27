@@ -184,7 +184,7 @@ export default function BoilerCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
@@ -253,7 +253,7 @@ export default function BoilerCalculator() {
             <p className="mt-2 text-sm text-ink-700">
               Air-to-water heat pumps (SpacePak, Chiltrix, Arctic Heat Pumps, Mitsubishi Ecodan) connect to your existing radiator/baseboard distribution. Capital cost is higher than a boiler — $14k–$30k installed — but operating cost is 50–65% lower, and you eliminate the carbon-monoxide and combustion risks of fuel-burning equipment.
             </p>
-            <p className="mt-2 text-[11px] text-ink-500">
+            <p className="mt-2 text-[11px] text-ink-600">
               Hydronic heat pumps typically work best with low-temperature distribution (in-floor or wall panel). Older high-temperature cast-iron baseboard may need supplemental backup.
             </p>
           </div>

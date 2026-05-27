@@ -80,6 +80,11 @@ const schemaJsonLd = [
   description={description}
   active="/heat-pump-water-heater-cost-calculator/"
   schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'HPWH by state', href: '/heat-pump-water-heater-cost-by-state/' },
+    { name: stateName, href: `/heat-pump-water-heater-cost-${stateCode.toLowerCase()}/` },
+  ]}
 >
   <section class="container-wide py-8 md:py-10">
     <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">{stateName}</p>
@@ -89,22 +94,25 @@ const schemaJsonLd = [
     <p class="mt-2 max-w-2xl text-sm text-ink-600 md:text-base">
       Estimate the installed cost of a hybrid heat pump water heater in {stateName}. Calibrated to local HVAC + plumber labor ({blendedMult.toFixed(2)}× the U.S. average), retail electricity ({electricityCents.toFixed(1)}¢/kWh), and natural-gas price for the operating-cost comparison.
     </p>
+    <p class="mt-3 max-w-2xl text-xs text-ink-600">
+      <strong>Planning range, not a contractor quote.</strong> Verify state and utility programs with the linked administrator before claiming — caps, eligibility, and timelines change.
+    </p>
 
     <div class="mt-4 grid gap-3 sm:grid-cols-3">
       <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Labor blend</div>
+        <div class="text-xs uppercase tracking-wider text-ink-600">Labor blend</div>
         <div class="mt-1 text-base font-semibold text-ink-900">{blendedMult.toFixed(2)}×</div>
-        <div class="text-xs text-ink-500">HVAC + plumber (BLS)</div>
+        <div class="text-xs text-ink-600">HVAC + plumber (BLS)</div>
       </div>
       <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Electricity</div>
+        <div class="text-xs uppercase tracking-wider text-ink-600">Electricity</div>
         <div class="mt-1 text-base font-semibold text-ink-900">{electricityCents.toFixed(1)}¢/kWh</div>
-        <div class="text-xs text-ink-500">EIA retail average</div>
+        <div class="text-xs text-ink-600">EIA retail average</div>
       </div>
       <div class="card p-3">
-        <div class="text-xs uppercase tracking-wider text-ink-500">Natural gas</div>
+        <div class="text-xs uppercase tracking-wider text-ink-600">Natural gas</div>
         <div class="mt-1 text-base font-semibold text-ink-900">${gasPrice.toFixed(2)}/therm</div>
-        <div class="text-xs text-ink-500">vs.-gas comparison</div>
+        <div class="text-xs text-ink-600">vs.-gas comparison</div>
       </div>
     </div>
   </section>
@@ -117,7 +125,7 @@ const schemaJsonLd = [
     <h2 class="text-xl font-semibold text-ink-900">HPWH rebates &amp; credits in {stateName}</h2>
     <div class="mt-3 overflow-x-auto">
       <table class="w-full text-left text-sm">
-        <thead class="border-b border-ink-200 text-xs uppercase tracking-wider text-ink-500">
+        <thead class="border-b border-ink-200 text-xs uppercase tracking-wider text-ink-600">
           <tr>
             <th class="py-2 pr-3">Program</th>
             <th class="py-2 pr-3">Type</th>

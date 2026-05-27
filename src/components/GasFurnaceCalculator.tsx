@@ -120,7 +120,7 @@ export default function GasFurnaceCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div className="md:col-span-2">
@@ -153,7 +153,7 @@ export default function GasFurnaceCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="annualHeat">Current annual heating cost ($)</label>
           <input id="annualHeat" className="input" type="number" min={0} max={6000} step={50} value={annualHeatingCost} onChange={e => setAnnualHeatingCost(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">If unsure, average US gas-heated home spends $700–$1,800/yr (EIA, 2024).</p>
+          <p className="mt-1 text-[10px] text-ink-600">If unsure, average US gas-heated home spends $700–$1,800/yr (EIA, 2024).</p>
         </div>
       </div>
 
@@ -197,7 +197,7 @@ export default function GasFurnaceCalculator() {
               In climate zone {climate}, a heat pump installed today replaces both heating <em>and</em> cooling. A modern cold-climate heat pump cuts heating energy use ~60% vs an 80% gas furnace — savings stack with whatever state rebate program your utility runs.
             </p>
             {elec && (
-              <p className="mt-2 text-[11px] text-ink-500">
+              <p className="mt-2 text-[11px] text-ink-600">
                 Your state: gas ${elec.natural_gas_dollars_per_therm.toFixed(2)}/therm, electricity {elec.electricity_cents_per_kwh.toFixed(1)}¢/kWh. <a href="/heat-pump-cost-calculator/" className="text-brand-700 font-medium">Run the heat-pump calculator →</a>
               </p>
             )}

@@ -99,7 +99,7 @@ export default function ThermostatCalculator() {
             placeholder="e.g., 94103"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -153,7 +153,7 @@ export default function ThermostatCalculator() {
             onChange={e => setAnnualHvacCost(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Sum your heating + cooling utility bills for the last 12 months. National average ~$1,500.</p>
+          <p className="mt-1 text-[11px] text-ink-600">Sum your heating + cooling utility bills for the last 12 months. National average ~$1,500.</p>
         </div>
       </div>
 

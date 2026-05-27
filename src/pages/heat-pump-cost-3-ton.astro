@@ -25,7 +25,10 @@ const faq = [
 const schemaJsonLd = [
   {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'WebApplication',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     name: '3-Ton Heat Pump Cost',
     description: 'Planning-range installed cost for a 3-ton (36,000 BTU/hr) heat pump — the most common residential size, suited to 1,500-2,000 sqft.',
   },
@@ -76,12 +79,12 @@ const schemaJsonLd = [
   <section class="container-wide pb-12">
     <h2 class="text-xl font-semibold text-ink-900">Heat pump cost by size</h2>
     <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
-      <li><a href="/heat-pump-cost-1-5-ton/">1.5-ton (~600-900 sqft) →</a></li>
-      <li><a href="/heat-pump-cost-2-ton/">2-ton (~900-1,300 sqft) →</a></li>
-      <li><a href="/heat-pump-cost-4-ton/">4-ton (~2,000-2,600 sqft) →</a></li>
-      <li><a href="/heat-pump-cost-5-ton/">5-ton (~2,600-3,200 sqft) →</a></li>
-      <li><a href="/heat-pump-cost-2000-sqft/">By home size (sqft) →</a></li>
-      <li><a href="/heat-pump-cost-by-state/">By state →</a></li>
+      <li><a href="/heat-pump-cost-1-5-ton/">1.5-ton (~600-900 sqft) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-2-ton/">2-ton (~900-1,300 sqft) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-4-ton/">4-ton (~2,000-2,600 sqft) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-5-ton/">5-ton (~2,600-3,200 sqft) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-2000-sqft/">By home size (sqft) <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-by-state/">By state <span aria-hidden="true">→</span></a></li>
     </ul>
   </section>
 

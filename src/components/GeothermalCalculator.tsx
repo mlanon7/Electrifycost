@@ -114,7 +114,7 @@ export default function GeothermalCalculator() {
             <option value={2027}>2027 (no federal)</option>
             <option value={2025}>2025 (historical — last 30% year)</option>
           </select>
-          <p className="mt-1 text-[11px] text-ink-500">25D credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
+          <p className="mt-1 text-[11px] text-ink-600">25D credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
         </div>
       </div>
 
@@ -141,7 +141,7 @@ export default function GeothermalCalculator() {
               <li className="flex justify-between gap-3"><span>System install ({loop} loop, fully loaded)</span><span className="tabular-nums">{fmtUSD(result.loopCost.mid)}</span></li>
               {existingDucts === 'yes' && <li className="flex justify-between gap-3"><span>Duct reuse credit</span><span className="tabular-nums text-brand-700">{fmtUSD(result.ductBonus.mid)}</span></li>}
               <li className="flex justify-between gap-3"><span>Permit + design engineering</span><span className="tabular-nums">{fmtUSD(result.permit.mid)}</span></li>
-              <li className="mt-2 border-t border-ink-100 pt-2 text-[11px] text-ink-500">Industry consolidates indoor unit + loop into a single per-ton installed figure: $3,500–$5,500/ton typical (HomeGuide 2026), up to $11,700/ton premium.</li>
+              <li className="mt-2 border-t border-ink-100 pt-2 text-[11px] text-ink-600">Industry consolidates indoor unit + loop into a single per-ton installed figure: $3,500–$5,500/ton typical (HomeGuide 2026), up to $11,700/ton premium.</li>
             </ul>
           </div>
           <div className="card p-4">

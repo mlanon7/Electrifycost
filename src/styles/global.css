@@ -56,13 +56,27 @@
   }
   :focus:not(:focus-visible) { outline: none; }
   :focus-visible {
-    outline: 2px solid theme('colors.brand.700');
+    outline: 3px solid theme('colors.brand.700');
     outline-offset: 2px;
     border-radius: 0.25rem;
-    box-shadow: 0 0 0 4px rgb(16 185 129 / 0.15);
+    /* White halo first, then brand ring — ensures the focus indicator stays
+       visible on brand-50/brand-100 surfaces (ResultPanel hero, guide CTAs)
+       where a pure brand-700 ring drops below 3:1 contrast. */
+    box-shadow: 0 0 0 5px #ffffff, 0 0 0 7px theme('colors.brand.700');
   }
   /* Smooth scrolling for in-page nav (guide pages especially). */
   html { scroll-behavior: smooth; }
+}
+
+/* WCAG 2.3.3 / best-practice — respect the user's reduced-motion preference.
+   Disables non-essential animation, transitions, and smooth scroll. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @layer components {
@@ -137,7 +151,7 @@
   .input {
     @apply block w-full rounded-md border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 shadow-inner-soft transition-colors;
     @apply focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-700/30;
-    @apply placeholder:text-ink-500;
+    @apply placeholder:text-ink-600;
   }
   .input:hover {
     @apply border-ink-300;
@@ -220,7 +234,7 @@
      but keep the look polished in case it does render in preview).
      ────────────────────────────────────────────────────────────── */
   .ad-slot {
-    @apply mx-auto my-8 flex min-h-[90px] w-full max-w-3xl items-center justify-center rounded-md border border-dashed border-ink-200 bg-ink-50 text-xs text-ink-500 print:hidden;
+    @apply mx-auto my-8 flex min-h-[90px] w-full max-w-3xl items-center justify-center rounded-md border border-dashed border-ink-200 bg-ink-50 text-xs text-ink-600 print:hidden;
   }
 
   /* ──────────────────────────────────────────────────────────────

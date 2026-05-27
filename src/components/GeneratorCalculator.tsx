@@ -158,7 +158,7 @@ export default function GeneratorCalculator() {
             placeholder="e.g., 33101"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -212,7 +212,7 @@ export default function GeneratorCalculator() {
             onChange={e => setAnnualHours(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Avg U.S. household experiences ~8 outage-hours/year; hurricane regions average 40-120 hours.</p>
+          <p className="mt-1 text-[11px] text-ink-600">Avg U.S. household experiences ~8 outage-hours/year; hurricane regions average 40-120 hours.</p>
         </div>
       </div>
 

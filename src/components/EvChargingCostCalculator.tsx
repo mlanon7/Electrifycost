@@ -65,7 +65,7 @@ export default function EvChargingCostCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
@@ -80,7 +80,7 @@ export default function EvChargingCostCalculator() {
         <div>
           <label className="label" htmlFor="miles">Annual miles</label>
           <input id="miles" className="input" type="number" min={3000} max={40000} step={500} value={annualMiles} onChange={e => setAnnualMiles(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">US avg: 12,000 mi/yr</p>
+          <p className="mt-1 text-[10px] text-ink-600">US avg: 12,000 mi/yr</p>
         </div>
 
         <div>
@@ -95,7 +95,7 @@ export default function EvChargingCostCalculator() {
         <div>
           <label className="label" htmlFor="gas">Gas price for comparison ($/gal)</label>
           <input id="gas" className="input" type="number" min={2} max={7} step={0.05} value={gasPrice} onChange={e => setGasPrice(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">US avg 2024: $3.45/gal</p>
+          <p className="mt-1 text-[10px] text-ink-600">US avg 2024: $3.45/gal</p>
         </div>
       </div>
 
@@ -135,7 +135,7 @@ export default function EvChargingCostCalculator() {
             <p className="mt-2 text-sm text-ink-700">
               Public DCFC averages $0.42/kWh — 2.5× the typical home rate. If you DC-fast-charge 50% of your miles, your operating cost can double. The biggest savings lever is just plugging in at home overnight.
             </p>
-            <p className="mt-2 text-[11px] text-ink-500">
+            <p className="mt-2 text-[11px] text-ink-600">
               TOU (time-of-use) home rates with EV plans (PG&amp;E EV2-A, ConEd VoltageReady) drop overnight rates to 8-12¢/kWh — saving another 30-50%.
             </p>
           </div>

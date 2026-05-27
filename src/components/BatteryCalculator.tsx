@@ -171,7 +171,7 @@ export default function BatteryCalculator() {
             placeholder="e.g., 02134"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -190,7 +190,7 @@ export default function BatteryCalculator() {
             onChange={e => setKwh(Number(e.target.value))}
             className="mt-2 w-full accent-brand-600"
           />
-          <div className="mt-1 flex justify-between text-[10px] text-ink-500">
+          <div className="mt-1 flex justify-between text-[10px] text-ink-600">
             <span>5 kWh (small)</span><span>13.5 kWh (Powerwall)</span><span>40 kWh (large)</span>
           </div>
         </div>
@@ -238,7 +238,7 @@ export default function BatteryCalculator() {
             <option value={2028}>2028 (no federal)</option>
             <option value={2025}>2025 (historical — last 30% year)</option>
           </select>
-          <p className="mt-1 text-[11px] text-ink-500">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
+          <p className="mt-1 text-[11px] text-ink-600">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
         </div>
       </div>
 
@@ -296,7 +296,7 @@ export default function BatteryCalculator() {
                 <li className="text-[11px] text-ink-600 leading-relaxed">{result.stateRebate.note}</li>
               )}
             </ul>
-            <p className="mt-3 text-[11px] text-ink-500">
+            <p className="mt-3 text-[11px] text-ink-600">
               Federal 25D credit (30% standalone battery ≥3 kWh) was terminated by OBBBA for property placed in service after 2025-12-31. State programs vary; verify income tier and capacity caps with the program administrator.
             </p>
           </div>
@@ -305,23 +305,23 @@ export default function BatteryCalculator() {
             <h3 className="text-sm font-semibold text-ink-900">Benefits estimate</h3>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Annual TOU savings</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Annual TOU savings</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{fmtUSD(result.tou)}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Resilience value</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Resilience value</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{fmtUSD(result.resilience)}/yr</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Useful cycles</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Useful cycles</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">~6,000 (LFP) / ~3,500 (NMC)</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Warranty (typical)</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Warranty (typical)</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">10 yr / 70% capacity</dd>
               </div>
             </dl>
-            <p className="mt-3 text-[11px] text-ink-500">
+            <p className="mt-3 text-[11px] text-ink-600">
               Resilience value is a conservative annualized figure; actual avoided-outage cost can be much higher during sustained outages or for medical-baseline households.
             </p>
           </div>

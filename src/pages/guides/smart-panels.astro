@@ -5,9 +5,9 @@ import RelatedGuides from '@/components/RelatedGuides.astro';
 const lastReviewed = '2026-05-01';
 const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Smart electrical panels in 2026: Span, Lumin, Schneider, and when load shedding beats them all', datePublished: '2026-03-06', dateModified: lastReviewed, author: { '@type': 'Organization', name: 'ElectrifyCost' } };
 ---
-<Layout title="Smart Electrical Panels 2026: Span, Lumin, Schneider" description="Comprehensive guide to smart electrical panels — Span Drive, Schneider Square D Energy Center, Lumin, and load-shed devices. When each makes sense." active="/guides/smart-panels/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/panel-upgrade-hero-photo.jpg" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Smart panels', href: '/guides/smart-panels/' }]}>
+<Layout title="Smart Electrical Panels 2026: Span, Lumin, Schneider" description="Span Drive, Schneider Square D Energy Center, Lumin, and load-shed devices: when each smart-panel option pays back vs. a traditional 200A service upgrade." active="/guides/smart-panels/" schemaJsonLd={schemaJsonLd} ogImage="/assets/topic-images/panel-upgrade-hero-photo.jpg" breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: 'Smart panels', href: '/guides/smart-panels/' }]}>
   <article class="container-wide max-w-3xl py-10 prose-guide">
-    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Smart electrical panels in 2026</h1><p class="mt-3 text-sm text-ink-500">Last reviewed {lastReviewed} · ~8 min read</p></header>
+    <header class="not-prose mb-8"><p class="eyebrow">Guide</p><h1 class="text-3xl md:text-4xl">Smart electrical panels in 2026</h1><p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · ~8 min read</p></header>
     <p class="lede">A smart panel can save you a $5,000 service upgrade and unlock electrification on existing 100A service — but only if the math works for your specific situation. This guide breaks down the four product approaches (full smart panel, add-on smart load center, monitoring-only, load-shed device), when each pays back, and the install gotchas that contractors often miss.</p>
     <div class="guide-toc not-prose">
       <a href="#what-smart-actually-means">1. What "smart" actually means</a>
@@ -16,7 +16,7 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
       <a href="#when-traditional-wins">4. When traditional wins</a>
       <a href="#span-drive-vs-schneider-square-d-energy-center-vs">5. Span Drive vs Schneider Square D Energy Center vs Lumin</a>
       <a href="#federal-state-incentives">6. Federal + state incentives</a>
-      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator &rarr;</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator <span aria-hidden="true">→</span></a>
     </div>
 
 <h2 id="what-smart-actually-means">1. What "smart" actually means</h2>
@@ -58,7 +58,7 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'Article', hea
       <li><a href="https://www.se.com/us/en/product-range/65420-square-d-pulse-energy-management-system/">Schneider Square D Pulse Energy Center</a></li>
       <li><a href="https://www.luminsmart.com/">Lumin Smart Panel</a></li>
     </ul>
-    <p class="mt-8"><a href="/smart-panel-cost-calculator/" class="font-medium text-brand-700">Run the smart panel calculator →</a></p>
+    <p class="mt-8"><a href="/smart-panel-cost-calculator/" class="font-medium text-brand-700">Run the smart panel calculator <span aria-hidden="true">→</span></a></p>
   </article>
   <RelatedGuides slug="smart-panels" />
   <div class="container-wide"><AdSlot /></div>

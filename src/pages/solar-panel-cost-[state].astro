@@ -64,6 +64,9 @@ const schemaJsonLd = {
     <p class="mt-3 text-base text-ink-700">
       Planning-range installed cost for residential solar PV in {name}, adjusted for state labor multipliers and PVWatts production yield. 25D federal credit expired 2025-12-31; state and utility programs still apply.
     </p>
+    <p class="mt-3 max-w-2xl text-xs text-ink-600">
+      <strong>Planning range, not a contractor quote.</strong> Verify state and utility programs with the linked administrator before claiming — caps, eligibility, and timelines change.
+    </p>
   </section>
 
   <section class="container-tight pb-10">
@@ -77,27 +80,27 @@ const schemaJsonLd = {
       <div class="card p-4">
         <h2 class="text-lg font-semibold text-ink-900">Cost basics</h2>
         <dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Mid $/W</dt><dd class="tabular-nums">${midPerW.toFixed(2)}</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Range $/W</dt><dd class="tabular-nums">${lowPerW.toFixed(2)}–${highPerW.toFixed(2)}</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">State labor multiplier</dt><dd class="tabular-nums">{mult.toFixed(2)}×</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">PV specific yield</dt><dd class="tabular-nums">{yieldKwhPerKw} kWh/kW/yr</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">Mid $/W</dt><dd class="tabular-nums">${midPerW.toFixed(2)}</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">Range $/W</dt><dd class="tabular-nums">${lowPerW.toFixed(2)}–${highPerW.toFixed(2)}</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">State labor multiplier</dt><dd class="tabular-nums">{mult.toFixed(2)}×</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">PV specific yield</dt><dd class="tabular-nums">{yieldKwhPerKw} kWh/kW/yr</dd></div>
         </dl>
       </div>
       <div class="card p-4">
         <h2 class="text-lg font-semibold text-ink-900">Production &amp; payback</h2>
         <dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">7 kW annual production</dt><dd class="tabular-nums">{annualKwh.toLocaleString()} kWh</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Local electricity rate</dt><dd class="tabular-nums">${elecRate.toFixed(2)}/kWh</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Annual bill displaced</dt><dd class="tabular-nums">${Math.round(annualValue).toLocaleString()}/yr</dd></div>
-          <div><dt class="text-[11px] uppercase tracking-wide text-ink-500">Simple payback (mid)</dt><dd class="tabular-nums">{paybackYrs} yr</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">7 kW annual production</dt><dd class="tabular-nums">{annualKwh.toLocaleString()} kWh</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">Local electricity rate</dt><dd class="tabular-nums">${elecRate.toFixed(2)}/kWh</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">Annual bill displaced</dt><dd class="tabular-nums">${Math.round(annualValue).toLocaleString()}/yr</dd></div>
+          <div><dt class="text-[11px] uppercase tracking-wide text-ink-600">Simple payback (mid)</dt><dd class="tabular-nums">{paybackYrs} yr</dd></div>
         </dl>
-        <p class="mt-3 text-[11px] text-ink-500">25D federal credit (30%) expired 2025-12-31. State and utility programs may shorten payback. Net-metering successor tariff (NEM 3.0 in CA, similar in HI, AZ, NY) reduces export value.</p>
+        <p class="mt-3 text-[11px] text-ink-600">25D federal credit (30%) expired 2025-12-31. State and utility programs may shorten payback. Net-metering successor tariff (NEM 3.0 in CA, similar in HI, AZ, NY) reduces export value.</p>
       </div>
     </div>
   </section>
 
   <section class="container-tight pb-10">
-    <a href="/solar-panel-cost-calculator/" class="btn-primary">Run the full solar calculator →</a>
+    <a href="/solar-panel-cost-calculator/" class="btn-primary">Run the full solar calculator <span aria-hidden="true">→</span></a>
   </section>
 
   <section class="container-tight pb-10">

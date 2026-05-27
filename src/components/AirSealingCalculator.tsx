@@ -93,7 +93,7 @@ export default function AirSealingCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
@@ -166,7 +166,7 @@ export default function AirSealingCalculator() {
             <p className="mt-2 text-sm text-ink-700">
               Air leakage is invisible until measured. A leaky home (ACH50 ≥ 10) loses 30-50% more conditioned air than a sealed one (ACH50 ≤ 5). Sealing before insulation, heat pump, or window upgrades makes every downstream project work better — and often smaller.
             </p>
-            <p className="mt-2 text-[11px] text-ink-500">
+            <p className="mt-2 text-[11px] text-ink-600">
               Pair with a blower-door test (~$200-400 standalone) to measure pre/post.
             </p>
           </div>

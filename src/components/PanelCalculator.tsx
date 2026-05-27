@@ -104,7 +104,7 @@ export default function PanelCalculator({ initialState = 'CA' }: { initialState?
           <div>
             <label className="label" htmlFor="zip">ZIP</label>
             <input id="zip" className="input" inputMode="numeric" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-            <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+            <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
           </div>
         </div>
 
@@ -155,7 +155,7 @@ export default function PanelCalculator({ initialState = 'CA' }: { initialState?
             <option value="moderate_income">Moderate income</option>
             <option value="low_income">Low income</option>
           </select>
-          <p className="mt-1 text-xs text-ink-500">Used for income-qualified rebates (e.g., DOE HEEHRA).</p>
+          <p className="mt-1 text-xs text-ink-600">Used for income-qualified rebates (e.g., DOE HEEHRA).</p>
         </div>
 
         <div>

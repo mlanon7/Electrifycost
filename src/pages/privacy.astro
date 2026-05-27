@@ -1,0 +1,101 @@
+---
+import Layout from '@/components/Layout.astro';
+
+const lastReviewed = '2026-05-27';
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Privacy Policy',
+  description: 'How ElectrifyCost handles cookies, analytics, consent, and user data.',
+  url: 'https://electrifycost.com/privacy/',
+  dateModified: lastReviewed,
+};
+---
+<Layout
+  title="Privacy Policy — ElectrifyCost"
+  description="How ElectrifyCost handles cookies, analytics, consent, and user data. No personal data sold, no ad targeting outside Google's standard signals."
+  active="/privacy/"
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Privacy Policy', href: '/privacy/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Legal</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">Privacy Policy</h1>
+    <p class="mt-3 max-w-prose text-ink-700">
+      ElectrifyCost is a calculator-first content site. We collect minimal data, never sell personal information, and gate all analytics behind a cookie-consent banner. This page documents what we collect, why, and how to opt out.
+    </p>
+    <p class="mt-2 text-sm text-ink-600">Last reviewed <time datetime={lastReviewed}>{lastReviewed}</time>.</p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">What we collect</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We collect aggregated, non-personally-identifying usage data through two analytics tools so we can improve the calculators and content:
+    </p>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li>
+        <strong>Google Analytics 4 (GA4)</strong> &mdash; standard web analytics (pages viewed, session duration, country, device type). Loads only after you grant consent. Sets cookies <code>_ga</code> and <code>_ga_*</code>.
+      </li>
+      <li>
+        <strong>Ahrefs Web Analytics</strong> &mdash; cookieless traffic measurement. Uses a session-scoped device signature rather than persistent identifiers. No cookies set; no consent gate required under EU ePrivacy guidance on cookieless analytics.
+      </li>
+    </ul>
+    <p class="mt-3 max-w-prose text-ink-700">
+      We do <strong>not</strong> collect names, email addresses, phone numbers, or payment information. The calculators run entirely in your browser; calculator inputs never reach our servers. We do not maintain user accounts. We do not send marketing email. We do not host comment forms or contact forms.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Consent &amp; cookies</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We implement Google&rsquo;s Consent Mode v2 with a default state of <em>denied</em> for all four storage categories (<code>ad_storage</code>, <code>ad_user_data</code>, <code>ad_personalization</code>, <code>analytics_storage</code>). GA4 will not set tracking cookies until you click <strong>Accept</strong> on the cookie banner.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      Your decision is stored in your browser&rsquo;s <code>localStorage</code> under the key <code>ec_consent_v1</code>. To change your decision, clear your browser&rsquo;s storage for this site and reload; the banner will reappear. If you decline, GA4 cookies are never set; only the cookieless Ahrefs measurement remains, and only in aggregate.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Advertising &amp; affiliate links</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      ElectrifyCost is supported by passive monetization only: display advertising (planned, not yet live) and product affiliate links (planned, not yet live). When ads or affiliates go live, you will see a visible disclosure on every page that contains them. We will never gate calculators behind ads. We will never let affiliate revenue change calculator math, recommendations, or rebate amounts &mdash; the methodology at <a href="/methodology/" class="text-brand-700 hover:underline">/methodology/</a> documents the inputs in full.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      We do not run lead-generation forms, contractor-referral widgets, or email-capture funnels.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Third parties</h2>
+    <ul class="mt-3 space-y-2 text-ink-700">
+      <li><strong>Google (GA4):</strong> traffic analytics, gated by consent. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Google&rsquo;s privacy policy</a>.</li>
+      <li><strong>Ahrefs Analytics:</strong> cookieless traffic measurement. <a href="https://ahrefs.com/privacy" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Ahrefs&rsquo; privacy policy</a>.</li>
+      <li><strong>Vercel:</strong> static hosting and CDN. Standard web-server access logs (IP address, request URL, user agent, timestamp) are retained briefly for security and abuse-prevention purposes. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Vercel&rsquo;s privacy policy</a>.</li>
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Data retention</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      GA4 retention is set to 14 months (the maximum allowed for the standard property tier). Aggregate Ahrefs reports retain only aggregated, non-identifying metrics. Vercel server logs are retained for the periods documented in their privacy policy. We do not maintain a personal-data database of our own.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Your rights</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Under GDPR, CCPA/CPRA, and similar U.S. state privacy laws (Virginia, Colorado, Connecticut, Utah, and others), you have the right to access, correct, delete, or opt out of the sale of your personal data. Because we do not collect personally identifying data, hold no user accounts, and do not sell personal information, there is generally no personal dataset to access, correct, or delete. To withdraw consent for analytics cookies, clear your browser storage for this site or use the cookie banner that reappears on a fresh visit.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      <strong>California residents (CCPA/CPRA):</strong> we do not sell or share personal information for cross-context behavioral advertising. We do not have a financial incentive program tied to personal data collection. We honor browser-level Global Privacy Control (GPC) signals where technically feasible.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Children</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      ElectrifyCost is intended for U.S. homeowners. The site is not directed to children under 13, and we do not knowingly collect personal information from children. If you believe a child has provided personal information, contact us and we will delete it.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Changes to this policy</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We will update this page when our analytics, advertising, or affiliate posture changes. The &ldquo;Last reviewed&rdquo; date at the top of this page reflects the most recent material change. We will not retroactively apply broader data collection without your renewed consent &mdash; if our analytics or third-party set changes, the cookie banner will reset and you will be asked to consent again.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Contact</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Privacy questions or requests: <a href="mailto:mkml.inc@gmail.com" class="text-brand-700 hover:underline">mkml.inc@gmail.com</a>. Please include &ldquo;Privacy&rdquo; in the subject line so we can respond promptly.
+    </p>
+
+    <p class="mt-10 text-sm text-ink-600">See also: <a href="/terms/" class="text-brand-700 hover:underline">Terms of Use</a> &middot; <a href="/about/" class="text-brand-700 hover:underline">About</a> &middot; <a href="/methodology/" class="text-brand-700 hover:underline">Methodology</a>.</p>
+  </section>
+</Layout>

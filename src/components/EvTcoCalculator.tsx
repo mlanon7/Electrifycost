@@ -175,7 +175,7 @@ export default function EvTcoCalculator() {
             placeholder="e.g., 94103"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -253,7 +253,7 @@ export default function EvTcoCalculator() {
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Acquisition date</label>
           <input type="date" className="input mt-1 w-full" value={acquisitionDate}
             onChange={e => setAcquisitionDate(e.target.value)} />
-          <p className="mt-1 text-[11px] text-ink-500">30D + 25E credits ended for vehicles acquired after 2025-09-30 (OBBBA).</p>
+          <p className="mt-1 text-[11px] text-ink-600">30D + 25E credits ended for vehicles acquired after 2025-09-30 (OBBBA).</p>
         </div>
 
         <div>

@@ -183,7 +183,7 @@ export default function AcCalculator() {
             placeholder="e.g., 30303"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -285,23 +285,23 @@ export default function AcCalculator() {
             <h3 className="text-sm font-semibold text-ink-900">Operating cost</h3>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Climate zone</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Climate zone</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{climate}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">SEER2 selected</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">SEER2 selected</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{result.seer}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Annual cooling kWh</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Annual cooling kWh</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{result.annualKwh.toLocaleString()}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Annual cost</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Annual cost</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{fmtUSD(result.annualCost)}</dd>
               </div>
               <div className="col-span-2">
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Savings vs SEER 13 baseline</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Savings vs SEER 13 baseline</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-brand-700">{fmtUSD(result.annualSavings)}/yr</dd>
               </div>
             </dl>

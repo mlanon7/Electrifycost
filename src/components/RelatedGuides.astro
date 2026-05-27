@@ -23,7 +23,7 @@ const siblings = meta?.siblings?.map(s => GUIDE_META[s]).filter(Boolean) ?? [];
       ))}
     </ul>
     <div class="mt-5 flex flex-wrap gap-3">
-      <a href={meta.calculatorHref} class="btn-primary">Open the {meta.title.toLowerCase()} calculator →</a>
+      <a href={meta.calculatorHref} class="btn-primary">Open the {meta.title.toLowerCase()} calculator <span aria-hidden="true">→</span></a>
     </div>
   </section>
 )}

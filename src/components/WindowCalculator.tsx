@@ -85,7 +85,7 @@ export default function WindowCalculator() {
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of windows</label>
           <input type="number" min={1} max={60} step={1} value={count}
             onChange={e => setCount(Number(e.target.value) || 0)} className="input mt-1 w-full" />
-          <p className="mt-1 text-[11px] text-ink-500">Typical 1,800 sqft home: 12-18 windows</p>
+          <p className="mt-1 text-[11px] text-ink-600">Typical 1,800 sqft home: 12-18 windows</p>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Frame material</label>

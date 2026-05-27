@@ -206,7 +206,7 @@ export default function SolarCalculator() {
             placeholder="e.g., 90210"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -225,7 +225,7 @@ export default function SolarCalculator() {
             onChange={e => setKw(Number(e.target.value))}
             className="mt-2 w-full accent-brand-600"
           />
-          <div className="mt-1 flex justify-between text-[10px] text-ink-500">
+          <div className="mt-1 flex justify-between text-[10px] text-ink-600">
             <span>3 kW (small)</span><span>7 kW (typical)</span><span>15 kW (large)</span>
           </div>
         </div>
@@ -284,7 +284,7 @@ export default function SolarCalculator() {
             onChange={e => setAnnualKwh(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">U.S. average = ~10,500 kWh/year (EIA)</p>
+          <p className="mt-1 text-[11px] text-ink-600">U.S. average = ~10,500 kWh/year (EIA)</p>
         </div>
 
         <div>
@@ -295,7 +295,7 @@ export default function SolarCalculator() {
             <option value={2028}>2028 (no federal)</option>
             <option value={2025}>2025 (historical — last 30% year)</option>
           </select>
-          <p className="mt-1 text-[11px] text-ink-500">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
+          <p className="mt-1 text-[11px] text-ink-600">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
         </div>
       </div>
 
@@ -353,7 +353,7 @@ export default function SolarCalculator() {
                 <li className="text-[11px] text-ink-600 leading-relaxed">{result.stateNote}</li>
               )}
             </ul>
-            <p className="mt-3 text-[11px] text-ink-500">
+            <p className="mt-3 text-[11px] text-ink-600">
               25D credit is non-refundable but carries forward. SRECs and production tariffs (MA SMART, NJ SuSI, IL Shines) are paid over 10-15 years, not upfront.
             </p>
           </div>
@@ -363,23 +363,23 @@ export default function SolarCalculator() {
             <h3 className="text-sm font-semibold text-ink-900">Production &amp; offset</h3>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Annual production</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Annual production</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{result.annualProduction.toLocaleString()} kWh</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">% of your usage</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">% of your usage</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{result.offsetPct}%</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Specific yield</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Specific yield</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{yieldKwhPerKw} kWh/kW/yr</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">25-yr savings</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">25-yr savings</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{fmtUSD(result.lifetimeSavings)}</dd>
               </div>
             </dl>
-            <p className="mt-3 text-[11px] text-ink-500">
+            <p className="mt-3 text-[11px] text-ink-600">
               Production uses NREL PVWatts-style state averages. Real output depends on roof orientation, tilt, and shade. Rate escalation (typically 2-4%/yr) is not modeled — actual savings usually beat this estimate.
             </p>
           </div>

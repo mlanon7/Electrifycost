@@ -59,7 +59,7 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
               <div class="card p-4">
                 <dt class="text-sm font-semibold text-ink-900" id={id}>
                   {t.term}
-                  {t.expansion && <span class="ml-1.5 text-xs font-normal text-ink-500">({t.expansion})</span>}
+                  {t.expansion && <span class="ml-1.5 text-xs font-normal text-ink-600">({t.expansion})</span>}
                 </dt>
                 <dd class="mt-1.5 text-sm text-ink-700">{t.definition}</dd>
               </div>
@@ -69,7 +69,7 @@ const schemaJsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       );
     })}
 
-    <p class="mt-12 text-xs text-ink-500">
+    <p class="mt-12 text-xs text-ink-600">
       Spotted something we should add or correct? Sources for our definitions are catalogued on the <a href="/sources/">sources page</a>.
     </p>
   </section>

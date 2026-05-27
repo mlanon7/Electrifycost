@@ -164,7 +164,7 @@ export default function InsulationCalculator() {
             placeholder="e.g., 02134"
             className="input mt-1 w-full"
           />
-          <p className="mt-1 text-[11px] text-ink-500">Optional — auto-detects state</p>
+          <p className="mt-1 text-[11px] text-ink-600">Optional — auto-detects state</p>
         </div>
 
         <div>
@@ -279,25 +279,25 @@ export default function InsulationCalculator() {
             <h3 className="text-sm font-semibold text-ink-900">Savings &amp; rebates</h3>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">HVAC savings %</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">HVAC savings %</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{Math.round(result.savingsPct * 100)}%</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Climate zone</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Climate zone</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{climate}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">Annual HVAC cost</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">Annual HVAC cost</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-ink-900">{fmtUSD(result.annualHvac)}</dd>
               </div>
               <div>
-                <dt className="text-[11px] uppercase tracking-wide text-ink-500">DOE HOMES rebate</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-ink-600">DOE HOMES rebate</dt>
                 <dd className="mt-0.5 font-medium tabular-nums text-brand-700">
                   {result.homes.mid > 0 ? `−${fmtUSD(result.homes.mid)}` : 'not eligible'}
                 </dd>
               </div>
             </dl>
-            <p className="mt-3 text-[11px] text-ink-500">
+            <p className="mt-3 text-[11px] text-ink-600">
               25C tax credit for insulation ended 2025-12-31. DOE HOMES rebate availability varies by state — see /rebates/ for current state status. State + utility programs (Mass Save, NYSERDA, Energy Trust of Oregon) often layer on top.
             </p>
           </div>

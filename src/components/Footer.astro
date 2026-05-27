@@ -3,7 +3,7 @@ import { siteLastReviewed } from '@/lib/data';
 const year = new Date().getFullYear();
 ---
 <footer class="mt-16 border-t border-ink-200 bg-ink-50 print:hidden">
-  <div class="container-wide grid gap-8 py-10 md:grid-cols-4">
+  <div class="container-wide grid gap-8 py-10 md:grid-cols-5">
     <div class="md:col-span-2">
       <a href="/" class="inline-flex shrink-0" aria-label="ElectrifyCost home">
         <img
@@ -19,7 +19,7 @@ const year = new Date().getFullYear();
       </p>
     </div>
     <div>
-      <h4 class="text-sm font-semibold text-ink-900">Calculators</h4>
+      <h2 class="text-sm font-semibold text-ink-900">Calculators</h2>
       <ul class="mt-3 space-y-1.5 text-sm">
         <li><a href="/heat-pump-cost-calculator/">Heat pump</a></li>
         <li><a href="/ev-charger-installation-cost-calculator/">EV charger</a></li>
@@ -29,13 +29,20 @@ const year = new Date().getFullYear();
       </ul>
     </div>
     <div>
-      <h4 class="text-sm font-semibold text-ink-900">Trust</h4>
+      <h2 class="text-sm font-semibold text-ink-900">Trust</h2>
       <ul class="mt-3 space-y-1.5 text-sm">
         <li><a href="/about/">About</a></li>
         <li><a href="/methodology/">Methodology</a></li>
         <li><a href="/sources/">Sources</a></li>
         <li><a href="/rebates/">Rebates &amp; credits</a></li>
         <li><a href="/glossary/">Glossary</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-sm font-semibold text-ink-900">Legal</h2>
+      <ul class="mt-3 space-y-1.5 text-sm">
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/terms/">Terms of Use</a></li>
       </ul>
     </div>
   </div>
@@ -45,7 +52,7 @@ const year = new Date().getFullYear();
       <p>Not affiliated with any utility, installer, or government agency. Tax credit and rebate eligibility, caps, and timelines are subject to change &mdash; verify with the linked primary source before claiming.</p>
     </div>
     {siteLastReviewed && (
-      <div class="container-wide pb-5 text-xs text-ink-500">
+      <div class="container-wide pb-5 text-xs text-ink-600">
         <p class="tabular-nums">Data last refreshed <time datetime={siteLastReviewed}>{siteLastReviewed}</time>. Source-by-source review dates are listed at <a href="/sources/" class="text-brand-700 hover:underline">/sources/</a>.</p>
       </div>
     )}

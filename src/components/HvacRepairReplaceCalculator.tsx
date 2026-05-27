@@ -191,7 +191,7 @@ export default function HvacRepairReplaceCalculator() {
         <div>
           <label className="label" htmlFor="repair">Quoted repair cost ($)</label>
           <input id="repair" className="input" type="number" min={0} max={20000} step={50} value={repairCost} onChange={e => setRepairCost(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">Include parts + labor.</p>
+          <p className="mt-1 text-[10px] text-ink-600">Include parts + labor.</p>
         </div>
 
         {equipment === 'central_ac' && (
@@ -240,7 +240,7 @@ export default function HvacRepairReplaceCalculator() {
             <ul className="mt-3 space-y-1.5 text-sm">
               <li className="flex justify-between"><span>Like-for-like ({typical.label})</span><span className="tabular-nums">{fmtUSD(typical.mid)}</span></li>
               <li className="flex justify-between"><span>Heat-pump replacement (heat + AC)</span><span className="tabular-nums">{fmtUSD(HEAT_PUMP_ALT.mid)}</span></li>
-              <li className="text-[11px] text-ink-500 mt-2">Heat pump replaces both heating and AC simultaneously. State rebates can subtract $1,000–$10,000.</li>
+              <li className="text-[11px] text-ink-600 mt-2">Heat pump replaces both heating and AC simultaneously. State rebates can subtract $1,000–$10,000.</li>
             </ul>
           </div>
           <div className="card p-4">
@@ -248,7 +248,7 @@ export default function HvacRepairReplaceCalculator() {
             <p className="mt-2 text-sm text-ink-700">
               Standard HVAC industry guidance: if a repair on equipment 10+ years old exceeds 50% of replacement cost, replace it. Energy Star and ASHRAE both reference this rule of thumb in their consumer guidance.
             </p>
-            <p className="mt-2 text-[11px] text-ink-500">
+            <p className="mt-2 text-[11px] text-ink-600">
               Your case: repair {fmtUSD(repairCost)} / replacement {fmtUSD(typical.mid)} = {Math.round((repairCost / typical.mid) * 100)}%
             </p>
           </div>

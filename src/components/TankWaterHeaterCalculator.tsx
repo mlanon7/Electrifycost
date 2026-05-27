@@ -163,7 +163,7 @@ export default function TankWaterHeaterCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
@@ -233,7 +233,7 @@ export default function TankWaterHeaterCalculator() {
               <li className="flex justify-between"><span>HPWH (50-gal hybrid)</span><span className="tabular-nums">{fmtUSD(result.hpwhGross.mid)}</span></li>
               <li className="flex justify-between"><span>Tankless gas</span><span className="tabular-nums">{fmtUSD(TANKLESS_GAS_BASELINE.mid)}</span></li>
             </ul>
-            <p className="mt-2 text-[11px] text-ink-500">HPWH typically saves $300-500/yr in operating cost vs gas tank; HEEHRA rebate up to $1,750 for income-qualified buyers.</p>
+            <p className="mt-2 text-[11px] text-ink-600">HPWH typically saves $300-500/yr in operating cost vs gas tank; HEEHRA rebate up to $1,750 for income-qualified buyers.</p>
           </div>
         </div>
 

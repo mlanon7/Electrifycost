@@ -1,0 +1,87 @@
+---
+import Layout from '@/components/Layout.astro';
+
+const lastReviewed = '2026-05-27';
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Terms of Use',
+  description: 'Terms of use for ElectrifyCost. Planning estimates, not contractor quotes; no professional advice; verify with licensed contractors before contracting.',
+  url: 'https://electrifycost.com/terms/',
+  dateModified: lastReviewed,
+};
+---
+<Layout
+  title="Terms of Use — ElectrifyCost"
+  description="Terms of use for ElectrifyCost. Planning estimates, not contractor quotes; no professional advice; verify with licensed contractors before contracting."
+  active="/terms/"
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Terms of Use', href: '/terms/' },
+  ]}
+>
+  <section class="container-tight py-10 md:py-14">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">Legal</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">Terms of Use</h1>
+    <p class="mt-3 max-w-prose text-ink-700">
+      ElectrifyCost (the &ldquo;Site&rdquo;) is a free, calculator-first content site that publishes planning-range cost estimates and source-cited research on residential electrification projects. By using the Site you agree to these terms.
+    </p>
+    <p class="mt-2 text-sm text-ink-600">Last reviewed <time datetime={lastReviewed}>{lastReviewed}</time>.</p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">No professional advice</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      ElectrifyCost is published by Martin Lashgari, Ph.D., P.E., PMP, a licensed structural engineer. The Site is intended for informational and educational purposes only. <strong>It is not engineering, HVAC, electrical, plumbing, medical, financial, or legal advice.</strong> A structural engineer is not a licensed HVAC or electrical professional and is not licensed to design or install the systems modeled by these calculators. Before contracting, financing, or making other decisions based on estimates from this Site, consult a contractor or other professional licensed in the relevant discipline and in your jurisdiction.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Planning estimates, not contractor quotes</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Every cost estimate on the Site is a <strong>planning range</strong> calibrated to public benchmarks (DOE, EIA, NREL, LBNL, BLS, ENERGY STAR, and similar primary sources). Estimates are not bids, not contracts, and not guarantees of any specific contractor&rsquo;s pricing. Actual prices vary with local labor market, site conditions, equipment availability, code requirements, permit fees, and contractor business model. Verify with one or more licensed contractors in your area before signing a contract.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Rebate and credit eligibility</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Federal credits, state programs, and utility rebates listed on the Site reflect published terms as of the date marked &ldquo;Last reviewed&rdquo; on each relevant page. Programs are subject to legislative change, funding caps, application backlogs, and eligibility requirements that are not visible from a cost calculator (e.g. income-qualification, eligible census tract, equipment qualified-product-list status, ownership status, prior-claim limits). <strong>Verify program rules directly with the linked program administrator before relying on a rebate or credit in your purchase decision.</strong> Some incentives shown are flagged as <em>potential</em> rather than confirmed; those are not subtracted from net cost.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">No warranty</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      The Site, the calculators, and the content are provided <strong>&ldquo;as is&rdquo;</strong> without warranty of any kind, express or implied, including but not limited to merchantability, fitness for a particular purpose, accuracy, timeliness, or non-infringement. We make reasonable efforts to keep calculator inputs current and cite primary sources, but data drift and source changes are inevitable. We disclaim liability for decisions made in reliance on Site content. To the maximum extent permitted by law, our aggregate liability for any claim arising from your use of the Site is limited to the amount you have paid us for access to the Site, which is zero.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Affiliate disclosure</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      ElectrifyCost participates (or plans to participate) in affiliate-product programs including Amazon Associates. When an affiliate link is present on a page, a visible disclosure appears on that page. We may earn a commission on qualifying purchases made through those links at no additional cost to you. Affiliate revenue does not change calculator math, our incentive math, or our recommendations &mdash; the methodology at <a href="/methodology/" class="text-brand-700 hover:underline">/methodology/</a> documents inputs in full.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Intellectual property</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Site content (text, calculator logic, structure, original photography, custom illustrations) is &copy; ElectrifyCost. You may quote short passages with attribution and a link back to the original page. Bulk republication, scraping for training data, or commercial reuse without written permission is not permitted. The Site uses primary-source data from federal and state agencies; those data are public, but our calibration, normalization, and synthesis are not.
+    </p>
+    <p class="mt-3 max-w-prose text-ink-700">
+      AI-assistant crawlers (GPTBot, ClaudeBot, Google-Extended, and similar) are explicitly allowed in our <a href="/robots.txt" class="text-brand-700 hover:underline">robots.txt</a> for indexing and citation. We ask that you cite ElectrifyCost when you use this content.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Third-party links</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      The Site links to government agencies, utility programs, manufacturer pages, and other third-party resources. We are not responsible for the accuracy, availability, or content of external sites. A link is not an endorsement.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Changes to these terms</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      We may update these Terms when the Site&rsquo;s scope, monetization, or legal environment changes. The &ldquo;Last reviewed&rdquo; date at the top of this page reflects the most recent material change. Continued use of the Site after a material update constitutes acceptance of the updated terms.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Governing law</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      These Terms are governed by the laws of the State of California, United States, without regard to its conflict-of-laws principles. Disputes arising from your use of the Site are subject to the exclusive jurisdiction of state and federal courts in California, except to the extent your state of residence requires a different venue under applicable consumer-protection law.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-ink-900">Contact</h2>
+    <p class="mt-2 max-w-prose text-ink-700">
+      Questions about these Terms: <a href="mailto:mkml.inc@gmail.com" class="text-brand-700 hover:underline">mkml.inc@gmail.com</a>. Please include &ldquo;Terms&rdquo; in the subject line.
+    </p>
+
+    <p class="mt-10 text-sm text-ink-600">See also: <a href="/privacy/" class="text-brand-700 hover:underline">Privacy Policy</a> &middot; <a href="/about/" class="text-brand-700 hover:underline">About</a> &middot; <a href="/methodology/" class="text-brand-700 hover:underline">Methodology</a>.</p>
+  </section>
+</Layout>

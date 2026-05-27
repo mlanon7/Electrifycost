@@ -114,18 +114,18 @@ export default function SolarPaybackCalculator() {
         <div>
           <label className="label" htmlFor="zip">ZIP</label>
           <input id="zip" className="input" inputMode="numeric" pattern="\d*" maxLength={5} value={zip} onChange={e => setZip(e.target.value.replace(/[^0-9]/g, ''))} />
-          <p className="mt-1 text-[10px] text-ink-500">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
+          <p className="mt-1 text-[10px] text-ink-600">{zip.length === 5 ? <span className="text-brand-700">State auto-set from ZIP</span> : 'Optional — auto-sets state'}</p>
         </div>
 
         <div>
           <label className="label" htmlFor="kw">System size (kW DC)</label>
           <input id="kw" className="input" type="number" min={2} max={30} step={0.5} value={systemKw} onChange={e => setSystemKw(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">US median residential: 8 kW (LBNL 2024)</p>
+          <p className="mt-1 text-[10px] text-ink-600">US median residential: 8 kW (LBNL 2024)</p>
         </div>
         <div>
           <label className="label" htmlFor="cpw">Installed cost per watt ($)</label>
           <input id="cpw" className="input" type="number" min={2} max={6} step={0.05} value={costPerWatt} onChange={e => setCostPerWatt(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">US median 2024: $3.50/W (LBNL)</p>
+          <p className="mt-1 text-[10px] text-ink-600">US median 2024: $3.50/W (LBNL)</p>
         </div>
 
         <div>
@@ -160,12 +160,12 @@ export default function SolarPaybackCalculator() {
         <div>
           <label className="label" htmlFor="escal">Annual electricity escalation (%)</label>
           <input id="escal" className="input" type="number" min={0} max={10} step={0.5} value={annualEscalation} onChange={e => setAnnualEscalation(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">EIA AEO 2024 reference: ~3.5%/yr</p>
+          <p className="mt-1 text-[10px] text-ink-600">EIA AEO 2024 reference: ~3.5%/yr</p>
         </div>
         <div>
           <label className="label" htmlFor="self">Self-consumption % (no battery: ~35%)</label>
           <input id="self" className="input" type="number" min={20} max={95} step={1} value={selfConsumption} onChange={e => setSelfConsumption(Number(e.target.value) || 0)} />
-          <p className="mt-1 text-[10px] text-ink-500">With 10 kWh battery: ~75%</p>
+          <p className="mt-1 text-[10px] text-ink-600">With 10 kWh battery: ~75%</p>
         </div>
       </div>
 
@@ -212,7 +212,7 @@ export default function SolarPaybackCalculator() {
               <li className="flex justify-between"><span>Gross install cost</span><span className="tabular-nums">{fmtUSD(result.grossCost)}</span></li>
               <li className="flex justify-between"><span>Federal 25D credit (expired 2025-12-31)</span><span className="tabular-nums text-rose-700">−{fmtUSD(result.fed25D)}</span></li>
               <li className="flex justify-between border-t border-ink-100 pt-2 font-semibold"><span>Net cost</span><span className="tabular-nums">{fmtUSD(result.netCost)}</span></li>
-              <li className="flex justify-between text-[11px] text-ink-500"><span>Inverter replacement (year 12)</span><span className="tabular-nums">{fmtUSD(result.inverterReplacementCost)}</span></li>
+              <li className="flex justify-between text-[11px] text-ink-600"><span>Inverter replacement (year 12)</span><span className="tabular-nums">{fmtUSD(result.inverterReplacementCost)}</span></li>
             </ul>
           </div>
           <div className="card p-4">
