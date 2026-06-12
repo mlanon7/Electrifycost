@@ -29,6 +29,12 @@ function priorityFor(urlPath) {
   if (/-cost-[a-z]{2}\/$/.test(urlPath)) return '0.7';
   if (/^\/guides\//.test(urlPath)) return '0.7';
   if (/-vs-/.test(urlPath)) return '0.7';
+  // Tier 1+2 keyword pages are calculator-grade: sqft/tonnage variants,
+  // brand pages ("<brand>-…-cost"), replacement intent, and hub pages.
+  if (/-cost-[\d-]+-(sqft|ton)\/$/.test(urlPath)) return '0.7';
+  if (/-(heat-pump|heat-pump-water-heater|ev-charger-installation|home-battery)-cost\/$/.test(urlPath)) return '0.7';
+  if (/replacement-cost\/$/.test(urlPath)) return '0.7';
+  if (/-by-(state|city)\/$/.test(urlPath)) return '0.7';
   return '0.6';
 }
 

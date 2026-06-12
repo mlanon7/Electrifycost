@@ -218,13 +218,17 @@ export default function ResultPanel({
                   <tr
                     className={`border-t border-ink-100 cursor-pointer transition-colors hover:bg-brand-50/40 ${isOpen ? 'bg-brand-50/40' : ''}`}
                     onClick={() => setOpenWhy(isOpen ? null : it.label)}
-                    aria-expanded={isOpen}
                   >
                     <td className="py-2">
-                      <div className="flex items-center gap-1.5 font-medium text-ink-800">
+                      <button
+                        type="button"
+                        className="flex items-center gap-1.5 text-left font-medium text-ink-800"
+                        aria-expanded={isOpen}
+                        onClick={e => { e.stopPropagation(); setOpenWhy(isOpen ? null : it.label); }}
+                      >
                         {it.label}
                         <span aria-hidden="true" className={`text-[10px] text-ink-400 transition-transform ${isOpen ? 'rotate-90' : ''}`}>▸</span>
-                      </div>
+                      </button>
                       {it.notes && <div className="mt-0.5 text-xs text-ink-600">{it.notes}</div>}
                     </td>
                     <td className="py-2 text-right tabular-nums text-ink-700">{fmtUSD(it.amount.low)}</td>

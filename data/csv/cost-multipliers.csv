@@ -1,11 +1,11 @@
-factor_type,factor_key,low,mid,high,notes
-difficulty,simple,0.85,0.95,1.05,Below-average install difficulty (good access; existing infra in place)
-difficulty,average,0.95,1.05,1.20,Typical residential install
-difficulty,difficult,1.10,1.30,1.55,Tight access; long runs; finishes to protect; legacy code issues
-home_type,single_family,1.00,1.00,1.05,Baseline
-home_type,townhouse,0.95,1.00,1.10,Slightly tighter access; party-wall considerations
-home_type,condo,1.00,1.10,1.30,HOA / shared infra adds friction
-home_type,manufactured,0.85,0.95,1.05,Less complex envelope; lower equipment tier typical
-timing,planning,0.95,1.00,1.05,Quotes obtained ahead of need; competitive
-timing,this_year,1.00,1.00,1.05,Standard turnaround
-timing,emergency,1.05,1.15,1.30,Same-week emergency replacement; premium dispatch
+factor_type,factor_key,low,mid,high,notes,source_id,last_reviewed
+difficulty,simple,0.85,0.95,1.05,Below-average install difficulty (good access; existing infra in place),SRC_NREL_RES_COST_MODELS,2026-06-12
+difficulty,average,0.95,1.05,1.20,Typical residential install,SRC_NREL_RES_COST_MODELS,2026-06-12
+difficulty,difficult,1.10,1.30,1.55,Tight access; long runs; finishes to protect; legacy code issues,SRC_NREL_RES_COST_MODELS,2026-06-12
+home_type,single_family,1.00,1.00,1.05,Baseline,SRC_NREL_RES_COST_MODELS,2026-06-12
+home_type,townhouse,0.95,1.00,1.10,Slightly tighter access; party-wall considerations,SRC_NREL_RES_COST_MODELS,2026-06-12
+home_type,condo,1.00,1.10,1.30,HOA / shared infra adds friction,SRC_NREL_RES_COST_MODELS,2026-06-12
+home_type,manufactured,0.85,0.95,1.05,Less complex envelope; lower equipment tier typical,SRC_NREL_RES_COST_MODELS,2026-06-12
+timing,planning,0.95,1.00,1.05,Quotes obtained ahead of need; competitive,SRC_NREL_RES_COST_MODELS,2026-06-12
+timing,this_year,1.00,1.00,1.05,Standard turnaround,SRC_NREL_RES_COST_MODELS,2026-06-12
+timing,emergency,1.05,1.15,1.30,Same-week emergency replacement; premium dispatch,SRC_NREL_RES_COST_MODELS,2026-06-12

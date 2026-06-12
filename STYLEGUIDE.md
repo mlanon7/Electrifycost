@@ -60,6 +60,24 @@ When in doubt, read the paragraph aloud. If you wouldn't say it aloud to a homeo
 
 ---
 
+## Icons & dingbats — what's allowed
+
+**No pictographic emoji in published copy or UI** (no 🏠, 🔥, ⚡, 💰, etc.). They read as social-media tone and undercut the engineering-reference voice.
+
+**Plain-text dingbats are allowed as UI iconography**, in these specific roles only:
+
+| Glyph | Allowed role | Example surface |
+|---|---|---|
+| `→` | Link-affordance arrow, wrapped in `<span aria-hidden="true">` so screen readers skip it | Related-links lists, CTA buttons |
+| `✓` / `✗` | Status or include/exclude markers in calculator output and comparison lists | ResultPanel status, About page "what this site is not" |
+| `⚠` | Warning prefix in calculator caveats and internal docs | Result-panel caveats |
+| `★` | Rating/heading marker in calculator output | Calculator result UI |
+| `›` / `▸` | Breadcrumb separator / expand-collapse chevron, always `aria-hidden="true"` | Breadcrumb bar, itemized-row toggle |
+
+Rules: decorative glyphs always get `aria-hidden="true"`; never use a dingbat as the only carrier of meaning (pair with text); don't introduce new glyphs outside this table without updating it.
+
+---
+
 ## Disclaimers — load-bearing, do not remove
 
 These appear repeatedly across the site for a reason. They're load-bearing for the YMYL E-E-A-T signal Google uses for home-renovation content. Don't edit them away in pursuit of "tighter copy."

@@ -33,28 +33,30 @@ Competitors fall into three buckets: (1) lead-gen funnels (Modernize, Networx, A
 - **CSV-first data** — every numeric input lives in `data/csv/*.csv` (51 files). Loaded via Vite `?raw` imports at build time. NO duplicate numbers in TS/JS.
 - **Vercel** — static deploy, clean URLs, trailing slashes, immutable cache headers, security headers. Config in `vercel.json`.
 - **Self-hosted fonts** — Inter + Source Serif 4 via `@fontsource/*`. NO Google Fonts third-party fetch.
-- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with ~641 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16. **The xmlns must be `http://www.sitemaps.org/schemas/sitemap/0.9` (slash, not hyphen)** — see lessons/01.
+- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with ~696 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16. **The xmlns must be `http://www.sitemaps.org/schemas/sitemap/0.9` (slash, not hyphen)** — see lessons/01.
 - **Analytics:** GA4 (`G-5CMBX2RBY4`) with Consent Mode v2 + cookie banner. Wired in `Layout.astro` + `CookieBanner.astro`. `calculator_used` custom event fires from `ResultPanel.tsx` when a valid result renders.
 - **Ahrefs MCP** — connected (the `mcp__...keywords-explorer-*`, `gsc-*`, `site-explorer-*`, `rank-tracker-*` tools). Use for keyword volume/difficulty, GSC query history, backlink + rank-tracking data. See `.claude/prompts/data-verification.md` and the keyword-research workflow.
 
 ---
 
-## Page inventory (642 built pages as of 2026-05-19)
+## Page inventory (697 built pages as of 2026-06-12)
 
-The site grew from 5 flagship calculators to 642 built HTML pages via **four programmatic-SEO dimensions**. Understand these before adding pages:
+The site grew from 5 flagship calculators to 697 built HTML pages via **four programmatic-SEO dimensions**. Understand these before adding pages:
 
 | Dimension | URL shape | Count | Template |
 |---|---|---|---|
-| **Calculators** | `/<module>-cost-calculator/` | 38 | one `.astro` per module |
+| **Calculators** | `/<module>-cost-calculator/` | 37 | one `.astro` per module |
 | **Guides** | `/guides/<topic>/` | 37 | one per topic + RelatedGuides |
-| **State** (heat pump, solar, EV, panel, HPWH, induction) | `/<module>-cost-<state>/` (prefix form) | 6 × 51 = 306 | `<module>-cost-[state].astro` |
+| **State** (heat pump, solar, EV, panel, HPWH, induction, water heater) | `/<module>-cost-<state>/` (prefix form) | 7 × 51 = 357 | `<module>-cost-[state].astro` |
 | **City** (heat pump, HPWH) | `/heat-pump-cost/<city>/` (SUBPATH) | 2 × 100 = 200 | `heat-pump-cost/[city].astro` |
 | **Size — sqft** (heat pump) | `/heat-pump-cost-<n>-sqft/` (static) | 5 | individual static files |
 | **Size — tonnage** (heat pump) | `/heat-pump-cost-<n>-ton/` (prefix, static) | 5 | individual static files |
 | **Brand** (HP, HPWH, EV, battery) | `/<brand>-<module>-cost/` (SUFFIX form) | 22 | `[brand]-<module>-cost.astro` |
 | **Per-amp panel** | `/100a-to-200a-panel-upgrade-cost/` etc. | 4 | individual static files |
-| **By-state / by-city hubs** | `/<module>-cost-by-state/`, `/-by-city/` | 8 | individual static files |
+| **By-state / by-city hubs** | `/<module>-cost-by-state/`, `/-by-city/` | 7 + 2 = 9 | individual static files |
 | **Comparison** | `/<a>-vs-<b>/` | ~8 | individual static files |
+| **Intent** (replacement) | `/heat-pump-replacement-cost/` | 1 | individual static file |
+| **Legal** | `/privacy/`, `/terms/` | 2 | individual static files |
 
 **Routing rule (critical — see lessons/08):** to avoid collisions with the greedy `<module>-cost-[state]` dynamic route (which matches any `/<module>-cost-<x>/`):
 - **State / sqft / tonnage** use **prefix form** (`heat-pump-cost-X`) as STATIC files — Astro static-priority lets them coexist with `[state]`.
@@ -274,7 +276,7 @@ The site is the product. Docs in the repo are working memory for contributors, n
 
 ### SEO
 
-- 408 URLs in `sitemap.xml` (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
+- ~696 URLs in `sitemap.xml` (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
 - Submitted to Google Search Console
 - 200+ source citations on `/sources/`
 - `WebSite`, `Organization`, `WebApplication`, `FAQPage`, `BreadcrumbList`, `TechArticle`, `CollectionPage`, `AboutPage`, `Person` JSON-LD schemas
@@ -347,7 +349,7 @@ Keyword strategy + opportunity backlog: `audit/KEYWORD_OPPORTUNITIES_2026-05.md`
 
 GSC indexing is operational. If a sitemap submission fails:
 1. Verify https://electrifycost.com/sitemap.xml has `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` — slash, not hyphen (this was a real historic bug)
-2. Verify 408 URLs present
+2. Verify ~696 URLs present
 3. Re-submit in GSC → Sitemaps → Add sitemap → `sitemap.xml`
 
 For manual URL inspection (≤10/day per property), prioritize: `/`, `/about/`, `/methodology/`, `/heat-pump-cost-calculator/`, `/solar-panel-cost-calculator/`, `/ev-charger-installation-cost-calculator/`, `/rebates/`, `/heat-pump-cost-ca/`, `/heat-pump-cost-by-state/`, `/guides/heat-pumps/`.

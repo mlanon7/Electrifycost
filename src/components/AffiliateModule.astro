@@ -1,13 +1,14 @@
 ---
 // Reserved affiliate-product slot. Renders nothing user-visible unless
-// PUBLIC_AFFILIATES_ENABLED is 'true'. The shape is `kind="ev_charger" |
-// "load_management" | "induction" | "hpwh"` so each calculator page can
-// reserve the slot below its result. When enabled, the actual product
-// cards / outbound links live alongside this component (separate PR).
+// PUBLIC_AFFILIATES_ENABLED is 'true'. Only the three kinds actually
+// placed on calculator pages — re-widen the union if heat_pump or
+// load_management affiliate slots are added later. When enabled, the
+// actual product cards / outbound links live alongside this component
+// (separate PR — blocked on Amazon Associates approval).
 //
 // Layout reserves a CLS-safe min-height so flipping the flag on later
 // doesn't shift the page.
-const { kind } = Astro.props as { kind: 'ev_charger' | 'load_management' | 'induction' | 'hpwh' | 'heat_pump' };
+const { kind } = Astro.props as { kind: 'ev_charger' | 'induction' | 'hpwh' };
 const enabled = import.meta.env.PUBLIC_AFFILIATES_ENABLED === 'true';
 ---
 {enabled && (

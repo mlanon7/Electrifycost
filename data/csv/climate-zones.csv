@@ -1,52 +1,52 @@
-state,state_name,iecc_zone,heating_degree_days,cooling_degree_days,heat_pump_class,notes
-AL,Alabama,3A,2700,1900,standard,
-AK,Alaska,7,11000,80,coldclimate,
-AZ,Arizona,2B,1800,3700,standard,Hot-dry; cooling dominant
-AR,Arkansas,3A,3300,1700,standard,
-CA,California,3B,2700,1100,standard,Mostly mild; varies by zone
-CO,Colorado,5B,6200,500,coldclimate,
-CT,Connecticut,5A,5800,650,coldclimate,
-DE,Delaware,4A,4400,1100,standard,
-FL,Florida,2A,700,3500,standard,Cooling dominant
-GA,Georgia,3A,2700,1900,standard,
-HI,Hawaii,1A,0,3500,standard,No heating need
-ID,Idaho,5B,5800,500,coldclimate,
-IL,Illinois,5A,6300,800,coldclimate,
-IN,Indiana,5A,5400,950,coldclimate,
-IA,Iowa,5A,6200,800,coldclimate,
-KS,Kansas,4A,4900,1300,standard,
-KY,Kentucky,4A,4500,1200,standard,
-LA,Louisiana,2A,1700,2500,standard,
-ME,Maine,6A,7500,300,coldclimate,
-MD,Maryland,4A,4400,1200,standard,
-MA,Massachusetts,5A,6200,650,coldclimate,
-MI,Michigan,5A,6700,650,coldclimate,
-MN,Minnesota,6A,7800,650,coldclimate,
-MS,Mississippi,3A,2300,2200,standard,
-MO,Missouri,4A,4500,1500,standard,
-MT,Montana,6B,7800,400,coldclimate,
-NE,Nebraska,5A,6000,1100,coldclimate,
-NV,Nevada,3B,3700,1700,standard,
-NH,New Hampshire,6A,7000,400,coldclimate,
-NJ,New Jersey,4A,4900,1100,standard,
-NM,New Mexico,4B,4200,1200,standard,
-NY,New York,5A,6500,700,coldclimate,Buffalo/upstate colder
-NC,North Carolina,3A,3300,1500,standard,
-ND,North Dakota,7,9000,500,coldclimate,
-OH,Ohio,5A,5700,950,coldclimate,
-OK,Oklahoma,3A,3500,1900,standard,
-OR,Oregon,4C,4700,500,standard,
-PA,Pennsylvania,5A,5500,900,coldclimate,
-RI,Rhode Island,5A,5800,650,coldclimate,
-SC,South Carolina,3A,2200,2100,standard,
-SD,South Dakota,6A,7400,750,coldclimate,
-TN,Tennessee,4A,3500,1700,standard,
-TX,Texas,3A,1900,2900,standard,Wide variance
-UT,Utah,5B,5800,1000,coldclimate,
-VT,Vermont,6A,7700,300,coldclimate,
-VA,Virginia,4A,4100,1400,standard,
-WA,Washington,4C,5200,300,standard,
-WV,West Virginia,5A,5100,750,coldclimate,
-WI,Wisconsin,6A,7100,650,coldclimate,
-WY,Wyoming,6B,7400,300,coldclimate,
-DC,District of Columbia,4A,4200,1450,standard,
+state,state_name,iecc_zone,heating_degree_days,cooling_degree_days,heat_pump_class,notes,source_id,last_reviewed
+AL,Alabama,3A,2700,1900,standard,,SRC_ICC_IECC,2026-06-12
+AK,Alaska,7,11000,80,coldclimate,,SRC_ICC_IECC,2026-06-12
+AZ,Arizona,2B,1800,3700,standard,Hot-dry; cooling dominant,SRC_ICC_IECC,2026-06-12
+AR,Arkansas,3A,3300,1700,standard,,SRC_ICC_IECC,2026-06-12
+CA,California,3B,2700,1100,standard,Mostly mild; varies by zone,SRC_ICC_IECC,2026-06-12
+CO,Colorado,5B,6200,500,coldclimate,,SRC_ICC_IECC,2026-06-12
+CT,Connecticut,5A,5800,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+DE,Delaware,4A,4400,1100,standard,,SRC_ICC_IECC,2026-06-12
+FL,Florida,2A,700,3500,standard,Cooling dominant,SRC_ICC_IECC,2026-06-12
+GA,Georgia,3A,2700,1900,standard,,SRC_ICC_IECC,2026-06-12
+HI,Hawaii,1A,0,3500,standard,No heating need,SRC_ICC_IECC,2026-06-12
+ID,Idaho,5B,5800,500,coldclimate,,SRC_ICC_IECC,2026-06-12
+IL,Illinois,5A,6300,800,coldclimate,,SRC_ICC_IECC,2026-06-12
+IN,Indiana,5A,5400,950,coldclimate,,SRC_ICC_IECC,2026-06-12
+IA,Iowa,5A,6200,800,coldclimate,,SRC_ICC_IECC,2026-06-12
+KS,Kansas,4A,4900,1300,standard,,SRC_ICC_IECC,2026-06-12
+KY,Kentucky,4A,4500,1200,standard,,SRC_ICC_IECC,2026-06-12
+LA,Louisiana,2A,1700,2500,standard,,SRC_ICC_IECC,2026-06-12
+ME,Maine,6A,7500,300,coldclimate,,SRC_ICC_IECC,2026-06-12
+MD,Maryland,4A,4400,1200,standard,,SRC_ICC_IECC,2026-06-12
+MA,Massachusetts,5A,6200,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+MI,Michigan,5A,6700,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+MN,Minnesota,6A,7800,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+MS,Mississippi,3A,2300,2200,standard,,SRC_ICC_IECC,2026-06-12
+MO,Missouri,4A,4500,1500,standard,,SRC_ICC_IECC,2026-06-12
+MT,Montana,6B,7800,400,coldclimate,,SRC_ICC_IECC,2026-06-12
+NE,Nebraska,5A,6000,1100,coldclimate,,SRC_ICC_IECC,2026-06-12
+NV,Nevada,3B,3700,1700,standard,,SRC_ICC_IECC,2026-06-12
+NH,New Hampshire,6A,7000,400,coldclimate,,SRC_ICC_IECC,2026-06-12
+NJ,New Jersey,4A,4900,1100,standard,,SRC_ICC_IECC,2026-06-12
+NM,New Mexico,4B,4200,1200,standard,,SRC_ICC_IECC,2026-06-12
+NY,New York,5A,6500,700,coldclimate,Buffalo/upstate colder,SRC_ICC_IECC,2026-06-12
+NC,North Carolina,3A,3300,1500,standard,,SRC_ICC_IECC,2026-06-12
+ND,North Dakota,7,9000,500,coldclimate,,SRC_ICC_IECC,2026-06-12
+OH,Ohio,5A,5700,950,coldclimate,,SRC_ICC_IECC,2026-06-12
+OK,Oklahoma,3A,3500,1900,standard,,SRC_ICC_IECC,2026-06-12
+OR,Oregon,4C,4700,500,standard,,SRC_ICC_IECC,2026-06-12
+PA,Pennsylvania,5A,5500,900,coldclimate,,SRC_ICC_IECC,2026-06-12
+RI,Rhode Island,5A,5800,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+SC,South Carolina,3A,2200,2100,standard,,SRC_ICC_IECC,2026-06-12
+SD,South Dakota,6A,7400,750,coldclimate,,SRC_ICC_IECC,2026-06-12
+TN,Tennessee,4A,3500,1700,standard,,SRC_ICC_IECC,2026-06-12
+TX,Texas,3A,1900,2900,standard,Wide variance,SRC_ICC_IECC,2026-06-12
+UT,Utah,5B,5800,1000,coldclimate,,SRC_ICC_IECC,2026-06-12
+VT,Vermont,6A,7700,300,coldclimate,,SRC_ICC_IECC,2026-06-12
+VA,Virginia,4A,4100,1400,standard,,SRC_ICC_IECC,2026-06-12
+WA,Washington,4C,5200,300,standard,,SRC_ICC_IECC,2026-06-12
+WV,West Virginia,5A,5100,750,coldclimate,,SRC_ICC_IECC,2026-06-12
+WI,Wisconsin,6A,7100,650,coldclimate,,SRC_ICC_IECC,2026-06-12
+WY,Wyoming,6B,7400,300,coldclimate,,SRC_ICC_IECC,2026-06-12
+DC,District of Columbia,4A,4200,1450,standard,,SRC_ICC_IECC,2026-06-12

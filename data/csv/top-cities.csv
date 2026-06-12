@@ -1,101 +1,101 @@
-slug,city,state,rank
-new-york-ny,New York,NY,1
-los-angeles-ca,Los Angeles,CA,2
-chicago-il,Chicago,IL,3
-houston-tx,Houston,TX,4
-phoenix-az,Phoenix,AZ,5
-philadelphia-pa,Philadelphia,PA,6
-san-antonio-tx,San Antonio,TX,7
-san-diego-ca,San Diego,CA,8
-dallas-tx,Dallas,TX,9
-jacksonville-fl,Jacksonville,FL,10
-austin-tx,Austin,TX,11
-fort-worth-tx,Fort Worth,TX,12
-san-jose-ca,San Jose,CA,13
-columbus-oh,Columbus,OH,14
-charlotte-nc,Charlotte,NC,15
-indianapolis-in,Indianapolis,IN,16
-san-francisco-ca,San Francisco,CA,17
-seattle-wa,Seattle,WA,18
-denver-co,Denver,CO,19
-oklahoma-city-ok,Oklahoma City,OK,20
-nashville-tn,Nashville,TN,21
-washington-dc,Washington,DC,22
-el-paso-tx,El Paso,TX,23
-boston-ma,Boston,MA,24
-las-vegas-nv,Las Vegas,NV,25
-portland-or,Portland,OR,26
-detroit-mi,Detroit,MI,27
-louisville-ky,Louisville,KY,28
-memphis-tn,Memphis,TN,29
-baltimore-md,Baltimore,MD,30
-milwaukee-wi,Milwaukee,WI,31
-albuquerque-nm,Albuquerque,NM,32
-tucson-az,Tucson,AZ,33
-fresno-ca,Fresno,CA,34
-sacramento-ca,Sacramento,CA,35
-mesa-az,Mesa,AZ,36
-kansas-city-mo,Kansas City,MO,37
-atlanta-ga,Atlanta,GA,38
-omaha-ne,Omaha,NE,39
-colorado-springs-co,Colorado Springs,CO,40
-raleigh-nc,Raleigh,NC,41
-virginia-beach-va,Virginia Beach,VA,42
-long-beach-ca,Long Beach,CA,43
-miami-fl,Miami,FL,44
-oakland-ca,Oakland,CA,45
-minneapolis-mn,Minneapolis,MN,46
-tulsa-ok,Tulsa,OK,47
-bakersfield-ca,Bakersfield,CA,48
-wichita-ks,Wichita,KS,49
-arlington-tx,Arlington,TX,50
-aurora-co,Aurora,CO,51
-tampa-fl,Tampa,FL,52
-new-orleans-la,New Orleans,LA,53
-cleveland-oh,Cleveland,OH,54
-honolulu-hi,Honolulu,HI,55
-anaheim-ca,Anaheim,CA,56
-lexington-ky,Lexington,KY,57
-stockton-ca,Stockton,CA,58
-corpus-christi-tx,Corpus Christi,TX,59
-henderson-nv,Henderson,NV,60
-riverside-ca,Riverside,CA,61
-newark-nj,Newark,NJ,62
-saint-paul-mn,Saint Paul,MN,63
-santa-ana-ca,Santa Ana,CA,64
-cincinnati-oh,Cincinnati,OH,65
-irvine-ca,Irvine,CA,66
-orlando-fl,Orlando,FL,67
-pittsburgh-pa,Pittsburgh,PA,68
-st-louis-mo,St. Louis,MO,69
-greensboro-nc,Greensboro,NC,70
-lincoln-ne,Lincoln,NE,71
-plano-tx,Plano,TX,72
-anchorage-ak,Anchorage,AK,73
-durham-nc,Durham,NC,74
-jersey-city-nj,Jersey City,NJ,75
-chandler-az,Chandler,AZ,76
-madison-wi,Madison,WI,77
-buffalo-ny,Buffalo,NY,78
-lubbock-tx,Lubbock,TX,79
-scottsdale-az,Scottsdale,AZ,80
-reno-nv,Reno,NV,81
-glendale-az,Glendale,AZ,82
-norfolk-va,Norfolk,VA,83
-winston-salem-nc,Winston-Salem,NC,84
-chesapeake-va,Chesapeake,VA,85
-gilbert-az,Gilbert,AZ,86
-irving-tx,Irving,TX,87
-hialeah-fl,Hialeah,FL,88
-garland-tx,Garland,TX,89
-fremont-ca,Fremont,CA,90
-richmond-va,Richmond,VA,91
-boise-id,Boise,ID,92
-baton-rouge-la,Baton Rouge,LA,93
-spokane-wa,Spokane,WA,94
-tacoma-wa,Tacoma,WA,95
-san-bernardino-ca,San Bernardino,CA,96
-modesto-ca,Modesto,CA,97
-des-moines-ia,Des Moines,IA,98
-fontana-ca,Fontana,CA,99
-salt-lake-city-ut,Salt Lake City,UT,100
+slug,city,state,rank,source_id,last_reviewed
+new-york-ny,New York,NY,1,SRC_CENSUS_CITY_POP,2026-06-12
+los-angeles-ca,Los Angeles,CA,2,SRC_CENSUS_CITY_POP,2026-06-12
+chicago-il,Chicago,IL,3,SRC_CENSUS_CITY_POP,2026-06-12
+houston-tx,Houston,TX,4,SRC_CENSUS_CITY_POP,2026-06-12
+phoenix-az,Phoenix,AZ,5,SRC_CENSUS_CITY_POP,2026-06-12
+philadelphia-pa,Philadelphia,PA,6,SRC_CENSUS_CITY_POP,2026-06-12
+san-antonio-tx,San Antonio,TX,7,SRC_CENSUS_CITY_POP,2026-06-12
+san-diego-ca,San Diego,CA,8,SRC_CENSUS_CITY_POP,2026-06-12
+dallas-tx,Dallas,TX,9,SRC_CENSUS_CITY_POP,2026-06-12
+jacksonville-fl,Jacksonville,FL,10,SRC_CENSUS_CITY_POP,2026-06-12
+austin-tx,Austin,TX,11,SRC_CENSUS_CITY_POP,2026-06-12
+fort-worth-tx,Fort Worth,TX,12,SRC_CENSUS_CITY_POP,2026-06-12
+san-jose-ca,San Jose,CA,13,SRC_CENSUS_CITY_POP,2026-06-12
+columbus-oh,Columbus,OH,14,SRC_CENSUS_CITY_POP,2026-06-12
+charlotte-nc,Charlotte,NC,15,SRC_CENSUS_CITY_POP,2026-06-12
+indianapolis-in,Indianapolis,IN,16,SRC_CENSUS_CITY_POP,2026-06-12
+san-francisco-ca,San Francisco,CA,17,SRC_CENSUS_CITY_POP,2026-06-12
+seattle-wa,Seattle,WA,18,SRC_CENSUS_CITY_POP,2026-06-12
+denver-co,Denver,CO,19,SRC_CENSUS_CITY_POP,2026-06-12
+oklahoma-city-ok,Oklahoma City,OK,20,SRC_CENSUS_CITY_POP,2026-06-12
+nashville-tn,Nashville,TN,21,SRC_CENSUS_CITY_POP,2026-06-12
+washington-dc,Washington,DC,22,SRC_CENSUS_CITY_POP,2026-06-12
+el-paso-tx,El Paso,TX,23,SRC_CENSUS_CITY_POP,2026-06-12
+boston-ma,Boston,MA,24,SRC_CENSUS_CITY_POP,2026-06-12
+las-vegas-nv,Las Vegas,NV,25,SRC_CENSUS_CITY_POP,2026-06-12
+portland-or,Portland,OR,26,SRC_CENSUS_CITY_POP,2026-06-12
+detroit-mi,Detroit,MI,27,SRC_CENSUS_CITY_POP,2026-06-12
+louisville-ky,Louisville,KY,28,SRC_CENSUS_CITY_POP,2026-06-12
+memphis-tn,Memphis,TN,29,SRC_CENSUS_CITY_POP,2026-06-12
+baltimore-md,Baltimore,MD,30,SRC_CENSUS_CITY_POP,2026-06-12
+milwaukee-wi,Milwaukee,WI,31,SRC_CENSUS_CITY_POP,2026-06-12
+albuquerque-nm,Albuquerque,NM,32,SRC_CENSUS_CITY_POP,2026-06-12
+tucson-az,Tucson,AZ,33,SRC_CENSUS_CITY_POP,2026-06-12
+fresno-ca,Fresno,CA,34,SRC_CENSUS_CITY_POP,2026-06-12
+sacramento-ca,Sacramento,CA,35,SRC_CENSUS_CITY_POP,2026-06-12
+mesa-az,Mesa,AZ,36,SRC_CENSUS_CITY_POP,2026-06-12
+kansas-city-mo,Kansas City,MO,37,SRC_CENSUS_CITY_POP,2026-06-12
+atlanta-ga,Atlanta,GA,38,SRC_CENSUS_CITY_POP,2026-06-12
+omaha-ne,Omaha,NE,39,SRC_CENSUS_CITY_POP,2026-06-12
+colorado-springs-co,Colorado Springs,CO,40,SRC_CENSUS_CITY_POP,2026-06-12
+raleigh-nc,Raleigh,NC,41,SRC_CENSUS_CITY_POP,2026-06-12
+virginia-beach-va,Virginia Beach,VA,42,SRC_CENSUS_CITY_POP,2026-06-12
+long-beach-ca,Long Beach,CA,43,SRC_CENSUS_CITY_POP,2026-06-12
+miami-fl,Miami,FL,44,SRC_CENSUS_CITY_POP,2026-06-12
+oakland-ca,Oakland,CA,45,SRC_CENSUS_CITY_POP,2026-06-12
+minneapolis-mn,Minneapolis,MN,46,SRC_CENSUS_CITY_POP,2026-06-12
+tulsa-ok,Tulsa,OK,47,SRC_CENSUS_CITY_POP,2026-06-12
+bakersfield-ca,Bakersfield,CA,48,SRC_CENSUS_CITY_POP,2026-06-12
+wichita-ks,Wichita,KS,49,SRC_CENSUS_CITY_POP,2026-06-12
+arlington-tx,Arlington,TX,50,SRC_CENSUS_CITY_POP,2026-06-12
+aurora-co,Aurora,CO,51,SRC_CENSUS_CITY_POP,2026-06-12
+tampa-fl,Tampa,FL,52,SRC_CENSUS_CITY_POP,2026-06-12
+new-orleans-la,New Orleans,LA,53,SRC_CENSUS_CITY_POP,2026-06-12
+cleveland-oh,Cleveland,OH,54,SRC_CENSUS_CITY_POP,2026-06-12
+honolulu-hi,Honolulu,HI,55,SRC_CENSUS_CITY_POP,2026-06-12
+anaheim-ca,Anaheim,CA,56,SRC_CENSUS_CITY_POP,2026-06-12
+lexington-ky,Lexington,KY,57,SRC_CENSUS_CITY_POP,2026-06-12
+stockton-ca,Stockton,CA,58,SRC_CENSUS_CITY_POP,2026-06-12
+corpus-christi-tx,Corpus Christi,TX,59,SRC_CENSUS_CITY_POP,2026-06-12
+henderson-nv,Henderson,NV,60,SRC_CENSUS_CITY_POP,2026-06-12
+riverside-ca,Riverside,CA,61,SRC_CENSUS_CITY_POP,2026-06-12
+newark-nj,Newark,NJ,62,SRC_CENSUS_CITY_POP,2026-06-12
+saint-paul-mn,Saint Paul,MN,63,SRC_CENSUS_CITY_POP,2026-06-12
+santa-ana-ca,Santa Ana,CA,64,SRC_CENSUS_CITY_POP,2026-06-12
+cincinnati-oh,Cincinnati,OH,65,SRC_CENSUS_CITY_POP,2026-06-12
+irvine-ca,Irvine,CA,66,SRC_CENSUS_CITY_POP,2026-06-12
+orlando-fl,Orlando,FL,67,SRC_CENSUS_CITY_POP,2026-06-12
+pittsburgh-pa,Pittsburgh,PA,68,SRC_CENSUS_CITY_POP,2026-06-12
+st-louis-mo,St. Louis,MO,69,SRC_CENSUS_CITY_POP,2026-06-12
+greensboro-nc,Greensboro,NC,70,SRC_CENSUS_CITY_POP,2026-06-12
+lincoln-ne,Lincoln,NE,71,SRC_CENSUS_CITY_POP,2026-06-12
+plano-tx,Plano,TX,72,SRC_CENSUS_CITY_POP,2026-06-12
+anchorage-ak,Anchorage,AK,73,SRC_CENSUS_CITY_POP,2026-06-12
+durham-nc,Durham,NC,74,SRC_CENSUS_CITY_POP,2026-06-12
+jersey-city-nj,Jersey City,NJ,75,SRC_CENSUS_CITY_POP,2026-06-12
+chandler-az,Chandler,AZ,76,SRC_CENSUS_CITY_POP,2026-06-12
+madison-wi,Madison,WI,77,SRC_CENSUS_CITY_POP,2026-06-12
+buffalo-ny,Buffalo,NY,78,SRC_CENSUS_CITY_POP,2026-06-12
+lubbock-tx,Lubbock,TX,79,SRC_CENSUS_CITY_POP,2026-06-12
+scottsdale-az,Scottsdale,AZ,80,SRC_CENSUS_CITY_POP,2026-06-12
+reno-nv,Reno,NV,81,SRC_CENSUS_CITY_POP,2026-06-12
+glendale-az,Glendale,AZ,82,SRC_CENSUS_CITY_POP,2026-06-12
+norfolk-va,Norfolk,VA,83,SRC_CENSUS_CITY_POP,2026-06-12
+winston-salem-nc,Winston-Salem,NC,84,SRC_CENSUS_CITY_POP,2026-06-12
+chesapeake-va,Chesapeake,VA,85,SRC_CENSUS_CITY_POP,2026-06-12
+gilbert-az,Gilbert,AZ,86,SRC_CENSUS_CITY_POP,2026-06-12
+irving-tx,Irving,TX,87,SRC_CENSUS_CITY_POP,2026-06-12
+hialeah-fl,Hialeah,FL,88,SRC_CENSUS_CITY_POP,2026-06-12
+garland-tx,Garland,TX,89,SRC_CENSUS_CITY_POP,2026-06-12
+fremont-ca,Fremont,CA,90,SRC_CENSUS_CITY_POP,2026-06-12
+richmond-va,Richmond,VA,91,SRC_CENSUS_CITY_POP,2026-06-12
+boise-id,Boise,ID,92,SRC_CENSUS_CITY_POP,2026-06-12
+baton-rouge-la,Baton Rouge,LA,93,SRC_CENSUS_CITY_POP,2026-06-12
+spokane-wa,Spokane,WA,94,SRC_CENSUS_CITY_POP,2026-06-12
+tacoma-wa,Tacoma,WA,95,SRC_CENSUS_CITY_POP,2026-06-12
+san-bernardino-ca,San Bernardino,CA,96,SRC_CENSUS_CITY_POP,2026-06-12
+modesto-ca,Modesto,CA,97,SRC_CENSUS_CITY_POP,2026-06-12
+des-moines-ia,Des Moines,IA,98,SRC_CENSUS_CITY_POP,2026-06-12
+fontana-ca,Fontana,CA,99,SRC_CENSUS_CITY_POP,2026-06-12
+salt-lake-city-ut,Salt Lake City,UT,100,SRC_CENSUS_CITY_POP,2026-06-12

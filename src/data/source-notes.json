@@ -1426,5 +1426,21 @@
     "publisher": "U.S. EPA / DOE",
     "category": "product_list",
     "last_reviewed": "2026-05-01"
+  },
+  "SRC_CENSUS_CITY_POP": {
+    "title": "U.S. Census Bureau — City and Town Population Totals",
+    "url": "https://www.census.gov/data/tables/time-series/demo/popest/2020s-total-cities-and-towns.html",
+    "publisher": "U.S. Census Bureau",
+    "category": "demographic_data",
+    "last_reviewed": "2026-06-12",
+    "notes": "Population ranking used to select the top-100 city roster for programmatic city pages."
+  },
+  "SRC_USPS_ZIP": {
+    "title": "USPS ZIP Code prefix-to-state assignments",
+    "url": "https://postalpro.usps.com/ZIP_Locale_Detail",
+    "publisher": "United States Postal Service",
+    "category": "reference",
+    "last_reviewed": "2026-06-12",
+    "notes": "Three-digit ZIP prefix ranges mapped to states; used for the calculator ZIP-to-state convenience lookup."
   }
 }

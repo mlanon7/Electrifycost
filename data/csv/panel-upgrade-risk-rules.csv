@@ -1,29 +1,29 @@
-rule_id,trigger_module,current_panel,target_addition,risk_level,upgrade_recommendation,explanation
-PR01,ev_charger,unknown,level2_40A_or_50A,high,recommended,"Without knowing your panel, assume risk; an electrician should perform a load calculation per NEC 220.83"
-PR02,ev_charger,60A,level2_40A_or_50A,critical,required,A 60A service typically cannot accommodate a Level 2 EV charger; service upgrade is almost always required
-PR03,ev_charger,100A,level2_40A_or_50A,medium,possible,A 100A panel may support Level 2 charging if existing load is moderate; load calculation needed
-PR04,ev_charger,125A,level2_40A_or_50A,low,often_unneeded,A 125A panel typically supports Level 2 charging; verify with load calculation
-PR05,ev_charger,150A,level2_40A_or_50A,low,often_unneeded,150A is generally sufficient; load management can avoid upgrade
-PR06,ev_charger,200A,level2_40A_or_50A,minimal,typically_not_needed,A 200A panel typically supports Level 2 charging without upgrade
-PR07,heat_pump,unknown,electrification_load,high,recommended,Heat pump adds significant load; assess panel before installation
-PR08,heat_pump,60A,electrification_load,critical,required,60A service cannot reliably support whole-home heat pump
-PR09,heat_pump,100A,electrification_load,medium,possible,100A may support heat pump with load calculation; depends on other loads
-PR10,heat_pump,125A,electrification_load,low,often_unneeded,125A typically supports heat pump installation
-PR11,heat_pump,150A,electrification_load,low,often_unneeded,150A is generally sufficient
-PR12,heat_pump,200A,electrification_load,minimal,typically_not_needed,200A is typically sufficient for whole-home heat pump
-PR13,hpwh,60A,heat_pump_water_heater_load,high,recommended,60A panel may struggle to add HPWH; consider 120V plug-in HPWH
-PR14,hpwh,100A,heat_pump_water_heater_load,low,often_unneeded,100A typically supports HPWH addition
-PR15,hpwh,200A,heat_pump_water_heater_load,minimal,typically_not_needed,200A is typically sufficient
-PR16,induction,60A,induction_range_circuit,high,recommended,Adding 240V induction circuit may exceed 60A service capacity
-PR17,induction,100A,induction_range_circuit,low,often_unneeded,100A typically supports induction range with load calculation
-PR18,induction,200A,induction_range_circuit,minimal,typically_not_needed,Sufficient capacity
-PR19,ev_charger,320/400A,level2_40A_or_50A,minimal,typically_not_needed,320/400A service has ample headroom for Level 2 charging
-PR20,heat_pump,320/400A,electrification_load,minimal,typically_not_needed,320/400A service has ample headroom for whole-home heat pump
-PR21,hpwh,unknown,heat_pump_water_heater_load,medium,recommended,"Without knowing your panel, plan a quick load assessment; 120V plug-in HPWH avoids new circuit work"
-PR22,hpwh,125A,heat_pump_water_heater_load,low,often_unneeded,125A typically supports HPWH addition
-PR23,hpwh,150A,heat_pump_water_heater_load,low,often_unneeded,150A typically supports HPWH addition
-PR24,hpwh,320/400A,heat_pump_water_heater_load,minimal,typically_not_needed,320/400A service has ample headroom
-PR25,induction,unknown,induction_range_circuit,medium,recommended,"Without knowing your panel, run a quick load assessment before adding a 240V induction circuit"
-PR26,induction,125A,induction_range_circuit,low,often_unneeded,125A typically supports an induction range with margin
-PR27,induction,150A,induction_range_circuit,low,often_unneeded,150A typically supports an induction range
-PR28,induction,320/400A,induction_range_circuit,minimal,typically_not_needed,Sufficient capacity
+rule_id,trigger_module,current_panel,target_addition,risk_level,upgrade_recommendation,explanation,source_id,last_reviewed
+PR01,ev_charger,unknown,level2_40A_or_50A,high,recommended,"Without knowing your panel, assume risk; an electrician should perform a load calculation per NEC 220.83",NEC_220,2026-06-12
+PR02,ev_charger,60A,level2_40A_or_50A,critical,required,A 60A service typically cannot accommodate a Level 2 EV charger; service upgrade is almost always required,NEC_220,2026-06-12
+PR03,ev_charger,100A,level2_40A_or_50A,medium,possible,A 100A panel may support Level 2 charging if existing load is moderate; load calculation needed,NEC_220,2026-06-12
+PR04,ev_charger,125A,level2_40A_or_50A,low,often_unneeded,A 125A panel typically supports Level 2 charging; verify with load calculation,NEC_220,2026-06-12
+PR05,ev_charger,150A,level2_40A_or_50A,low,often_unneeded,150A is generally sufficient; load management can avoid upgrade,NEC_220,2026-06-12
+PR06,ev_charger,200A,level2_40A_or_50A,minimal,typically_not_needed,A 200A panel typically supports Level 2 charging without upgrade,NEC_220,2026-06-12
+PR07,heat_pump,unknown,electrification_load,high,recommended,Heat pump adds significant load; assess panel before installation,NEC_220,2026-06-12
+PR08,heat_pump,60A,electrification_load,critical,required,60A service cannot reliably support whole-home heat pump,NEC_220,2026-06-12
+PR09,heat_pump,100A,electrification_load,medium,possible,100A may support heat pump with load calculation; depends on other loads,NEC_220,2026-06-12
+PR10,heat_pump,125A,electrification_load,low,often_unneeded,125A typically supports heat pump installation,NEC_220,2026-06-12
+PR11,heat_pump,150A,electrification_load,low,often_unneeded,150A is generally sufficient,NEC_220,2026-06-12
+PR12,heat_pump,200A,electrification_load,minimal,typically_not_needed,200A is typically sufficient for whole-home heat pump,NEC_220,2026-06-12
+PR13,hpwh,60A,heat_pump_water_heater_load,high,recommended,60A panel may struggle to add HPWH; consider 120V plug-in HPWH,NEC_220,2026-06-12
+PR14,hpwh,100A,heat_pump_water_heater_load,low,often_unneeded,100A typically supports HPWH addition,NEC_220,2026-06-12
+PR15,hpwh,200A,heat_pump_water_heater_load,minimal,typically_not_needed,200A is typically sufficient,NEC_220,2026-06-12
+PR16,induction,60A,induction_range_circuit,high,recommended,Adding 240V induction circuit may exceed 60A service capacity,NEC_220,2026-06-12
+PR17,induction,100A,induction_range_circuit,low,often_unneeded,100A typically supports induction range with load calculation,NEC_220,2026-06-12
+PR18,induction,200A,induction_range_circuit,minimal,typically_not_needed,Sufficient capacity,NEC_220,2026-06-12
+PR19,ev_charger,320/400A,level2_40A_or_50A,minimal,typically_not_needed,320/400A service has ample headroom for Level 2 charging,NEC_220,2026-06-12
+PR20,heat_pump,320/400A,electrification_load,minimal,typically_not_needed,320/400A service has ample headroom for whole-home heat pump,NEC_220,2026-06-12
+PR21,hpwh,unknown,heat_pump_water_heater_load,medium,recommended,"Without knowing your panel, plan a quick load assessment; 120V plug-in HPWH avoids new circuit work",NEC_220,2026-06-12
+PR22,hpwh,125A,heat_pump_water_heater_load,low,often_unneeded,125A typically supports HPWH addition,NEC_220,2026-06-12
+PR23,hpwh,150A,heat_pump_water_heater_load,low,often_unneeded,150A typically supports HPWH addition,NEC_220,2026-06-12
+PR24,hpwh,320/400A,heat_pump_water_heater_load,minimal,typically_not_needed,320/400A service has ample headroom,NEC_220,2026-06-12
+PR25,induction,unknown,induction_range_circuit,medium,recommended,"Without knowing your panel, run a quick load assessment before adding a 240V induction circuit",NEC_220,2026-06-12
+PR26,induction,125A,induction_range_circuit,low,often_unneeded,125A typically supports an induction range with margin,NEC_220,2026-06-12
+PR27,induction,150A,induction_range_circuit,low,often_unneeded,150A typically supports an induction range,NEC_220,2026-06-12
+PR28,induction,320/400A,induction_range_circuit,minimal,typically_not_needed,Sufficient capacity,NEC_220,2026-06-12
