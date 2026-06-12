@@ -34,7 +34,23 @@ const faq = [
   },
   {
     q: `Does a ${b.brand} charger qualify for the federal 30C credit?`,
-    a: `The 30C credit (30% up to $1,000) applies to qualifying EV chargers installed through June 30 2026, per IRS guidance — but only at addresses in eligible census tracts (rural or low-income), regardless of brand. Verify your address with the AFDC eligible-tract tool before assuming the credit. The calculator below handles the eligibility logic.`,
+    a: `The 30C credit (30% up to $1,000) applies to qualifying EV chargers installed through June 30 2026, per IRS guidance (https://www.irs.gov/forms-pubs/about-form-8911) — but only at addresses in eligible census tracts (rural or low-income), regardless of brand. Verify your address with the AFDC eligibility mapper at https://afdc.energy.gov/laws/30c-tax-credit-eligibility-locator before assuming the credit. The calculator below handles the eligibility logic.`,
+  },
+  {
+    q: `Should a ${b.brand} charger be hardwired or plug-in?`,
+    a: `Hardwired is usually the better install: NEC 625 requires a GFCI breaker for a plug-in (NEMA 14-50) circuit, and that 2-pole GFCI breaker alone runs $100-$160 — plus outlet-quality issues are the top cause of melted receptacles on cheap 14-50 outlets. Hardwiring skips the receptacle, allows the full 48A output on many units, and is required above 40A charging on most models. Plug-in makes sense mainly for renters or if you already have a quality 14-50 outlet on a GFCI-protected circuit.`,
+  },
+  {
+    q: `What amperage should I install for a ${b.brand} charger?`,
+    a: `Match the circuit to your actual charging need, not the maximum. Under the NEC continuous-load rule the circuit must be sized at 125% of charger output — a 48A charger needs a 60A circuit; 40A needs 50A. For most drivers, 32-40A replenishes a full day's driving overnight; per DOE's charging-at-home guidance (https://www.energy.gov/vehicles/charging-home), a Level 2 charger adds roughly 25-40 miles of range per hour even at mid amperage. Downsizing from 60A to 40A-50A circuits can also avoid a panel upgrade — often a $2,000-$4,500 swing.`,
+  },
+  {
+    q: `How long does a ${b.brand} charger last, and what's the warranty?`,
+    a: `Level 2 home chargers are solid-state and typically outlast the first EV — 10+ years is normal for a quality unit installed indoors or under cover. Most major brands including ${b.brand} carry a 3-year warranty (check whether it requires professional installation to stay valid — several do). The wear items are the cable and connector; replaceable-cable designs are worth a small premium for outdoor installs in harsh climates.`,
+  },
+  {
+    q: `What are the red flags in a ${b.brand} charger install quote?`,
+    a: `Watch for: (1) no load calculation — NEC 220.83 math determines whether your panel can take the circuit, and skipping it risks a failed inspection or worse; (2) no permit on a 240V circuit job — most jurisdictions require one, and unpermitted electrical work can void home insurance claims; (3) a too-good quote that assumes a 10-foot run from the panel sight-unseen; (4) installing a 14-50 outlet without a GFCI breaker (NEC violation since 2020); (5) pressure to oversize to 60A "for the future" when it triggers a panel upgrade you don't need today. A solid quote itemizes the breaker, wire run length, conduit, permit, and any load-management device.`,
   },
 ];
 

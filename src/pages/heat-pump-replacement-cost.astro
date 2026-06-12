@@ -1,0 +1,111 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import HeatPumpCalculator from '@/components/HeatPumpCalculator';
+
+const faq = [
+  {
+    q: 'How much does it cost to replace an existing heat pump?',
+    a: 'Replacing an existing heat pump typically runs $6,500 to $14,000 for a like-for-like 3-ton ducted swap, per NREL benchmark data and 2026 installer surveys — usually $1,500 to $4,000 less than a first-time installation because the ductwork, line-set path, electrical circuit, and pad are already in place. Cold-climate equipment, a deteriorated line set, or panel work push the total higher. Use the calculator below for a state-specific range.',
+  },
+  {
+    q: 'Why is replacement cheaper than a new heat pump installation?',
+    a: 'A first-time install pays for infrastructure a replacement reuses: duct modifications or new ductwork ($3,500-$9,000 when needed), a new 240V circuit and disconnect, refrigerant line routing, and the outdoor pad. A swap-out reuses most of that. The replacement-specific costs are removal and disposal of the old unit ($150-$500) and, in many cases, a new line set or flush — required when switching refrigerants (R-410A to R-454B/R-32) per EPA refrigerant-transition rules (https://www.epa.gov/climate-hfcs-reduction).',
+  },
+  {
+    q: 'When should I replace my heat pump instead of repairing it?',
+    a: 'The common rule: multiply the repair quote by the unit\'s age in years — over $5,000, lean replace. A 12-year-old unit needing a $1,200 compressor repair scores $14,400: replace. A 6-year-old unit with a $400 capacitor failure: repair. Units past 10-12 years with refrigerant-circuit failures (compressor, coil leak) are usually not worth repairing because R-410A refrigerant costs are rising under the EPA phasedown. Our repair-vs-replace tool at /hvac-repair-vs-replace/ runs the math.',
+  },
+  {
+    q: 'Should I replace my heat pump with the same size?',
+    a: 'Not automatically. If the home has gained insulation, air sealing, or new windows since the original install, the correct size may be smaller — and an oversized heat pump short-cycles, dehumidifies poorly, and wears out faster. Per ACCA Manual J procedure (https://www.acca.org/standards/technical-manuals/manual-j), a load calculation should precede any replacement. Insist on one; a contractor who quotes like-for-like tonnage without it is guessing with your money.',
+  },
+  {
+    q: 'How long does a heat pump replacement take?',
+    a: 'A straightforward like-for-like swap is a one-day job for a two-person crew: remove the old equipment, set the new outdoor unit and air handler, connect or replace the line set, vacuum and charge the refrigerant circuit, and commission. Add a day if the line set is being replaced through finished walls, the air handler is in a tight attic, or electrical panel work is in scope. Permit inspection follows, typically within a week.',
+  },
+  {
+    q: 'Do 2026 rebates apply to a replacement, or only new installations?',
+    a: 'Most programs treat replacement and first-time installation identically — eligibility keys off the new equipment\'s efficiency rating, not what it replaces. The federal 25C credit expired Dec 31 2025 under OBBBA (https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit), but state and utility programs still apply: Mass Save up to $8,500, NYSERDA Clean Heat up to $12,000, TECH Clean California, and DOE Home Energy Rebates for income-qualified households where launched (https://www.energy.gov/scep/home-energy-rebates-programs). Some utility programs pay MORE for replacing electric resistance or oil heat than for replacing an old heat pump — check the program fine print.',
+  },
+  {
+    q: 'Can I replace just the outdoor unit and keep the indoor air handler?',
+    a: 'Usually a false economy, and often not allowed. The outdoor and indoor coils are a matched system — mismatched pairs lose rated efficiency and may void the warranty, and AHRI certificates (which rebate programs require) only exist for tested combinations. The refrigerant transition makes this harder still: a new R-454B outdoor unit cannot run on an R-410A indoor coil. Budget for both sections; the indoor-only savings rarely exceed $1,500-$2,500 and cost more long-term.',
+  },
+  {
+    q: 'What are the red flags in a heat pump replacement quote?',
+    a: 'Watch for: (1) no Manual J — the replacement is sized by copying the dying unit\'s nameplate; (2) reusing a 15-year-old line set with a new-refrigerant unit without a flush or pressure test; (3) no AHRI matched-system number on the quote; (4) disposal not itemized — the old refrigerant must be recovered per EPA Section 608, not vented; (5) a quote far below the others that omits the permit. A good replacement quote lists model numbers for both sections, the AHRI certificate number, line-set plan, disposal, and permit as line items.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    name: 'Heat Pump Replacement Cost Calculator',
+    description: 'Planning-range cost to replace an existing heat pump — like-for-like swap pricing, repair-vs-replace math, and 2026 rebates.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Layout
+  title="Heat Pump Replacement Cost 2026 — Swap-Out Price"
+  description="Replacing an existing heat pump runs $6,500-$14,000 for a like-for-like 3-ton swap — less than a first install. Repair-vs-replace math and 2026 rebates."
+  active="/heat-pump-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-hero-photo.jpg"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Heat pump calculator', href: '/heat-pump-cost-calculator/' },
+    { name: 'Replacement cost', href: '/heat-pump-replacement-cost/' },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="eyebrow">Heat pump · Replacement</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Heat Pump Replacement Cost</h1>
+    <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
+      Swapping out an existing heat pump costs less than a first-time install because the ductwork, electrical circuit, and refrigerant path already exist. What changes the number: refrigerant-transition line-set work, equipment tier, and whether the original unit was sized correctly.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> $6,500-$14,000 for a like-for-like 3-ton ducted replacement — roughly $1,500-$4,000 below first-install cost. Removal/disposal adds $150-$500; a new line set (often required with the R-454B refrigerant transition) adds $400-$1,200. Refine by state and home below.
+    </p>
+    <p class="mt-3 max-w-2xl text-xs text-ink-600">
+      <strong>Planning range, not a contractor quote.</strong> Verify state and utility programs with the linked administrator before claiming — caps, eligibility, and timelines change.
+    </p>
+  </section>
+
+  <section class="container-wide pb-10"><HeatPumpCalculator client:load /></section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Related</h2>
+    <ul class="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+      <li><a href="/hvac-repair-vs-replace/">Repair vs. replace decision tool <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-calculator/">Main heat pump calculator <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-by-state/">Cost by state <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-cost-3-ton/">Cost by tonnage <span aria-hidden="true">→</span></a></li>
+      <li><a href="/heat-pump-vs-gas-furnace/">Heat pump vs. gas furnace <span aria-hidden="true">→</span></a></li>
+      <li><a href="/guides/heat-pumps/">Heat pumps guide <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

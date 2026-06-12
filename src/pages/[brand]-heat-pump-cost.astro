@@ -28,7 +28,23 @@ const faq = [
   },
   {
     q: `What rebates apply to a ${b.brand} heat pump?`,
-    a: `Rebates key off equipment efficiency and household income, not the brand. The federal 25C credit expired Dec 31 2025 under OBBBA; state and utility programs plus DOE Home Energy Rebates (where launched) still apply to qualifying ${b.brand} models. The calculator below surfaces programs for your state.`,
+    a: `Rebates key off equipment efficiency and household income, not the brand. The federal 25C credit expired Dec 31 2025 under OBBBA (see https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit); state and utility programs plus DOE Home Energy Rebates (where launched — track rollout at https://www.energy.gov/scep/home-energy-rebates-programs) still apply to qualifying ${b.brand} models. The calculator below surfaces programs for your state.`,
+  },
+  {
+    q: `How long does a ${b.brand} heat pump last?`,
+    a: `Plan on 15 to 20 years for a properly sized and maintained unit, per U.S. Department of Energy guidance (https://www.energy.gov/energysaver/heat-pump-systems). Warranty matters more than brand folklore: most ${b.brand} residential units carry a 10-year parts warranty, but only if the unit is registered within 60-90 days of install — unregistered units typically drop to 5 years. Ask the contractor who handles registration before you sign.`,
+  },
+  {
+    q: `Who installs ${b.brand} heat pumps, and does the installer matter?`,
+    a: `${b.tier === 'premium' ? `${b.brand} sells largely through authorized or factory-trained dealer networks, which keeps install quality more consistent but can limit how many competing quotes you can get.` : `${b.brand} equipment is widely available through standard HVAC supply channels, so most licensed contractors can quote it — get at least three bids.`} Per ENERGY STAR's quality-installation guidance (https://www.energystar.gov/products/heating_cooling/heat_pumps_air_source), incorrect refrigerant charge, duct leakage, and oversizing cause more real-world performance loss than any brand difference. Ask every bidder for a Manual J load calculation, not a rule-of-thumb tonnage match.`,
+  },
+  {
+    q: `Does a ${b.brand} heat pump cost more to run than other brands?`,
+    a: `Operating cost is set by the unit's HSPF2 (heating) and SEER2 (cooling) ratings, your electricity rate, and your climate — not the badge. Two brands at the same HSPF2 cost the same to run. Compare specific model ratings on the ENERGY STAR product finder (https://www.energystar.gov/productfinder/product/certified-air-source-heat-pumps/) and, for cold climates, verify low-temperature capacity retention in the NEEP database (https://ashp.neep.org/). The operating-cost panel in the calculator below estimates your monthly change.`,
+  },
+  {
+    q: `What are the red flags in a ${b.brand} heat pump quote?`,
+    a: `Watch for: (1) no Manual J load calculation — tonnage guessed from square footage alone; (2) a quote that's 30%+ below the others, which usually means the panel work, line-set replacement, or permit was left out; (3) pressure to decide same-day for a "discount"; (4) no model number on the quote — you can't verify efficiency ratings or rebate eligibility without it; (5) replacing like-for-like size without asking about insulation upgrades since the original install. A legitimate ${b.brand} quote lists the outdoor and indoor model numbers, the HSPF2/SEER2 ratings, and itemizes electrical work separately.`,
   },
 ];
 

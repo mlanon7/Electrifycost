@@ -34,7 +34,23 @@ const faq = [
   },
   {
     q: `What incentives apply to a ${b.brand} battery in 2026?`,
-    a: `The federal 25D residential clean energy credit (30% of battery cost) expired Dec 31 2025 under OBBBA and does not apply to 2026 installs. State and utility storage programs still apply — California SGIP, plus several state and utility resilience and demand-response programs. The calculator below surfaces what's available; verify with the program administrator.`,
+    a: `The federal 25D residential clean energy credit (30% of battery cost) expired Dec 31 2025 under OBBBA and does not apply to 2026 installs — see https://www.irs.gov/credits-deductions/residential-clean-energy-credit. State and utility storage programs still apply — California SGIP (https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/self-generation-incentive-program), plus several state and utility resilience and demand-response programs. The calculator below surfaces what's available; verify with the program administrator.`,
+  },
+  {
+    q: `How long does a ${b.brand} battery last, and what does the warranty actually cover?`,
+    a: `Ten-year warranties are the industry standard, but read the fine print: warranties are capped by whichever comes first — years, cycle count, or total energy throughput (MWh) — and typically guarantee only 70% of original capacity at the end of the term, not 100%. Daily-cycling for bill arbitrage consumes the throughput cap faster than backup-only use. LFP chemistry (used in most current ${b.brand} and competitor models) degrades slower than older NMC packs. Ask for the warranty's throughput number, not just "10 years."`,
+  },
+  {
+    q: `Where does a ${b.brand} battery get installed, and what does the install involve?`,
+    a: `Wall-mounted in a garage or on an exterior wall is typical. NEC 706 and most fire codes (per UL 9540A testing requirements) set clearances and limit how much capacity can sit in living-space-adjacent locations — garages and exterior walls avoid most of those limits. The install includes the battery, a backup gateway or transfer switch (which is what actually islands your home during an outage), permits, and inspection. Extreme-heat or hard-freeze locations matter: most units derate charging below freezing, so outdoor mounting in cold climates costs you winter performance.`,
+  },
+  {
+    q: `Can a ${b.brand} battery earn money in a virtual power plant (VPP)?`,
+    a: `In a growing number of territories, yes. Utility and aggregator VPP programs pay enrolled batteries for grid support — flat annual credits ($200-$1,000/yr is the common range) or per-event payments. Tesla, Enphase, and several aggregators run programs in CA, TX, MA, CT, CO, and more; availability depends on your utility, not just your state. VPP revenue meaningfully improves battery payback, which is otherwise long on bill savings alone now that the 25D credit has expired. Check your utility's demand-response page and https://www.dsireusa.org/ for current programs.`,
+  },
+  {
+    q: `What are the red flags in a ${b.brand} battery quote?`,
+    a: `Watch for: (1) door-to-door sales bundling battery + solar with financing whose dealer fee inflates the cash price 15-30% — always ask for the cash price first; (2) quotes that don't state usable kWh and continuous kW output — "a Powerwall-class battery" is not a spec; (3) claims that the federal tax credit still applies in 2026 — 25D expired Dec 31 2025, and a quote promising 30% back is wrong on a material fact; (4) no mention of the backup gateway/transfer switch, which adds $1,000-$2,000 and is required for outage backup; (5) whole-home backup promises from a single small battery — a 10 kWh unit backs up critical loads, not central AC. Get the single-line diagram and permit scope in writing.`,
   },
 ];
 
