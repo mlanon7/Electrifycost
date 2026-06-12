@@ -107,8 +107,8 @@ const TANKLESS_GAS_BASELINE = { low: 2800, mid: 4300, high: 6500, annualTherms: 
 function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
 function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
 
-export default function TankWaterHeaterCalculator() {
-  const [state, setState] = useState('OH');
+export default function TankWaterHeaterCalculator({ initialState }: { initialState?: string } = {}) {
+  const [state, setState] = useState(initialState ?? 'OH');
   const [zip, setZip] = useState('');
   const [fuel, setFuel] = useState<Fuel>('natural_gas');
   const [tier, setTier] = useState<Tier>('standard');

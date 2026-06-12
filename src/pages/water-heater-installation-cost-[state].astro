@@ -1,0 +1,171 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import TankWaterHeaterCalculator from '@/components/TankWaterHeaterCalculator';
+import {
+  ALL_STATES,
+  findStateEnergy,
+  findStateLabor,
+} from '@/lib/data';
+import { fmtUSD } from '@/lib/format';
+
+export async function getStaticPaths() {
+  return ALL_STATES.map(s => ({ params: { state: s.code.toLowerCase() } }));
+}
+
+const { state: stateParam } = Astro.params as { state: string };
+const stateCode = (stateParam ?? '').toUpperCase();
+// getStaticPaths enumerates every valid state, so meta is always defined at
+// build time. The non-null assertion is safe here.
+const meta = ALL_STATES.find(s => s.code === stateCode)!;
+const stateName = meta.name;
+const energy = findStateEnergy(stateCode);
+const labor  = findStateLabor(stateCode);
+
+const plumberMult = labor?.plumber_multiplier ?? 1;
+const electricityCents = energy?.electricity_cents_per_kwh ?? 0;
+const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
+
+// 50-gal standard gas tank: equipment $700-$1,400 + install $500-$1,300 ×
+// state plumber multiplier + permit $75-$300 (tank-water-heater-cost-ranges.csv).
+const lowTotal  = Math.round((700  + 500  * plumberMult + 75)  / 50) * 50;
+const highTotal = Math.round((1400 + 1300 * plumberMult + 300) / 50) * 50;
+
+// Annual operating cost comparison: gas 221 therms vs electric 4,880 kWh
+// (tank-water-heater-cost-ranges.csv 50-gal rows).
+const gasAnnual = Math.round(221 * gasPrice);
+const electricAnnual = Math.round(4880 * electricityCents / 100);
+
+const hpwhStateHref = '/heat-pump-water-heater-cost-' + stateCode.toLowerCase() + '/';
+const hpwhSavings = Math.max(electricAnnual - Math.round(electricAnnual / 3), 0);
+
+const description = 'Water heater installation cost in ' + stateName + ': 50-gal tank ' + fmtUSD(lowTotal) + '-' + fmtUSD(highTotal) + ' installed. Plumber labor ' + plumberMult.toFixed(2) + 'x, gas $' + gasPrice.toFixed(2) + '/therm.';
+
+const faq = [
+  {
+    q: 'How much does water heater installation cost in ' + stateName + '?',
+    a: 'A standard 50-gallon tank water heater runs about ' + fmtUSD(lowTotal) + ' to ' + fmtUSD(highTotal) + ' installed in ' + stateName + ", including the unit, plumber labor at the state's " + plumberMult.toFixed(2) + 'x multiplier vs. the U.S. average, and the permit. Power-vent and condensing gas tiers run higher; a heat pump water heater runs $2,200-$4,200. Use the calculator above to refine by fuel, size, and tier.',
+  },
+  {
+    q: 'Is gas or electric cheaper to run in ' + stateName + '?',
+    a: 'At ' + stateName + "'s current prices - electricity " + electricityCents.toFixed(1) + ' cents/kWh and natural gas $' + gasPrice.toFixed(2) + '/therm - a standard gas tank costs roughly $' + gasAnnual + '/year to run vs. $' + electricAnnual + '/year for an electric resistance tank (EIA state retail prices; usage per DOE test-procedure assumptions for a 50-gal tank). A heat pump water heater cuts the electric figure by roughly two-thirds, which usually makes it the cheapest option to run regardless of the gas-vs-electric split.',
+  },
+  {
+    q: 'Do I need a permit to replace a water heater in ' + stateName + '?',
+    a: 'Yes - nearly every ' + stateName + ' jurisdiction requires a plumbing permit for a water heater replacement (plus an electrical permit for new circuits). The inspection checks venting, the temperature-and-pressure relief valve, expansion tank, and strapping where required. Permits typically run $75-$300. Unpermitted installs can void homeowner insurance claims and complicate a sale.',
+  },
+  {
+    q: 'When is a heat pump water heater worth it in ' + stateName + '?',
+    a: "If you're on electric resistance today, almost always: a HPWH uses about one-third the electricity, saving roughly $" + hpwhSavings + '/year at ' + stateName + ' rates, which pays back the $1,000-$1,800 upfront premium in a few years. If you are on cheap natural gas, the math is closer - run both numbers in the dedicated calculator at ' + hpwhStateHref + '. Income-qualified households may also get up to $1,750 via DOE HEEHRA where ' + stateName + ' has launched the program (https://www.energy.gov/scep/home-energy-rebates-programs).',
+  },
+  {
+    q: 'My water heater died - what does an emergency replacement cost in ' + stateName + '?',
+    a: 'Same-day emergency swaps typically add $300-$800 over the planned-replacement price: after-hours labor, whatever unit is on the truck (rarely the best-value model), and no time for competing quotes. If your tank is 10+ years old, pricing the replacement now - before it fails - is the single best way to avoid paying the emergency premium and getting stuck with a low-efficiency unit for the next decade.',
+  },
+];
+
+const schemaJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: `Water Heater Installation Cost Calculator — ${stateName}`,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Layout
+  title={`Water Heater Installation Cost in ${stateName}`}
+  description={description}
+  active="/water-heater-installation-cost-calculator/"
+  schemaJsonLd={schemaJsonLd}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Water heater by state', href: '/water-heater-installation-cost-by-state/' },
+    { name: stateName, href: `/water-heater-installation-cost-${stateCode.toLowerCase()}/` },
+  ]}
+>
+  <section class="container-wide py-8 md:py-10">
+    <p class="text-xs font-semibold uppercase tracking-wider text-brand-700">{stateName}</p>
+    <h1 class="mt-1 text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+      Water Heater Installation Cost in {stateName}
+    </h1>
+    <p class="mt-2 max-w-2xl text-sm text-ink-600 md:text-base">
+      Estimate the installed cost of replacing a tank water heater in {stateName} — by fuel (gas / electric / propane), size (40 / 50 / 80 gallon), and efficiency tier. Calibrated to local plumber labor ({plumberMult.toFixed(2)}× the U.S. average) and {stateName} energy prices for the operating-cost comparison.
+    </p>
+    <p class="mt-3 max-w-2xl rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
+      <strong>Quick answer:</strong> a standard 50-gallon tank runs about {fmtUSD(lowTotal)}–{fmtUSD(highTotal)} installed in {stateName}. Power-vent and condensing tiers run higher; heat pump water heaters $2,200–$4,200; permit $75–$300.
+    </p>
+    <p class="mt-3 max-w-2xl text-xs text-ink-600">
+      <strong>Planning range, not a contractor quote.</strong> Verify state and utility programs with the linked administrator before claiming — caps, eligibility, and timelines change.
+    </p>
+
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      <div class="card p-3">
+        <div class="text-xs uppercase tracking-wider text-ink-600">Plumber labor</div>
+        <div class="mt-1 text-base font-semibold text-ink-900">{plumberMult.toFixed(2)}×</div>
+        <div class="text-xs text-ink-600">vs. U.S. average (BLS)</div>
+      </div>
+      <div class="card p-3">
+        <div class="text-xs uppercase tracking-wider text-ink-600">Electricity</div>
+        <div class="mt-1 text-base font-semibold text-ink-900">{electricityCents.toFixed(1)}¢/kWh</div>
+        <div class="text-xs text-ink-600">EIA retail average</div>
+      </div>
+      <div class="card p-3">
+        <div class="text-xs uppercase tracking-wider text-ink-600">Natural gas</div>
+        <div class="mt-1 text-base font-semibold text-ink-900">${gasPrice.toFixed(2)}/therm</div>
+        <div class="text-xs text-ink-600">gas-vs-electric comparison</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-wide pb-10">
+    <TankWaterHeaterCalculator client:load initialState={stateCode} />
+  </section>
+
+  <section class="container-wide py-8 border-t border-ink-100">
+    <div class="max-w-prose">
+      <h2 class="text-xl font-semibold text-ink-900">Thinking beyond a like-for-like swap?</h2>
+      <p class="mt-2 text-sm text-ink-700">
+        A standard tank is the cheapest install, but at {stateName}'s electricity price of {electricityCents.toFixed(1)}¢/kWh, a heat pump water heater costs roughly one-third as much to run as electric resistance — and rebates may apply where standard tanks get none.
+      </p>
+      <p class="mt-3 text-sm">
+        <a href={`/heat-pump-water-heater-cost-${stateCode.toLowerCase()}/`} class="font-medium text-brand-700">Heat pump water heater cost in {stateName} <span aria-hidden="true">→</span></a>
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide py-10 section-shelf section-shelf-soft">
+    <h2 class="text-xl font-semibold text-ink-900">Frequently asked questions</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map(f => (
+        <details class="card p-4">
+          <summary class="cursor-pointer text-sm font-medium text-ink-900">{f.q}</summary>
+          <p class="mt-2 text-sm text-ink-700">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <h2 class="text-xl font-semibold text-ink-900">Water heater installation cost by state</h2>
+    <ul class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
+      {ALL_STATES.map(s => (
+        <li><a href={`/water-heater-installation-cost-${s.code.toLowerCase()}/`}>{s.name}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
