@@ -8,6 +8,15 @@ Items here are loosely ordered by priority (top = sooner). When something ships,
 
 ## Up next (next 30 days)
 
+> **2026-06-14 reality check (from GSC + Ahrefs + Bing data):** the content is comprehensive and ranks *page 1* on long-tail (city pages pos 1–13, panel-state pages pos 3–8, brand pages pos 8–16). But every high-volume head term ("heat pump cost" 264 imp, "heat pump system cost" 190 imp) sits at position 65–88. This is an **authority/backlink ceiling on a ~1-month-old domain, not a content problem** — so the acquisition items below (especially outreach now that `martin@electrifycost.com` is set up and inbox-deliverable) are the real growth lever, not more pages.
+
+### Highest-leverage now
+
+- **Authority / backlink push.** The single thing that moves the stuck head terms. Outreach is now unblocked — `martin@electrifycost.com` is live and verified 10/10 deliverable (see `INFRASTRUCTURE.md`). Fire the HN launch kit, newsletter outreach, and directory submissions.
+- **Bing IndexNow + Bing Webmaster Tools.** Bing + DuckDuckGo are ~half of current search referrers, and there is **no IndexNow key or Bing submission yet**. Cheap, Bing-weighted upside. In-repo: add an IndexNow key file + post-deploy ping.
+- **30C federal credit flips 2026-06-30.** On/after July 1: set `FED_30C_EVSE` status `active → expired` in `rebate-programs.csv` and past-tense the ~24 copy references. Calendared.
+- **Tighten DMARC** `p=none` → `p=quarantine` ~2026-07-05 once reports are clean (see `INFRASTRUCTURE.md`).
+
 ### Acquisition + indexing
 
 - **Reddit seeding.** Genuinely useful answers in r/heatpumps, r/electricvehicles, r/solar, r/HomeImprovement, r/HVAC — link the calculator when it's the actual best resource for the OP's question. 2–3 posts/week.

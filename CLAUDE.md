@@ -83,7 +83,8 @@ electrifycost/
 │   ├── favicon.svg
 │   ├── og-default.png
 │   ├── robots.txt                      — Sitemap: /sitemap.xml + GPTBot/ClaudeBot Allow
-│   └── assets/topic-images/            — 27 hero photos (AVIF + WebP + PNG triples)
+│   ├── brand/                          — logo1.png (556×102, ≤19KB)
+│   └── assets/topic-images/            — 38 hero photos × (AVIF + WebP + JPG) = 114 files, each ≤85KB
 ├── data/csv/                           — 51 CSVs; SINGLE source of truth for numbers
 │                                          (incl. top-cities.csv, brand-profiles.csv)
 │   ├── README.md                       — per-column docs + edit checklist
@@ -97,17 +98,20 @@ electrifycost/
 │   ├── home-energy-rebate-status.csv   — HEEHRA per-state rollout status
 │   └── ...39 more module-specific files
 ├── scripts/
-│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml
-│   ├── validate-csvs.cjs               — pre-test: 49 CSVs schema-checked
+│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (~696 URLs)
+│   ├── validate-csvs.cjs               — pre-test: all 51 CSVs schema-checked (source_id resolves, ISO dates)
 │   ├── validate-pages.cjs              — pre-test: Layout open/close balance + JSX-trap detection
 │   ├── smoke-test.cjs                  — 13 scenarios + 9 targeted assertion groups
 │   ├── new-calc-tests.cjs              — 29 formula assertions for non-flagship calculators
-│   └── smoke-cases.json                — input matrix for smoke-test
+│   ├── smoke-cases.json                — input matrix for smoke-test
+│   ├── audit-scan.cjs                  — POSTBUILD manual: meta/title length, orphans, trailing-slash links
+│   ├── contrast-check.cjs              — WCAG AA contrast check on the ink/brand palette
+│   └── recompress-images.cjs           — manual one-off: re-encode hero photos to ≤85KB (sharp; AVIF/WebP/JPG)
 └── src/
     ├── components/
     │   ├── Layout.astro                — site shell, meta, JSON-LD schemas, GA4
     │   ├── Header.astro                — sticky nav, 5 dropdown categories + Guides + Rebates
-    │   ├── Footer.astro                — 4-col footer, About link, "Data last refreshed" stamp
+    │   ├── Footer.astro                — 5-col footer (Calculators / Trust / Legal), "Data last refreshed" stamp
     │   ├── CookieBanner.astro          — Consent Mode v2 accept/decline UI
     │   ├── ResultPanel.tsx             — shared low/mid/high result UI for the 5 flagships
     │   ├── RelatedGuides.astro         — uniform "Related guides" footer on every /guides/X page
@@ -140,8 +144,12 @@ electrifycost/
     │   ├── sources.astro
     │   ├── rebates.astro
     │   ├── glossary.astro
+    │   ├── privacy.astro                            — privacy policy (legal; ad-network requirement)
+    │   ├── terms.astro                              — terms of use (legal; ad-network requirement)
     │   ├── 404.astro
-    │   ├── <module>-cost-calculator.astro  × 38     — flagship calculator pages
+    │   ├── <module>-cost-calculator.astro  × 37     — flagship calculator pages
+    │   ├── water-heater-installation-cost-[state].astro  — 51 programmatic state pages + by-state hub
+    │   ├── heat-pump-replacement-cost.astro         — replacement-intent page
     │   ├── heat-pump-cost-[state].astro             — 51 programmatic state pages
     │   ├── solar-panel-cost-[state].astro           — 51 programmatic state pages
     │   ├── ev-charger-installation-cost-[state].astro     — 51 pages
@@ -315,8 +323,15 @@ When working on a task, read the most-recent audit for context. When closing a t
 
 ## Recent commits worth knowing about
 
+Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-driven audit + build sprint; see `audit/AUDIT_2026-05-27.md` for the audit doc, `INFRASTRUCTURE.md` for the email/DNS work, and `CHANGELOG.md` for the full per-release log.
+
 | SHA | Summary |
 |---|---|
+| `6e38723` | Close audit P2/P3 backlog: CWV (Lighthouse), logo PNG resize, source_id+last_reviewed on last 7 CSVs, named studies (LBNL Aeroseal / Nest), internal links (geothermal, battery-vs-generator), ResultPanel keyboard a11y, dingbat codification in STYLEGUIDE, sitemap priority, AffiliateModule type trim |
+| `e2f59e2` | 51 water-heater-installation state pages + by-state hub (GSC demand cluster #2); TankWaterHeaterCalculator gains `initialState` |
+| `13ea0ab` | GSC-driven: deepen 22 brand pages (4→8 FAQs + inline source URLs) + new `/heat-pump-replacement-cost/` page |
+| `20fda58` | Audit 2026-05-27: P0 (30D date) + 12 P1 + 13 P2 + 3 Ahrefs fixes — privacy.astro + terms.astro + footer Legal col, vercel.json HTML cache, BreadcrumbList on state pages, WebApplication schema, hero disclaimers, ink-500→600 contrast, focus ring, csv?raw env.d.ts |
+| `21fbf74` | Add Ahrefs Web Analytics tracking script |
 | `fa72559` | Tier 2 keyword pages: 22 brand cost pages (HP/HPWH/EV/battery) via brand-profiles.csv + 4 dynamic `[brand]-...` templates |
 | `54ee47e` | Tier 1 keyword pages: heat pump by tonnage (5) + operating-cost + ducted + electric-furnace |
 | `7c3d9ca` | HPWH-by-city hub; fix HPWH city-cluster orphan path |
@@ -333,6 +348,8 @@ When working on a task, read the most-recent audit for context. When closing a t
 | `9b9c318` | Pass 4 audit fixes (EV regression, panel CA, per-amp pages, self-host fonts) |
 
 Keyword strategy + opportunity backlog: `audit/KEYWORD_OPPORTUNITIES_2026-05.md` (Tier 1+2 shipped; Tier 3 pending).
+
+Operational (non-code) facts — domain, DNS, hosting, **email (ImprovMX + SPF/DKIM/DMARC)**, analytics: `INFRASTRUCTURE.md`. Email-auth setup gotchas: `.claude/lessons/09-email-auth-dmarc-dkim.md`.
 
 ---
 
