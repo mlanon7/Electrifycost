@@ -22,6 +22,7 @@ Same-owner cross-links pass **little ranking authority** — they're not indepen
 3. **One link per page**, only where the destination genuinely helps that page's reader.
 4. **Asymmetric on purpose** — generalist→specialist heavier (8) than specialist→generalist (3). Perfect reciprocity at scale is the spammy pattern; asymmetry reads natural.
 5. **Normal dofollow links** — no `nofollow` (would kill even the crawl-discovery benefit), no `target=_blank` templating.
+6. **Neutral editorial framing — do NOT write "our sister site."** Name the destination ("ProjectCostPro's roofing calculator", "ProjectCostPro covers 50+ home-project calculators"). Explicitly advertising the common ownership hand-feeds Google the same-owner signal, which further discounts an already-low-authority link — and the link is just as useful to the reader without it. (The first pass used "our sister site"; removed 2026-06-20.)
 
 ## The live map (as of 2026-06-20 — `5e81200` here, `3c4bfb6` in projectcostpro)
 
