@@ -19,7 +19,7 @@ System design for human developers. Complements `CLAUDE.md` (AI-focused working 
                                   ▼
               ┌──────────────────────────────────────┐
               │     Astro 4 static build output      │
-              │  (dist/ — 642 HTML pages, ~5 MB JS)  │
+              │  (dist/ — 697 HTML pages, ~5 MB JS)  │
               └─────────────────┬────────────────────┘
                                 │ at build time
                                 ▼
@@ -97,7 +97,7 @@ Astro renders each page to static HTML at build time. The five flagship calculat
 
 ### 4. Programmatic SEO dimensions + the routing rule
 
-The site scales URL count by multiplying a calculator across **dimensions**. As of 2026-05 there are four live dimensions (642 built pages):
+The site scales URL count by multiplying a calculator across **dimensions**. As of 2026-06 there are four live dimensions (697 built pages):
 
 | Dimension | Data source | URL shape | Example |
 |---|---|---|---|
@@ -114,7 +114,7 @@ The site scales URL count by multiplying a calculator across **dimensions**. As 
 
 See `.claude/lessons/08-astro-route-collision-patterns.md` for the full decision tree. Adding a new dimension? Pick one of these three shapes; never add a second greedy single-segment dynamic at the same prefix.
 
-The dimensions compose: state × module = 306 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 642 pages came from ~10 template files.
+The dimensions compose: state × module = 357 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 697 pages came from ~10 template files.
 
 ---
 
@@ -131,7 +131,7 @@ The dimensions compose: state × module = 306 pages, city × module = 200, brand
 │   ├── robots.txt              — Sitemap: /sitemap.xml + GPTBot/ClaudeBot allow
 │   ├── og-default.png          — 1200×630 social card
 │   ├── favicon.svg
-│   └── assets/topic-images/    — 27 hero photos × (AVIF + WebP + PNG)
+│   └── assets/topic-images/    — 38 hero photos × (AVIF + WebP + JPG)
 ├── data/csv/                   — 51 CSVs (THE source of truth)
 ├── scripts/
 │   ├── build-sitemap.cjs       — postbuild: walks dist/ → emits sitemap.xml
@@ -160,7 +160,7 @@ The dimensions compose: state × module = 306 pages, city × module = 200, brand
     │   ├── contractor-checklists.json
     │   ├── glossary.json
     │   └── source-notes.json   — 200+ primary-source entries
-    ├── pages/                  — 109 .astro files → 409 built HTML pages
+    ├── pages/                  — 131 .astro files → 697 built HTML pages
     │   ├── index.astro
     │   ├── about.astro
     │   ├── methodology.astro
@@ -193,11 +193,11 @@ npm run build
    │     │     ├──▶ React islands  → dist/_astro/<calculator>.<hash>.js
    │     │     └──▶ CSV ?raw        → inlined into shared chunk
    │     │
-   │     └──▶ render pages          → dist/<route>/index.html (409 files)
+   │     └──▶ render pages          → dist/<route>/index.html (697 files)
    │
    └──▶ node scripts/build-sitemap.cjs
          │
-         └──▶ walks dist/ → emits dist/sitemap.xml (408 URLs)
+         └──▶ walks dist/ → emits dist/sitemap.xml (696 URLs)
 ```
 
 Vercel uploads the `dist/` directory verbatim. No edge functions, no SSR runtime, no node server. Pure static hosting with aggressive caching.
@@ -231,8 +231,8 @@ Vercel uploads the `dist/` directory verbatim. No edge functions, no SSR runtime
 | INP | < 200ms | ✅ React hydration is the bottleneck; well under |
 | CLS | < 0.1 | ✅ `<picture>` elements have explicit width/height; ad slot reserved with min-height |
 | JS bundle (per calc page) | < 200 KB transferred | ⚠ ~250 KB transferred currently (104 KB CSVs + 130 KB React + calc component) — Phase 3 candidate |
-| Sitemap URLs | 400+ | ✅ 408 |
-| Indexable pages | ≥ 400 | ✅ 409 built; ~408 indexable (excluding 404) |
+| Sitemap URLs | 400+ | ✅ 696 |
+| Indexable pages | ≥ 400 | ✅ 697 built; ~696 indexable (excluding 404) |
 
 ---
 

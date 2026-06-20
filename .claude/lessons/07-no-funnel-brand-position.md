@@ -33,7 +33,7 @@ The competitive moat isn't technology — it's **trust as a ranking signal**. Me
 
 ### 2. Programmatic SEO works better
 
-ElectrifyCost has 408 URLs as of writing. A funnel-first approach would gate value behind email submission, which means:
+ElectrifyCost has ~700 URLs as of writing. A funnel-first approach would gate value behind email submission, which means:
 - Google penalizes the page for intent mismatch
 - Programmatic state pages don't get indexed at the same depth
 - Long-tail capture suffers

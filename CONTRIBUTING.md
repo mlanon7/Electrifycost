@@ -41,7 +41,7 @@ Plus:
 
 ```bash
 npx tsc --noEmit          # zero errors
-npm run build             # must complete cleanly + emit 408+ URLs in sitemap.xml
+npm run build             # must complete cleanly + emit 690+ URLs in sitemap.xml
 ```
 
 CI runs the same chain on every push and PR via `.github/workflows/ci.yml`. If CI fails after you push, fix the issue and push a follow-up commit (don't force-push to rewrite history).
@@ -124,7 +124,7 @@ A change is mergeable when:
 
 - [ ] `npm test` passes (4 stages, all green)
 - [ ] `npx tsc --noEmit` reports zero errors
-- [ ] `npm run build` completes and emits 408+ URLs in `dist/sitemap.xml`
+- [ ] `npm run build` completes and emits 690+ URLs in `dist/sitemap.xml`
 - [ ] No new dependencies added without explicit justification in commit body
 - [ ] Any new content respects the "no funnel" position (see STYLEGUIDE.md)
 - [ ] Any factual claim about a rebate, federal credit, or efficiency standard cites a primary source URL inline or in `/sources/`

@@ -12,8 +12,13 @@ Items here are loosely ordered by priority (top = sooner). When something ships,
 
 ### Highest-leverage now
 
-- **Authority / backlink push.** The single thing that moves the stuck head terms. Outreach is now unblocked — `martin@electrifycost.com` is live and verified 10/10 deliverable (see `INFRASTRUCTURE.md`). Fire the HN launch kit, newsletter outreach, and directory submissions.
-- **Bing IndexNow + Bing Webmaster Tools.** Bing + DuckDuckGo are ~half of current search referrers, and there is **no IndexNow key or Bing submission yet**. Cheap, Bing-weighted upside. In-repo: add an IndexNow key file + post-deploy ping.
+> **2026-06-14 live audit (GSC + Bing, pulled via Chrome):** GSC has **339 indexed** and **302 "discovered – not indexed"** (crawl rationing on a young domain); avg position **48.3** and improving. Bing read all 696 sitemap URLs; its own top two recommendations were "set up IndexNow" and "not enough inbound links from high-quality domains." Both engines agree: **authority-gated, not content-gated.**
+
+- **Authority / backlink push — THE lever.** Third-party links are what move the 302 "discovered" pages into the index and lift head terms off page 5. Outreach is unblocked: `martin@electrifycost.com` is verified 10/10 deliverable (`INFRASTRUCTURE.md`). Fire the HN launch kit, newsletter outreach, directory submissions. (Note: the ProjectCostPro cross-link below is *same-owner* and passes little ranking authority — it's for referral/discovery, not the lever.)
+- ✅ **IndexNow — DONE (`6e1652d`).** Bing's #1 recommendation; key file + `scripts/indexnow-submit.cjs`; 696 URLs submitted and confirmed received. Run it for new/changed URLs after each ship.
+- ✅ **Bing Webmaster Tools — confirmed set up** (sign in via the Google account); sitemap reading 696 URLs, 0 errors.
+- ✅ **ProjectCostPro cross-link — DONE (`5e81200`).** Sister-site cross-discovery + referral; strategy/map in `.claude/lessons/10-portfolio-cross-linking.md`.
+- **Request indexing** on top new pages in GSC + Bing URL Inspection (≤10/day): water-heater hub, replacement page, top brand pages. Drive via Chrome.
 - **30C federal credit flips 2026-06-30.** On/after July 1: set `FED_30C_EVSE` status `active → expired` in `rebate-programs.csv` and past-tense the ~24 copy references. Calendared.
 - **Tighten DMARC** `p=none` → `p=quarantine` ~2026-07-05 once reports are clean (see `INFRASTRUCTURE.md`).
 

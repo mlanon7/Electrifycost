@@ -138,7 +138,7 @@ electrifycost/
     │   ├── contractor-checklists.json  — 5 modules × ~10 questions each
     │   ├── glossary.json               — 30 terms in 7 categories
     │   └── source-notes.json           — 200+ source entries with last_reviewed dates
-    ├── pages/                          — 109 .astro pages; 409 built HTML pages
+    ├── pages/                          — 131 .astro pages; 697 built HTML pages
     │   ├── index.astro                 — homepage + 38 calculator cards
     │   ├── about.astro                 — founder bio (E-E-A-T critical)
     │   ├── methodology.astro
@@ -328,6 +328,10 @@ Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-dr
 
 | SHA | Summary |
 |---|---|
+| `5e81200` | Strategic cross-link with sister site projectcostpro.com (8 PCP→EC + 3 EC→PCP contextual links) — see `.claude/lessons/10-portfolio-cross-linking.md` |
+| `6e1652d` | Wire IndexNow (key file + `scripts/indexnow-submit.cjs`); Bing's #1 recommendation; 696 URLs submitted |
+| `79dcd06` | Standardize all site contact to `martin@electrifycost.com` (remove stray `hello@` / `mkml.inc@`) |
+| `c58e530` | Docs: capture 05-27→06-14 sprint + email auth (`INFRASTRUCTURE.md`, lesson 09); prune junk (MANUS prompt, stale image script) |
 | `6e38723` | Close audit P2/P3 backlog: CWV (Lighthouse), logo PNG resize, source_id+last_reviewed on last 7 CSVs, named studies (LBNL Aeroseal / Nest), internal links (geothermal, battery-vs-generator), ResultPanel keyboard a11y, dingbat codification in STYLEGUIDE, sitemap priority, AffiliateModule type trim |
 | `e2f59e2` | 51 water-heater-installation state pages + by-state hub (GSC demand cluster #2); TankWaterHeaterCalculator gains `initialState` |
 | `13ea0ab` | GSC-driven: deepen 22 brand pages (4→8 FAQs + inline source URLs) + new `/heat-pump-replacement-cost/` page |

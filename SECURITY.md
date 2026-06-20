@@ -4,7 +4,7 @@
 
 If you discover a security issue with **electrifycost.com** — XSS, data exposure, build-pipeline compromise, supply-chain issue, etc. — please report it via email **before** disclosing publicly:
 
-**Email:** hello@electrifycost.com
+**Email:** martin@electrifycost.com
 **Subject line:** `[SECURITY] <one-line summary>`
 
 Expected response time: **48 hours** for initial acknowledgement, **7 days** for a fix or formal status update.

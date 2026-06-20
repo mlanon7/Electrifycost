@@ -59,7 +59,7 @@ Need to add a dimension to /<module>-cost-... ?
 
 ## What we shipped (proof the patterns coexist)
 
-All of these build together cleanly (642 pages):
+All of these build together cleanly (697 pages):
 - `heat-pump-cost-[state].astro` (greedy dynamic, prefix) — 51 pages
 - `heat-pump-cost-by-state.astro`, `-by-city.astro` (static, prefix) — hubs
 - `heat-pump-cost-3-ton.astro` ... `-5-ton.astro`, `-1000-sqft.astro` ... (static, prefix) — 10 pages

@@ -8,6 +8,12 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
+### Shipped (2026-06-14 → 2026-06-20) — deliverability, indexing, portfolio links
+- **Single site email (`79dcd06`).** Replaced two stray addresses (`hello@electrifycost.com`, `mkml.inc@gmail.com`) across about/privacy/terms with the one verified mailbox `martin@electrifycost.com`. One contact address sitewide — fewer aliases, less auth surface, one inbox.
+- **IndexNow wired (`6e1652d`).** Bing Webmaster Tools' #1 recommendation for the site. Key file at the root + `scripts/indexnow-submit.cjs` (no deps). Submitted all 696 URLs (verified 200 OK; Bing's IndexNow dashboard shows 696 received). Bing + DuckDuckGo are ~half of search referrers. Documented in `INFRASTRUCTURE.md`.
+- **Portfolio cross-link with ProjectCostPro (`5e81200` here + `3c4bfb6` in projectcostpro).** Strategic, asymmetric cross-linking between the two sister sites: 8 PCP electrification calculators → EC's deeper specialist calculators; 3 EC pages → PCP for the broader renovation projects EC doesn't cover. Contextual, varied-anchor, one-per-page (not sitewide footer). Strategy + full map in `.claude/lessons/10-portfolio-cross-linking.md`.
+- **Live search-console audit (2026-06-14, via Chrome).** GSC: 339 indexed, 302 "discovered – not indexed" (crawl rationing on a young domain), avg position 48.3 (improving). Bing: all 696 URLs read; 13 clicks / 430 impressions; its own top two recommendations were "set up IndexNow" (now done) and "not enough inbound links from high-quality domains." Conclusion: **authority-gated, not content-gated** — third-party backlinks are the lever. No code change; recorded for traceability.
+
 ### Infrastructure (2026-06-14) — email authentication
 - **Set up `martin@electrifycost.com`** on ImprovMX (forwarding in, Gmail "send as" relaying out via `smtp.improvmx.com`). Hardened with the full auth stack: SPF (existing), **DKIM** (two `dkimprovmx{1,2}._domainkey` CNAMEs), and **DMARC** (`_dmarc` TXT, `p=none` monitoring). Verified **10/10 on mail-tester.com** ("properly authenticated"). All records managed in Vercel DNS. Documented in `INFRASTRUCTURE.md`; setup gotchas in `.claude/lessons/09-email-auth-dmarc-dkim.md`. Pending: tighten DMARC `p=none` → `p=quarantine` ~2026-07-05. Not a code change — recorded here for traceability.
 

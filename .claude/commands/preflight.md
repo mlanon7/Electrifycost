@@ -69,7 +69,7 @@ If a dev server is running (port 4321), navigate to the changed page and verify 
 ```
 ✅ Tests: passing (4/4)
 ✅ TypeScript: clean
-✅ Build: 409 pages, 408 sitemap URLs
+✅ Build: 697 pages, 696 sitemap URLs
 ✅ Sitemap namespace: correct
 ✅ Sample pages: rendered correctly
 ```

@@ -30,7 +30,8 @@ Treat this directory as a **toolkit you can clone**: copy `.claude/` into a new 
 │   ├── 06-cold-start-mediavine-timing.md
 │   ├── 07-no-funnel-brand-position.md
 │   ├── 08-astro-route-collision-patterns.md
-│   └── 09-email-auth-dmarc-dkim.md
+│   ├── 09-email-auth-dmarc-dkim.md
+│   └── 10-portfolio-cross-linking.md
 ├── prompts/                 — drop-in prompts for any AI assistant (Manus, ChatGPT, Claude.ai)
 │   ├── full-site-audit.md   — comprehensive audit brief (~30 min agent runtime)
 │   ├── content-quality-review.md

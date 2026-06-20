@@ -2,7 +2,7 @@
 
 This is the meta-document for adapting ElectrifyCost's pattern to a new niche. If you're standing up a calculator-first site for HVAC SaaS, solar microgrids, EV total-cost-of-ownership, home renovation estimating, insurance quoting, or any other niche where the user wants **"give me a planning-range number based on my inputs, with the math shown"** — this is the playbook.
 
-The 6-pass arc that got ElectrifyCost from zero to a 408-URL site with 38 calculators in 4 weeks is documented here. Use it as a recipe, not a script. The principles transfer; the specifics need adaptation.
+The 6-pass arc that got ElectrifyCost from zero to a 690+-URL site with 38 calculators in 4 weeks is documented here. Use it as a recipe, not a script. The principles transfer; the specifics need adaptation.
 
 ---
 

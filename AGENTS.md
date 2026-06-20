@@ -9,7 +9,7 @@ touching anything — it has:
 
 - What the site is + the "no funnel / source-cited / planning-ranges" position
 - Tech stack (Astro static + React islands + CSV-first data + Vercel + GA4 + Ahrefs MCP)
-- The 642-page inventory and the **four programmatic-SEO dimensions** (state, city, size, brand)
+- The 697-page inventory and the **four programmatic-SEO dimensions** (state, city, size, brand)
 - The **routing rule** that prevents collisions when adding dimensions (prefix-static / subpath / suffix-dynamic)
 - The shared calculator engine (`src/lib/calc.ts`) and result shape
 - OBBBA federal-credit dates baked into the data (25C/25D/30D/25E expired; only 30C lives, through 2026-06-30)

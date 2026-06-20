@@ -124,7 +124,8 @@ End-to-end test (the real proof): send **as** `martin@electrifycost.com` to a un
 | **Bing Webmaster Tools** | property `electrifycost.com` (sign in with the **Google** account); sitemap read (696 URLs, 0 errors) |
 | **IndexNow** | key `f26b605a0e104a478e1c474408dac0b5`, hosted at `https://electrifycost.com/f26b605a0e104a478e1c474408dac0b5.txt` (public by design). Submit new/changed URLs with `node scripts/indexnow-submit.cjs <url…>` after shipping — see that script's header. Notifies Bing/Yandex/etc. instantly |
 | **Ad networks** | none live; `PUBLIC_ADS_ENABLED` / `PUBLIC_AFFILIATES_ENABLED` flags default false (see `.env.example`) |
-| **Owner** | Martin Lashgari, Ph.D., P.E., PMP — site email `martin@electrifycost.com`, workspace email `mkml.inc@gmail.com` |
+| **Data checks** | GSC, Bing Webmaster, and Ahrefs are reviewed by driving the owner's logged-in **Chrome** (Claude-in-Chrome). The Ahrefs **API plan is gated** ("Insufficient plan"), so prefer Chrome + GSC/Bing first-party data over the Ahrefs API. Bing Webmaster signs in via the **Google** account |
+| **Owner** | Martin Lashgari, Ph.D., P.E., PMP. **The site shows only one contact address: `martin@electrifycost.com`** (no `info@`/`hello@`/etc. aliases — see lesson 09). Underlying workspace Google account is `mkml.inc@gmail.com` (where ImprovMX forwards land) |
 
 ---
 

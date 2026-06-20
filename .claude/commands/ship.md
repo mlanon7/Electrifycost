@@ -30,7 +30,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-**Expected output:** "409 page(s) built" (or current count, ≥ 400) + "[sitemap] wrote 408 URLs to dist/sitemap.xml" (or current count). If the build fails with `Unexpected "export"` at a `.astro` line, see `.claude/lessons/02-esbuild-template-literal-bug.md`.
+**Expected output:** "697 page(s) built" (or current count, ≥ 400) + "[sitemap] wrote 696 URLs to dist/sitemap.xml" (or current count). If the build fails with `Unexpected "export"` at a `.astro` line, see `.claude/lessons/02-esbuild-template-literal-bug.md`.
 
 ## 4. Verify sitemap namespace
 
@@ -66,7 +66,7 @@ git commit -m "$(cat <<'EOF'
 Verification:
 - npm test: X assertions passed
 - npx tsc --noEmit: zero errors
-- npm run build: 409 pages OK
+- npm run build: 697 pages OK
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 EOF
