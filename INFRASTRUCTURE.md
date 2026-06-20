@@ -121,7 +121,8 @@ End-to-end test (the real proof): send **as** `martin@electrifycost.com` to a un
 | **Google Analytics 4** | `G-5CMBX2RBY4` — Consent Mode v2 + cookie banner (wired in `Layout.astro` / `CookieBanner.astro`) |
 | **Ahrefs Web Analytics** | cookieless script (`data-key=ZNPKoM1LyX3ZL5OsiluGxw`) in `Layout.astro` |
 | **Google Search Console** | property `sc-domain:electrifycost.com`; sitemap submitted |
-| **Bing** | impressions arriving, but **no Bing Webmaster Tools / IndexNow integration yet** (pending — see `ROADMAP.md`) |
+| **Bing Webmaster Tools** | property `electrifycost.com` (sign in with the **Google** account); sitemap read (696 URLs, 0 errors) |
+| **IndexNow** | key `f26b605a0e104a478e1c474408dac0b5`, hosted at `https://electrifycost.com/f26b605a0e104a478e1c474408dac0b5.txt` (public by design). Submit new/changed URLs with `node scripts/indexnow-submit.cjs <url…>` after shipping — see that script's header. Notifies Bing/Yandex/etc. instantly |
 | **Ad networks** | none live; `PUBLIC_ADS_ENABLED` / `PUBLIC_AFFILIATES_ENABLED` flags default false (see `.env.example`) |
 | **Owner** | Martin Lashgari, Ph.D., P.E., PMP — site email `martin@electrifycost.com`, workspace email `mkml.inc@gmail.com` |
 

@@ -106,7 +106,8 @@ electrifycost/
 │   ├── smoke-cases.json                — input matrix for smoke-test
 │   ├── audit-scan.cjs                  — POSTBUILD manual: meta/title length, orphans, trailing-slash links
 │   ├── contrast-check.cjs              — WCAG AA contrast check on the ink/brand palette
-│   └── recompress-images.cjs           — manual one-off: re-encode hero photos to ≤85KB (sharp; AVIF/WebP/JPG)
+│   ├── recompress-images.cjs           — manual one-off: re-encode hero photos to ≤85KB (sharp; AVIF/WebP/JPG)
+│   └── indexnow-submit.cjs             — manual: POST new/changed URLs to IndexNow (Bing). Key file in public/
 └── src/
     ├── components/
     │   ├── Layout.astro                — site shell, meta, JSON-LD schemas, GA4
