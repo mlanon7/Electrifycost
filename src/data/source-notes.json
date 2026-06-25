@@ -762,6 +762,13 @@
     "last_reviewed": "2026-06-24",
     "notes": "Brand value/mid/premium tiers and representative installed-cost notes are editorial estimates benchmarked against manufacturer MSRP and spec sheets plus aggregated market ranges (EnergySage, HomeGuide). Directional guidance, not a single primary source."
   },
+  "DSIRE": {
+    "title": "DSIRE — Database of State Incentives for Renewables & Efficiency",
+    "url": "https://www.dsireusa.org/",
+    "publisher": "NC Clean Energy Technology Center",
+    "category": "rebate_program",
+    "last_reviewed": "2026-06-25"
+  },
   "CPUC_NEM3": {
     "title": "CPUC NEM 3.0 Successor Tariff",
     "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering/nem-2.0-to-nem-3.0",

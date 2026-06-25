@@ -1,52 +1,52 @@
-state,program,status,administrator,source_url,last_reviewed,notes
-AL,DOE_HOMES,prelaunch,Alabama Dept. of Economic and Community Affairs,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,Verify with state energy office before relying on amount
-AK,DOE_HOMES,prelaunch,Alaska Housing Finance Corporation,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-AZ,DOE_HOMES,open,Arizona Governor's Office of Resiliency,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-AR,DOE_HOMES,prelaunch,Arkansas Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-CA,DOE_HOMES,reserved,California Energy Commission (TECH HEEHRA),https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,Single-family HEEHRA funds fully reserved; verify before relying
-CO,DOE_HOMES,open,Colorado Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-CT,DOE_HOMES,prelaunch,Connecticut Green Bank,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-DE,DOE_HOMES,prelaunch,Delaware Dept. of Natural Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-DC,DOE_HOMES,open,DC Department of Energy & Environment,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-FL,DOE_HOMES,prelaunch,Florida Dept. of Agriculture and Consumer Services,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-GA,DOE_HOMES,open,Georgia Environmental Finance Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-HI,DOE_HOMES,open,Hawaii State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-ID,DOE_HOMES,prelaunch,Idaho Governor's Office of Energy and Mineral Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-IL,DOE_HOMES,open,Illinois EPA Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-IN,DOE_HOMES,prelaunch,Indiana Office of Energy Development,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-IA,DOE_HOMES,prelaunch,Iowa Economic Development Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-KS,DOE_HOMES,prelaunch,Kansas Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-KY,DOE_HOMES,prelaunch,Kentucky Office of Energy Policy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-LA,DOE_HOMES,prelaunch,Louisiana Dept. of Natural Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-ME,DOE_HOMES,open,Efficiency Maine Trust,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MD,DOE_HOMES,prelaunch,Maryland Energy Administration,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MA,DOE_HOMES,open,Massachusetts Department of Energy Resources / Mass Save,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MI,DOE_HOMES,prelaunch,Michigan Dept. of Environment Great Lakes and Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MN,DOE_HOMES,open,Minnesota Department of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MS,DOE_HOMES,prelaunch,Mississippi Development Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MO,DOE_HOMES,prelaunch,Missouri Division of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-MT,DOE_HOMES,prelaunch,Montana Dept. of Environmental Quality,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NE,DOE_HOMES,prelaunch,Nebraska State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NV,DOE_HOMES,prelaunch,Nevada Governor's Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NH,DOE_HOMES,prelaunch,New Hampshire Dept. of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NJ,DOE_HOMES,prelaunch,NJ Board of Public Utilities,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NM,DOE_HOMES,open,New Mexico Energy Conservation and Management Division,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NY,DOE_HOMES,open,NYS Homes and Community Renewal / NYSERDA,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-NC,DOE_HOMES,open,North Carolina State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-ND,DOE_HOMES,prelaunch,North Dakota Dept. of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-OH,DOE_HOMES,prelaunch,Ohio Development Services Agency,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-OK,DOE_HOMES,prelaunch,Oklahoma Dept. of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-OR,DOE_HOMES,open,Oregon Department of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-PA,DOE_HOMES,prelaunch,Pennsylvania Energy Programs Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-RI,DOE_HOMES,open,Rhode Island Office of Energy Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-SC,DOE_HOMES,prelaunch,South Carolina Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-SD,DOE_HOMES,prelaunch,South Dakota Dept. of Energy and Environment,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-TN,DOE_HOMES,prelaunch,Tennessee Office of Energy Programs,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-TX,DOE_HOMES,prelaunch,State Energy Conservation Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-UT,DOE_HOMES,prelaunch,Utah Office of Energy Development,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-VT,DOE_HOMES,open,Efficiency Vermont,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-VA,DOE_HOMES,prelaunch,Virginia Dept. of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-WA,DOE_HOMES,open,Washington State Department of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-WV,DOE_HOMES,prelaunch,West Virginia Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-WI,DOE_HOMES,prelaunch,Wisconsin Office of Energy Innovation,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
-WY,DOE_HOMES,prelaunch,Wyoming State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,
+state,program,status,administrator,source_url,last_reviewed,notes,source_id
+AL,DOE_HOMES,prelaunch,Alabama Dept. of Economic and Community Affairs,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,Verify with state energy office before relying on amount,SRC_DOE_HOMES
+AK,DOE_HOMES,prelaunch,Alaska Housing Finance Corporation,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+AZ,DOE_HOMES,open,Arizona Governor's Office of Resiliency,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+AR,DOE_HOMES,prelaunch,Arkansas Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+CA,DOE_HOMES,reserved,California Energy Commission (TECH HEEHRA),https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,Single-family HEEHRA funds fully reserved; verify before relying,SRC_DOE_HOMES
+CO,DOE_HOMES,open,Colorado Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+CT,DOE_HOMES,prelaunch,Connecticut Green Bank,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+DE,DOE_HOMES,prelaunch,Delaware Dept. of Natural Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+DC,DOE_HOMES,open,DC Department of Energy & Environment,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+FL,DOE_HOMES,prelaunch,Florida Dept. of Agriculture and Consumer Services,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+GA,DOE_HOMES,open,Georgia Environmental Finance Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+HI,DOE_HOMES,open,Hawaii State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+ID,DOE_HOMES,prelaunch,Idaho Governor's Office of Energy and Mineral Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+IL,DOE_HOMES,open,Illinois EPA Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+IN,DOE_HOMES,prelaunch,Indiana Office of Energy Development,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+IA,DOE_HOMES,prelaunch,Iowa Economic Development Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+KS,DOE_HOMES,prelaunch,Kansas Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+KY,DOE_HOMES,prelaunch,Kentucky Office of Energy Policy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+LA,DOE_HOMES,prelaunch,Louisiana Dept. of Natural Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+ME,DOE_HOMES,open,Efficiency Maine Trust,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MD,DOE_HOMES,prelaunch,Maryland Energy Administration,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MA,DOE_HOMES,open,Massachusetts Department of Energy Resources / Mass Save,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MI,DOE_HOMES,prelaunch,Michigan Dept. of Environment Great Lakes and Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MN,DOE_HOMES,open,Minnesota Department of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MS,DOE_HOMES,prelaunch,Mississippi Development Authority,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MO,DOE_HOMES,prelaunch,Missouri Division of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+MT,DOE_HOMES,prelaunch,Montana Dept. of Environmental Quality,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NE,DOE_HOMES,prelaunch,Nebraska State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NV,DOE_HOMES,prelaunch,Nevada Governor's Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NH,DOE_HOMES,prelaunch,New Hampshire Dept. of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NJ,DOE_HOMES,prelaunch,NJ Board of Public Utilities,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NM,DOE_HOMES,open,New Mexico Energy Conservation and Management Division,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NY,DOE_HOMES,open,NYS Homes and Community Renewal / NYSERDA,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+NC,DOE_HOMES,open,North Carolina State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+ND,DOE_HOMES,prelaunch,North Dakota Dept. of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+OH,DOE_HOMES,prelaunch,Ohio Development Services Agency,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+OK,DOE_HOMES,prelaunch,Oklahoma Dept. of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+OR,DOE_HOMES,open,Oregon Department of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+PA,DOE_HOMES,prelaunch,Pennsylvania Energy Programs Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+RI,DOE_HOMES,open,Rhode Island Office of Energy Resources,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+SC,DOE_HOMES,prelaunch,South Carolina Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+SD,DOE_HOMES,prelaunch,South Dakota Dept. of Energy and Environment,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+TN,DOE_HOMES,prelaunch,Tennessee Office of Energy Programs,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+TX,DOE_HOMES,prelaunch,State Energy Conservation Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+UT,DOE_HOMES,prelaunch,Utah Office of Energy Development,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+VT,DOE_HOMES,open,Efficiency Vermont,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+VA,DOE_HOMES,prelaunch,Virginia Dept. of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+WA,DOE_HOMES,open,Washington State Department of Commerce,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+WV,DOE_HOMES,prelaunch,West Virginia Office of Energy,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+WI,DOE_HOMES,prelaunch,Wisconsin Office of Energy Innovation,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES
+WY,DOE_HOMES,prelaunch,Wyoming State Energy Office,https://www.energy.gov/scep/home-energy-rebates-programs,2026-05-08,,SRC_DOE_HOMES

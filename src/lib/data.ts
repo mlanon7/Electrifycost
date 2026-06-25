@@ -140,7 +140,7 @@ export interface RebateProgram {
   percent: number; cap: number;
   income_rule: string; eligible_equipment: string;
   expiration_date: string; status: string;
-  source_url: string; last_reviewed: string; notes: string;
+  source_url: string; source_id: string; last_reviewed: string; notes: string;
 }
 
 export interface ClimateZone {
@@ -188,6 +188,7 @@ export interface HomeEnergyRebateRow {
   status: HomeEnergyRebateStatus;
   administrator: string;
   source_url: string;
+  source_id: string;
   last_reviewed: string;
   notes: string;
 }
