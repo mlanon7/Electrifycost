@@ -66,6 +66,42 @@ const schemas = breadcrumbSchema ? [...baseSchemas, breadcrumbSchema] : baseSche
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    {/* Embed mode: when a calculator is opened inside the Project Simulator's
+        popup (?embed=1), strip the site chrome so the iframe shows just the
+        calculator. With ?zip=NNNNN, also pre-fill the calculator's ZIP input so
+        its state + prices match the simulator's ZIP. Runs before paint to avoid
+        a flash of the header/footer. */}
+    <script is:inline>
+      (function () {
+        var p = new URLSearchParams(location.search);
+        if (p.get('embed') !== '1') return;
+        document.documentElement.classList.add('ec-embed');
+        var zip = (p.get('zip') || '').replace(/\D/g, '').slice(0, 5);
+        if (zip.length !== 5) return;
+        // The calculator is a React island that hydrates after load. Set its ZIP
+        // input via the native setter + an input event (so React's onChange fires
+        // and it derives the state), retrying until the value sticks past hydration.
+        var tries = 0, ok = 0;
+        function findZip() {
+          return document.querySelector('#zip, input[autocomplete="postal-code"], input[name="zip"], input[inputmode="numeric"][maxlength="5"]');
+        }
+        function setVal(el) {
+          var d = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value');
+          d.set.call(el, zip);
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        var iv = setInterval(function () {
+          tries++;
+          var el = findZip();
+          if (el) {
+            if (el.value === zip) { ok++; if (ok >= 2) { clearInterval(iv); return; } }
+            else { ok = 0; setVal(el); }
+          }
+          if (tries > 60) clearInterval(iv);
+        }, 80);
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     {reviewedAt && <meta name="article:modified_time" content={reviewedAt} />}
