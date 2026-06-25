@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type DoorType = 'front_steel' | 'front_fiberglass_mid' | 'front_fiberglass_premium' | 'front_wood' | 'sliding_vinyl' | 'sliding_fiberglass' | 'sliding_wood' | 'french' | 'garage_steel_single' | 'garage_steel_double' | 'garage_premium';
 
@@ -47,6 +48,7 @@ export default function DoorReplacementCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -96,5 +98,10 @@ export default function DoorReplacementCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="door-replacement"
+    />
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Tier = 'walkthrough' | 'standard' | 'hers' | 'rater_full';
 type Utility = 'yes_free' | 'yes_subsidized' | 'no';
@@ -46,6 +47,7 @@ export default function EnergyAuditCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -107,5 +109,10 @@ export default function EnergyAuditCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.base.low, high: result.base.high }}
+      slug="home-energy-audit"
+    />
+    </>
   );
 }

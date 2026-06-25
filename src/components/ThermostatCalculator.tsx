@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Model = 'basic' | 'nest_e' | 'ecobee_premium' | 'nest_learning' | 'honeywell_t9';
 type Install = 'diy' | 'pro';
@@ -89,6 +90,7 @@ export default function ThermostatCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -215,5 +217,10 @@ export default function ThermostatCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="smart-thermostat"
+    />
+    </>
   );
 }

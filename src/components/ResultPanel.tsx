@@ -1,7 +1,19 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import type { CalculatorResult } from '@/lib/calc';
+import type { Module } from '@/lib/data';
 import { sources, checklists } from '@/lib/data';
 import { fmtUSD, fmtUSDRange, fmtMonths } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
+
+// Map the flagship engine module to the risk-events.json slug used by the
+// Monte Carlo simulation. Keep in sync with the keys in src/data/risk-events.json.
+const MODULE_TO_SLUG: Record<Module, string> = {
+  heat_pump: 'heat-pump',
+  ev_charger: 'ev-charger',
+  panel: 'electrical-panel',
+  hpwh: 'heat-pump-water-heater',
+  induction: 'induction-stove',
+};
 
 // Fire a GA4 custom event when the calculator produces a valid result.
 // Debounced via ref so we don't fire on every keystroke. Single event per
@@ -475,6 +487,12 @@ export default function ResultPanel({
           Print summary
         </button>
       </div>
+
+      <MonteCarloSim
+        band={{ low: result.gross.low, high: result.gross.high }}
+        items={result.itemized.map(it => ({ low: it.amount.low, high: it.amount.high }))}
+        slug={MODULE_TO_SLUG[result.module]}
+      />
     </div>
   );
 }

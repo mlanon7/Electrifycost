@@ -1,0 +1,151 @@
+{
+  "_meta": {
+    "about": "Probabilistic 'real-world surprise' events per ElectrifyCost calculator slug, used by the Monte Carlo simulation. Cost ranges are sourced to 2025-2026 cost guides, electrical/HVAC trade sources, and federal references. PROBABILITIES ARE APPROXIMATE planning priors, not measured rates - no public survey publishes per-event occurrence frequencies for electrification work; they are reasoned estimates skewed by housing age and panel-capacity risk. The UI labels them 'approximate' and softens the figure with a leading tilde. Per-event fields: confidence (analyst confidence in the probability) and show_probability (whether the UI prints a numeric percent at all). Low-confidence events (source 'industry estimate') hide the exact percent and read as 'Possible'.",
+    "reviewed": "2026-06-24"
+  },
+  "heat-pump": [
+    { "label": "200A panel upgrade needed to add the heat pump load", "p": 0.25, "costLow": 1800, "costHigh": 4500, "source": "HomeGuide / NEC 220.83 load calc", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Existing ductwork repaired or resized (undersized return)", "p": 0.30, "costLow": 800, "costHigh": 4000, "source": "ACCA Manual D / Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Longer refrigerant line set or hard-to-reach air handler", "p": 0.20, "costLow": 400, "costHigh": 1500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "New disconnect / circuit run for the air handler", "p": 0.18, "costLow": 300, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "heat-pump-water-heater": [
+    { "label": "Dedicated 240V circuit run (gas-to-electric conversion)", "p": 0.35, "costLow": 300, "costHigh": 1200, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Condensate drain or pump routing in a tight space", "p": 0.22, "costLow": 150, "costHigh": 700, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Ducting kit or louvered door for a small mechanical closet", "p": 0.20, "costLow": 200, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "electrical-panel": [
+    { "label": "Service mast, weatherhead, or meter base also replaced", "p": 0.30, "costLow": 500, "costHigh": 2500, "source": "Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Grounding & bonding brought to current NEC (ground rods, water bond)", "p": 0.25, "costLow": 200, "costHigh": 1200, "source": "NEC 250 / HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Knob-and-tube or aluminum branch wiring found (older home)", "p": 0.15, "costLow": 1500, "costHigh": 6000, "source": "This Old House", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Utility disconnect / reconnect scheduling and permit fees", "p": 0.28, "costLow": 150, "costHigh": 800, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "ev-charger": [
+    { "label": "Long conduit run to a far wall or detached garage", "p": 0.28, "costLow": 400, "costHigh": 2000, "source": "Qmerit / HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Panel lacks capacity - subpanel or load management added", "p": 0.22, "costLow": 500, "costHigh": 2500, "source": "NEC 220.83 load calc", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Trenching across a driveway or yard to a detached structure", "p": 0.12, "costLow": 500, "costHigh": 3000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Permit + utility EV rate / meter coordination", "p": 0.20, "costLow": 100, "costHigh": 600, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "induction-stove": [
+    { "label": "New 240V/40-50A circuit run to the kitchen (gas-to-induction)", "p": 0.45, "costLow": 400, "costHigh": 1800, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Gas line capped by a licensed plumber", "p": 0.30, "costLow": 150, "costHigh": 600, "source": "Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Panel has no open slots - subpanel or load management", "p": 0.18, "costLow": 500, "costHigh": 2000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Countertop or cabinet cutout modified for a larger unit", "p": 0.15, "costLow": 150, "costHigh": 700, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "solar": [
+    { "label": "Main service panel upgrade required for interconnection", "p": 0.25, "costLow": 1800, "costHigh": 4500, "source": "NREL / SEIA", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Roof repair or reinforcement before mounting (aged deck)", "p": 0.20, "costLow": 1000, "costHigh": 6000, "source": "This Old House", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Utility interconnection / PTO delay + study fees", "p": 0.30, "costLow": 100, "costHigh": 1500, "source": "DSIRE / utility tariff", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Busbar derate - line-side tap or supply-side connection", "p": 0.15, "costLow": 500, "costHigh": 2500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "home-battery": [
+    { "label": "Critical-loads subpanel needed for backup wiring", "p": 0.40, "costLow": 1000, "costHigh": 3000, "source": "Qmerit / HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Main panel upgrade for the battery interconnection", "p": 0.20, "costLow": 1800, "costHigh": 4500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Permit + utility storage interconnection delay", "p": 0.25, "costLow": 150, "costHigh": 1000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "mini-split": [
+    { "label": "Long line set + lineset cover and condensate pump", "p": 0.30, "costLow": 300, "costHigh": 1200, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Extra zone / head added after a room-by-room load check", "p": 0.22, "costLow": 1500, "costHigh": 4000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Dedicated circuit and disconnect for the outdoor unit", "p": 0.20, "costLow": 300, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "geothermal": [
+    { "label": "Ground-loop drilling hits rock or a harder formation", "p": 0.30, "costLow": 1500, "costHigh": 8000, "source": "DOE / IGSHPA", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "More borehole depth or loop length than estimated", "p": 0.25, "costLow": 1000, "costHigh": 6000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Desuperheater, buffer tank, or loop pump added", "p": 0.18, "costLow": 500, "costHigh": 2500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "ac-replacement": [
+    { "label": "Ductwork repair or resize (undersized return)", "p": 0.30, "costLow": 800, "costHigh": 4000, "source": "ACCA Manual D / Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Refrigerant line-set replacement / refrigerant changeover", "p": 0.25, "costLow": 400, "costHigh": 1500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Electrical circuit or disconnect upgrade for the condenser", "p": 0.18, "costLow": 300, "costHigh": 800, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "gas-furnace": [
+    { "label": "Venting brought to code or a new flue liner", "p": 0.25, "costLow": 300, "costHigh": 1500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Gas line resize or a sediment trap added", "p": 0.20, "costLow": 200, "costHigh": 1000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Return-air or plenum modification", "p": 0.20, "costLow": 300, "costHigh": 1500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "boiler": [
+    { "label": "Venting or chimney liner upgrade", "p": 0.25, "costLow": 400, "costHigh": 2000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Asbestos pipe insulation abatement (older home)", "p": 0.18, "costLow": 500, "costHigh": 3000, "source": "EPA asbestos guidance", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Near-boiler piping and circulators replaced", "p": 0.30, "costLow": 500, "costHigh": 2500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "ductwork": [
+    { "label": "Asbestos in existing duct tape or wrap (pre-1980 home)", "p": 0.18, "costLow": 500, "costHigh": 3000, "source": "EPA asbestos guidance", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Framing or soffit work to route new trunk lines", "p": 0.25, "costLow": 500, "costHigh": 3000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "insulation": [
+    { "label": "Knob-and-tube wiring remediated before blown-in insulation", "p": 0.15, "costLow": 1500, "costHigh": 6000, "source": "This Old House", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Vermiculite/asbestos or mold found in the attic", "p": 0.15, "costLow": 800, "costHigh": 4000, "source": "EPA asbestos guidance", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Recessed-light IC covers, baffles, or venting fixes", "p": 0.30, "costLow": 200, "costHigh": 1200, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "air-sealing": [
+    { "label": "Combustion-safety failure - draft or venting fix before sealing", "p": 0.20, "costLow": 200, "costHigh": 1500, "source": "BPI combustion-safety standard", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Knob-and-tube remediation needed before sealing", "p": 0.12, "costLow": 1000, "costHigh": 5000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "window-replacement": [
+    { "label": "Rotted frame or sill - insert becomes full-frame", "p": 0.30, "costLow": 300, "costHigh": 1500, "source": "Modernize / HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Lead paint disturbed (pre-1978 homes)", "p": 0.20, "costLow": 200, "costHigh": 1500, "source": "HomeAdvisor / EPA RRP", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Exterior trim or casing replacement + repaint", "p": 0.30, "costLow": 150, "costHigh": 900, "source": "Modernize", "sourced": true, "confidence": "medium", "show_probability": true }
+  ],
+  "door-replacement": [
+    { "label": "Rotted framing or sill-pan replacement", "p": 0.25, "costLow": 200, "costHigh": 1200, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Out-of-square opening needs reframing", "p": 0.18, "costLow": 200, "costHigh": 1000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "roof-replacement": [
+    { "label": "Rotted or soft roof decking found at tear-off", "p": 0.50, "costLow": 200, "costHigh": 1200, "source": "HomeGuide / Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Flashing, chimney, or valley rework beyond quote", "p": 0.30, "costLow": 300, "costHigh": 1500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Extra layer(s) requiring more tear-off and disposal", "p": 0.18, "costLow": 1000, "costHigh": 3000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "tank-water-heater": [
+    { "label": "Code upgrades (expansion tank, strap, T&P, drip leg)", "p": 0.40, "costLow": 300, "costHigh": 800, "source": "HomeGuide / Angi", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Venting brought to code (gas units)", "p": 0.25, "costLow": 100, "costHigh": 600, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true }
+  ],
+  "tankless-water-heater": [
+    { "label": "Gas line upsize (tank-to-tankless conversion)", "p": 0.30, "costLow": 500, "costHigh": 2000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Dedicated 240V circuit (electric) or new venting (gas)", "p": 0.25, "costLow": 300, "costHigh": 1500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Water hardness - softener or filter for warranty", "p": 0.18, "costLow": 800, "costHigh": 2500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "generator": [
+    { "label": "Gas line upsize or a regulator for the unit", "p": 0.30, "costLow": 500, "costHigh": 2000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Transfer switch or critical-loads subpanel", "p": 0.25, "costLow": 500, "costHigh": 2000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Concrete pad, setback, and permit", "p": 0.20, "costLow": 200, "costHigh": 1200, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "smart-panel": [
+    { "label": "Main service upgrade needed before the smart panel", "p": 0.25, "costLow": 1800, "costHigh": 4500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Circuit relabeling / remapping for monitoring", "p": 0.20, "costLow": 150, "costHigh": 700, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "off-grid-solar": [
+    { "label": "Battery bank wiring or enclosure upgrade", "p": 0.25, "costLow": 800, "costHigh": 3500, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Ground-mount foundation or extra racking", "p": 0.22, "costLow": 1000, "costHigh": 4000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Backup generator / auto-start integration", "p": 0.20, "costLow": 1500, "costHigh": 6000, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "sump-pump": [
+    { "label": "Concrete cut for a new pit / basin", "p": 0.30, "costLow": 400, "costHigh": 1500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Discharge line re-route or freeze protection", "p": 0.22, "costLow": 200, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Dedicated GFCI circuit added", "p": 0.20, "costLow": 150, "costHigh": 600, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "smart-thermostat": [
+    { "label": "C-wire adapter or a new low-voltage wire run", "p": 0.30, "costLow": 100, "costHigh": 350, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Incompatible system (heat pump / multi-stage) needs a pro setup", "p": 0.15, "costLow": 100, "costHigh": 300, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "water-treatment": [
+    { "label": "Drain / loop plumbing rework for the unit", "p": 0.28, "costLow": 200, "costHigh": 1000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Outlet added at the install location", "p": 0.20, "costLow": 150, "costHigh": 600, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false },
+    { "label": "Pre-filter / sediment stage for hard or well water", "p": 0.22, "costLow": 200, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "pool-heat-pump": [
+    { "label": "Dedicated 240V circuit or subpanel for the unit", "p": 0.35, "costLow": 500, "costHigh": 2000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Plumbing tie-in / bypass and equipment pad", "p": 0.25, "costLow": 300, "costHigh": 1200, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "hot-tub-heat-pump": [
+    { "label": "240V GFCI circuit run to the pad", "p": 0.35, "costLow": 400, "costHigh": 1500, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Reinforced pad or base for the equipment", "p": 0.20, "costLow": 200, "costHigh": 900, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "heat-pump-dryer": [
+    { "label": "240V circuit run (gas-to-electric conversion)", "p": 0.25, "costLow": 300, "costHigh": 1200, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Condensate drain or stacking kit", "p": 0.20, "costLow": 100, "costHigh": 400, "source": "industry estimate", "sourced": false, "confidence": "low", "show_probability": false }
+  ],
+  "wood-pellet-stove": [
+    { "label": "Hearth pad and wall protection to meet clearances", "p": 0.35, "costLow": 300, "costHigh": 1500, "source": "NFPA 211 / HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true },
+    { "label": "Class-A chimney or flue liner run", "p": 0.30, "costLow": 800, "costHigh": 3000, "source": "HomeGuide", "sourced": true, "confidence": "medium", "show_probability": true }
+  ]
+}

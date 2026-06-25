@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Size = '85k' | '110k' | '125k' | '140k';
 type PoolGallons = '10k' | '15k' | '20k' | '30k' | '40k';
@@ -65,6 +66,7 @@ export default function PoolHpCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -150,5 +152,10 @@ export default function PoolHpCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="pool-heat-pump"
+    />
+    </>
   );
 }

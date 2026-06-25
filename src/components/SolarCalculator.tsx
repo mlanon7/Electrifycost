@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type RoofType = 'comp_shingle' | 'tile' | 'metal' | 'flat';
 type Complexity = 'simple' | 'standard' | 'complex' | 'historic_hoa';
@@ -195,6 +196,7 @@ export default function SolarCalculator() {
   const yieldKwhPerKw = PRODUCTION_KWH_PER_KW[state] ?? 1350;
 
   return (
+    <>
     <div className="card overflow-hidden">
       {/* Inputs */}
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
@@ -402,5 +404,10 @@ export default function SolarCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="solar"
+    />
+    </>
   );
 }

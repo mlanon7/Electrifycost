@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Material = 'asphalt_3tab' | 'asphalt_architectural' | 'asphalt_premium' | 'metal_standing_seam' | 'metal_corrugated' | 'clay_tile' | 'concrete_tile' | 'slate' | 'synthetic_slate' | 'wood_shake' | 'flat_tpo' | 'flat_epdm';
 type Pitch = 'low' | 'medium' | 'steep' | 'extreme';
@@ -87,6 +88,7 @@ export default function RoofCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -234,5 +236,10 @@ export default function RoofCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="roof-replacement"
+    />
+    </>
   );
 }

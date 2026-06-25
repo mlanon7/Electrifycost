@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Model = 'ventless_compact' | 'ventless_fullsize' | 'ventless_premium' | 'hybrid_vented' | 'combo';
 type Current = 'electric_vented' | 'gas_vented' | 'none';
@@ -68,7 +69,8 @@ export default function HeatPumpDryerCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
-    <div className="card overflow-hidden">
+    <>
+      <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
           <label className="label" htmlFor="state">State</label>
@@ -169,6 +171,15 @@ export default function HeatPumpDryerCalculator() {
           </ul>
         </div>
       </div>
-    </div>
+      </div>
+      <MonteCarloSim
+        band={result ? { low: result.gross.low, high: result.gross.high } : null}
+        items={[
+          { low: result.equipment.low, high: result.equipment.high },
+          { low: result.install.low, high: result.install.high },
+        ].filter(it => it.high > 0)}
+        slug="heat-pump-dryer"
+      />
+    </>
   );
 }

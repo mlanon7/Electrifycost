@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Tier = 'basic_80' | 'mid_95' | 'premium_97' | 'condensing_98';
 type Size = 'small' | 'medium' | 'large';
@@ -109,6 +110,7 @@ export default function GasFurnaceCalculator() {
   const elec = findStateEnergy(state);
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -222,5 +224,10 @@ export default function GasFurnaceCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="gas-furnace"
+    />
+    </>
   );
 }

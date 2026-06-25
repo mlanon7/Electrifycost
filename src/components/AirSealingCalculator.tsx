@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Scope = 'diy' | 'pro_targeted' | 'deep' | 'ducts_only';
 type Tightness = 'leaky' | 'average' | 'tight';
@@ -82,6 +83,7 @@ export default function AirSealingCalculator() {
   const climate = findClimate(state)?.iecc_zone ?? '4A';
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -191,5 +193,10 @@ export default function AirSealingCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="air-sealing"
+    />
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findClimate, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Tier = 'single' | 'two_stage' | 'variable';
 type Tonnage = '2' | '2.5' | '3' | '3.5' | '4' | '5';
@@ -173,6 +174,7 @@ export default function AcCalculator() {
   const climate = findClimate(state)?.iecc_zone ?? "4A";
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -327,5 +329,10 @@ export default function AcCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="ac-replacement"
+    />
+    </>
   );
 }

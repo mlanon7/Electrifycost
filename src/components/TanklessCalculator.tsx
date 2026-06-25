@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Type = 'gas_condensing' | 'gas_non_condensing' | 'electric_pos' | 'electric_whole';
 type Size = '140k' | '180k' | '199k' | 'electric_18' | 'electric_27' | 'electric_36';
@@ -151,6 +152,7 @@ export default function TanklessCalculator() {
     : ['electric_27', 'electric_36'];
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -298,5 +300,10 @@ export default function TanklessCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="tankless-water-heater"
+    />
+    </>
   );
 }

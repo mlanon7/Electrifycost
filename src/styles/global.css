@@ -377,3 +377,200 @@
   .card { border: 1px solid #ccc; box-shadow: none; }
   .btn-primary { background: #000 !important; color: #fff !important; }
 }
+
+/* === Monte Carlo simulation (MonteCarloSim.tsx) ===
+   Ported from ProjectCostPro's montecarlo-ui CSS; tokens remapped to the
+   ElectrifyCost brand (emerald) + ink (slate) palette. Plain CSS so the
+   hand-authored classes survive Tailwind's purge. */
+.mc-section{margin-top:1rem;border:1px solid #e2e8f0;border-radius:0.75rem;background:#fff;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 1px 3px 0 rgb(15 23 42 / 0.05);padding:22px 0 24px;overflow:hidden}
+.mc-head{display:flex;align-items:center;gap:13px;margin-bottom:6px;padding:0 20px}
+.mc-head-ic{width:42px;height:42px;flex:0 0 auto;border-radius:11px;background:#ecfdf5;color:#047857;display:flex;align-items:center;justify-content:center}
+.mc-head-ic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mc-head-text{min-width:0}
+.mc-head-eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#047857}
+.mc-head-title{display:block;font-size:19px;font-weight:700;color:#0f172a;letter-spacing:-.02em;line-height:1.15}
+.mc-head-sub{display:block;font-size:13px;color:#64748b;margin-top:1px}
+.mc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 20px 0}
+.mc-card{background:#f8fafc;border:1px solid #f1f5f9;border-radius:11px;padding:13px 14px;text-align:center}
+.mc-card-mid{background:#ecfdf5;border-color:#d1fae5}
+.mc-card-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#64748b}
+.mc-card-mid .mc-card-label{color:#047857}
+.mc-card-val{display:block;font-size:22px;font-weight:700;color:#0f172a;letter-spacing:-.02em;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.mc-card-mid .mc-card-val{color:#047857}
+.mc-card-sub{display:block;font-size:11px;color:#475569}
+.mc-summary{padding:15px 20px 2px;font-size:14.5px;color:#334155;line-height:1.55;text-align:center}
+.mc-summary b{color:#0f172a;font-weight:700}
+.mc-refnote{padding:2px 20px 0;font-size:11.5px;color:#64748b;text-align:center}
+.mc-chart{padding:8px 16px 2px}
+.mc-svg{width:100%;height:auto;display:block}
+.mc-area{fill:#ecfdf5;stroke:none}
+.mc-zone{fill:#d1fae5;stroke:none}
+.mc-line{fill:none;stroke:#047857;stroke-width:2.4;stroke-linejoin:round}
+.mc-axis{stroke:#e2e8f0;stroke-width:1}
+.mc-ref{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:2 4;opacity:.7}
+.mc-vline{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:3 3}
+.mc-vline-mid{stroke:#047857;stroke-width:1.6;opacity:.9}
+.mc-xval{fill:#0f172a;font-size:14px;font-weight:700;text-anchor:middle}
+.mc-xcap{fill:#64748b;font-size:11px;text-anchor:middle}
+.mc-runrow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 20px 4px;flex-wrap:wrap}
+.mc-run{appearance:none;border:0;background:#047857;color:#fff;font-size:14px;font-weight:700;padding:11px 24px;border-radius:9px;cursor:pointer;letter-spacing:-.01em;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.06);transition:filter .15s,transform .1s}
+.mc-run:hover{filter:brightness(1.08)}
+.mc-run:active{transform:translateY(1px)}
+.mc-run:disabled{opacity:.65;cursor:default}
+.mc-counter{font-size:13px;color:#64748b;font-variant-numeric:tabular-nums}
+.mc-chart-empty{display:flex;align-items:center;justify-content:center;min-height:200px;margin:6px 0;color:#64748b;font-size:14px;text-align:center;border:1px dashed #e2e8f0;border-radius:11px;background:#f8fafc;padding:20px}
+.mc-chart-empty b{color:#047857}
+.mc-surprises{margin:6px 20px 0;padding:16px 0 0;border-top:1px solid #f1f5f9}
+.mc-switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.mc-switch input{position:absolute;opacity:0;width:0;height:0}
+.mc-switch-track{width:40px;height:23px;border-radius:999px;background:#e2e8f0;position:relative;transition:background .18s;flex:0 0 auto}
+.mc-switch-thumb{position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.22);transition:transform .18s}
+.mc-switch input:checked + .mc-switch-track{background:#047857}
+.mc-switch input:checked + .mc-switch-track .mc-switch-thumb{transform:translateX(17px)}
+.mc-switch input:focus-visible + .mc-switch-track{box-shadow:0 0 0 3px #d1fae5}
+.mc-switch-text{font-size:14px;font-weight:600;color:#0f172a}
+.mc-surprise-stat{font-size:14px;color:#334155;margin:12px 0 8px}
+.mc-surprise-stat b{color:#047857}
+.mc-surprise-stat:empty{margin:0}
+.mc-ev-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.mc-ev-list li{display:flex;align-items:center;gap:12px;padding:7px 10px;border-radius:8px;font-size:13.5px}
+.mc-ev-list li:nth-child(odd){background:#f1f5f9}
+.mc-ev-odds{flex:0 0 auto;min-width:42px;font-weight:700;color:#047857;font-variant-numeric:tabular-nums}
+.mc-ev-label{flex:1;color:#334155}
+.mc-ev-cost{flex:0 0 auto;color:#475569;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mc-approx{font-size:12px;color:#64748b;margin:12px 0 0}
+.mc-approx a{color:#047857}
+.mc-method{padding:14px 20px 0;font-size:12px;color:#64748b;line-height:1.5;text-align:center}
+@media (max-width:520px){
+  .mc-cards{grid-template-columns:1fr;gap:8px}
+  .mc-card{display:flex;align-items:baseline;justify-content:space-between;text-align:left}
+  .mc-card-val{font-size:19px;margin:0}
+  .mc-ev-list li{flex-wrap:wrap;gap:4px 10px}
+}
+
+/* === Project Simulator (ProjectSimulator.tsx) ===
+   Two-panel picker/result. Ported from ProjectCostPro's scenario-sim CSS,
+   tokens remapped to the ElectrifyCost brand + ink palette. */
+.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:24px;align-items:start}
+/* picker */
+.sim-picker{min-width:0;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.12)}
+.sim-picker-bar{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;padding-bottom:14px;border-bottom:1px solid #f1f5f9}
+.sim-bundles{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.sim-bundles-lbl{font-size:12.5px;font-weight:700;color:#64748b;margin-right:2px}
+.sim-bundle{font-size:12.5px;font-weight:600;color:#334155;background:#ecfdf5;border:1px solid transparent;border-radius:999px;padding:6px 12px;cursor:pointer;transition:background .14s,color .14s,border-color .14s}
+.sim-bundle:hover{background:#d1fae5;color:#047857;border-color:#d1fae5}
+.sim-picker-tools{display:flex;align-items:center;gap:10px}
+.sim-search{flex:1;display:flex;align-items:center;gap:7px;background:#f1f5f9;border-radius:9px;padding:0 10px}
+.sim-search svg{width:15px;height:15px;stroke:#64748b;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.sim-search input{flex:1;border:none;background:transparent;padding:9px 0;font-size:13.5px;color:#0f172a;outline:none}
+.sim-clear{font-size:12.5px;font-weight:600;color:#475569;background:transparent;border:1px solid #e2e8f0;border-radius:9px;padding:8px 12px;cursor:pointer;white-space:nowrap}
+.sim-clear:hover{color:#0f172a;border-color:#cbd5e1}
+.sim-groups{max-height:calc(100vh - 220px);min-height:380px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+.sim-group{border-bottom:1px solid #f1f5f9}
+.sim-group>summary{display:flex;align-items:center;gap:8px;padding:11px 4px;cursor:pointer;list-style:none;font-size:13px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.04em}
+.sim-group>summary::-webkit-details-marker{display:none}
+.sim-group-count{margin-left:auto;font-size:11.5px;font-weight:600;color:#64748b;background:#f1f5f9;border-radius:999px;padding:1px 8px}
+.sim-group-body{padding-bottom:6px}
+.sim-row{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;flex-wrap:nowrap}
+.sim-row:hover{background:#f1f5f9}
+.sim-row.is-on{background:#ecfdf5}
+.sim-check{display:flex;align-items:center;gap:9px;cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden}
+.sim-check input{position:absolute;opacity:0;width:0;height:0}
+.sim-check-box{width:18px;height:18px;border:1.8px solid #cbd5e1;border-radius:5px;flex:0 0 auto;transition:background .12s,border-color .12s;position:relative}
+.sim-check input:checked + .sim-check-box{background:#047857;border-color:#047857}
+.sim-check input:checked + .sim-check-box::after{content:"";position:absolute;left:5px;top:1.5px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.sim-check input:focus-visible + .sim-check-box{box-shadow:0 0 0 3px #d1fae5}
+.sim-row-name{font-size:13.5px;font-weight:600;color:#0f172a;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sim-row-link{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;color:#cbd5e1;flex:0 0 auto;transition:color .14s,background .14s;text-decoration:none}
+.sim-row-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sim-row-link:hover,.sim-row-link:focus-visible{color:#047857;background:#d1fae5}
+.sim-row-ctl{display:flex;align-items:center;gap:8px;margin-left:auto}
+.sim-tier{font-size:12px;color:#334155;background-color:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:5px 26px 5px 9px;width:184px;flex:0 0 auto;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%2364748b'%20stroke-width='2.2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%209l6%206%206-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:12px;text-overflow:ellipsis}
+.sim-tier:focus{border-color:#047857;outline:none;box-shadow:0 0 0 3px #d1fae5}
+.sim-qty{display:inline-flex;align-items:center;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.sim-qty-btn{width:24px;height:26px;border:none;background:#fff;color:#475569;font-size:15px;line-height:1;cursor:pointer}
+.sim-qty-btn:hover{background:#f1f5f9;color:#0f172a}
+.sim-qty-btn:disabled{opacity:.4;cursor:default}
+.sim-qty-n{min-width:18px;text-align:center;font-size:12.5px;font-weight:600;color:#0f172a;font-variant-numeric:tabular-nums}
+.sim-row-band{display:none;font-size:11.5px;color:#64748b;min-width:96px;text-align:right;font-variant-numeric:tabular-nums}
+@media(min-width:1180px){ .sim-row-band{display:block} }
+/* pinned plan chips */
+.sim-chosen{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:2px 0 8px;padding:0 2px 12px;border-bottom:1px solid #f1f5f9}
+.sim-chosen-lbl{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-right:3px}
+.sim-chosen-lbl b{color:#047857}
+.sim-chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#047857;background:#ecfdf5;border:1px solid #d1fae5;border-radius:999px;padding:5px 8px 5px 11px;cursor:pointer;transition:background .14s,border-color .14s}
+.sim-chip:hover{background:#d1fae5;border-color:#047857}
+.sim-chip svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;flex:0 0 auto}
+/* result column */
+.sim-result{min-width:0}
+.sim-result-inner{position:sticky;top:78px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:18px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.16)}
+/* ZIP bar — sits at the top of the simulator; drives regional pricing */
+.sim-zipbar{display:inline-flex;align-items:center;gap:10px;margin:0 0 16px;padding:7px 10px 7px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04);flex-wrap:wrap}
+.sim-ziplabel{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#334155}
+.sim-ziplabel svg{width:16px;height:16px;stroke:#047857;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sim-zipbar input{width:96px;border:1px solid #e2e8f0;border-radius:9px;padding:8px 10px;font-size:14px;font-weight:600;color:#0f172a;background:#f8fafc;outline:none;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.sim-zipbar input::placeholder{font-weight:500;letter-spacing:0;color:#94a3b8}
+.sim-zipbar input:focus{border-color:#047857;box-shadow:0 0 0 3px #d1fae5}
+.sim-zip-note{font-size:12.5px;color:#64748b;font-weight:600}
+.sim-zip-note.is-set{color:#047857}
+.sim-empty{text-align:center;padding:40px 16px;color:#64748b}
+.sim-empty-ic{display:inline-flex;width:44px;height:44px;border-radius:12px;background:#ecfdf5;align-items:center;justify-content:center;margin-bottom:12px}
+.sim-empty-ic svg{width:24px;height:24px;stroke:#047857;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sim-empty p{font-size:14px;margin:0}
+.sim-selcount{font-size:12px;font-weight:700;color:#047857;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.sim-output .mc-cards{padding:0;margin-bottom:16px}
+.sim-output .mc-card{padding:12px 8px}
+.sim-output .mc-card-val{font-size:21px}
+.sim-output .mc-summary{padding:0 0 2px;text-align:left}
+.sim-output .mc-refnote{padding:2px 0 0;text-align:left}
+.sim-output .mc-chart{padding:8px 0 2px}
+.sim-output .mc-method{padding:14px 0 0;text-align:left}
+.sim-contrib{margin-top:18px;padding-top:16px;border-top:1px solid #f1f5f9}
+.sim-contrib-lbl{font-size:12px;font-weight:700;color:#475569;margin:0 0 7px}
+.sim-cbar{display:flex;height:13px;border-radius:7px;overflow:hidden;background:#f1f5f9}
+.sim-cbar-seg{height:100%}
+.sim-clegend{list-style:none;margin:9px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:5px 16px}
+.sim-clegend li{display:flex;align-items:center;gap:6px;font-size:12px;color:#334155}
+.sim-clegend b{color:#0f172a;font-weight:600}
+.sim-cdot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+.sim-cseg-0{background:#047857}.sim-cseg-1{background:#0ea5e9}.sim-cseg-2{background:#6366f1}
+.sim-cseg-3{background:#14b8a6}.sim-cseg-4{background:#8b5cf6}.sim-cseg-5{background:#f59e0b}
+.sim-controls{margin-top:16px;padding-top:15px;border-top:1px solid #f1f5f9}
+.sim-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:13px}
+.sim-btn-ghost{font-size:13px;font-weight:600;color:#475569;background:transparent;border:1px solid #e2e8f0;border-radius:9px;padding:9px 13px;cursor:pointer;transition:color .14s,border-color .14s}
+.sim-btn-ghost:hover{color:#0f172a;border-color:#cbd5e1}
+@media (max-width:1024px){
+  .sim-layout{grid-template-columns:1fr;gap:18px}
+  .sim-result-inner{position:static}
+  .sim-groups{max-height:none}
+}
+@media (max-width:520px){
+  .sim-row{flex-wrap:wrap}
+  .sim-row-ctl{margin-left:0;width:100%}
+  .sim-tier{flex:1;width:auto}
+}
+/* "Custom" read-back badge — a project the user configured in its own calculator */
+.sim-saved-tag{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:2px 3px 2px 7px;flex:0 0 auto;white-space:nowrap;line-height:1}
+.sim-saved-x{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border:none;background:transparent;color:#047857;font-size:14px;line-height:1;cursor:pointer;border-radius:4px;padding:0;font-weight:700}
+.sim-saved-x:hover{background:#a7f3d0;color:#0f172a}
+/* embedded-calculator popup — adjust a calculator without leaving the simulator */
+.sim-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.sim-modal-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.55)}
+.sim-modal-panel{position:relative;width:min(840px,100%);max-height:92vh;background:#fff;border-radius:16px;box-shadow:0 24px 64px -20px rgb(15 23 42 / 0.5);display:flex;flex-direction:column;overflow:hidden;animation:simModalIn .18s ease}
+@keyframes simModalIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
+.sim-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid #f1f5f9}
+.sim-modal-titlewrap{display:flex;flex-direction:column;min-width:0}
+.sim-modal-title{font-size:15px;font-weight:700;color:#0f172a}
+.sim-modal-hint{font-size:12px;color:#64748b}
+.sim-modal-close{flex:0 0 auto;font-size:14px;font-weight:700;color:#fff;background:#047857;border:0;border-radius:9px;padding:9px 18px;cursor:pointer;transition:filter .12s}
+.sim-modal-close:hover{filter:brightness(1.08)}
+.sim-modal-frame{flex:1;width:100%;min-height:62vh;border:0;background:#fff}
+body.sim-modal-open{overflow:hidden}
+/* embed mode (?embed=1): strip the site chrome inside the popup iframe */
+.ec-embed header,
+.ec-embed footer,
+.ec-embed nav[aria-label="Breadcrumb"],
+.ec-embed #ec-cookie-banner,
+.ec-embed .mc-section,
+.ec-embed .ad-slot{display:none !important}
+.ec-embed main{padding-top:0 !important}

@@ -10,7 +10,7 @@
     "build": "astro build && node scripts/build-sitemap.cjs",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node scripts/validate-csvs.cjs && node scripts/validate-pages.cjs && node scripts/smoke-test.cjs && node scripts/new-calc-tests.cjs"
+    "test": "node scripts/validate-csvs.cjs && node scripts/validate-risk-events.cjs && node scripts/validate-pages.cjs && node scripts/smoke-test.cjs && node scripts/new-calc-tests.cjs && node scripts/test-montecarlo.cjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",

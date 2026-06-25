@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Type = 'portable' | 'inverter' | 'standby_air' | 'standby_liquid';
 type Fuel = 'natural_gas' | 'propane' | 'diesel' | 'gasoline';
@@ -148,6 +149,7 @@ export default function GeneratorCalculator() {
     : ['14kw', '18kw', '22kw', '26kw'];
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -291,5 +293,10 @@ export default function GeneratorCalculator() {
         )}
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="generator"
+    />
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type System = 'softener_basic' | 'softener_premium' | 'salt_free' | 'whole_house_carbon' | 'softener_carbon_combo' | 'ro_undersink' | 'ro_whole_house' | 'iron_filter';
 
@@ -55,6 +56,7 @@ export default function WaterTreatmentCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -116,5 +118,10 @@ export default function WaterTreatmentCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="water-treatment"
+    />
+    </>
   );
 }

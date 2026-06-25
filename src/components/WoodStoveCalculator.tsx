@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
+import MonteCarloSim from './MonteCarloSim';
 
 type Stove = 'wood_small' | 'wood_medium' | 'wood_large_catalytic' | 'pellet_small' | 'pellet_medium' | 'pellet_large' | 'pellet_insert' | 'masonry';
 
@@ -44,6 +45,7 @@ export default function WoodStoveCalculator() {
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
 
   return (
+    <>
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
@@ -95,5 +97,10 @@ export default function WoodStoveCalculator() {
         </div>
       </div>
     </div>
+    <MonteCarloSim
+      band={{ low: result.gross.low, high: result.gross.high }}
+      slug="wood-pellet-stove"
+    />
+    </>
   );
 }
