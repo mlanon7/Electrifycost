@@ -8,6 +8,15 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
+### Shipped (2026-06-25) — full-audit remediation (Claude audit, waves 1-4)
+A second, independent multi-agent audit (`audit/FULL_AUDIT_CLAUDE_2026-06-25.md`, 18 agents, every P0/P1 adversarially re-verified) confirmed the site ship-clean (no P0 defects) and surfaced one P1 plus governance/polish P2s. Fixed:
+- **P1 — panel-FAQ single-source-of-truth.** `electrical-panel-upgrade-cost-[state]` FAQ hardcoded `$1800/$4500 × labor` and disagreed with the on-page calculator; it now computes the default range from the shared engine (`runCalculator`). FAQ == calculator (CA $1,850-$5,925, TX $1,550-$5,075).
+- **Conversion tracking on all 32 bespoke calculators.** New `useCalculatorUsed` hook (`src/lib/track.ts`) fires `calculator_used` from every calculator island, not just the 5 flagships — affiliate/Mediavine attribution now covers the full product.
+- **`source_id` on the last two un-attributed CSVs** (`rebate-programs.csv`, `home-energy-rebate-status.csv`); every numeric-input CSV now carries resolvable source attribution.
+- **Solar base `$/W` reconciled.** `solar-cost-ranges.csv` `base_per_w` was stale at `$2.20/2.60/3.40` (below the EnergySage benchmark) while the live calculator used `$2.50/3.30/4.50`; the CSV now mirrors the calculator.
+- **Content guard + caveats.** Extended `validate-content.cjs` with the remaining STYLEGUIDE AI-slop patterns; added the universal "Actual prices depend…" caveat to all flagship result panels; removed "leverage" from 2 guides; trimmed two over-length SEO fields.
+- **Deferred (documented in ROADMAP Phase 4):** the full bespoke-calculator→CSV migration, comparison-page context→CSV, and the EIA energy-price refresh — each needs output-snapshot regression coverage or unpublished EIA data, so not done blind.
+
 ### Shipped (2026-06-25) — Codex full-site audit response
 - **California TECH rebates corrected.** TECH Clean California's single-family heat-pump HVAC + HPWH funds are fully reserved statewide (no new reservations as of early 2026, verified on the program's incentives page). The two `CA_TECH_*` rows in `rebate-programs.csv` move `active` → `reserved`; `calc.ts` now routes any `reserved`/`closed` rebate to **potential** context — shown with a "funding fully reserved, not subtracted" caveat, never deducted from net. New smoke-test assertions (`CA_TECH_HP`/`CA_TECH_HPWH` not in applied, in potential) guard it. Previously CA net estimates ran ~$1k–$4k too low.
 - **Federal-credit copy fixes.** Solar-payback FAQ called the residential clean-energy credit "30D" (it is **25D**); the EV-TCO guide framed 30D as active in 2026 and folded used-EVs into 30D (used-EV is **25E**) — both corrected and the new/used credits split. Stale "Mass Save $10,000" copy on 5 guide/comparison pages updated to the current **$8,500** cap. Hot-tub guide no longer lists closed TECH incentives as available; sources page no longer describes expired 25C/25D as currently applied.

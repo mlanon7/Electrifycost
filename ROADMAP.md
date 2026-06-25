@@ -59,6 +59,12 @@ Deferred from Phase 1 + Phase 2 of the guide-unification effort. Achievable in a
 
 ## Phase 4 — engine + data refinements
 
+> **From the 2026-06-25 full audit (the remaining P2/P3 data-architecture items).** The high-value findings shipped that day (panel-FAQ SSOT, rebate `source_id`, conversion tracking on all 32 bespoke calcs, solar base-`$/W` reconciliation, content-guard hardening). These three are deliberately deferred because they change calculator-math sourcing and want output-snapshot regression coverage first — they are not safe to do blind:
+
+- **Migrate the ~30 bespoke calculators' hardcoded cost models to CSV.** SolarCalculator / BatteryCalculator / AcCalculator etc. hold their cost tables as TS objects (e.g. `BASE_PER_W`, `BATTERY_ADDER`) instead of CSV, unlike the 5 flagships. Solar's base `$/W` is now reconciled with `solar-cost-ranges.csv`; the rest still diverge. Before extracting each, add a per-calculator output-snapshot test so the refactor is provably behavior-preserving (no existing tests cover the bespoke calcs' math).
+- **Move comparison-page hardcoded context figures to a CSV.** Pages like `load-management-vs-panel-upgrade.astro`, `battery-vs-generator.astro`, and `heat-pump-vs-ac.astro` hardcode TOU/NEM/Span/Lumin dollar context that can't be centrally updated. Land them in a `comparative-cost-context.csv` with `source_id` + `last_reviewed`.
+- **Refresh `state-energy-prices.csv` when Q3 2026 EIA retail data publishes.** Current rows are `last_reviewed 2026-04-01` (sourced `SRC_EIA_RETAIL`, within the 90-day window). A blind value refresh isn't possible yet — EIA's newer state retail-price release isn't out — so this is calendared for the next EIA drop, not a now-fix.
+
 - **Per-module CSV chunking.** Refactor `src/lib/data.ts` (435 LOC, ~50 `?raw` imports) into per-domain modules so calculators import only the data they need. Drops the ~104 KB shared bundle currently hydrated on every calculator page. Estimated work: 2–3 hours + careful testing across 38 calculators.
 - **Live rebate refresh script.** A quarterly automated script that reads DSIRE + AFDC + state energy office RSS feeds and flags rebate rows whose `last_reviewed` date is > 90 days old. Email-style summary to the maintainer for manual verification.
 - **`labor_rate_usd` row in `ac-cost-ranges.csv` cleanup.** The AC calculator uses an inline `LABOR_RATE_USD` constant; the CSV has a `labor_rate_usd` row that's loaded but unused. Either wire it or drop the row.

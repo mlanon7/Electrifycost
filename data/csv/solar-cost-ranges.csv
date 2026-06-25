@@ -1,5 +1,5 @@
 parameter,key,low,mid,high,unit,notes,source_id,last_reviewed
-base_per_w,base,2.20,2.60,3.40,$/W,Median residential PV installed cost. EnergySage 2026 marketplace median $2.58/W national; LBNL TTS 2024 $2.92/W marketplace. https://www.energysage.com/local-data/solar-panel-cost/,SRC_LBNL_TTS,2026-05-13
+base_per_w,base,2.50,3.30,4.50,$/W,Median installed residential PV cost ($/W DC); mirrors SolarCalculator BASE_PER_W. LBNL TTS 2024 median $3.40/W marketplace; EnergySage 2026 marketplace median $2.58/W (a marketplace floor - turnkey installs run higher). https://www.energysage.com/local-data/solar-panel-cost/,SRC_LBNL_TTS,2026-06-25
 roof_multiplier,comp_shingle,1.00,1.00,1.00,multiplier,Flush mount on asphalt baseline,SRC_LBNL_TTS,2026-05-11
 roof_multiplier,tile,1.20,1.20,1.20,multiplier,Tile hooks / careful flashing 15-20% premium,SRC_LBNL_TTS,2026-05-11
 roof_multiplier,metal,1.10,1.10,1.10,multiplier,Standing-seam clamps; modest premium,SRC_LBNL_TTS,2026-05-11
