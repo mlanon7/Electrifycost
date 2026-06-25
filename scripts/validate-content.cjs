@@ -26,6 +26,20 @@ const BANNED = [
     why: 'AI-slop superlative (STYLEGUIDE blacklist). State the specific scope instead.' },
   { re: /\b(let's |lets )?dive into\b/i,
     why: 'AI-slop filler (STYLEGUIDE blacklist). Delete the preamble and state the thing.' },
+  { re: /let's explore/i,
+    why: 'AI-slop filler (STYLEGUIDE blacklist). Delete the preamble.' },
+  { re: /it's important to (note|remember|recognize)/i,
+    why: 'AI-slop padding (STYLEGUIDE blacklist). Delete; just state the fact.' },
+  { re: /there are several factors/i,
+    why: 'AI-slop empty preamble (STYLEGUIDE blacklist). Just list the factors.' },
+  { re: /some experts say|experts agree/i,
+    why: 'AI-slop anonymous authority (STYLEGUIDE blacklist). Name the source.' },
+  { re: /while it's true that/i,
+    why: 'AI-slop hedge construction (STYLEGUIDE blacklist). State both facts directly.' },
+  { re: /in today's (rapidly )?(evolving|changing)/i,
+    why: 'AI-slop opener (STYLEGUIDE blacklist). Delete the whole opening.' },
+  { re: /robust solution|holistic approach/i,
+    why: 'MBA-speak (STYLEGUIDE blacklist). Use plain English.' },
 ];
 
 const TARGET_DIRS = ['src/pages', 'src/components'];

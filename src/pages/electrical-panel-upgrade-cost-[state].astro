@@ -9,6 +9,7 @@ import {
   findClimate,
   rebatePrograms,
 } from '@/lib/data';
+import { runCalculator } from '@/lib/calc';
 import { fmtUSD } from '@/lib/format';
 
 export async function getStaticPaths() {
@@ -38,10 +39,26 @@ const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
 const description = `100A-to-200A electrical panel upgrade cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ~$${labor?.permit_avg ?? 300} permit, ${stateRebates.length} rebate programs.`;
 
+// Default 100A→200A range straight from the shared engine — the same numbers the
+// calculator on this page shows by default (average difficulty, single-family).
+// Keeps the FAQ and the calculator in single-source-of-truth sync (no hardcoded $).
+const panelDefault = runCalculator({
+  module: 'panel',
+  scenario: 'upgrade_100_to_200',
+  scenarioLabel: '100A → 200A panel upgrade',
+  contractorChecklistKey: 'panel',
+  state: stateCode,
+  panelSize: '100A',
+  difficulty: 'average',
+  homeType: 'single_family',
+  timing: 'this_year',
+  income: 'unknown',
+});
+
 const faq = [
   {
     q: `How much does a 100A to 200A panel upgrade cost in ${stateName}?`,
-    a: `In ${stateName}, a 100A to 200A panel upgrade typically runs ${fmtUSD(1800 * (labor?.electrician_multiplier ?? 1))}–${fmtUSD(4500 * (labor?.electrician_multiplier ?? 1))} installed. The work includes a new 200A main breaker, meter base, service-entrance conductors, and utility coordination. Use the calculator above to refine for your existing panel and install difficulty.`,
+    a: `In ${stateName}, a 100A to 200A panel upgrade typically runs ${fmtUSD(panelDefault.gross.low)}–${fmtUSD(panelDefault.gross.high)} installed. The work includes a new 200A main breaker, meter base, service-entrance conductors, and utility coordination. Use the calculator above to refine for your existing panel and install difficulty.`,
   },
   {
     q: `Is a panel upgrade necessary for an EV charger or heat pump in ${stateName}?`,

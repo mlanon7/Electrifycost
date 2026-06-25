@@ -451,6 +451,10 @@ export default function ResultPanel({
         <ul className="mt-1 list-disc space-y-0.5 pl-5">
           {result.caveats.map((c, i) => <li key={i}>{c}</li>)}
         </ul>
+        <p className="mt-2">
+          Actual prices depend on your home, local labor rates, equipment selection, code requirements,
+          utility rules, and contractor availability. Estimates are planning ranges, not contractor quotes.
+        </p>
       </div>
 
       <div className="card p-4">
