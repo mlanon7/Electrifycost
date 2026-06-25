@@ -31,10 +31,12 @@ Every commit must pass the full test chain before pushing:
 ```bash
 npm test
 # Runs in this order, all must pass:
-#   1. validate-csvs.cjs         — schema check on all 49 CSVs
-#   2. validate-pages.cjs        — Layout open/close balance, JSX-trap detection
-#   3. smoke-test.cjs            — 13 calculator scenarios + 9 assertion groups
-#   4. new-calc-tests.cjs        — 29 formula assertions
+#   1. validate-csvs.cjs         — schema check on all CSVs
+#   2. validate-risk-events.cjs  — sanity + sourcing guard on risk-events.json
+#   3. validate-pages.cjs        — Layout open/close balance, JSX-trap detection
+#   4. smoke-test.cjs            — 13 calculator scenarios + 9 assertion groups
+#   5. new-calc-tests.cjs        — 29 formula assertions
+#   6. test-montecarlo.cjs       — 39 assertions on the Monte Carlo engine (calibration gate)
 ```
 
 Plus:
@@ -74,6 +76,8 @@ CI runs the same chain on every push and PR via `.github/workflows/ci.yml`. If C
 6. **Add to the appropriate header dropdown** in `src/components/Header.astro`.
 7. **Add a smoke-test case** in `scripts/smoke-cases.json` covering at least one realistic scenario.
 8. **Run `npm test` and `npm run build` locally before committing.**
+
+**Monte Carlo inline sim:** flagship calculators get it automatically (it's embedded in `ResultPanel`). For a bespoke calculator, render `<MonteCarloSim band={{ low: result.gross.low, high: result.gross.high }} slug="<slug>" />` as a sibling after the component's root (wrap the return in a fragment). To also list the calculator in the **Project Simulator**, add a row to `src/data/scenario-projects.json` and (optionally) risk events to `src/data/risk-events.json` — **the project slug, the `MonteCarloSim` slug, and the risk-events key must all match.** See `.claude/lessons/11-monte-carlo-simulation.md`.
 
 If the calculator is module-specific enough to also have state programmatic pages, clone `heat-pump-cost-[state].astro` (see "How to add state pages" below).
 
@@ -122,7 +126,7 @@ The footer's "Data last refreshed YYYY-MM-DD" line surfaces the MAX `last_review
 
 A change is mergeable when:
 
-- [ ] `npm test` passes (4 stages, all green)
+- [ ] `npm test` passes (6 stages, all green)
 - [ ] `npx tsc --noEmit` reports zero errors
 - [ ] `npm run build` completes and emits 690+ URLs in `dist/sitemap.xml`
 - [ ] No new dependencies added without explicit justification in commit body

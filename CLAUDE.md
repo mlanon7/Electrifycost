@@ -8,6 +8,8 @@ This file is the working context for any AI assistant editing the repo. Read it 
 
 **ElectrifyCost** is a calculator-first content site for U.S. home electrification cost estimation. 38 interactive calculators (heat pumps, solar, EV chargers, panel upgrades, water heaters, induction stoves, insulation, windows, generators, batteries, etc.) return **low / mid / high** installed-cost ranges with applicable rebates pre-applied.
 
+A **Monte Carlo cost simulation** layers on top: an inline P10 / most-likely / P90 distribution on every calculator, plus a combined **Project Simulator** (`/project-simulator/`) that rolls 10,000 scenarios across multiple projects with ZIP-based regional pricing and a "Custom" calculator read-back. Full design: `.claude/lessons/11-monte-carlo-simulation.md`.
+
 - **Live:** https://electrifycost.com
 - **Repo:** https://github.com/mlanon7/Electrifycost
 - **Owner:** Martin Lashgari, Ph.D., P.E., PMP (structural engineer; site is biographical disclosure on `/about/`)
@@ -39,9 +41,9 @@ Competitors fall into three buckets: (1) lead-gen funnels (Modernize, Networx, A
 
 ---
 
-## Page inventory (697 built pages as of 2026-06-12)
+## Page inventory (698 built pages as of 2026-06-24)
 
-The site grew from 5 flagship calculators to 697 built HTML pages via **four programmatic-SEO dimensions**. Understand these before adding pages:
+The site grew from 5 flagship calculators to 698 built HTML pages via **four programmatic-SEO dimensions** (plus the standalone `/project-simulator/` tool). Understand these before adding pages:
 
 | Dimension | URL shape | Count | Template |
 |---|---|---|---|
@@ -103,6 +105,8 @@ electrifycost/
 │   ├── validate-pages.cjs              — pre-test: Layout open/close balance + JSX-trap detection
 │   ├── smoke-test.cjs                  — 13 scenarios + 9 targeted assertion groups
 │   ├── new-calc-tests.cjs              — 29 formula assertions for non-flagship calculators
+│   ├── validate-risk-events.cjs        — pre-test: sanity + sourcing guard on risk-events.json
+│   ├── test-montecarlo.cjs             — 39 assertions: Monte Carlo calibration gate (in npm test)
 │   ├── smoke-cases.json                — input matrix for smoke-test
 │   ├── audit-scan.cjs                  — POSTBUILD manual: meta/title length, orphans, trailing-slash links
 │   ├── contrast-check.cjs              — WCAG AA contrast check on the ink/brand palette
@@ -124,9 +128,13 @@ electrifycost/
     │   ├── PanelCalculator.tsx
     │   ├── HpwhCalculator.tsx
     │   ├── InductionCalculator.tsx
-    │   └── 33 non-flagship calculators — bespoke math, own result UI
+    │   ├── 33 non-flagship calculators — bespoke math, own result UI
+    │   ├── MonteCarloSim.tsx           — per-calculator Monte Carlo sim island (inline on every calc)
+    │   └── ProjectSimulator.tsx        — combined /project-simulator/ tool (picker + result + iframe popup)
     ├── lib/
     │   ├── calc.ts                     — SHARED ENGINE: runCalculator(args): CalculatorResult
+    │   ├── montecarlo.js               — probabilistic cost engine (verbatim math; ESM wrapper)
+    │   ├── mc-chart.ts                 — shared sim chart + money/smooth/domainFor helpers
     │   ├── data.ts                     — CSV loaders + lookup helpers. Key exports:
     │   │                                 ALL_STATES, findStateLabor/Energy/Climate,
     │   │                                 ALL_CITIES + findCity + stateName (city pages),
@@ -137,9 +145,12 @@ electrifycost/
     ├── data/
     │   ├── contractor-checklists.json  — 5 modules × ~10 questions each
     │   ├── glossary.json               — 30 terms in 7 categories
+    │   ├── risk-events.json            — Monte Carlo "surprise" events keyed by calculator slug
+    │   ├── scenario-projects.json      — Project Simulator per-project tiers + cost mix
     │   └── source-notes.json           — 200+ source entries with last_reviewed dates
-    ├── pages/                          — 131 .astro pages; 697 built HTML pages
+    ├── pages/                          — 132 .astro pages; 698 built HTML pages
     │   ├── index.astro                 — homepage + 38 calculator cards
+    │   ├── project-simulator.astro     — the combined Project Simulator tool page
     │   ├── about.astro                 — founder bio (E-E-A-T critical)
     │   ├── methodology.astro
     │   ├── sources.astro
@@ -196,6 +207,19 @@ They each do their own `useMemo` math directly in the component (no shared engin
 
 ---
 
+## Monte Carlo cost simulation (`src/lib/montecarlo.js`)
+
+A probabilistic layer on top of the deterministic engine. **Ported math-identical from ProjectCostPro** (the sister site) — only the module wrapper differs (ESM here vs UMD there). Each installed-cost line item is sampled from a **triangular** distribution (mode skewed 40% up), the items are tied by a **one-factor Gaussian copula** (ρ=0.5), and surprise events add a beta-PERT right tail. **Calibration constants are load-bearing** (`modeSkew 0.40`, `rho 0.5`, `TRIALS 10000`); `scripts/test-montecarlo.cjs` (39 assertions, in `npm test`) is the gate — do not retune without keeping it green.
+
+Two surfaces, both client-side:
+
+- **Per-calculator inline sim** — `src/components/MonteCarloSim.tsx` (chart helpers in `src/lib/mc-chart.ts`). Renders P10 / most-likely / P90 + a streaming SVG density curve + a sourced "real-world surprises" toggle. Models **gross installed cost**, markup 1:1. Embedded once in `ResultPanel.tsx` (covers all 5 flagships + their programmatic pages) and on 27 bespoke calculators. The published band is shown only as a faint reference — **nothing is relabeled.**
+- **The Project Simulator** — `/project-simulator/` (`src/components/ProjectSimulator.tsx` + `src/data/scenario-projects.json`). Combine multiple projects → one combined distribution (portfolio effect). ZIP bar → state → labor-index regional pricing. A row's ↗ opens the calculator in an `?embed=1` iframe popup; **Done** reads its estimate back as a "Custom" tier via `localStorage['ec:est:<slug>']` (the simulator ZIP auto-fills the popup — flagships via the URL hash, bespoke via a `Layout.astro` prefill script). Featured "Simulator · New" nav pill.
+
+**Load-bearing invariant:** the Project Simulator project `slug`, the `MonteCarloSim` `slug`, and the `risk-events.json` key must all match (e.g. `electrical-panel`, not `panel`). Risk-event odds are reasoned planning priors, not measured rates (softened in the UI). Full design + the no-double-counting / ZIP-prefill rules: `.claude/lessons/11-monte-carlo-simulation.md`.
+
+---
+
 ## Critical federal-credit dates (OBBBA, signed 2025-07-04)
 
 These rules are baked into the calculator engine via `federal-credits.csv` and the runtime date filter:
@@ -226,12 +250,14 @@ npm run build
 # Preview built dist/ (port 4321)
 npm run preview
 
-# Full test suite (4 stages — all must pass before commit)
+# Full test suite (6 stages — all must pass before commit)
 npm test
-  # 1. validate-csvs.cjs — schema check on all 49 CSVs
-  # 2. validate-pages.cjs — Layout open/close balance, JSX-trap detection (109 pages)
-  # 3. smoke-test.cjs — 13 calculator scenarios + 9 targeted assertion groups
-  # 4. new-calc-tests.cjs — 29 formula assertions for non-flagship calculators
+  # 1. validate-csvs.cjs — schema check on all CSVs
+  # 2. validate-risk-events.cjs — sanity + sourcing guard on risk-events.json
+  # 3. validate-pages.cjs — Layout open/close balance, JSX-trap detection
+  # 4. smoke-test.cjs — 13 calculator scenarios + 9 targeted assertion groups
+  # 5. new-calc-tests.cjs — 29 formula assertions for non-flagship calculators
+  # 6. test-montecarlo.cjs — 39 assertions on the Monte Carlo engine (calibration gate)
 
 # Type check (independent of tests; run before commits with new code)
 npx tsc --noEmit
@@ -328,6 +354,7 @@ Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-dr
 
 | SHA | Summary |
 |---|---|
+| _(this branch)_ | **Monte Carlo cost simulation:** ported engine (`montecarlo.js`) + inline sim on all calculators + new `/project-simulator/` tool (combined distribution, ZIP pricing, "Custom" iframe read-back) + featured nav pill + 2 new test stages. See `.claude/lessons/11-monte-carlo-simulation.md`. (697 → 698 pages) |
 | `5e81200` | Strategic cross-link with sister site projectcostpro.com (8 PCP→EC + 3 EC→PCP contextual links) — see `.claude/lessons/10-portfolio-cross-linking.md` |
 | `6e1652d` | Wire IndexNow (key file + `scripts/indexnow-submit.cjs`); Bing's #1 recommendation; 696 URLs submitted |
 | `79dcd06` | Standardize all site contact to `martin@electrifycost.com` (remove stray `hello@` / `mkml.inc@`) |

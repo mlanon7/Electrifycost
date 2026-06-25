@@ -6,6 +6,8 @@ Source-backed home electrification cost calculators for U.S. homeowners.
 
 A calculator-first site that estimates planning-level installed cost ranges for switching from gas, oil, propane, or older electric systems to electric alternatives — heat pumps, EV chargers, electrical panel upgrades, heat pump water heaters, and induction ranges.
 
+A **Monte Carlo cost simulation** layers on top: a probabilistic P10 / most-likely / P90 distribution inline on every calculator, plus a combined **[Project Simulator](https://electrifycost.com/project-simulator/)** that rolls 10,000 scenarios across multiple projects with ZIP-based regional pricing. Design notes: [`.claude/lessons/11-monte-carlo-simulation.md`](.claude/lessons/11-monte-carlo-simulation.md).
+
 The site is deliberately not a lead-gen funnel: no contact forms, no email gate, no contractor marketplace. The goal is trust, SEO, and usefulness first; monetization later.
 
 ## Stack
@@ -60,6 +62,8 @@ electrifycost/
     │   ├── Header.astro
     │   ├── Footer.astro
     │   ├── ResultPanel.tsx    # Shared low/mid/high results UI
+    │   ├── MonteCarloSim.tsx  # Per-calculator Monte Carlo sim island
+    │   ├── ProjectSimulator.tsx # Combined /project-simulator/ tool
     │   ├── PanelCalculator.tsx
     │   ├── HeatPumpCalculator.tsx
     │   ├── EvChargerCalculator.tsx

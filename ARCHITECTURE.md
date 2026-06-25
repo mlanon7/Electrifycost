@@ -114,7 +114,16 @@ The site scales URL count by multiplying a calculator across **dimensions**. As 
 
 See `.claude/lessons/08-astro-route-collision-patterns.md` for the full decision tree. Adding a new dimension? Pick one of these three shapes; never add a second greedy single-segment dynamic at the same prefix.
 
-The dimensions compose: state × module = 357 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 697 pages came from ~10 template files.
+The dimensions compose: state × module = 357 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 698 pages came from ~10 template files.
+
+### 5. The Monte Carlo simulation layer
+
+A probabilistic cost layer sits on top of the deterministic engine. `src/lib/montecarlo.js` (ported math-identical from ProjectCostPro) turns a calculator's installed-cost line items into a *distribution* via triangular per-item draws tied by a one-factor Gaussian copula (ρ=0.5). It powers two surfaces:
+
+- **Per-calculator inline sim** (`MonteCarloSim.tsx`) — embedded in `ResultPanel` (flagships) + 27 bespoke calculators. Models gross installed cost; shows P10 / most-likely / P90 + a streaming density curve + sourced "surprise" events. The published band is a faint reference only — nothing is relabeled.
+- **The Project Simulator** (`/project-simulator/`, `ProjectSimulator.tsx`) — combines multiple projects' total bands into one distribution (the portfolio effect: tighter than the naive low+low / high+high sum), with ZIP → state regional pricing and a "Custom" read-back that opens a calculator in an `?embed=1` iframe popup and reads its estimate back via `localStorage['ec:est:<slug>']`.
+
+Pure client-side (no server), shares the static-island model, and is gated by its own calibration test (`scripts/test-montecarlo.cjs`, 39 assertions) + data validator (`scripts/validate-risk-events.cjs`). Full design + the slug/no-double-counting/ZIP-prefill rules: `.claude/lessons/11-monte-carlo-simulation.md`.
 
 ---
 
@@ -138,7 +147,9 @@ The dimensions compose: state × module = 357 pages, city × module = 200, brand
 │   ├── validate-csvs.cjs       — pre-test
 │   ├── validate-pages.cjs      — pre-test: Layout open/close + JSX traps
 │   ├── smoke-test.cjs          — 13 + 9 assertion runs against the engine
-│   └── new-calc-tests.cjs      — 29 assertion runs for non-flagship math
+│   ├── new-calc-tests.cjs      — 29 assertion runs for non-flagship math
+│   ├── validate-risk-events.cjs — sanity + sourcing guard on risk-events.json
+│   └── test-montecarlo.cjs     — 39 assertions: Monte Carlo calibration gate
 └── src/
     ├── components/
     │   ├── Layout.astro        — site shell: <head>, GA4, schemas, header, footer, slot
@@ -149,16 +160,22 @@ The dimensions compose: state × module = 357 pages, city × module = 200, brand
     │   ├── RelatedGuides.astro — uniform footer on every /guides/X page
     │   ├── AdSlot.astro        — gated; reserves min-height for CLS
     │   ├── AffiliateDisclosure.astro + AffiliateModule.astro — gated
-    │   └── 38 *Calculator.tsx  — 5 flagship + 33 bespoke
+    │   ├── MonteCarloSim.tsx   — per-calculator Monte Carlo sim island
+    │   ├── ProjectSimulator.tsx — combined /project-simulator/ tool
+    │   └── 37 *Calculator.tsx  — 5 flagship + 32 bespoke (incl. WholeHome)
     ├── lib/
     │   ├── calc.ts             — shared engine (runCalculator)
     │   ├── data.ts             — CSV loaders + lookup helpers
     │   ├── format.ts           — fmtUSD / fmtUSDRange / fmtMonths
     │   ├── use-url-state.ts    — hash-state hooks for shareable inputs
+    │   ├── montecarlo.js       — probabilistic cost engine (verbatim math)
+    │   ├── mc-chart.ts         — shared sim chart + money/smooth/domainFor
     │   └── guide-relationships.ts — 37 guide siblings + calculator hrefs
     ├── data/
     │   ├── contractor-checklists.json
     │   ├── glossary.json
+    │   ├── risk-events.json    — Monte Carlo "surprise" events by slug
+    │   ├── scenario-projects.json — Project Simulator tiers + cost mix
     │   └── source-notes.json   — 200+ primary-source entries
     ├── pages/                  — 131 .astro files → 697 built HTML pages
     │   ├── index.astro

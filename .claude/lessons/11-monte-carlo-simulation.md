@@ -1,0 +1,100 @@
+# Lesson 11 — Monte Carlo cost simulation (inline + the Project Simulator)
+
+**Date:** 2026-06-24
+**Severity:** P1 (a major new feature surface — the engine, the per-calculator sim on ~30 pages, a new flagship tool page, and a cross-component read-back protocol; get the slug/no-double-counting/ZIP plumbing wrong and the numbers quietly drift)
+**Context:** ProjectCostPro (the sister site) shipped a Monte Carlo cost simulator — a per-calculator inline version and a combined "Project Simulator" — and wrote a portable playbook for lifting it onto a sibling. This lesson records how it was ported to ElectrifyCost (Astro/React, not PCP's vanilla JS), the decisions that differ, and the rules for extending it.
+
+> Source of truth for the design: `projectcostpro/.claude/worktrees/.../docs/PORTABLE_SIMULATOR_PLAYBOOK.md` (PCP repo — **reference only, never edited from here**). This lesson is the EC-side record so the EC repo is self-contained.
+
+## What shipped
+
+1. **A per-calculator inline Monte Carlo sim** on every calculator that produces an installed-cost band — the 5 flagships (via `ResultPanel`) + 27 bespoke calculators. Each renders a "Monte Carlo simulation" card: P10 (optimistic) / most-likely / P90 (safer budget), a streaming SVG density curve, a sourced "real-world surprises" toggle.
+2. **The Project Simulator** at `/project-simulator/` — a combined tool: pick multiple projects, set scale + quantity, and get one combined cost distribution (the portfolio effect), with ZIP-based regional pricing and a "Custom" read-back from each calculator.
+3. **A featured nav pill** ("Simulator · New") and the supporting `?embed=1` / ZIP-prefill plumbing.
+
+## The non-negotiable design principle (carried over from PCP)
+
+**Nothing is relabeled.** The published low–high band is drawn only as a faint reference line. P10 / most-likely / P90 are computed from 10,000 trials. Each line item is sampled from a **triangular** distribution (mode skewed 40% up — overruns skew high), the items are tied together by a **one-factor Gaussian copula** (ρ = 0.5) so the total keeps a realistic wide tail, and surprise events add a beta-PERT right tail. If you ever find yourself drawing the band and calling it the answer, stop.
+
+## The engine — ported verbatim
+
+`src/lib/montecarlo.js` is the PCP math engine, **math byte-identical**. The only change is the module wrapper: PCP uses UMD (`window` + `module.exports`); EC is `"type": "module"`, so it's **ESM named exports** (`simulate`, `streamer`, `triInv`, `_internals`, …) so it imports cleanly as a Vite/React island AND is `require()`-able by the Node test.
+
+- Calibration constants are **load-bearing** — do not retune: `modeSkew 0.40`, `rho 0.5`, `TRIALS 10000`, `PER_FRAME 320`, `nbins 36`, PERT `lambda 4`.
+- `scripts/test-montecarlo.cjs` is the acceptance gate (39 assertions): triangular mean, emergent-band-tighter-than-naive, correlation widening, markup scaling, events tail, right-skew, determinism, and the bundle claims. **Wired into `npm test`.** It must stay green or the calibration is broken.
+- Shared render helpers (money, smooth, `domainFor`, `buildChart`) live in `src/lib/mc-chart.ts` — used by both the inline sim and the Project Simulator (one chart implementation).
+
+## Inline sim — how it reaches every calculator
+
+`src/components/MonteCarloSim.tsx` is a React island. Props: `band {low,high}`, optional `items {low,high}[]`, `slug`. It models **gross installed cost** (before rebates/incentives) — that's where the line-item uncertainty lives, and it matches PCP. Markup is **1:1** (EC's engine has no separate markup band; the band passed in is already the installed cost).
+
+- **Flagships (5):** embedded once at the bottom of `ResultPanel.tsx`, fed by `result.gross` (band) + `result.itemized` (items, each already a `{low,mid,high}`) + a `MODULE_TO_SLUG` map. **One edit covers all 5 flagships AND every programmatic state/city/brand page that reuses them.**
+- **Bespoke (27):** each component renders `<MonteCarloSim band={{low:result.gross.low,high:result.gross.high}} slug="…" />` as a sibling after its root (wrapped in a fragment). Band-only — the component **synthesizes** sub-items from the band (split 0.5/0.35/0.15) so the portfolio-tightening still applies. (One bespoke calc, heat-pump-dryer, passes real `equipment`/`install` sub-bands.)
+- **Skipped (deliberate):** EV-charging-cost (operating), EV-TCO, solar-payback, hvac-repair-vs-replace (decision), and whole-home (composite — the Project Simulator IS the combined sim). These don't produce a single installed-cost band, so a cost-distribution sim doesn't apply.
+
+EC's engine is a **better** fit than PCP's here: every `itemized` line already carries its own `{low,high}` and they sum to `gross`, so the per-line triangular+copula method drops straight in — no `basisType`/markup gymnastics.
+
+## The Project Simulator (`/project-simulator/`)
+
+`src/components/ProjectSimulator.tsx` is a React port of PCP's `scenario-sim.js`. Each selected project enters the Monte Carlo as **one triangular draw over its installed-cost total band**, correlated across projects by the shared market factor.
+
+- **Data:** `src/data/scenario-projects.json` — small/typical/large tiers + a cost `mix {material,labor,equipment}` per project. **Deviation from PCP:** PCP generates its bands by running each calculator's engine headlessly. EC's engine is TS + the bespoke calcs are TSX, so the bands are **curated** representative tiers grounded in EC's data (flagships trace to `data/csv/project-cost-ranges.csv`; the rest to each calculator's published ranges). Documented in the JSON `note`. A future `build-scenario-bands` generator could replace the curation.
+- **Regional pricing = ZIP → state → labor index.** PCP keys on ZIP via a zip-zones table; EC keys on **state** (`state-labor-multipliers.csv`). The ZIP bar at the top resolves ZIP→state (`findStateForZip`), then applies a blended labor index (avg of electrician/hvac/plumber) to the **labor share** of each project's mix: `regionIndex = mix.material·1 + mix.labor·laborIdx + mix.equipment·1`. National (no ZIP) → index 1.
+- **Performance:** the animating result is its own child component (`SimResult`) so the 30-row picker doesn't re-render at 30fps during the streaming animation.
+- **Also ported:** curated bundle presets, filter search, the "your plan" chips, the contribution bar (per-project triangular-median share), the surprise toggle (events are always streamed; the toggle just switches which distribution is displayed), share-state URLs, "Save as PDF" (`window.print`).
+
+## The "Custom" read-back (the part that's easy to get subtly wrong)
+
+The flow PCP established and EC replicates: click a row's **↗** → the real calculator opens in a same-origin **iframe popup** → adjust it → **Done** → the simulator picks up that exact estimate as a **"Custom"** tier.
+
+- **Persistence:** `MonteCarloSim` writes `localStorage['ec:est:<slug>'] = {low,high,ts,int:true}` whenever its band moves **off its default** (i.e. the user changed an input). **One write point covers all 37 calculators**, because each embeds `MonteCarloSim` with its slug + live band. Merely viewing a calculator never creates a config (the default band is recorded on mount and not written).
+- **Embed mode:** the popup loads `…?embed=1`; an inline script in `Layout.astro` adds `.ec-embed` to `<html>` and CSS strips the header/footer/breadcrumb/cookie-banner/ad/own-mc-section so the iframe shows just the calculator.
+- **Read-back:** on Done, `ProjectSimulator.closeModal` re-reads `localStorage['ec:est:<slug>']` (requires `int===true && high>low && low>0`), offers a "Custom" tier whose band is the saved low/high, selects the project, and shows a "Custom ×" badge. The `×` clears the saved config. Saved configs persist across visits (loaded on mount).
+- **No double-counting:** the saved band is used **as-is** — the page region index is NOT re-applied, because the calculator already applied the ZIP's state internally. (Tier bands ARE region-indexed; saved bands are not. Keep this asymmetry.)
+
+### ZIP auto-fill into the popup (two mechanisms — for a reason)
+
+The simulator's ZIP is passed to the popup so the calculator pre-fills it and its prices match. **Flagships and bespoke need different mechanisms:**
+
+- **Flagships → URL hash.** The iframe src is `…?embed=1&zip=NNNNN#zip=NNNNN`. Flagships read `#zip` natively via `useHashStateInit`, which sets React state reliably and survives later re-renders. This is the robust path. (First attempt used only the query param + a DOM-prefill script; the flagship's `useHashStateSync` fought it and the ZIP cleared on the next re-render. The hash is the calculator's own mechanism — use it.)
+- **Bespoke → query-param prefill script.** Bespoke calcs don't read the hash, so the `Layout.astro` embed script (when `?embed=1&zip=`) finds the calculator's ZIP input (`#zip`, `[autocomplete=postal-code]`, `[inputmode=numeric][maxlength=5]`) and sets it via the native value setter + an `input` event, **retrying until the value sticks past hydration** (poll until it holds for 2 consecutive checks). Verified working (solar → ZIP → state in React state).
+
+## Slug alignment — the load-bearing invariant
+
+For the read-back and risk events to work, **the Project Simulator's project `slug` must equal the calculator's `MonteCarloSim` slug must equal the `risk-events.json` key.** e.g. `electrical-panel` (not `panel`), `heat-pump-water-heater`, `induction-stove`. Flagships map via `MODULE_TO_SLUG` in `ResultPanel`; bespoke pass the slug directly. If you add a project, keep all three in sync or the popup saves under one key and the simulator reads another.
+
+## Honesty stance (E-E-A-T, carried over)
+
+`src/data/risk-events.json` (validated by `scripts/validate-risk-events.cjs`, wired into `npm test`): cost ranges are sourced; **probabilities are reasoned planning priors, not measured rates** — the UI softens unsourced odds to "Possible" and says so. The Project Simulator page carries the P.E. byline, "planning simulation, not a quote" disclaimers, and links to `/methodology/` + `/sources/`. Nothing is relabeled.
+
+## Deliberate omissions / future work
+
+- **`home-energy-audit` and `hot-water-recirculation`** have no risk events (a diagnostic and a small pump have no meaningful "surprises") — the sim runs, the toggle just doesn't appear.
+- **Embed popup** strips chrome but still shows the calculator's hero + content (scrollable); it doesn't auto-scroll to the form. Fine for v1.
+- **Bespoke ZIP prefill** is best-effort (DOM heuristic). Flagships are rock-solid (hash). If a bespoke calc's ZIP input changes shape, update the selector list in `Layout.astro`.
+- **Scenario bands are curated**, not engine-generated. A `--check` band generator (PCP-style) is the rigorous future upgrade.
+
+## The nav trade-off (documented so it isn't "fixed" by accident)
+
+The featured "Simulator · New" pill sits left of Guides/Rebates. EC's nav was already at the edge of its container, so to fit the pill **the small per-item nav icons were dropped** (`.nav-item .nav-icon { display:none }`) — the pill is now the nav's single visual anchor; dropdown chevrons + the pill icon stay. If you want the icons back, free the space another way (fold Guides+Rebates into a "More ▾" dropdown, or widen the header container) rather than just deleting the rule.
+
+## Files (manifest)
+
+```
+src/lib/montecarlo.js            # engine — verbatim math, ESM wrapper
+src/lib/mc-chart.ts              # shared chart + money/smooth/domainFor helpers
+src/components/MonteCarloSim.tsx # per-calc inline sim island (+ localStorage write)
+src/components/ProjectSimulator.tsx  # the combined tool (picker + result + popup)
+src/data/risk-events.json        # surprise events keyed by slug
+src/data/scenario-projects.json  # per-project tiers + cost mix (curated)
+src/pages/project-simulator.astro    # the page (hero, byline, FAQ, schema)
+scripts/test-montecarlo.cjs      # acceptance gate (39 assertions) — in npm test
+scripts/validate-risk-events.cjs # sourcing/sanity guard — in npm test
+```
+Plus edits: `ResultPanel.tsx` (flagship embed + slug map), the 27 bespoke `*Calculator.tsx`, `Header.astro` (pill + icon rule), `Layout.astro` (embed + ZIP-prefill script), `global.css` (mc-* + sim-* + embed + modal + zipbar), `package.json` (2 test stages).
+
+## How to extend it
+
+- **Add a project to the simulator:** add a row to `scenario-projects.json` (slug, label, category/categoryLabel, calcUrl, mix, 3 tiers). Keep the slug aligned with the calculator's `MonteCarloSim` slug + the `risk-events.json` key. Ground the band in the calculator's published range.
+- **Add risk events:** add a key to `risk-events.json` (slug) with sourced cost ranges; set `show_probability:false` for low-confidence odds (the validator warns on false precision). Re-run `node scripts/validate-risk-events.cjs`.
+- **Never retune the engine** without keeping `scripts/test-montecarlo.cjs` green.
