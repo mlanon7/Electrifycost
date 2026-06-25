@@ -458,6 +458,7 @@ export interface BrandProfile {
   positioning: string;
   models: string;     // '/'-separated model examples
   price_note: string;
+  source_id: string;  // resolves to src/data/source-notes.json
   last_reviewed: string;
 }
 export const BRAND_PROFILES: BrandProfile[] =
@@ -469,6 +470,7 @@ export const BRAND_PROFILES: BrandProfile[] =
     positioning: r.positioning,
     models: r.models,
     price_note: r.price_note,
+    source_id: r.source_id,
     last_reviewed: r.last_reviewed,
   }));
 

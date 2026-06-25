@@ -34,9 +34,10 @@ npm test
 #   1. validate-csvs.cjs         — schema check on all CSVs
 #   2. validate-risk-events.cjs  — sanity + sourcing guard on risk-events.json
 #   3. validate-pages.cjs        — Layout open/close balance, JSX-trap detection
-#   4. smoke-test.cjs            — 13 calculator scenarios + 9 assertion groups
-#   5. new-calc-tests.cjs        — 29 formula assertions
-#   6. test-montecarlo.cjs       — 39 assertions on the Monte Carlo engine (calibration gate)
+#   4. validate-content.cjs      — banned-string guard (stale incentives, wrong credit codes, AI-slop)
+#   5. smoke-test.cjs            — 13 calculator scenarios + 9 assertion groups
+#   6. new-calc-tests.cjs        — 29 formula assertions
+#   7. test-montecarlo.cjs       — 39 assertions on the Monte Carlo engine (calibration gate)
 ```
 
 Plus:
@@ -126,7 +127,7 @@ The footer's "Data last refreshed YYYY-MM-DD" line surfaces the MAX `last_review
 
 A change is mergeable when:
 
-- [ ] `npm test` passes (6 stages, all green)
+- [ ] `npm test` passes (7 stages, all green)
 - [ ] `npx tsc --noEmit` reports zero errors
 - [ ] `npm run build` completes and emits 690+ URLs in `dist/sitemap.xml`
 - [ ] No new dependencies added without explicit justification in commit body

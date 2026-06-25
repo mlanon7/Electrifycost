@@ -103,6 +103,7 @@ electrifycost/
 │   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (~696 URLs)
 │   ├── validate-csvs.cjs               — pre-test: all 51 CSVs schema-checked (source_id resolves, ISO dates)
 │   ├── validate-pages.cjs              — pre-test: Layout open/close balance + JSX-trap detection
+│   ├── validate-content.cjs            — pre-test: banned-string guard (stale incentives, wrong credit codes, AI-slop)
 │   ├── smoke-test.cjs                  — 13 scenarios + 9 targeted assertion groups
 │   ├── new-calc-tests.cjs              — 29 formula assertions for non-flagship calculators
 │   ├── validate-risk-events.cjs        — pre-test: sanity + sourcing guard on risk-events.json
@@ -250,14 +251,15 @@ npm run build
 # Preview built dist/ (port 4321)
 npm run preview
 
-# Full test suite (6 stages — all must pass before commit)
+# Full test suite (7 stages — all must pass before commit)
 npm test
   # 1. validate-csvs.cjs — schema check on all CSVs
   # 2. validate-risk-events.cjs — sanity + sourcing guard on risk-events.json
   # 3. validate-pages.cjs — Layout open/close balance, JSX-trap detection
-  # 4. smoke-test.cjs — 13 calculator scenarios + 9 targeted assertion groups
-  # 5. new-calc-tests.cjs — 29 formula assertions for non-flagship calculators
-  # 6. test-montecarlo.cjs — 39 assertions on the Monte Carlo engine (calibration gate)
+  # 4. validate-content.cjs — banned-string guard (stale incentives, wrong credit codes, AI-slop)
+  # 5. smoke-test.cjs — 13 calculator scenarios + 9 targeted assertion groups
+  # 6. new-calc-tests.cjs — 29 formula assertions for non-flagship calculators
+  # 7. test-montecarlo.cjs — 39 assertions on the Monte Carlo engine (calibration gate)
 
 # Type check (independent of tests; run before commits with new code)
 npx tsc --noEmit
