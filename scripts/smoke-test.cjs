@@ -210,6 +210,12 @@ function compute(input) {
     const a = applyRebate(p, gross, input.income);
     if (a[0]===0 && a[1]===0 && a[2]===0) continue;
 
+    // Closed / fully-reserved programs: surface for context, never subtract.
+    if (p.status === 'reserved' || p.status === 'closed') {
+      potential.push({ name: p.program_name, amount: a, programId: p.program_id });
+      continue;
+    }
+
     if (p.program_id === 'FED_30C_EVSE' && censusTract === 'unknown') {
       potential.push({ name: p.program_name, amount: a, programId: p.program_id });
       continue;
@@ -416,6 +422,30 @@ run('Panel WA average stays in industry range', {
 }, [
   ['Panel WA average mid in range', r => r.gross[1] >= 2200 && r.gross[1] <= 4000,
    'Panel WA average mid out of industry $2.2K-$4K typical range'],
+]);
+
+// Codex audit 2026-06-25 P0-2: TECH Clean California single-family funds are fully
+// reserved (no new HVAC/HPWH reservations). The CA_TECH rows carry status=reserved and
+// must surface as potential context, never be subtracted from net.
+run('CA TECH heat pump reserved → potential only', {
+  module: 'heat_pump', scenario: 'ducted_central_3ton', state: 'CA',
+  panel: '100A', difficulty: 'average', homeType: 'single_family', income: 'unknown',
+  fuelHeating: 'natural_gas', sqft: 1800,
+}, [
+  ['CA_TECH_HP not in applied', r => !r.applied.some(i => i.programId === 'CA_TECH_HP'),
+   'CA_TECH_HP subtracted from net despite reserved status'],
+  ['CA_TECH_HP in potential', r => r.potential.some(i => i.programId === 'CA_TECH_HP'),
+   'CA_TECH_HP missing from potential context'],
+]);
+
+run('CA TECH HPWH reserved → potential only', {
+  module: 'hpwh', scenario: 'hybrid_240v_50gal', state: 'CA',
+  panel: '100A', difficulty: 'average', homeType: 'single_family', income: 'unknown',
+}, [
+  ['CA_TECH_HPWH not in applied', r => !r.applied.some(i => i.programId === 'CA_TECH_HPWH'),
+   'CA_TECH_HPWH subtracted from net despite reserved status'],
+  ['CA_TECH_HPWH in potential', r => r.potential.some(i => i.programId === 'CA_TECH_HPWH'),
+   'CA_TECH_HPWH missing from potential context'],
 ]);
 
 run('25C: with asOf=2025-06-01 it still applies (historical)', {

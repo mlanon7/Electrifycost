@@ -246,6 +246,18 @@ function buildIncentiveLines({
       sourceUrl: p.source_url,
     };
 
+    // Closed or fully-reserved programs (e.g. TECH Clean California after funds were
+    // fully reserved): surface for context but never subtract from net.
+    if (p.status === 'reserved' || p.status === 'closed') {
+      potential.push({
+        ...base,
+        potential: true,
+        caveat: (p.status === 'reserved' ? 'Funding fully reserved' : 'Closed to new applicants')
+          + ' — the administrator is not accepting new reservations. Shown for context; not subtracted from your net cost above.',
+      });
+      continue;
+    }
+
     // 30C with unknown census tract → potential.
     if (p.program_id === 'FED_30C_EVSE' && eligibleCensusTract === 'unknown') {
       potential.push({
