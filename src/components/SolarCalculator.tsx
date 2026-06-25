@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -108,6 +109,7 @@ function utilityRebateRange(state: string, kw: number): UtilityRebateEstimate | 
 }
 
 export default function SolarCalculator() {
+  useCalculatorUsed('solar');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [kw, setKw] = useState(7);                     // system DC size

@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useMemo, useState } from 'react';
 import { fmtUSD } from '@/lib/format';
 
@@ -149,6 +150,7 @@ function rankRecommendation(eq: Equipment, age: number, repairCost: number, refr
 }
 
 export default function HvacRepairReplaceCalculator() {
+  useCalculatorUsed('hvac-repair-vs-replace');
   const [equipment, setEquipment] = useState<Equipment>('furnace');
   const [age, setAge] = useState(12);
   const [repairCost, setRepairCost] = useState(1200);

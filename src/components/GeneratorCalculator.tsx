@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -103,6 +104,7 @@ const SIZE_BTU_HOURS: Record<Sizing, number> = {
 };
 
 export default function GeneratorCalculator() {
+  useCalculatorUsed('generator');
   const [state, setState] = useState('FL');
   const [zip, setZip] = useState('');
   const [type, setType] = useState<Type>('standby_air');

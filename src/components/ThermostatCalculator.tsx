@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
@@ -39,6 +40,7 @@ function utilityRebate(state: string): number {
 }
 
 export default function ThermostatCalculator() {
+  useCalculatorUsed('smart-thermostat');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [model, setModel] = useState<Model>('ecobee_premium');

@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -144,6 +145,7 @@ const HEAT_PUMP_HYDRONIC: Record<Size, Band> = {
 };
 
 export default function BoilerCalculator() {
+  useCalculatorUsed('boiler');
   const [state, setState] = useState('MA');
   const [zip, setZip] = useState('');
   const [fuel, setFuel] = useState<Fuel>('natural_gas');

@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findClimate, stateEnergy, findHomeEnergyRebateStatus } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -100,6 +101,7 @@ function homesRebateEstimate(state: string, income: Income, savingsPct: number):
 }
 
 export default function InsulationCalculator() {
+  useCalculatorUsed('insulation');
   const [state, setState] = useState('MA');
   const [zip, setZip] = useState('');
   const [sqft, setSqft] = useState(1800);

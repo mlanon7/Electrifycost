@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateEnergy } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
@@ -14,6 +15,7 @@ const DCFC_LOSS = 1.05; // 5% DCFC loss
 const DCFC_RATE = 0.42; // US average public DCFC rate ($/kWh)
 
 export default function EvChargingCostCalculator() {
+  useCalculatorUsed('ev-charging-cost');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [vehicle, setVehicle] = useState<VehicleClass>('crossover');

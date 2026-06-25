@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -38,6 +39,7 @@ function add(a: Band, b: Band): Band {
 }
 
 export default function RoofCalculator() {
+  useCalculatorUsed('roof-replacement');
   const [state, setState] = useState('OH');
   const [zip, setZip] = useState('');
   const [roofSqft, setRoofSqft] = useState(2200);

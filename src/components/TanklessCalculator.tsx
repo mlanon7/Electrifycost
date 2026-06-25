@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -96,6 +97,7 @@ function annualOperatingCost(
 }
 
 export default function TanklessCalculator() {
+  useCalculatorUsed('tankless-water-heater');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [type, setType] = useState<Type>('gas_condensing');

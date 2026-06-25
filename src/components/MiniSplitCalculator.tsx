@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -50,6 +51,7 @@ const ELECTRICAL_ADDER: CostBand = { low: 400, mid: 800, high: 1500 };  // 240V 
 const PERMIT: CostBand = { low: 200, mid: 400, high: 700 };
 
 export default function MiniSplitCalculator() {
+  useCalculatorUsed('mini-split');
   const [state, setState] = useState('MA');
   const [zip, setZip] = useState('');
   const [zones, setZones] = useState<Zones>('2');

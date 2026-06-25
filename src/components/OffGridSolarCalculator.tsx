@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -18,6 +19,7 @@ const PROFILES: Record<Profile, { dailyKwh: number; pvKw: number; batteryKwh: nu
 function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
 
 export default function OffGridSolarCalculator() {
+  useCalculatorUsed('off-grid-solar');
   const [state, setState] = useState('MT');
   const [zip, setZip] = useState('');
   const [profile, setProfile] = useState<Profile>('cabin_full');

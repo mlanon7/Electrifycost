@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -67,6 +68,7 @@ const HEAT_PUMP_COMPARE: Record<Size, Band> = {
 };
 
 export default function GasFurnaceCalculator() {
+  useCalculatorUsed('gas-furnace');
   const [state, setState] = useState('OH');
   const [zip, setZip] = useState('');
   const [tier, setTier] = useState<Tier>('mid_95');

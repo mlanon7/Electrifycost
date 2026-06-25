@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -23,6 +24,7 @@ function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid *
 function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
 
 export default function SmartPanelCalculator() {
+  useCalculatorUsed('smart-panel');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [product, setProduct] = useState<Product>('span_drive');

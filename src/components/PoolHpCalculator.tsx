@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -30,6 +31,7 @@ function annualOpKwh(size: Size, climate: Climate): number {
 }
 
 export default function PoolHpCalculator() {
+  useCalculatorUsed('pool-heat-pump');
   const [state, setState] = useState('FL');
   const [zip, setZip] = useState('');
   const [size, setSize] = useState<Size>('110k');

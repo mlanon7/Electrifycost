@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -91,6 +92,7 @@ function annualResilienceValue(useCase: UseCase): number {
 }
 
 export default function BatteryCalculator() {
+  useCalculatorUsed('home-battery');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [kwh, setKwh] = useState(13.5);   // Powerwall-3 default

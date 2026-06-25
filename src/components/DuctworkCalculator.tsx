@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -42,6 +43,7 @@ const ACCESS_MULT: Record<Access, number> = { easy: 0.95, normal: 1.0, hard: 1.2
 const AEROSEAL: CostBand = { low: 1500, mid: 2200, high: 3200 };  // Aeroseal injection sealing addon
 
 export default function DuctworkCalculator() {
+  useCalculatorUsed('ductwork');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [sqft, setSqft] = useState(1800);

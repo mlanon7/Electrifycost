@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -23,6 +24,7 @@ const UTILITY_DISCOUNT: Record<Utility, number> = {
 };
 
 export default function EnergyAuditCalculator() {
+  useCalculatorUsed('home-energy-audit');
   const [state, setState] = useState('MA');
   const [zip, setZip] = useState('');
   const [tier, setTier] = useState<Tier>('standard');

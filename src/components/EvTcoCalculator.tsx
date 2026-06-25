@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, stateEnergy } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
@@ -121,6 +122,7 @@ function tco(
 }
 
 export default function EvTcoCalculator() {
+  useCalculatorUsed('ev-tco');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [category, setCategory] = useState<Category>('sedan');

@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import type { CalculatorResult, CostBand, PanelSize, IncomeBand, Timing, FuelType } from '@/lib/calc';
 import { runCalculator } from '@/lib/calc';
@@ -64,6 +65,7 @@ interface ModuleRun {
 }
 
 export default function WholeHomeCalculator() {
+  useCalculatorUsed('whole-home-electrification');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [panelSize, setPanelSize] = useState<PanelSize>('100A');

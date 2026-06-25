@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -33,6 +34,7 @@ function add(a: Band, b: Band): Band {
 }
 
 export default function HeatPumpDryerCalculator() {
+  useCalculatorUsed('heat-pump-dryer');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [model, setModel] = useState<Model>('ventless_fullsize');

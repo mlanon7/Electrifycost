@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -50,6 +51,7 @@ function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid +
 function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
 
 export default function AirSealingCalculator() {
+  useCalculatorUsed('air-sealing');
   const [state, setState] = useState('MA');
   const [zip, setZip] = useState('');
   const [sqft, setSqft] = useState(2000);

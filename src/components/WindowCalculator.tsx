@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -41,6 +42,7 @@ const INSTALL_MULT: Record<Install, number> = {
 };
 
 export default function WindowCalculator() {
+  useCalculatorUsed('window-replacement');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
   const [count, setCount] = useState(12);

@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor, findClimate, stateEnergy } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -104,6 +105,7 @@ function cddProxy(state: string): number {
 }
 
 export default function AcCalculator() {
+  useCalculatorUsed('ac-replacement');
   const [state, setState] = useState('TX');
   const [zip, setZip] = useState('');
   const [sqft, setSqft] = useState(1800);

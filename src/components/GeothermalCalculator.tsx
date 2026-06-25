@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
@@ -27,6 +28,7 @@ const DUCT_REUSE_BONUS: CostBand = { low: -1500, mid: -2500, high: -4000 };  // 
 const PERMIT_DESIGN: CostBand = { low: 800, mid: 1500, high: 2800 };          // engineering + drilling permit
 
 export default function GeothermalCalculator() {
+  useCalculatorUsed('geothermal');
   const [state, setState] = useState('NY');
   const [zip, setZip] = useState('');
   const [tonnage, setTonnage] = useState<Tonnage>('3');

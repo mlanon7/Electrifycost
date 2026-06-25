@@ -1,3 +1,4 @@
+import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip, findStateEnergy, solarProductionByState } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
@@ -17,6 +18,7 @@ function lookupAcAnnualPerKw(state: string): number {
 }
 
 export default function SolarPaybackCalculator() {
+  useCalculatorUsed('solar-payback');
   const [state, setState] = useState('TX');
   const [zip, setZip] = useState('');
   const [systemKw, setSystemKw] = useState(8);
