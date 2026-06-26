@@ -110,12 +110,10 @@ export default function ResultPanel({
                 </button>
               )}
               <a
-                href="https://github.com/electrifycost/electrifycost/issues/new"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:martin@electrifycost.com?subject=ElectrifyCost%20calculator%20issue"
                 className="text-xs text-brand-700 underline-offset-2 hover:underline"
               >
-                Report on GitHub ↗
+                Report this ↗
               </a>
             </div>
           </div>

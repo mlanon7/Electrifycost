@@ -77,7 +77,7 @@ const PERMIT: CostBand = { low: 250, mid: 450, high: 800 };
 // Energy to heat water = gallons × 8.34 lb/gal × ΔT °F × 1 BTU/lb-°F
 // 1 therm = 100,000 BTU; 1 kWh = 3,412 BTU.
 // Default: 64 gal/day × 8.34 × 70°F rise = 37,363 BTU/day = 0.374 therm/day delivered (before UEF losses).
-// Source: DOE water-heating methodology https://www.energy.gov/energysaver/estimating-costs-and-efficiency-storage-water-heaters
+// Source: DOE water-heating methodology https://www.energy.gov/energysaver/storage-water-heaters
 function annualOperatingCost(
   type: Type,
   gasPerTherm: number,

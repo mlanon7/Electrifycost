@@ -67,7 +67,7 @@
   },
   "SRC_ENERGYSTAR_PRODUCT_FINDER_HP": {
     "title": "ENERGY STAR Product Finder — Air Source Heat Pumps",
-    "url": "https://www.energystar.gov/productfinder/product/certified-air-source-heat-pumps/results",
+    "url": "https://www.energystar.gov/products/air_source_heat_pumps",
     "publisher": "ENERGY STAR",
     "category": "product_list",
     "last_reviewed": "2026-05-01",
@@ -97,7 +97,7 @@
   },
   "SRC_DOE_HOMES_FAQ": {
     "title": "DOE Home Energy Rebates Frequently Asked Questions",
-    "url": "https://www.energy.gov/scep/home-energy-rebates-frequently-asked-questions",
+    "url": "https://www.energy.gov/scep",
     "publisher": "U.S. Department of Energy",
     "category": "rebate_program",
     "last_reviewed": "2026-05-01"
@@ -126,7 +126,7 @@
   },
   "SRC_DOE_BTO_HP_ROADMAP": {
     "title": "DOE Building Technologies Office — Residential Heat Pump Roadmap",
-    "url": "https://www.energy.gov/eere/buildings/residential-heat-pumps",
+    "url": "https://www.energy.gov/energysaver/heat-pump-systems",
     "publisher": "U.S. Department of Energy",
     "category": "research",
     "last_reviewed": "2026-05-01"
@@ -234,7 +234,7 @@
   },
   "SRC_AFDC_30C_TRACT_TOOL": {
     "title": "AFDC 30C Eligible Census Tract Lookup Tool",
-    "url": "https://afdc.energy.gov/laws/30c-tract-lookup",
+    "url": "https://afdc.energy.gov/laws/fed_summary",
     "publisher": "Alternative Fuels Data Center",
     "category": "tax_credit",
     "last_reviewed": "2026-05-01",
@@ -258,7 +258,7 @@
   },
   "SRC_NEEP_GUIDE": {
     "title": "NEEP Guide — Buying a Cold-Climate Air-Source Heat Pump",
-    "url": "https://neep.org/heating-electrification/buying-cold-climate-air-source-heat-pumps",
+    "url": "https://neep.org/heating-electrification",
     "publisher": "Northeast Energy Efficiency Partnerships",
     "category": "guide",
     "last_reviewed": "2026-05-01"
@@ -281,14 +281,14 @@
   },
   "SRC_RMI_INDUCTION": {
     "title": "RMI — Cooking with Gas vs. Induction",
-    "url": "https://rmi.org/insight/health-effects-from-gas-stove-pollution/",
+    "url": "https://rmi.org/insight/gas-stove/",
     "publisher": "Rocky Mountain Institute",
     "category": "research",
     "last_reviewed": "2026-05-01"
   },
   "SRC_ACEEE_HP_GUIDE": {
     "title": "ACEEE Consumer Guide to Heat Pump Tax Credits",
-    "url": "https://www.aceee.org/topic/residential-energy-efficiency",
+    "url": "https://www.aceee.org/topic/energy-efficiency-strategies-and-upgrades",
     "publisher": "American Council for an Energy-Efficient Economy",
     "category": "guide",
     "last_reviewed": "2026-05-01"
@@ -310,7 +310,7 @@
   },
   "SRC_PNNL_RES_PANEL": {
     "title": "PNNL — Residential Service Panel Sizing & Electrification Readiness",
-    "url": "https://www.pnnl.gov/projects/grid-modernization-laboratory-consortium",
+    "url": "https://www.pnnl.gov/electric-grid-modernization",
     "publisher": "Pacific Northwest National Laboratory",
     "category": "research",
     "last_reviewed": "2026-05-01"
@@ -425,7 +425,7 @@
   },
   "SRC_CONSUMER_REPORTS_HP": {
     "title": "Consumer Reports — Heat Pump Buying Guide",
-    "url": "https://www.consumerreports.org/heat-pumps/heat-pump-buying-guide-a8076716077/",
+    "url": "https://www.consumerreports.org/appliances/heat-pumps/",
     "publisher": "Consumer Reports",
     "category": "guide",
     "last_reviewed": "2026-05-01"
@@ -502,7 +502,7 @@
   },
   "ENERGY_STAR_Windows": {
     "title": "ENERGY STAR Residential Windows",
-    "url": "https://www.energystar.gov/products/residential_windows_doors_skylights",
+    "url": "https://www.energystar.gov/products/res_windows_doors_skylights",
     "publisher": "EPA",
     "category": "guide",
     "last_reviewed": "2026-05-12"
@@ -714,7 +714,7 @@
   },
   "Consumer_Reports_2024": {
     "title": "Consumer Reports 2024 EV Reliability & Maintenance",
-    "url": "https://www.consumerreports.org/cars/types/hybrids-evs/",
+    "url": "https://www.consumerreports.org/cars/hybrids-evs/",
     "publisher": "Consumer Reports",
     "category": "research",
     "last_reviewed": "2026-05-12"
@@ -771,7 +771,7 @@
   },
   "CPUC_NEM3": {
     "title": "CPUC NEM 3.0 Successor Tariff",
-    "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering/nem-2.0-to-nem-3.0",
+    "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/nem-revisit",
     "publisher": "California Public Utilities Commission",
     "category": "regulation",
     "last_reviewed": "2026-05-12"
@@ -925,8 +925,8 @@
   },
   "manufacturer_msrp": {
     "title": "Manufacturer MSRP (Generac, Kohler, Rinnai, Navien, Rheem, Bosch, Tesla, Enphase, Franklin, Mitsubishi, Daikin, Fujitsu, LG, Pioneer)",
-    "url": "https://example.com/manufacturer-msrp",
-    "publisher": "Various manufacturers",
+    "url": "https://electrifycost.com/methodology/",
+    "publisher": "Various manufacturers (aggregated MSRP; see methodology)",
     "category": "market_data",
     "last_reviewed": "2026-05-12"
   },
@@ -974,7 +974,7 @@
   },
   "municipal_avg": {
     "title": "Municipal permit + inspection averages",
-    "url": "https://www.energy.gov/eere/buildings/permitting",
+    "url": "https://www.energy.gov/cmei/buildings",
     "publisher": "DOE BTO + city permit office surveys",
     "category": "market_data",
     "last_reviewed": "2026-05-12"
@@ -1009,7 +1009,7 @@
   },
   "LG_dealer_avg": {
     "title": "LG Multi V/F dealer install averages",
-    "url": "https://www.lg.com/us/business/built-in-air-conditioning",
+    "url": "https://solutions.lg.com/us/air-conditioning",
     "publisher": "LG Electronics",
     "category": "market_data",
     "last_reviewed": "2026-05-12"
@@ -1030,7 +1030,7 @@
   },
   "DOE_furnace_2024": {
     "title": "DOE 2023 Final Rule on Residential Gas Furnace Efficiency (95% AFUE)",
-    "url": "https://www.energy.gov/eere/buildings/articles/biden-harris-administration-finalizes-cost-saving-efficiency-standards-gas",
+    "url": "https://www.energy.gov/cmei/buildings/appliance-and-equipment-standards-program",
     "publisher": "U.S. Department of Energy",
     "category": "code",
     "last_reviewed": "2026-05-01"
@@ -1086,14 +1086,14 @@
   },
   "EPA_R22_2020": {
     "title": "EPA Phaseout of Class II Ozone-Depleting Substances (R-22)",
-    "url": "https://www.epa.gov/section608/phaseout-class-ii-ods",
+    "url": "https://www.epa.gov/section608",
     "publisher": "U.S. Environmental Protection Agency",
     "category": "code",
     "last_reviewed": "2026-05-01"
   },
   "GE_Profile_2024": {
     "title": "GE Profile Heat Pump Clothes Dryer product specifications",
-    "url": "https://www.geappliances.com/appliance/heat-pump-dryers",
+    "url": "https://www.geappliances.com/ge-appliances/laundry/dryers/",
     "publisher": "GE Appliances",
     "category": "product_list",
     "last_reviewed": "2026-05-01"
@@ -1114,7 +1114,7 @@
   },
   "DOE_appliance_2024": {
     "title": "DOE Appliance Standards Clothes Dryers",
-    "url": "https://www.energy.gov/eere/buildings/clothes-dryers",
+    "url": "https://www.energy.gov/energysaver/laundry",
     "publisher": "U.S. Department of Energy",
     "category": "code",
     "last_reviewed": "2026-05-01"
@@ -1128,7 +1128,7 @@
   },
   "BPI_2024": {
     "title": "Building Performance Institute (BPI) Air Sealing Standards",
-    "url": "https://www.bpi.org/standards",
+    "url": "https://www.bpi.org/resources/standards/",
     "publisher": "Building Performance Institute",
     "category": "code",
     "last_reviewed": "2026-05-01"
@@ -1149,7 +1149,7 @@
   },
   "IECC_2021": {
     "title": "2021 International Energy Conservation Code (IECC) Residential",
-    "url": "https://www.energycodes.gov/sites/default/files/2021-08/2021_IECC_Residential.pdf",
+    "url": "https://www.energycodes.gov/technical-assistance/publications",
     "publisher": "International Code Council / DOE",
     "category": "code",
     "last_reviewed": "2026-05-01"
@@ -1268,7 +1268,7 @@
   },
   "EPA_woodstove_2024": {
     "title": "EPA NSPS Residential Wood Heaters certified list",
-    "url": "https://www.epa.gov/compliance/list-epa-certified-wood-heaters",
+    "url": "https://www.epa.gov/compliance/epa-certified-wood-heater-database",
     "publisher": "U.S. Environmental Protection Agency",
     "category": "code",
     "last_reviewed": "2026-05-01"
