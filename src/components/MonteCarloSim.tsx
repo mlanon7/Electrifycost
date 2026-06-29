@@ -171,8 +171,8 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
         </span>
         <span className="mc-head-text">
           <span className="mc-head-eyebrow">Cost simulator</span>
-          <span className="mc-head-title">Monte Carlo simulation</span>
-          <span className="mc-head-sub">See the full range of likely installed costs — with the odds</span>
+          <span className="mc-head-title">Your likely cost range</span>
+          <span className="mc-head-sub">The most-likely cost — plus how high and low it realistically goes</span>
         </span>
       </div>
 
@@ -204,14 +204,14 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
               {' '}extremes at once.
             </>
           ) : (
-            <>Run a Monte Carlo of 10,000 possible outcomes to see the full distribution and the single most-likely installed cost.</>
+            <>See the single most-likely cost and the realistic range it falls in — not just a low/high band.</>
           )}
         </p>
 
         <div className="mc-chart">
           {dist
             ? <div dangerouslySetInnerHTML={{ __html: chartHtml }} />
-            : <div className="mc-chart-empty"><span>Press <b>Run simulation</b> to roll 10,000 scenarios and watch the odds take shape.</span></div>}
+            : <div className="mc-chart-empty"><span>Press <b>Show the range</b> to see the most-likely cost and how the odds spread.</span></div>}
         </div>
 
         <p className="mc-refnote">
@@ -220,7 +220,7 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
 
         <div className="mc-runrow">
           <button type="button" className="mc-run" onClick={run} disabled={running}>
-            {running ? 'Running…' : hasRun ? 'Run again' : 'Run simulation'}
+            {running ? 'Running…' : hasRun ? 'Run again' : 'Show the range'}
           </button>
           <span className="mc-counter">{counterText}</span>
         </div>
@@ -254,8 +254,9 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
         )}
 
         <p className="mc-method">
-          Each cost line is drawn from a triangular distribution and correlated by a shared market factor (~0.5);
-          the most-likely value and range emerge from the simulation, not the band. A planning simulation, not a quote.
+          Method: each cost line is drawn from a triangular distribution and correlated by a shared market factor (~0.5),
+          then sampled across 10,000 outcomes (a Monte Carlo simulation); the most-likely value and range emerge from the
+          simulation, not the band. A planning simulation, not a quote.
         </p>
       </div>
     </section>
