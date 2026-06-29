@@ -8,6 +8,16 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
+### Shipped (2026-06-27) — product audit: build the decision on-ramp
+An honest product/UX/growth audit (`audit/PRODUCT_AUDIT_2026-06-27.md`, 6 agents incl. an adversarial lens) found the site's single necessary shortcoming: it only answered "what will THIS install cost" — the question homeowners ask *last* — with no on-ramp for the much larger undecided audience. That gap, not domain age, is the root of the discovery problem. Built the missing front door, fully inside the no-funnel stance:
+- **`/guides/should-i-electrify/`** — orientation hub routing undecided visitors to the right tool by situation, the money-saving order, and the 2026 incentive reality.
+- **`/guides/is-a-heat-pump-worth-it/`** — decision-framed guide targeting the high-demand "is it worth it" query (operating-cost math by fuel, premium after rebates, climate limits, honest worth-it/closer-call cases); ends in the calculator.
+- **`/guides/hiring-a-contractor/`** — how to vet a contractor & compare bids; linked from every flagship result panel.
+- Homepage hero on-ramp ("Not sure where to start?"), a "Start here" section on the guides hub, and internal links from the heat-pump/whole-home hubs. All citations verified live (0 dead).
+- **Reframed the inline cost simulator for homeowners** — leads with "Your likely cost range" + the single most-likely number; the "Monte Carlo / 10,000 scenarios" detail moved to a method footnote (rigor kept, jargon demoted). No math change.
+- **Deliberately not done:** email capture — retention is the wrong problem before acquisition works; "no email, ever" stays.
+- Site totals: 698 → **701 built pages**, 697 → **700 sitemap URLs**.
+
 ### Shipped (2026-06-25) — full-audit remediation (Claude audit, waves 1-4)
 A second, independent multi-agent audit (`audit/FULL_AUDIT_CLAUDE_2026-06-25.md`, 18 agents, every P0/P1 adversarially re-verified) confirmed the site ship-clean (no P0 defects) and surfaced one P1 plus governance/polish P2s. Fixed:
 - **P1 — panel-FAQ single-source-of-truth.** `electrical-panel-upgrade-cost-[state]` FAQ hardcoded `$1800/$4500 × labor` and disagreed with the on-page calculator; it now computes the default range from the shared engine (`runCalculator`). FAQ == calculator (CA $1,850-$5,925, TX $1,550-$5,075).
