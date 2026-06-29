@@ -19,7 +19,7 @@ export const GUIDE_META: Record<string, GuideMeta> = {
     slug: 'heat-pumps',
     title: 'Heat pumps',
     calculatorHref: '/heat-pump-cost-calculator/',
-    siblings: ['mini-splits', 'geothermal', 'gas-furnaces'],
+    siblings: ['is-a-heat-pump-worth-it', 'mini-splits', 'gas-furnaces'],
   },
   'mini-splits': {
     slug: 'mini-splits',
@@ -244,6 +244,25 @@ export const GUIDE_META: Record<string, GuideMeta> = {
     slug: 'whole-home-electrification',
     title: 'Whole-home electrification',
     calculatorHref: '/whole-home-electrification-cost-calculator/',
-    siblings: ['heat-pumps', 'electrical-panels', 'energy-audits'],
+    siblings: ['should-i-electrify', 'heat-pumps', 'hiring-a-contractor'],
+  },
+  // Decision / start-here guides (top-of-funnel: "should I" and "is it worth it")
+  'should-i-electrify': {
+    slug: 'should-i-electrify',
+    title: 'Should I electrify?',
+    calculatorHref: '/whole-home-electrification-cost-calculator/',
+    siblings: ['is-a-heat-pump-worth-it', 'whole-home-electrification', 'energy-audits'],
+  },
+  'is-a-heat-pump-worth-it': {
+    slug: 'is-a-heat-pump-worth-it',
+    title: 'Is a heat pump worth it?',
+    calculatorHref: '/heat-pump-cost-calculator/',
+    siblings: ['heat-pumps', 'gas-furnaces', 'hvac-repair-replace'],
+  },
+  'hiring-a-contractor': {
+    slug: 'hiring-a-contractor',
+    title: 'Hiring a contractor',
+    calculatorHref: '/heat-pump-cost-calculator/',
+    siblings: ['is-a-heat-pump-worth-it', 'heat-pumps', 'whole-home-electrification'],
   },
 };

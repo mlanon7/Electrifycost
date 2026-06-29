@@ -406,7 +406,14 @@ const schemaJsonLd = [
             <span class="text-ink-700"><strong class="text-ink-900">Appliances</strong> — induction stove, heat-pump dryer, more</span>
           </li>
         </ul>
-        <div class="mt-12 flex flex-wrap gap-2">
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/guides/should-i-electrify/" class="btn-primary">Not sure where to start? Start here <span aria-hidden="true">→</span></a>
+          <a href="#calculators" class="btn-ghost border border-ink-200">Jump to the calculators</a>
+        </div>
+        <p class="mt-3 text-xs text-ink-600">
+          Deciding, not just pricing? <a href="/guides/is-a-heat-pump-worth-it/" class="text-brand-700 hover:underline">Is a heat pump worth it?</a> · <a href="/guides/hiring-a-contractor/" class="text-brand-700 hover:underline">How to vet a contractor</a>
+        </p>
+        <div class="mt-8 flex flex-wrap gap-2">
           {trustChips.map(c => (
             <a href={c.href} class="rounded-full border border-ink-200 bg-white/70 px-3 py-1 text-xs text-ink-700 no-underline shadow-sm hover:bg-ink-50">{c.label}</a>
           ))}

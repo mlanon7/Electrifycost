@@ -2,6 +2,18 @@
 import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
 
+const decisionGuides = [
+  { href: '/guides/should-i-electrify/', title: 'Should you electrify your home?',
+    summary: 'Not sure where to start? Whether to do it, where to begin for your situation, the order that saves the most, and the 2026 incentive reality &mdash; with a calculator for every step.',
+    calc: '/whole-home-electrification-cost-calculator/', calcLabel: 'Whole-home calculator', accent: 'bg-brand-100 text-brand-700' },
+  { href: '/guides/is-a-heat-pump-worth-it/', title: 'Is a heat pump worth it?',
+    summary: 'The honest answer for your home: operating-cost math vs gas/oil/propane/resistance, the upfront premium after rebates, climate limits, and when it clearly does (and does not) pay off.',
+    calc: '/heat-pump-cost-calculator/', calcLabel: 'Heat pump calculator', accent: 'bg-brand-100 text-brand-700' },
+  { href: '/guides/hiring-a-contractor/', title: 'How to vet a contractor &amp; compare bids',
+    summary: 'Turn a planning range into real, comparable bids: the license/insurance/permit non-negotiables, the questions that reveal a good contractor, how to read quotes line by line, and the red flags.',
+    calc: '/heat-pump-cost-calculator/', calcLabel: 'Get a planning range', accent: 'bg-amber-100 text-amber-700' },
+];
+
 const guides = [
   { href: '/guides/whole-home-electrification/', title: 'Whole-home electrification',
     summary: 'The 5–10 year sequence: insulation, then heat pump, then EV charger, then HPWH, then induction. Panel reality, incentive stacking, combined cost.',
@@ -95,6 +107,29 @@ const schemaJsonLd = {
     <p class="mt-3 max-w-prose text-base text-ink-700">
       One long-form, source-backed guide per topic. Each covers what the equipment is, how it works, install requirements, lifespan and maintenance, cost expectations, and the practical tips you wish you&rsquo;d known before signing a contractor quote.
     </p>
+  </section>
+
+  <section class="container-wide pb-8">
+    <h2 class="text-xl font-semibold text-ink-900">Start here</h2>
+    <p class="mt-1 text-sm text-ink-700">New to this, or not sure it&rsquo;s worth it yet? Start with the decision, not the calculator.</p>
+    <div class="mt-4 grid gap-4 sm:grid-cols-3">
+      {decisionGuides.map(g => (
+        <article class="card border-brand-200 bg-brand-50/40 p-5">
+          <div class={`mb-2 inline-flex items-center gap-2 rounded-full px-2 py-0.5 text-xs ${g.accent}`}>
+            <span>Start here</span>
+          </div>
+          <h3 class="mt-1 text-lg font-semibold text-ink-900">
+            <a href={g.href} class="no-underline hover:underline" set:html={g.title}></a>
+          </h3>
+          <p class="mt-2 text-sm text-ink-700" set:html={g.summary}></p>
+          <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+            <a href={g.href} class="font-medium text-brand-700">Read the guide <span aria-hidden="true">→</span></a>
+            <span class="text-ink-400">·</span>
+            <a href={g.calc} class="text-ink-700">{g.calcLabel}</a>
+          </div>
+        </article>
+      ))}
+    </div>
   </section>
 
   <section class="container-wide pb-8">

@@ -1,0 +1,164 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
+
+const lastReviewed = '2026-06-27';
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to Vet an HVAC or Electrical Contractor and Compare Bids (2026)',
+  description: 'A homeowner-to-contractor playbook: the license/insurance/permit non-negotiables, the questions that separate a good HVAC or electrical bid from a bad one, how to read and compare quotes line by line, what a fair markup looks like, and the red flags that should end a conversation.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-06-27',
+  dateModified: lastReviewed,
+};
+---
+<Layout
+  title="How to Vet a Contractor & Compare Bids (HVAC + Electrical) 2026"
+  description="Vet an HVAC or electrical contractor and compare bids the right way: license/insurance/permit checks, the questions to ask, how to read quotes line by line, and red flags."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/electrical-panel-hero-photo.jpg"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Hiring a contractor', href: '/guides/hiring-a-contractor/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · After the estimate</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">How to vet a contractor and compare bids</h1>
+    <p class="mt-3 text-base text-ink-700">
+      A planning range tells you what a job <em>should</em> cost. The next decision — who does it, and which of three quotes to trust — is where most homeowners actually lose money or get a bad install. This is the part the calculator can't do for you, so here is the playbook: the non-negotiables to verify, the questions that separate a real bid from a sales pitch, and how to compare quotes line by line. It applies to heat pumps, panel upgrades, EV chargers, water heaters, and most home-electrification work. 10-minute read.
+    </p>
+    <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer. Reading a scope of work and a bid is squarely within engineering practice; defer to your licensed HVAC/electrical contractor on the trade-specific design.</p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <div class="guide-toc not-prose">
+      <a href="#bid-not-brand">1. The bid, not the brand</a>
+      <a href="#before-you-call">2. Before you call</a>
+      <a href="#non-negotiables">3. The three non-negotiables</a>
+      <a href="#questions">4. Questions that reveal a good contractor</a>
+      <a href="#compare-bids">5. How to read and compare bids</a>
+      <a href="#fair-markup">6. What a fair price looks like</a>
+      <a href="#red-flags">7. Red flags that should end the conversation</a>
+      <a href="#after">8. After you sign and after the install</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator <span aria-hidden="true">→</span></a>
+    </div>
+
+    <section>
+      <h2 id="bid-not-brand">1. The bid, not the brand</h2>
+      <p>
+        Homeowners shop equipment brands. The install quality matters more than the brand on the box: a well-sized, well-commissioned mid-tier system beats a premium unit installed badly, every time. So the goal of vetting isn't to find the cheapest number or the biggest name — it's to find the contractor whose <strong>scope of work is complete and correct</strong> and whose price reflects it. Get at least <strong>three written bids</strong>; one quote tells you nothing about whether it's fair.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="before-you-call">2. Before you call</h2>
+      <p>
+        Walk in with your own numbers and the right scope, so you're comparing bids on the same job rather than being sold three different ones:
+      </p>
+      <ul>
+        <li><strong>Run a planning estimate first</strong> (the relevant calculator on this site) so you know roughly what the work should cost in your state before anyone quotes you. A bid 2–3× the planning range deserves a hard question.</li>
+        <li><strong>Insist on a load calculation, not a rule of thumb.</strong> For HVAC, that's an <strong>ACCA Manual J</strong> for sizing (and Manual S for equipment selection, Manual D for ducts). For a panel, it's an <strong>NEC 220.83</strong> load calculation. Oversizing is the most common — and most expensive — mistake, and "we'll match what you have" is not a calculation.</li>
+        <li><strong>Write down the scope yourself</strong> in one paragraph (e.g., "replace 3-ton AC + gas furnace with a cold-climate heat pump, keep furnace as dual-fuel backup, include any panel work"). Hand the same paragraph to every bidder.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="non-negotiables">3. The three non-negotiables (verify, don't take their word)</h2>
+      <ul>
+        <li><strong>License.</strong> Confirm an active contractor's license in your state and trade — most states have a free online license lookup. An unlicensed install can void equipment warranties and home-insurance claims.</li>
+        <li><strong>Insurance.</strong> Ask for a certificate of <strong>general liability and workers' compensation</strong> insurance. If an uninsured worker is hurt on your property, the liability can land on you.</li>
+        <li><strong>Permit.</strong> The contractor should pull a permit and schedule the inspection — and it should be a line on the bid. A contractor who offers to skip the permit "to save you money" is offering to skip the one independent check on their work. An unpermitted install is the most common red flag during a home sale and can cost far more to remediate later.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="questions">4. Questions that reveal a good contractor</h2>
+      <p>For HVAC:</p>
+      <ul>
+        <li>"Will you do a Manual J load calculation, and can I have a copy?" (A good contractor says yes without flinching.)</li>
+        <li>"What's the cold-climate rating — the HSPF2 and the capacity at my design temperature?" (Tests whether they spec for your climate or just grab a unit.)</li>
+        <li>"Are you recommending dual-fuel or a backup, and why?" (Reveals whether they've thought about your coldest days.)</li>
+        <li>"Who handles the refrigerant transition (R-32 / R-454B) and do your techs have the A2L training?"</li>
+      </ul>
+      <p>For electrical:</p>
+      <ul>
+        <li>"Did you run a 220.83 load calc, and does my existing service actually need upgrading — or would load management work?" (A panel upgrade you don't need is a common upsell.)</li>
+        <li>"Are the service-entrance conductors copper or aluminum, and is the meter base included?"</li>
+        <li>"Who coordinates with the utility for the disconnect/reconnect, and is that fee in the bid?"</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="compare-bids">5. How to read and compare bids</h2>
+      <p>
+        A real bid is <strong>itemized</strong>. Beware the single-line "$X for a heat pump" quote — you have no way to compare it. A complete bid breaks out:
+      </p>
+      <ul>
+        <li>Equipment (make, model, size/tonnage, efficiency rating)</li>
+        <li>Labor and any subcontracted electrical work</li>
+        <li>Ancillaries: line sets, condensate handling, ductwork repair, pads/mounts, electrical circuit or panel work</li>
+        <li>Permit + inspection fee, and utility coordination fee where applicable</li>
+        <li>Removal/disposal of old equipment, and any drywall/finish repair</li>
+        <li>Warranty terms — both the manufacturer's parts warranty and the contractor's labor warranty</li>
+      </ul>
+      <p>
+        When three bids differ a lot, the difference is almost always in the <strong>scope, not the markup</strong> — a low bid that omitted the panel work or the ductwork isn't cheaper, it's incomplete. Normalize the bids to the same scope before you compare the totals.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="fair-markup">6. What a fair price looks like</h2>
+      <p>
+        It is normal and legitimate for an installed price to be well above the equipment's retail box price — you're paying for sizing, labor, code compliance, permits, warranty, and a company that will still exist when something needs service. A useful sanity check is the planning range from the calculator: a bid <strong>within or modestly above</strong> the low/mid/high band for your state is reasonable; a bid far below it usually means missing scope (or an unlicensed/uninsured operator), and a bid far above it deserves an itemized explanation. The planning range is a guardrail, not a target — your home's specifics legitimately move the number.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="red-flags">7. Red flags that should end the conversation</h2>
+      <ul>
+        <li>"We can skip the permit to save you money."</li>
+        <li>Pressure tactics and "today only" pricing on a multi-thousand-dollar install.</li>
+        <li>A large deposit demanded up front (a deposit for special-order equipment is normal; paying most of the job before work starts is not).</li>
+        <li>No written, itemized scope — or refusal to provide a load calculation.</li>
+        <li>Cash-only, no license number on the contract, or no proof of insurance.</li>
+        <li>"You definitely need a panel upgrade" with no load calculation to back it up.</li>
+        <li>Sizing by rule of thumb ("a ton per 500 square feet") instead of a Manual J.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="after">8. After you sign and after the install</h2>
+      <ul>
+        <li><strong>Get it in writing:</strong> the itemized scope, the equipment models, the price, the timeline, the warranty, and that the permit is included.</li>
+        <li><strong>Don't pay in full until the inspection passes.</strong> Hold a final payment until the permit is closed out by the local inspector.</li>
+        <li><strong>Commissioning matters:</strong> for HVAC, ask that refrigerant charge and airflow be measured and recorded, not eyeballed — an undercharged or airflow-starved system quietly loses much of the efficiency you paid for.</li>
+        <li><strong>Register the equipment</strong> for the full manufacturer warranty, and keep the permit and invoice with your home records — the next buyer's inspector will ask.</li>
+      </ul>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Get your planning range first</p>
+        <p class="mt-1 text-sm text-ink-700">Walk into the bidding process knowing what the job should cost in your state — a low/mid/high installed range with rebates applied, plus a contractor question checklist on every result.</p>
+        <a href="/heat-pump-cost-calculator/" class="btn-primary mt-3 inline-block">Open a calculator <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="guide-sources">
+      <h2 id="sources">Sources</h2>
+      <ul>
+        <li><a href="https://www.energystar.gov/saveathome" target="_blank" rel="noopener">ENERGY STAR — Save at Home (HVAC quality installation &amp; home upgrades)</a></li>
+        <li><a href="https://www.acca.org/standards/technical-manuals" target="_blank" rel="noopener">ACCA — Manual J / S / D residential design standards</a></li>
+        <li><a href="https://www.energy.gov/energysaver/energy-saver" target="_blank" rel="noopener">DOE Energy Saver — home efficiency &amp; equipment guidance</a></li>
+        <li><a href="/methodology/">ElectrifyCost methodology</a> (how the planning ranges are built)</li>
+      </ul>
+    </section>
+  </article>
+
+  <RelatedGuides slug="hiring-a-contractor" />
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

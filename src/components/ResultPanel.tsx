@@ -437,9 +437,14 @@ export default function ResultPanel({
             <span className="text-xs text-ink-600">{showChecklist ? 'Hide' : 'Show'}</span>
           </button>
           {showChecklist && (
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
-              {checklist.items.map((q, i) => <li key={i}>{q}</li>)}
-            </ul>
+            <>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
+                {checklist.items.map((q, i) => <li key={i}>{q}</li>)}
+              </ul>
+              <p className="mt-3 text-xs text-ink-700">
+                Next step: <a href="/guides/hiring-a-contractor/" className="font-medium text-brand-700 hover:underline">how to vet a contractor &amp; compare bids</a> <span aria-hidden="true">→</span>
+              </p>
+            </>
           )}
         </div>
       )}

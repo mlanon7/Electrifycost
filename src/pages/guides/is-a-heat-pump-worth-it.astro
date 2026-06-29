@@ -1,0 +1,169 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
+
+const lastReviewed = '2026-06-27';
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Is a Heat Pump Worth It? An Honest 2026 Decision Guide',
+  description: 'A plain-English decision guide to whether a heat pump is worth it for your home in 2026: the operating-cost math vs gas, oil, propane, and electric resistance, the upfront premium after rebates, climate limits, and the situations where it clearly does (and does not) pay off.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-06-27',
+  dateModified: lastReviewed,
+};
+---
+<Layout
+  title="Is a Heat Pump Worth It in 2026? An Honest Decision Guide"
+  description="Decide whether a heat pump is worth it for your home: operating cost vs gas/oil/propane/resistance, upfront premium after rebates, climate limits, and when it pays off."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/heat-pump-hero-photo.jpg"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Is a heat pump worth it?', href: '/guides/is-a-heat-pump-worth-it/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Should you electrify?</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Is a heat pump worth it?</h1>
+    <p class="mt-3 text-base text-ink-700">
+      An honest answer to the question most homeowners actually have before they start pricing anything: not "what does a heat pump cost" but "is this worth doing for <em>my</em> house?" The real answer depends on four things — what you heat with now, what electricity and that fuel cost where you live, whether you also need air conditioning, and your climate. This guide walks each one, then points you at the calculator to run your own numbers. 9-minute read.
+    </p>
+    <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer (not an HVAC contractor); this is planning guidance, not a Manual J load calculation.</p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <div class="guide-toc not-prose">
+      <a href="#the-short-answer">1. The short answer</a>
+      <a href="#operating-cost">2. The operating-cost math</a>
+      <a href="#upfront-and-rebates">3. Upfront cost &amp; rebates in 2026</a>
+      <a href="#does-it-work-in-my-climate">4. Does it work in my climate?</a>
+      <a href="#clearly-worth-it">5. When it's clearly worth it</a>
+      <a href="#closer-call">6. When it's a closer call</a>
+      <a href="#pressure-test">7. How to pressure-test it for your home</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator <span aria-hidden="true">→</span></a>
+    </div>
+
+    <section>
+      <h2 id="the-short-answer">1. The short answer</h2>
+      <p>
+        For most U.S. homeowners who are <strong>already going to replace heating or cooling equipment soon</strong>, a heat pump is worth it — because one machine replaces both your furnace/boiler and your air conditioner, runs at 250–350% efficiency, and qualifies for state and utility rebates that a gas furnace does not. It is most clearly worth it if you currently heat with <strong>electric resistance, heating oil, or propane</strong>, or if your AC is already due for replacement.
+      </p>
+      <p>
+        It is a closer call — worth running the numbers carefully — if you have <strong>very cheap natural gas, expensive electricity, a furnace that is only a few years old, or a very cold climate with no plan for backup heat</strong>. It is rarely "worth it" purely as an early replacement of a healthy, recently installed gas furnace; the savings usually don't cover throwing away good equipment.
+      </p>
+      <p>
+        The honest framing: a heat pump is a <em>good default</em> for your next HVAC purchase in 2026, not an emergency upgrade. The rest of this guide is the math behind that sentence.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="operating-cost">2. The operating-cost math (the part that actually decides it)</h2>
+      <p>
+        A heat pump doesn't make heat — it moves it. A good cold-climate model delivers roughly 2.5–3.5 units of heat per unit of electricity (a seasonal COP of 2.5–3.5), where electric resistance delivers exactly 1.0 and a 95% gas furnace delivers 0.95 per unit of fuel energy (<a href="https://www.energy.gov/energysaver/heat-pump-systems" target="_blank" rel="noopener">DOE Energy Saver</a>). Whether that efficiency translates into lower bills depends entirely on what you heat with now and your local prices:
+      </p>
+      <ul>
+        <li><strong>Replacing electric resistance (baseboard, furnace, or an old strip-heat system):</strong> almost always a large win. A heat pump uses roughly one-third the electricity for the same heat. This is the single most reliable "worth it."</li>
+        <li><strong>Replacing heating oil or propane:</strong> usually a clear win. Oil and propane are expensive per delivered BTU and volatile; a heat pump on average residential electricity typically cuts heating cost meaningfully. Check current prices for your region in the <a href="https://www.eia.gov/dnav/pet/pet_pri_wfr_a_EPD2F_PRS_dpgal_w.htm" target="_blank" rel="noopener">EIA heating-fuel data</a>.</li>
+        <li><strong>Replacing natural gas:</strong> the genuinely variable case. In states with cheap gas and expensive electricity (parts of the Midwest), a heat pump can be roughly break-even or slightly more expensive to <em>run</em> in the coldest months — though it still wins overall because it replaces the AC too. In states with moderate electricity and average gas, it's typically a modest operating-cost win.</li>
+      </ul>
+      <p>
+        The point: "is a heat pump worth it" has no universal answer because <strong>your fuel and your local rates are the deciding variables</strong>, not the technology. That's exactly what the calculator solves — it pulls your state's retail electricity rate and the price of your current fuel and computes the monthly bill change, not a national average.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="upfront-and-rebates">3. Upfront cost &amp; rebates in 2026</h2>
+      <p>
+        A typical 3-ton ducted heat pump installs for roughly <strong>$7,500–$22,000</strong> depending on your state, home, and whether the install needs ductwork or an electrical-panel upgrade; mini-splits range $3,500–$16,000. The premium over a like-for-like gas furnace + AC pairing is usually <strong>$2,000–$3,000</strong> — and that premium is what the rebates are there to offset.
+      </p>
+      <p>
+        Two things changed for 2026 that you should know before you assume a number from an older article:
+      </p>
+      <ul>
+        <li><strong>The federal 25C tax credit (up to $2,000 for a qualifying heat pump) expired on 2025-12-31</strong> under the One Big Beautiful Bill Act. It no longer applies to equipment placed in service in 2026. Don't budget for it.</li>
+        <li><strong>State and utility rebates remain the real lever</strong> and are often larger than the old federal credit ever was — Mass Save up to $8,500 (Massachusetts), NYSERDA Clean Heat (New York), plus utility programs in many states, and DOE Home Energy Rebates (income-qualified) where your state has launched them. These are applied automatically in the calculator and listed on the <a href="/rebates/">rebates page</a>.</li>
+      </ul>
+      <p>
+        So the honest 2026 math is: a modest upfront premium over gas+AC, partly or fully erased by state/utility rebates, against an operating cost that depends on Section 2. The federal piece is smaller than it was a year ago, but the state piece is doing the heavy lifting now.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="does-it-work-in-my-climate">4. Does it work in my climate?</h2>
+      <p>
+        The "heat pumps don't work when it's cold" objection is a decade out of date for the right equipment. <strong>Cold-climate heat pumps</strong> on the <a href="https://neep.org/heating-electrification" target="_blank" rel="noopener">NEEP cold-climate specification list</a> maintain useful capacity well below freezing, and are installed routinely across the Northeast, Mountain West, and Upper Midwest. Two honest caveats:
+      </p>
+      <ul>
+        <li><strong>Standard (non-cold-climate) units lose capacity as it gets colder.</strong> If you're in IECC climate zone 5 or higher, you want a cold-climate-spec model, not the cheapest unit on the truck.</li>
+        <li><strong>In very cold regions, "dual-fuel" is often the smart answer:</strong> the heat pump handles everything down to roughly the high 20s/low 30s °F, where it's most efficient, and your existing gas furnace takes over below that. You keep ~70–80% of the operating savings while keeping a proven backup for the coldest nights. This is frequently the best "is it worth it" answer for a cold-climate home with existing gas service.</li>
+      </ul>
+      <p>
+        Climate doesn't usually make a heat pump "not worth it" anymore; it changes <em>which</em> heat pump and whether you keep a backup.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="clearly-worth-it">5. When it's clearly worth it</h2>
+      <ul>
+        <li><strong>Your AC is already on its last legs.</strong> If you're replacing the air conditioner anyway, the incremental cost to get heating too is small — this is the single best time to switch, and the math is rarely close.</li>
+        <li><strong>You heat with oil, propane, or electric resistance.</strong> The operating-cost drop is large and reliable.</li>
+        <li><strong>You live in a state with strong rebates</strong> (MA, NY, ME, CA, CO, and a growing list). The upfront premium can be fully covered.</li>
+        <li><strong>You want air conditioning you don't currently have.</strong> A heat pump is central AC and heating in one box; pricing it against "add AC" rather than "replace furnace" changes the comparison in its favor.</li>
+        <li><strong>You're doing solar or already have low-cost electricity.</strong> Cheap kWh makes the operating side a clear win.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 id="closer-call">6. When it's a closer call (the honest cases)</h2>
+      <ul>
+        <li><strong>Cheap gas + expensive electricity.</strong> If gas is under ~$0.90/therm and electricity is over ~$0.20/kWh, the winter operating cost can be a wash. A heat pump may still win once you count the replaced AC and the rebates — but run it, don't assume.</li>
+        <li><strong>Your furnace is only a few years old and healthy.</strong> Scrapping working equipment to save on operating cost rarely pencils out. Wait for the replacement cycle, or do a heat pump now and keep the furnace as dual-fuel backup.</li>
+        <li><strong>Very cold climate, no gas service, single heat pump only.</strong> Without a backup, you may be sizing for the worst night and running expensive resistance strips when it's coldest. Cold-climate spec plus a backup plan fixes this; "cheapest unit, no backup" is where people get burned.</li>
+        <li><strong>Ductwork is bad or absent.</strong> If a ducted system needs major duct repair, that adds cost — though mini-splits sidestep ducts entirely and are often the better answer for these homes.</li>
+      </ul>
+      <p>
+        None of these are automatic "no" answers. They're the cases where the honest move is to run your own numbers rather than trust a headline.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="pressure-test">7. How to pressure-test it for your home</h2>
+      <p>
+        Three steps turn "is it worth it in general" into "is it worth it for me":
+      </p>
+      <ol>
+        <li><strong>Run your own numbers.</strong> The heat-pump calculator uses your state's electricity rate, your current heating fuel, your home size, and your panel situation to return a low/mid/high installed cost with rebates pre-applied <em>and</em> the monthly bill change vs your current fuel — the two figures this whole decision turns on.</li>
+        <li><strong>Get a Manual J load calculation, not a rule of thumb.</strong> Most homes are sold oversized equipment. A proper <a href="/guides/heat-pumps/">load calculation</a> sizes the unit to your house, which protects both comfort and the operating-cost math. Ask the contractor for it in writing.</li>
+        <li><strong>Compare real bids the right way.</strong> Equipment line, cold-climate spec (HSPF2 and capacity at your design temperature), electrical work, and whether dual-fuel is included — these are where quotes diverge. Our <a href="/guides/hiring-a-contractor/">contractor-vetting guide</a> covers exactly what to ask.</li>
+      </ol>
+      <p>
+        A heat pump is a planning decision, and planning decisions deserve your real inputs — not a national average and not a sales pitch.
+      </p>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">Run the numbers for your home</p>
+        <p class="mt-1 text-sm text-ink-700">Enter your ZIP, current heating fuel, and home size — get a low/mid/high installed cost with rebates applied, plus the monthly bill change vs gas, oil, propane, or resistance.</p>
+        <a href="/heat-pump-cost-calculator/" class="btn-primary mt-3 inline-block">Open the heat pump calculator <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="guide-sources">
+      <h2 id="sources">Sources</h2>
+      <ul>
+        <li><a href="https://www.energy.gov/energysaver/heat-pump-systems" target="_blank" rel="noopener">DOE Energy Saver — Heat Pump Systems</a> (efficiency, COP, selection)</li>
+        <li><a href="https://neep.org/heating-electrification" target="_blank" rel="noopener">NEEP — Cold Climate Heat Pump Specification &amp; product list</a></li>
+        <li><a href="https://www.eia.gov/dnav/pet/pet_pri_wfr_a_EPD2F_PRS_dpgal_w.htm" target="_blank" rel="noopener">EIA — residential heating fuel prices (oil &amp; propane)</a></li>
+        <li><a href="https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a" target="_blank" rel="noopener">EIA — average retail electricity price by state</a></li>
+        <li><a href="/methodology/">ElectrifyCost methodology</a> · <a href="/rebates/">current rebate programs</a></li>
+      </ul>
+    </section>
+  </article>
+
+  <RelatedGuides slug="is-a-heat-pump-worth-it" />
+  <div class="container-wide"><AdSlot /></div>
+</Layout>

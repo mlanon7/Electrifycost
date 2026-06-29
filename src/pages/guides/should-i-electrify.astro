@@ -1,0 +1,153 @@
+---
+import Layout from '@/components/Layout.astro';
+import AdSlot from '@/components/AdSlot.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
+
+const lastReviewed = '2026-06-27';
+const schemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Should You Electrify Your Home? A Homeowner Decision Guide (2026)',
+  description: 'Not sure where to start with home electrification? An honest, no-funnel guide to whether you should electrify, where to start based on your situation, the order that saves the most money, and the 2026 incentive reality — with a calculator for every step.',
+  author: { '@type': 'Organization', name: 'ElectrifyCost' },
+  datePublished: '2026-06-27',
+  dateModified: lastReviewed,
+};
+
+const paths = [
+  {
+    when: 'Something just broke (or is about to)',
+    detail: 'Your furnace, AC, or water heater is failing. This is the best moment to electrify — you were going to spend the money anyway, so the only question is which replacement.',
+    links: [
+      { label: 'Heat pump vs your furnace/AC', href: '/guides/is-a-heat-pump-worth-it/' },
+      { label: 'Repair or replace?', href: '/hvac-repair-vs-replace/' },
+      { label: 'Heat pump water heater', href: '/heat-pump-water-heater-cost-calculator/' },
+    ],
+  },
+  {
+    when: 'My bills are too high',
+    detail: 'Start with the cheap, boring wins before the big equipment: sealing and insulation cut the load (and the size of every system you buy next).',
+    links: [
+      { label: 'Home energy audit', href: '/home-energy-audit-cost-calculator/' },
+      { label: 'Air sealing', href: '/air-sealing-cost-calculator/' },
+      { label: 'Insulation', href: '/insulation-cost-calculator/' },
+    ],
+  },
+  {
+    when: "I'm planning the whole project",
+    detail: 'You want the big picture — heat pump + water heater + panel + maybe solar — and a realistic combined budget, not a pile of separate numbers.',
+    links: [
+      { label: 'Whole-home estimate', href: '/whole-home-electrification-cost-calculator/' },
+      { label: 'Project Simulator (combined budget)', href: '/project-simulator/' },
+      { label: 'Electrical panel reality check', href: '/electrical-panel-upgrade-cost-calculator/' },
+    ],
+  },
+  {
+    when: "I'm getting an EV or adding solar",
+    detail: 'Electrification often starts at the driveway or the roof. Both touch your electrical panel, so it pays to think one step ahead.',
+    links: [
+      { label: 'EV charger install', href: '/ev-charger-installation-cost-calculator/' },
+      { label: 'Solar PV', href: '/solar-panel-cost-calculator/' },
+      { label: 'Home battery', href: '/home-battery-cost-calculator/' },
+    ],
+  },
+];
+---
+<Layout
+  title="Should You Electrify Your Home? Where to Start (2026)"
+  description="An honest decision guide to home electrification: should you do it, where to start for your situation, the order that saves the most, and the 2026 incentive reality."
+  schemaJsonLd={schemaJsonLd}
+  ogImage="/assets/topic-images/homepage-hero-electrified-home.webp"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Guides', href: '/guides/' },
+    { name: 'Should I electrify?', href: '/guides/should-i-electrify/' },
+  ]}
+>
+  <section class="container-tight py-8 md:py-10">
+    <p class="eyebrow">Guide · Start here</p>
+    <h1 class="mt-1 text-3xl md:text-4xl">Should you electrify your home?</h1>
+    <p class="mt-3 text-base text-ink-700">
+      If you've landed here unsure whether home electrification is worth it — or just unsure where to start — this is the orientation guide. The honest version is short: for most homeowners, yes, but <strong>on your replacement cycle, not all at once</strong>. Below is how to decide, where to start based on your situation, and the order that saves the most money. Every step links to a calculator that runs <em>your</em> numbers, with no email gate and no contractor funnel. 7-minute read.
+    </p>
+    <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer. Planning guidance, not a bid or a load calculation.</p>
+  </section>
+
+  <article class="container-tight guide-prose pb-12">
+    <div class="guide-toc not-prose">
+      <a href="#the-premise">1. The honest premise</a>
+      <a href="#where-to-start">2. Where to start (pick your situation)</a>
+      <a href="#the-order">3. The order that saves the most</a>
+      <a href="#the-money">4. The 2026 money reality</a>
+      <a href="#related-guides" class="border-brand-300 bg-brand-50 text-brand-700 hover:bg-brand-100 hover:text-brand-700">Related &amp; calculator <span aria-hidden="true">→</span></a>
+    </div>
+
+    <section>
+      <h2 id="the-premise">1. The honest premise</h2>
+      <p>
+        "Electrify your home" sounds like a single $40,000 project. It almost never is, and treating it that way is how people talk themselves out of it. The realistic version: <strong>every time a gas or oil appliance reaches the end of its life, the electric replacement is usually the better buy</strong> — a heat pump instead of a furnace + AC, a heat pump water heater instead of a gas tank, induction instead of a gas range. Done on the replacement cycle, the marginal cost is small and the incentives do real work.
+      </p>
+      <p>
+        So the useful question isn't "should I electrify everything?" It's "what's the next thing due, and is the electric version worth it for my home?" The rest of this guide helps you find <em>your</em> next thing.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="where-to-start">2. Where to start — pick the situation that sounds like you</h2>
+      <p>Four common starting points. Find yours and follow the links; each one ends in a calculator that uses your ZIP and current fuel.</p>
+      <div class="not-prose mt-4 grid gap-4 sm:grid-cols-2">
+        {paths.map(p => (
+          <div class="card p-5">
+            <p class="text-sm font-semibold text-ink-900">{p.when}</p>
+            <p class="mt-1 text-sm text-ink-700">{p.detail}</p>
+            <ul class="mt-3 space-y-1">
+              {p.links.map(l => (
+                <li><a href={l.href} class="text-sm text-brand-700 hover:underline">{l.label} <span aria-hidden="true">→</span></a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 id="the-order">3. The order that saves the most</h2>
+      <p>
+        If you do have the luxury of planning ahead rather than reacting to a breakdown, sequence matters — doing things in the right order makes every later step cheaper:
+      </p>
+      <ol>
+        <li><strong>Envelope first (if bills are high or comfort is poor).</strong> Air sealing and insulation reduce your heating and cooling load. A smaller load means a smaller, cheaper heat pump and lower bills forever after. A <a href="/home-energy-audit-cost-calculator/">home energy audit</a> tells you whether this applies to you (and is often required for the bigger rebates).</li>
+        <li><strong>Heat pump for space heating &amp; cooling.</strong> Usually the biggest single bill and the biggest single win. See <a href="/guides/is-a-heat-pump-worth-it/">is a heat pump worth it</a>.</li>
+        <li><strong>Heat pump water heater.</strong> The second-biggest energy user in most homes; a quiet, high-return swap.</li>
+        <li><strong>Check the panel before you assume an upgrade.</strong> Adding a heat pump + EV charger + induction doesn't always require a 200A service — a load calculation or smart load management often avoids a $2,000–$4,000 panel job. Don't let it be the thing that stalls the rest.</li>
+        <li><strong>Solar / battery / EV — whenever they fit your life.</strong> These are less about sequence and more about timing (a new car, a roof replacement, an outage-prone grid).</li>
+      </ol>
+      <p>
+        Planning several of these together? The <a href="/project-simulator/">Project Simulator</a> rolls them into one realistic combined budget instead of a naive sum of best cases.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="the-money">4. The 2026 money reality (so you're not working from old articles)</h2>
+      <ul>
+        <li><strong>The federal 25C and 25D credits expired on 2025-12-31.</strong> Articles from 2024 that promise a federal heat-pump or solar tax credit for a 2026 install are out of date. Don't budget around them.</li>
+        <li><strong>The federal 30C EV-charger credit runs through 2026-06-30</strong> (eligible census tracts), and the EV vehicle credits (30D/25E) ended for vehicles acquired after 2025-09-30.</li>
+        <li><strong>State and utility rebates are now the main lever</strong> — and in many states they're larger than the old federal credit. They're applied automatically in every calculator and listed on the <a href="/rebates/">rebates page</a>, with the <a href="/sources/">primary source</a> for each.</li>
+      </ul>
+      <p>
+        The numbers on this site are planning ranges, not quotes — calibrated to public data and updated as programs change. When you're ready to act, the <a href="/guides/hiring-a-contractor/">contractor-vetting guide</a> covers turning a planning range into real, comparable bids.
+      </p>
+    </section>
+
+    <section class="mt-8 not-prose">
+      <div class="card p-5">
+        <p class="text-sm font-semibold text-ink-900">See the whole picture</p>
+        <p class="mt-1 text-sm text-ink-700">Get a combined, realistic budget across heat pump, water heater, panel, solar, and more — with rebates applied and the portfolio effect handled honestly.</p>
+        <a href="/whole-home-electrification-cost-calculator/" class="btn-primary mt-3 inline-block">Whole-home estimate <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </article>
+
+  <RelatedGuides slug="should-i-electrify" />
+  <div class="container-wide"><AdSlot /></div>
+</Layout>
