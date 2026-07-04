@@ -1,54 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Brand = 'mitsubishi' | 'daikin' | 'fujitsu' | 'lg' | 'pioneer';
-type Zones = '1' | '2' | '3' | '4' | '5';
-type Spec = 'standard' | 'hyperheat';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// 2026 installed cost per indoor head (zone), all-in including outdoor unit allocation,
-// line-set, condensate pump, electrical. Sources: NEEP cold-climate database, Energy Vanguard
-// 2024 mini-split survey, Mitsubishi/Daikin/Fujitsu MSRP plus typical contractor markup.
-const PER_HEAD: Record<Brand, Record<Spec, CostBand>> = {
-  mitsubishi: {
-    standard:  { low: 3800, mid: 4800, high: 6000 },
-    hyperheat: { low: 4500, mid: 5500, high: 7000 },   // Hyper-Heat H2i (cold-climate)
-  },
-  daikin: {
-    standard:  { low: 3500, mid: 4400, high: 5500 },
-    hyperheat: { low: 4200, mid: 5100, high: 6500 },   // Aurora
-  },
-  fujitsu: {
-    standard:  { low: 3300, mid: 4200, high: 5200 },
-    hyperheat: { low: 4000, mid: 4900, high: 6200 },   // Halcyon XLTH
-  },
-  lg: {
-    standard:  { low: 3000, mid: 3900, high: 4800 },
-    hyperheat: { low: 3700, mid: 4600, high: 5800 },
-  },
-  pioneer: {                                            // Budget brand — DIY-adjacent
-    standard:  { low: 2000, mid: 2800, high: 3700 },
-    hyperheat: { low: 2700, mid: 3500, high: 4600 },
-  },
-};
-
-// Multi-zone economies: each additional head shares an outdoor unit so marginal cost drops.
-const MULTI_ZONE_DISCOUNT: Record<Zones, number> = {
-  '1': 1.0,
-  '2': 0.92,
-  '3': 0.88,
-  '4': 0.85,
-  '5': 0.83,
-};
-
-const ELECTRICAL_ADDER: CostBand = { low: 400, mid: 800, high: 1500 };  // 240V circuit + disconnect
-const PERMIT: CostBand = { low: 200, mid: 400, high: 700 };
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, ZONE_OPTIONS, BRAND_OPTIONS, SPEC_OPTIONS, CIRCUIT_OPTIONS,
+  type Brand, type Zones, type Spec, type Circuit,
+} from '@/lib/calcs/mini-split';
 
 export default function MiniSplitCalculator() {
   useCalculatorUsed('mini-split');
@@ -57,7 +17,7 @@ export default function MiniSplitCalculator() {
   const [zones, setZones] = useState<Zones>('2');
   const [brand, setBrand] = useState<Brand>('mitsubishi');
   const [spec, setSpec] = useState<Spec>('hyperheat');
-  const [needsCircuit, setNeedsCircuit] = useState<'yes' | 'no'>('yes');
+  const [needsCircuit, setNeedsCircuit] = useState<Circuit>('yes');
 
   useEffect(() => {
     if (zip.length === 5) {
@@ -66,21 +26,43 @@ export default function MiniSplitCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const hvacMult = lab?.hvac_multiplier ?? 1.0;
-    const perHead = PER_HEAD[brand][spec];
-    const numZones = parseInt(zones, 10);
-    const discount = MULTI_ZONE_DISCOUNT[zones];
-    const equipPerHeadAdj: CostBand = scale(perHead, discount);
-    const equip: CostBand = scale(equipPerHeadAdj, numZones * hvacMult);
-    const elec = needsCircuit === 'yes' ? scale(ELECTRICAL_ADDER, hvacMult) : { low: 0, mid: 0, high: 0 };
-    const permit = scale(PERMIT, hvacMult);
-    const gross = add(add(equip, elec), permit);
-    return { equip, elec, permit, gross };
-  }, [state, zones, brand, spec, needsCircuit]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.zones && ZONE_OPTIONS.some(o => o.value === h.zones)) setZones(h.zones as Zones);
+    if (h.brand && BRAND_OPTIONS.some(o => o.value === h.brand)) setBrand(h.brand as Brand);
+    if (h.spec && SPEC_OPTIONS.some(o => o.value === h.spec)) setSpec(h.spec as Spec);
+    if (h.circuit && CIRCUIT_OPTIONS.some(o => o.value === h.circuit)) setNeedsCircuit(h.circuit as Circuit);
+  });
+  const hashValues = { state, zip, zones, brand, spec, circuit: needsCircuit };
+  useHashStateSync(hashValues);
 
+  const result = useMemo(
+    () => compute({ state, zones, brand, spec, needsCircuit }),
+    [state, zones, brand, spec, needsCircuit],
+  );
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('mini-split', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -101,35 +83,25 @@ export default function MiniSplitCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of indoor heads (zones)</label>
           <select className="input mt-1 w-full" value={zones} onChange={e => setZones(e.target.value as Zones)}>
-            <option value="1">1 zone (single room or open floor)</option>
-            <option value="2">2 zones</option>
-            <option value="3">3 zones</option>
-            <option value="4">4 zones</option>
-            <option value="5">5 zones (max for most outdoor units)</option>
+            {ZONE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Brand</label>
           <select className="input mt-1 w-full" value={brand} onChange={e => setBrand(e.target.value as Brand)}>
-            <option value="mitsubishi">Mitsubishi (Hyper-Heat — premium)</option>
-            <option value="daikin">Daikin (Aurora — premium)</option>
-            <option value="fujitsu">Fujitsu (Halcyon — value/mid)</option>
-            <option value="lg">LG (mid)</option>
-            <option value="pioneer">Pioneer (budget / DIY-adjacent)</option>
+            {BRAND_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cold-climate spec?</label>
           <select className="input mt-1 w-full" value={spec} onChange={e => setSpec(e.target.value as Spec)}>
-            <option value="hyperheat">Yes — cold-climate (rated to -13°F or lower)</option>
-            <option value="standard">No — standard (drops capacity below 17°F)</option>
+            {SPEC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Need new 240V circuit?</label>
-          <select className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as 'yes' | 'no')}>
-            <option value="yes">Yes (standard for new install)</option>
-            <option value="no">No (existing circuit available)</option>
+          <select className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as Circuit)}>
+            {CIRCUIT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

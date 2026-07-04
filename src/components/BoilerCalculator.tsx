@@ -1,148 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy, findClimate } from '@/lib/data';
+import { ALL_STATES, findStateForZip, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Fuel = 'natural_gas' | 'propane' | 'heating_oil' | 'electric';
-type Tier = 'standard' | 'condensing' | 'modulating';
-type Size = 'small' | 'medium' | 'large';
-
-interface Band { low: number; mid: number; high: number; }
-
-// Per CSV: boiler-cost-ranges.csv (Modernize 2024 + DOE 2024)
-const BOILER: Record<Fuel, Record<Tier, { equipment: Record<Size, Band>; labor: Band; afue: number; label: string }>> = {
-  natural_gas: {
-    standard: {
-      afue: 85, label: 'Cast-iron 85% AFUE',
-      equipment: {
-        small:  { low: 2200, mid: 3100, high: 4000 },
-        medium: { low: 2500, mid: 3500, high: 4500 },
-        large:  { low: 3200, mid: 4500, high: 5800 },
-      },
-      labor: { low: 2500, mid: 3500, high: 4500 },
-    },
-    condensing: {
-      afue: 95, label: 'Condensing 95% AFUE',
-      equipment: {
-        small:  { low: 4000, mid: 5400, high: 7000 },
-        medium: { low: 4500, mid: 6000, high: 8000 },
-        large:  { low: 5400, mid: 7200, high: 9500 },
-      },
-      labor: { low: 3500, mid: 5000, high: 6500 },
-    },
-    modulating: {
-      afue: 96, label: 'Modulating 96% AFUE (premium)',
-      equipment: {
-        small:  { low: 5500, mid: 7800, high: 10000 },
-        medium: { low: 6000, mid: 8500, high: 11000 },
-        large:  { low: 6800, mid: 9500, high: 12500 },
-      },
-      labor: { low: 4000, mid: 5500, high: 7500 },
-    },
-  },
-  propane: {
-    standard: {
-      afue: 85, label: 'Propane 85% AFUE',
-      equipment: {
-        small:  { low: 2500, mid: 3500, high: 4500 },
-        medium: { low: 2800, mid: 4000, high: 5200 },
-        large:  { low: 3500, mid: 5000, high: 6500 },
-      },
-      labor: { low: 2700, mid: 3800, high: 5000 },
-    },
-    condensing: {
-      afue: 95, label: 'Propane condensing 95% AFUE',
-      equipment: {
-        small:  { low: 4300, mid: 5800, high: 7500 },
-        medium: { low: 4800, mid: 6500, high: 8500 },
-        large:  { low: 5800, mid: 7800, high: 10000 },
-      },
-      labor: { low: 3500, mid: 5000, high: 6500 },
-    },
-    modulating: {
-      afue: 96, label: 'Propane modulating premium',
-      equipment: {
-        small:  { low: 5800, mid: 8000, high: 10500 },
-        medium: { low: 6500, mid: 9000, high: 11500 },
-        large:  { low: 7200, mid: 10000, high: 13000 },
-      },
-      labor: { low: 4000, mid: 5500, high: 7500 },
-    },
-  },
-  heating_oil: {
-    standard: {
-      afue: 85, label: 'Oil 85% AFUE',
-      equipment: {
-        small:  { low: 4000, mid: 5500, high: 7000 },
-        medium: { low: 4500, mid: 6000, high: 7800 },
-        large:  { low: 5500, mid: 7200, high: 9500 },
-      },
-      labor: { low: 3500, mid: 5000, high: 6500 },
-    },
-    condensing: {
-      afue: 87, label: 'Premium oil 87% AFUE',
-      equipment: {
-        small:  { low: 5200, mid: 6800, high: 8800 },
-        medium: { low: 5800, mid: 7500, high: 9800 },
-        large:  { low: 6500, mid: 8500, high: 11000 },
-      },
-      labor: { low: 4000, mid: 5500, high: 7500 },
-    },
-    modulating: {
-      afue: 87, label: 'Premium oil 87% AFUE (same as condensing)',
-      equipment: {
-        small:  { low: 5200, mid: 6800, high: 8800 },
-        medium: { low: 5800, mid: 7500, high: 9800 },
-        large:  { low: 6500, mid: 8500, high: 11000 },
-      },
-      labor: { low: 4000, mid: 5500, high: 7500 },
-    },
-  },
-  electric: {
-    standard: {
-      afue: 100, label: 'Electric resistance',
-      equipment: {
-        small:  { low: 1800, mid: 2700, high: 3800 },
-        medium: { low: 2200, mid: 3200, high: 4500 },
-        large:  { low: 2800, mid: 4000, high: 5800 },
-      },
-      labor: { low: 1800, mid: 2800, high: 4000 },
-    },
-    condensing: {
-      afue: 100, label: 'Electric resistance (same)',
-      equipment: {
-        small:  { low: 1800, mid: 2700, high: 3800 },
-        medium: { low: 2200, mid: 3200, high: 4500 },
-        large:  { low: 2800, mid: 4000, high: 5800 },
-      },
-      labor: { low: 1800, mid: 2800, high: 4000 },
-    },
-    modulating: {
-      afue: 100, label: 'Electric resistance (same)',
-      equipment: {
-        small:  { low: 1800, mid: 2700, high: 3800 },
-        medium: { low: 2200, mid: 3200, high: 4500 },
-        large:  { low: 2800, mid: 4000, high: 5800 },
-      },
-      labor: { low: 1800, mid: 2800, high: 4000 },
-    },
-  },
-};
-
-function scale(b: Band, m: number): Band {
-  return { low: b.low * m, mid: b.mid * m, high: b.high * m };
-}
-function add(a: Band, b: Band): Band {
-  return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high };
-}
-
-// Hydronic-compatible heat pump (air-to-water) replacement
-const HEAT_PUMP_HYDRONIC: Record<Size, Band> = {
-  small:  { low: 14000, mid: 19000, high: 25000 },
-  medium: { low: 17000, mid: 23000, high: 30000 },
-  large:  { low: 22000, mid: 28000, high: 38000 },
-};
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, FUEL_OPTIONS, TIER_OPTIONS, SIZE_OPTIONS,
+  type Fuel, type Tier, type Size,
+} from '@/lib/calcs/boiler';
 
 export default function BoilerCalculator() {
   useCalculatorUsed('boiler');
@@ -159,20 +25,44 @@ export default function BoilerCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.hvac_multiplier ?? 1.0;
-    const cfg = BOILER[fuel][tier];
-    const equipment = cfg.equipment[size];
-    const labor = scale(cfg.labor, laborMult);
-    const permit: Band = { low: 200, mid: 400, high: 800 };
-    const gross = add(add(equipment, labor), permit);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.fuel && FUEL_OPTIONS.some(o => o.value === h.fuel)) setFuel(h.fuel as Fuel);
+    if (h.tier && TIER_OPTIONS.some(o => o.value === h.tier)) setTier(h.tier as Tier);
+    if (h.size && SIZE_OPTIONS.some(o => o.value === h.size)) setSize(h.size as Size);
+  });
+  const hashValues = { state, zip, fuel, tier, size };
+  useHashStateSync(hashValues);
 
-    const hp = HEAT_PUMP_HYDRONIC[size];
-    return { equipment, labor, permit, gross, afue: cfg.afue, label: cfg.label, hp };
-  }, [state, fuel, tier, size]);
+  const result = useMemo(
+    () => compute({ state, fuel, tier, size }),
+    [state, fuel, tier, size],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('boiler', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
+
   const climate = findClimate(state)?.iecc_zone ?? '5A';
 
   return (
@@ -194,27 +84,20 @@ export default function BoilerCalculator() {
         <div>
           <label className="label" htmlFor="fuel">Fuel</label>
           <select id="fuel" className="input" value={fuel} onChange={e => setFuel(e.target.value as Fuel)}>
-            <option value="natural_gas">Natural gas (most common)</option>
-            <option value="heating_oil">Heating oil (NE / rural)</option>
-            <option value="propane">Propane (rural)</option>
-            <option value="electric">Electric resistance (rare)</option>
+            {FUEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="tier">Efficiency tier</label>
           <select id="tier" className="input" value={tier} onChange={e => setTier(e.target.value as Tier)}>
-            <option value="standard">Standard (cast-iron / older tech)</option>
-            <option value="condensing">Condensing 95%+ AFUE</option>
-            <option value="modulating">Modulating premium</option>
+            {TIER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
           <label className="label" htmlFor="size">Home size</label>
           <select id="size" className="input" value={size} onChange={e => setSize(e.target.value as Size)}>
-            <option value="small">Small (≤1500 sqft) — 80-100k BTU</option>
-            <option value="medium">Medium (1500-2500 sqft) — 100-140k BTU</option>
-            <option value="large">Large (2500+ sqft) — 140-180k BTU</option>
+            {SIZE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

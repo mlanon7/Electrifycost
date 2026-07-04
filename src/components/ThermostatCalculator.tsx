@@ -1,43 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Model = 'basic' | 'nest_e' | 'ecobee_premium' | 'nest_learning' | 'honeywell_t9';
-type Install = 'diy' | 'pro';
-type Cwire = 'yes' | 'no' | 'unknown';
-type HvacType = 'central_ac_furnace' | 'heat_pump' | 'boiler';
-
-interface CostBand { low: number; mid: number; high: number; }
-
-// Hardware MSRPs 2026
-const HARDWARE: Record<Model, CostBand> = {
-  basic:           { low: 60,  mid: 90,  high: 130 },   // Sensi, Honeywell RTH9580
-  nest_e:          { low: 130, mid: 170, high: 200 },
-  ecobee_premium:  { low: 230, mid: 250, high: 280 },
-  nest_learning:   { low: 230, mid: 250, high: 280 },
-  honeywell_t9:    { low: 180, mid: 220, high: 250 },
-};
-
-const PRO_INSTALL: CostBand = { low: 150, mid: 250, high: 400 };
-const CWIRE_ADDER: CostBand = { low: 100, mid: 200, high: 350 };   // electrician adds C-wire if missing
-
-// Annual HVAC savings: Nest's own studies put it 10-12% heating + 15% cooling, ENERGY STAR claims ~8%.
-// We model 10% combined to be conservative.
-const HVAC_SAVINGS_PCT: Record<HvacType, number> = {
-  central_ac_furnace: 0.10,
-  heat_pump: 0.08,        // heat pumps with proper smart-thermostat behavior; less if naive recovery cycles
-  boiler: 0.12,           // hot-water boilers respond well to setback
-};
-
-// Typical utility rebate (snapshot — varies wildly by utility, often $50–$125)
-function utilityRebate(state: string): number {
-  // Strong programs in MA, CA, NY, CT, NJ, MN, CO
-  const strong = ['MA', 'CA', 'NY', 'CT', 'NJ', 'MN', 'CO', 'IL'];
-  if (strong.includes(state)) return 100;
-  return 0;
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, MODEL_OPTIONS, INSTALL_OPTIONS, CWIRE_OPTIONS, HVAC_OPTIONS,
+  type Model, type Install, type Cwire, type HvacType,
+} from '@/lib/calcs/smart-thermostat';
 
 export default function ThermostatCalculator() {
   useCalculatorUsed('smart-thermostat');
@@ -56,40 +27,48 @@ export default function ThermostatCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const elecMult = lab?.electrician_multiplier ?? 1.0;
-    const hw = HARDWARE[model];
-    const proCost: CostBand = install === 'pro'
-      ? { low: PRO_INSTALL.low * elecMult, mid: PRO_INSTALL.mid * elecMult, high: PRO_INSTALL.high * elecMult }
-      : { low: 0, mid: 0, high: 0 };
-    const cw: CostBand = cwire === 'no'
-      ? { low: CWIRE_ADDER.low * elecMult, mid: CWIRE_ADDER.mid * elecMult, high: CWIRE_ADDER.high * elecMult }
-      : cwire === 'unknown'
-      ? { low: 0, mid: CWIRE_ADDER.mid * 0.4 * elecMult, high: CWIRE_ADDER.high * 0.7 * elecMult }
-      : { low: 0, mid: 0, high: 0 };
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.model && MODEL_OPTIONS.some(o => o.value === h.model)) setModel(h.model as Model);
+    if (h.install && INSTALL_OPTIONS.some(o => o.value === h.install)) setInstall(h.install as Install);
+    if (h.cwire && CWIRE_OPTIONS.some(o => o.value === h.cwire)) setCwire(h.cwire as Cwire);
+    if (h.hvac && HVAC_OPTIONS.some(o => o.value === h.hvac)) setHvac(h.hvac as HvacType);
+    if (h.cost) {
+      const n = parseInt(h.cost, 10);
+      if (Number.isFinite(n)) setAnnualHvacCost(Math.min(6000, Math.max(200, n)));
+    }
+  });
+  const hashValues = { state, zip, model, install, cwire, hvac, cost: annualHvacCost };
+  useHashStateSync(hashValues);
 
-    const gross: CostBand = {
-      low: hw.low + proCost.low + cw.low,
-      mid: hw.mid + proCost.mid + cw.mid,
-      high: hw.high + proCost.high + cw.high,
-    };
-
-    const rebate = utilityRebate(state);
-    const net: CostBand = {
-      low: Math.max(0, gross.low - rebate),
-      mid: Math.max(0, gross.mid - rebate),
-      high: Math.max(0, gross.high - rebate),
-    };
-
-    const savingsPct = HVAC_SAVINGS_PCT[hvac];
-    const annualSavings = annualHvacCost * savingsPct;
-    const paybackYears = annualSavings > 0 ? Math.round((net.mid / annualSavings) * 10) / 10 : null;
-
-    return { hw, proCost, cw, gross, rebate, net, savingsPct, annualSavings, paybackYears };
-  }, [state, model, install, cwire, hvac, annualHvacCost]);
+  const result = useMemo(
+    () => compute({ state, model, install, cwire, hvac, annualHvacCost }),
+    [state, model, install, cwire, hvac, annualHvacCost],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('smart-thermostat', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -116,37 +95,28 @@ export default function ThermostatCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Model</label>
           <select className="input mt-1 w-full" value={model} onChange={e => setModel(e.target.value as Model)}>
-            <option value="basic">Basic Wi-Fi (Sensi, Honeywell RTH)</option>
-            <option value="nest_e">Nest E (mid)</option>
-            <option value="honeywell_t9">Honeywell T9 (multi-sensor)</option>
-            <option value="ecobee_premium">Ecobee Premium (multi-sensor + voice)</option>
-            <option value="nest_learning">Nest Learning (4th gen)</option>
+            {MODEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install</label>
           <select className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
-            <option value="diy">DIY (free, ~30 min)</option>
-            <option value="pro">Pro install ($150–$400)</option>
+            {INSTALL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">C-wire present?</label>
           <select className="input mt-1 w-full" value={cwire} onChange={e => setCwire(e.target.value as Cwire)}>
-            <option value="yes">Yes</option>
-            <option value="unknown">Unknown (most homes have one)</option>
-            <option value="no">No (needs electrician to add)</option>
+            {CWIRE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">HVAC type</label>
           <select className="input mt-1 w-full" value={hvac} onChange={e => setHvac(e.target.value as HvacType)}>
-            <option value="central_ac_furnace">Central AC + forced-air furnace</option>
-            <option value="heat_pump">Heat pump (use heat-pump-aware mode)</option>
-            <option value="boiler">Hot-water boiler / radiator</option>
+            {HVAC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 

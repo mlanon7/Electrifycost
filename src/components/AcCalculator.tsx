@@ -1,108 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findClimate, stateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Tier = 'single' | 'two_stage' | 'variable';
-type Tonnage = '2' | '2.5' | '3' | '3.5' | '4' | '5';
-type DuctState = 'keep' | 'minor_repair' | 'replace';
-type FurnaceBundle = 'no' | 'yes';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// 2026 installed-cost base ranges. Anchored to ASHRAE 2024 cost guide, ACCA Manual J/S/D guidance,
-// AHRI directory pricing surveys, and Home Advisor / Modernize 2024-2025 contractor surveys.
-// Costs reflect post-2023 SEER2 efficiency standard + R-410A → R-32/R-454B refrigerant transition.
-
-// Tonnage base cost (per ton, includes condenser + evaporator coil + line set, before tier multiplier)
-const PER_TON: Record<Tier, CostBand> = {
-  single: { low: 1600, mid: 2100, high: 2700 },        // 14.3-16 SEER2 single-stage
-  two_stage: { low: 2100, mid: 2700, high: 3400 },     // 16-19 SEER2 two-stage
-  variable: { low: 2700, mid: 3400, high: 4400 },      // 18-26 SEER2 variable-speed (inverter)
-};
-
-// Tonnage map → BTU/hour and recommended sqft range
-const TON_INFO: Record<Tonnage, { btu: number; sqftLow: number; sqftHigh: number; rec: number }> = {
-  '2':   { btu: 24000, sqftLow: 1000, sqftHigh: 1300, rec: 2.0 },
-  '2.5': { btu: 30000, sqftLow: 1300, sqftHigh: 1600, rec: 2.5 },
-  '3':   { btu: 36000, sqftLow: 1500, sqftHigh: 1900, rec: 3.0 },
-  '3.5': { btu: 42000, sqftLow: 1800, sqftHigh: 2200, rec: 3.5 },
-  '4':   { btu: 48000, sqftLow: 2100, sqftHigh: 2500, rec: 4.0 },
-  '5':   { btu: 60000, sqftLow: 2400, sqftHigh: 3000, rec: 5.0 },
-};
-
-// Duct work adders
-const DUCT_ADDER: Record<DuctState, CostBand> = {
-  keep: { low: 0, mid: 0, high: 0 },
-  minor_repair: { low: 400, mid: 800, high: 1500 },          // seal + insulate trunk
-  replace: { low: 2500, mid: 4500, high: 7500 },             // full duct replacement (small home)
-};
-
-// Bundled furnace replacement (gas, 80-95% AFUE) — only if user is doing both at same time
-const FURNACE_BUNDLE: CostBand = { low: 2400, mid: 3500, high: 5000 };
-
-// Labor hours per ton (varies by tier — variable systems take longer)
-const LABOR_HOURS_PER_TON: Record<Tier, number> = {
-  single: 6,        // 12-18 hours for 2-3 ton install
-  two_stage: 7,
-  variable: 8.5,    // commissioning + line set vacuum
-};
-
-// HVAC technician blended rate; sourced from module-labor-rates.csv (`ac` row, $110)
-// so it's consistent with every other module's labor rate basis.
-// Previously hard-coded at $95 — a separate source of truth from `module-labor-rates.csv`,
-// flagged by the May-2026 audit as inconsistent.
-const LABOR_RATE_USD = 110;
-
-// Permit + disposal of old equipment
-const PERMIT_BASE: CostBand = { low: 200, mid: 400, high: 700 };
-
-// Refrigerant transition adder — A2L (R-32, R-454B) installs require new tools/training and
-// in 2025-2026 some supply constraints. Add a modest premium.
-const REFRIGERANT_PREMIUM: CostBand = { low: 200, mid: 400, high: 700 };
-
-// SEER2 typical efficiency by tier
-const SEER2_TYPICAL: Record<Tier, number> = {
-  single: 15.0,
-  two_stage: 17.5,
-  variable: 21.0,
-};
-
-// Annual cooling load model. The cooling-degree-day method (Manual J building load coefficient):
-//   annual cooling BTU ≈ sqft × CDD × ~18 BTU/(sqft·CDD-day) for a typical insulated home
-// Source: ASHRAE Handbook + ACCA Manual J — BLC ranges 12–25 BTU/(sqft·°F·day) by envelope tightness.
-// SEER2 is BTU output / Wh input, so kWh consumed = annualBtu / SEER2 / 1000.
-// Sanity check: 1,800 sqft × 1,500 CDD × 18 = 48.6 MMBTU/yr ÷ SEER2 17.5 = ~2,780 kWh/yr.
-// EIA RECS 2020 average residential AC: ~1,800-2,500 kWh/yr. Aligns.
-const BLC_BTU_PER_SQFT_CDD = 18;
-function estimateAnnualCoolingKwh(sqft: number, seer2: number, cdd: number): number {
-  const annualBtu = sqft * cdd * BLC_BTU_PER_SQFT_CDD;
-  const kwh = annualBtu / (seer2 * 1000);
-  return Math.max(0, Math.round(kwh));
-}
-
-// Map climate zone to a cooling-degree-days proxy (very rough — real CDD from NOAA)
-function cddProxy(state: string): number {
-  const c = findClimate(state);
-  if (c?.cooling_degree_days && c.cooling_degree_days > 0) return c.cooling_degree_days;
-  const z = c?.iecc_zone ?? "4A";
-  // Very rough mapping: 1A/2A hot/humid → 2500-3500, 3-4 → 1200-2000, 5-7 → 500-1000, 8 → ~200
-  const head = z[0];
-  switch (head) {
-    case '1': return 3500;
-    case '2': return 2800;
-    case '3': return 1800;
-    case '4': return 1200;
-    case '5': return 800;
-    case '6': return 500;
-    case '7': return 300;
-    case '8': return 150;
-    default: return 1200;
-  }
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, recommendedTonnage, TONNAGE_OPTIONS, EFFICIENCY_OPTIONS, DUCT_OPTIONS, FURNACE_OPTIONS,
+  type Tier, type Tonnage, type DuctState, type FurnaceBundle,
+} from '@/lib/calcs/ac-replacement';
 
 export default function AcCalculator() {
   useCalculatorUsed('ac-replacement');
@@ -121,57 +27,50 @@ export default function AcCalculator() {
     }
   }, [zip, state]);
 
-  // Tonnage recommendation based on sqft (Manual J shortcut — 1 ton per ~600 sqft is too aggressive;
-  // 1 ton per ~700-800 sqft is more accurate; high-load climates closer to 600, low closer to 900)
-  const recommendedTon: Tonnage = useMemo(() => {
-    const target = sqft / 700;
-    if (target < 2.25) return '2';
-    if (target < 2.75) return '2.5';
-    if (target < 3.25) return '3';
-    if (target < 3.75) return '3.5';
-    if (target < 4.5) return '4';
-    return '5';
-  }, [sqft]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.sqft) {
+      const n = parseInt(h.sqft, 10);
+      if (Number.isFinite(n)) setSqft(Math.min(6000, Math.max(500, n)));
+    }
+    if (h.ton && TONNAGE_OPTIONS.some(o => o.value === h.ton)) setTonnage(h.ton as Tonnage);
+    if (h.tier && EFFICIENCY_OPTIONS.some(o => o.value === h.tier)) setTier(h.tier as Tier);
+    if (h.ducts && DUCT_OPTIONS.some(o => o.value === h.ducts)) setDucts(h.ducts as DuctState);
+    if (h.furn && FURNACE_OPTIONS.some(o => o.value === h.furn)) setFurnaceBundle(h.furn as FurnaceBundle);
+  });
+  const hashValues = { state, zip, sqft, ton: tonnage, tier, ducts, furn: furnaceBundle };
+  useHashStateSync(hashValues);
 
-  const result = useMemo(() => {
-    const tonNum = parseFloat(tonnage);
-    const stateLab = findStateLabor(state);
-    const hvacMult = stateLab?.hvac_multiplier ?? 1.0;
+  const recommendedTon: Tonnage = useMemo(() => recommendedTonnage(sqft), [sqft]);
 
-    const equipPerTon = PER_TON[tier];
-    const equip: CostBand = scale(equipPerTon, tonNum);
+  const result = useMemo(
+    () => compute({ state, sqft, tonnage, tier, ducts, furnaceBundle }),
+    [state, sqft, tonnage, tier, ducts, furnaceBundle],
+  );
 
-    const laborHours = LABOR_HOURS_PER_TON[tier] * tonNum;
-    const laborCostMid = laborHours * LABOR_RATE_USD * hvacMult;
-    const labor: CostBand = { low: laborCostMid * 0.85, mid: laborCostMid, high: laborCostMid * 1.20 };
-
-    const duct = DUCT_ADDER[ducts];
-    const furnace = furnaceBundle === 'yes' ? FURNACE_BUNDLE : { low: 0, mid: 0, high: 0 };
-    const refrigerant = REFRIGERANT_PREMIUM;
-    const permit = scale(PERMIT_BASE, hvacMult);
-
-    const gross = add(add(add(add(add(equip, labor), duct), furnace), refrigerant), permit);
-
-    // Operating cost comparison
-    const seer = SEER2_TYPICAL[tier];
-    const cdd = cddProxy(state);
-    const annualKwh = estimateAnnualCoolingKwh(sqft, seer, cdd);
-    const baselineKwh = estimateAnnualCoolingKwh(sqft, 13.0, cdd); // pre-2023 SEER 13 baseline
-    const eRow = stateEnergy.find(e => e.state === state);
-    const rate = eRow ? eRow.electricity_cents_per_kwh / 100 : 0.16;
-    const annualCost = annualKwh * rate;
-    const annualSavings = (baselineKwh - annualKwh) * rate;
-
-    // Heat-pump alternative cost (estimate vs same tier — central air-source HP runs ~$1,500-2,500/ton more)
-    const hpAltMid = gross.mid + tonNum * 2000;
-
-    return {
-      gross, equip, labor, duct, furnace, refrigerant, permit,
-      seer, annualKwh, baselineKwh, annualCost, annualSavings, hpAltMid,
-    };
-  }, [state, sqft, tonnage, tier, ducts, furnaceBundle]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('ac-replacement', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
+
   const tonMisfit = tonnage !== recommendedTon;
   const climate = findClimate(state)?.iecc_zone ?? "4A";
 
@@ -211,11 +110,7 @@ export default function AcCalculator() {
             System size · recommended: <span className="text-brand-700">{recommendedTon} ton</span>
           </label>
           <select className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
-            {(['2','2.5','3','3.5','4','5'] as Tonnage[]).map(t => (
-              <option key={t} value={t}>
-                {t} ton · {TON_INFO[t].btu.toLocaleString()} BTU · fits {TON_INFO[t].sqftLow}-{TON_INFO[t].sqftHigh} sqft
-              </option>
-            ))}
+            {TONNAGE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           {tonMisfit && (
             <p className="mt-1 text-[11px] text-amber-700">
@@ -227,26 +122,21 @@ export default function AcCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Efficiency tier</label>
           <select className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
-            <option value="single">Single-stage (~15 SEER2 — basic)</option>
-            <option value="two_stage">Two-stage (~17.5 SEER2 — mid)</option>
-            <option value="variable">Variable-speed inverter (~21 SEER2 — premium)</option>
+            {EFFICIENCY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ductwork</label>
           <select className="input mt-1 w-full" value={ducts} onChange={e => setDucts(e.target.value as DuctState)}>
-            <option value="keep">Keep existing (good condition)</option>
-            <option value="minor_repair">Minor repair / seal / insulate</option>
-            <option value="replace">Replace ductwork</option>
+            {DUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Bundle furnace?</label>
           <select className="input mt-1 w-full" value={furnaceBundle} onChange={e => setFurnaceBundle(e.target.value as FurnaceBundle)}>
-            <option value="no">No (AC only)</option>
-            <option value="yes">Yes — replace gas furnace at same time</option>
+            {FURNACE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

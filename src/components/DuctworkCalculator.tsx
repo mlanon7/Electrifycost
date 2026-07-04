@@ -1,46 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Scope = 'seal_insulate' | 'partial_replace' | 'full_replace' | 'new_install';
-type Material = 'flex' | 'sheet_metal' | 'fiber_board';
-type Stories = '1' | '2' | '3';
-type Access = 'easy' | 'normal' | 'hard';
-
-interface CostBand { low: number; mid: number; high: number; }
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// Per-sqft pricing 2026. Sources: ACCA contractor surveys, Aeroseal proprietary network data,
-// Home Advisor / Modernize 2024-2025 ductwork pricing reports, Energy Vanguard estimates.
-const COST_PER_SQFT: Record<Scope, Record<Material, CostBand>> = {
-  seal_insulate: {
-    flex:        { low: 0.80, mid: 1.30, high: 2.00 },
-    sheet_metal: { low: 0.80, mid: 1.30, high: 2.00 },
-    fiber_board: { low: 0.80, mid: 1.30, high: 2.00 },
-  },
-  partial_replace: {
-    flex:        { low: 1.80, mid: 2.80, high: 4.20 },
-    sheet_metal: { low: 2.50, mid: 3.80, high: 5.50 },
-    fiber_board: { low: 2.00, mid: 3.00, high: 4.50 },
-  },
-  full_replace: {
-    flex:        { low: 3.50, mid: 5.50, high: 8.00 },
-    sheet_metal: { low: 5.00, mid: 7.50, high: 11.00 },
-    fiber_board: { low: 3.80, mid: 6.00, high: 9.00 },
-  },
-  new_install: {
-    flex:        { low: 4.50, mid: 6.50, high: 9.00 },
-    sheet_metal: { low: 6.00, mid: 9.00, high: 13.00 },
-    fiber_board: { low: 5.00, mid: 7.00, high: 10.00 },
-  },
-};
-
-const STORY_MULT: Record<Stories, number> = { '1': 1.0, '2': 1.15, '3': 1.35 };
-const ACCESS_MULT: Record<Access, number> = { easy: 0.95, normal: 1.0, hard: 1.25 };
-
-const AEROSEAL: CostBand = { low: 1500, mid: 2200, high: 3200 };  // Aeroseal injection sealing addon
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, SCOPE_OPTIONS, MATERIAL_OPTIONS, STORIES_OPTIONS, ACCESS_OPTIONS, AEROSEAL_OPTIONS,
+  type Scope, type Material, type Stories, type Access, type Aeroseal,
+} from '@/lib/calcs/ductwork';
 
 export default function DuctworkCalculator() {
   useCalculatorUsed('ductwork');
@@ -51,7 +19,7 @@ export default function DuctworkCalculator() {
   const [material, setMaterial] = useState<Material>('flex');
   const [stories, setStories] = useState<Stories>('2');
   const [access, setAccess] = useState<Access>('normal');
-  const [aeroseal, setAeroseal] = useState<'yes' | 'no'>('no');
+  const [aeroseal, setAeroseal] = useState<Aeroseal>('no');
 
   useEffect(() => {
     if (zip.length === 5) {
@@ -60,19 +28,49 @@ export default function DuctworkCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const hvacMult = lab?.hvac_multiplier ?? 1.0;
-    const base = COST_PER_SQFT[scope][material];
-    const sm = STORY_MULT[stories];
-    const am = ACCESS_MULT[access];
-    const total: CostBand = scale(base, sqft * hvacMult * sm * am);
-    const aeroCost = aeroseal === 'yes' ? scale(AEROSEAL, hvacMult) : { low: 0, mid: 0, high: 0 };
-    const gross: CostBand = { low: total.low + aeroCost.low, mid: total.mid + aeroCost.mid, high: total.high + aeroCost.high };
-    return { total, aeroCost, gross };
-  }, [state, sqft, scope, material, stories, access, aeroseal]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.sqft) {
+      const n = parseInt(h.sqft, 10);
+      if (Number.isFinite(n)) setSqft(Math.min(6000, Math.max(500, n)));
+    }
+    if (h.scope && SCOPE_OPTIONS.some(o => o.value === h.scope)) setScope(h.scope as Scope);
+    if (h.mat && MATERIAL_OPTIONS.some(o => o.value === h.mat)) setMaterial(h.mat as Material);
+    if (h.stories && STORIES_OPTIONS.some(o => o.value === h.stories)) setStories(h.stories as Stories);
+    if (h.access && ACCESS_OPTIONS.some(o => o.value === h.access)) setAccess(h.access as Access);
+    if (h.aero === '1' || h.aero === '0') setAeroseal(h.aero === '1' ? 'yes' : 'no');
+  });
+  const hashValues = { state, zip, sqft, scope, mat: material, stories, access, aero: aeroseal === 'yes' ? '1' : '0' };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(
+    () => compute({ state, sqft, scope, material, stories, access, aeroseal }),
+    [state, sqft, scope, material, stories, access, aeroseal],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('ductwork', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -98,41 +96,31 @@ export default function DuctworkCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Scope of work</label>
           <select className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
-            <option value="seal_insulate">Seal + insulate existing (cheapest)</option>
-            <option value="partial_replace">Partial replace (failing sections)</option>
-            <option value="full_replace">Full replace (existing duct chases reused)</option>
-            <option value="new_install">New install (no existing ducts)</option>
+            {SCOPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Duct material</label>
           <select className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
-            <option value="flex">Insulated flex (cheapest, most common)</option>
-            <option value="sheet_metal">Sheet metal (premium, longest life)</option>
-            <option value="fiber_board">Fiberglass duct board (insulated rigid)</option>
+            {MATERIAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Stories</label>
           <select className="input mt-1 w-full" value={stories} onChange={e => setStories(e.target.value as Stories)}>
-            <option value="1">1 story</option>
-            <option value="2">2 stories</option>
-            <option value="3">3+ stories</option>
+            {STORIES_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Access difficulty</label>
           <select className="input mt-1 w-full" value={access} onChange={e => setAccess(e.target.value as Access)}>
-            <option value="easy">Easy (unfinished basement / open attic)</option>
-            <option value="normal">Normal (typical crawl space / partial attic)</option>
-            <option value="hard">Hard (finished ceilings / tight crawl / chase work)</option>
+            {ACCESS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Add Aeroseal injection?</label>
-          <select className="input mt-1 w-full" value={aeroseal} onChange={e => setAeroseal(e.target.value as 'yes' | 'no')}>
-            <option value="no">No</option>
-            <option value="yes">Yes (+$1,500–$3,200 — seals leaks from inside)</option>
+          <select className="input mt-1 w-full" value={aeroseal} onChange={e => setAeroseal(e.target.value as Aeroseal)}>
+            {AEROSEAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

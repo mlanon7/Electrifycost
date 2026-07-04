@@ -1,71 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy, findClimate } from '@/lib/data';
+import { ALL_STATES, findStateForZip, findStateEnergy, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Tier = 'basic_80' | 'mid_95' | 'premium_97' | 'condensing_98';
-type Size = 'small' | 'medium' | 'large';
-type Difficulty = 'easy' | 'average' | 'hard';
-
-interface Band { low: number; mid: number; high: number; }
-
-// Per CSV: gas-furnace-cost-ranges.csv
-// Equipment + labor + permit costs sourced from Modernize 2024 and DOE 2024 furnace rule data.
-const TIERS: Record<Tier, { afue: number; equipment: Record<Size, Band>; labor: Band; label: string }> = {
-  basic_80: {
-    afue: 80, label: '80% AFUE single-stage',
-    equipment: {
-      small:  { low: 1500, mid: 2100, high: 2700 },
-      medium: { low: 1800, mid: 2400, high: 3000 },
-      large:  { low: 2400, mid: 3000, high: 3800 },
-    },
-    labor: { low: 1500, mid: 2200, high: 3000 },
-  },
-  mid_95: {
-    afue: 95, label: '95% AFUE single-stage (most common)',
-    equipment: {
-      small:  { low: 2100, mid: 2800, high: 3600 },
-      medium: { low: 2500, mid: 3300, high: 4200 },
-      large:  { low: 3200, mid: 4200, high: 5400 },
-    },
-    labor: { low: 1700, mid: 2500, high: 3500 },
-  },
-  premium_97: {
-    afue: 97, label: '97% AFUE two-stage variable',
-    equipment: {
-      small:  { low: 3200, mid: 4200, high: 5400 },
-      medium: { low: 3800, mid: 5000, high: 6500 },
-      large:  { low: 4500, mid: 6000, high: 7800 },
-    },
-    labor: { low: 1900, mid: 2800, high: 3800 },
-  },
-  condensing_98: {
-    afue: 98, label: '98% AFUE modulating top-tier',
-    equipment: {
-      small:  { low: 4400, mid: 5800, high: 7500 },
-      medium: { low: 5000, mid: 6500, high: 8500 },
-      large:  { low: 5800, mid: 7500, high: 9800 },
-    },
-    labor: { low: 2200, mid: 3200, high: 4500 },
-  },
-};
-
-const DIFFICULTY_MULT: Record<Difficulty, number> = { easy: 0.9, average: 1.0, hard: 1.25 };
-
-function scale(b: Band, m: number): Band {
-  return { low: b.low * m, mid: b.mid * m, high: b.high * m };
-}
-function add(a: Band, b: Band): Band {
-  return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high };
-}
-
-// Compare against heat pump replacement (rough industry mid for same home size)
-const HEAT_PUMP_COMPARE: Record<Size, Band> = {
-  small:  { low: 7000,  mid: 11000, high: 15000 },
-  medium: { low: 9000,  mid: 13500, high: 19000 },
-  large:  { low: 12000, mid: 17000, high: 24000 },
-};
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, TIERS, TIER_OPTIONS, SIZE_OPTIONS, DIFFICULTY_OPTIONS,
+  type Tier, type Size, type Difficulty,
+} from '@/lib/calcs/gas-furnace';
 
 export default function GasFurnaceCalculator() {
   useCalculatorUsed('gas-furnace');
@@ -83,31 +26,47 @@ export default function GasFurnaceCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const stateLab = findStateLabor(state);
-    const laborMult = stateLab?.hvac_multiplier ?? 1.0;
-    const t = TIERS[tier];
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.tier && TIER_OPTIONS.some(o => o.value === h.tier)) setTier(h.tier as Tier);
+    if (h.size && SIZE_OPTIONS.some(o => o.value === h.size)) setSize(h.size as Size);
+    if (h.diff && DIFFICULTY_OPTIONS.some(o => o.value === h.diff)) setDifficulty(h.diff as Difficulty);
+    if (h.heat) {
+      const n = parseInt(h.heat, 10);
+      if (Number.isFinite(n)) setAnnualHeatingCost(Math.min(6000, Math.max(0, n)));
+    }
+  });
+  const hashValues = { state, zip, tier, size, diff: difficulty, heat: annualHeatingCost };
+  useHashStateSync(hashValues);
 
-    const equipment = t.equipment[size];
-    const labor = scale(t.labor, laborMult * DIFFICULTY_MULT[difficulty]);
-    const permit: Band = { low: 150, mid: 300, high: 650 };
-    const gross = add(add(equipment, labor), permit);
+  const result = useMemo(
+    () => compute({ state, tier, size, difficulty, annualHeatingCost }),
+    [state, tier, size, difficulty, annualHeatingCost],
+  );
 
-    // Operating cost savings vs older 80% AFUE furnace baseline
-    const baselineAFUE = 80;
-    const newAFUE = t.afue;
-    const annualSavings = annualHeatingCost > 0
-      ? Math.round(annualHeatingCost * (1 - baselineAFUE / newAFUE))
-      : 0;
-
-    // Heat pump alternative
-    const hp = HEAT_PUMP_COMPARE[size];
-    const hpDelta = hp.mid - gross.mid;
-
-    return { equipment, labor, permit, gross, annualSavings, hp, hpDelta, afue: newAFUE };
-  }, [state, tier, size, difficulty, annualHeatingCost]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('gas-furnace', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
+
   const climate = findClimate(state)?.iecc_zone ?? '4A';
   const elec = findStateEnergy(state);
 
@@ -130,27 +89,20 @@ export default function GasFurnaceCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="tier">Efficiency tier</label>
           <select id="tier" className="input" value={tier} onChange={e => setTier(e.target.value as Tier)}>
-            <option value="basic_80">80% AFUE single-stage (southern US only)</option>
-            <option value="mid_95">95% AFUE single-stage (northern US minimum, most common)</option>
-            <option value="premium_97">97% AFUE two-stage / variable</option>
-            <option value="condensing_98">98% AFUE modulating top-tier</option>
+            {TIER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="label" htmlFor="size">Home size</label>
           <select id="size" className="input" value={size} onChange={e => setSize(e.target.value as Size)}>
-            <option value="small">Small (≤1500 sqft) — 60-80k BTU</option>
-            <option value="medium">Medium (1500-2500 sqft) — 80-100k BTU</option>
-            <option value="large">Large (2500+ sqft) — 100-140k BTU</option>
+            {SIZE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="difficulty">Install difficulty</label>
           <select id="difficulty" className="input" value={difficulty} onChange={e => setDifficulty(e.target.value as Difficulty)}>
-            <option value="easy">Easy (same-spot swap, no venting changes)</option>
-            <option value="average">Average (some duct/venting work)</option>
-            <option value="hard">Hard (relocate, new venting, basement-to-attic conversion)</option>
+            {DIFFICULTY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 

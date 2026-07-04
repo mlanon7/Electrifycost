@@ -1,31 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Loop = 'vertical' | 'horizontal' | 'pond' | 'open';
-type Tonnage = '2' | '3' | '4' | '5' | '6';
-type Existing = 'yes' | 'no';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// Fully-loaded per-ton installed cost by loop type. Industry consolidates the
-// indoor heat-pump unit + ground loop + plumbing tie-in into a single per-ton
-// figure ($3,500–$5,500/ton typical, HomeGuide 2026; premium installs up to
-// $11,700/ton, Bryant 2026). Sources: data/csv/geothermal-cost-ranges.csv.
-const LOOP_PER_TON: Record<Loop, CostBand> = {
-  vertical:   { low: 3500, mid: 4500, high: 6500 },
-  horizontal: { low: 2500, mid: 3500, high: 5000 },
-  pond:       { low: 2200, mid: 3200, high: 4500 },
-  open:       { low: 2800, mid: 3800, high: 5200 },
-};
-
-const DUCT_REUSE_BONUS: CostBand = { low: -1500, mid: -2500, high: -4000 };  // savings if existing ducts reused
-
-const PERMIT_DESIGN: CostBand = { low: 800, mid: 1500, high: 2800 };          // engineering + drilling permit
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, TONNAGE_OPTIONS, LOOP_OPTIONS, DUCT_OPTIONS, YEAR_OPTIONS,
+  type Loop, type Tonnage, type Existing,
+} from '@/lib/calcs/geothermal';
 
 export default function GeothermalCalculator() {
   useCalculatorUsed('geothermal');
@@ -43,31 +26,46 @@ export default function GeothermalCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const hvacMult = lab?.hvac_multiplier ?? 1.0;
-    const ton = parseFloat(tonnage);
-    // Fully-loaded per-ton install (indoor unit + loop + tie-in).
-    const loopCost = scale(LOOP_PER_TON[loop], ton * hvacMult);
-    const ductBonus = existingDucts === 'yes' ? DUCT_REUSE_BONUS : { low: 0, mid: 0, high: 0 };
-    const permit = scale(PERMIT_DESIGN, hvacMult);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.tons && TONNAGE_OPTIONS.some(o => o.value === h.tons)) setTonnage(h.tons as Tonnage);
+    if (h.loop && LOOP_OPTIONS.some(o => o.value === h.loop)) setLoop(h.loop as Loop);
+    if (h.ducts && DUCT_OPTIONS.some(o => o.value === h.ducts)) setExistingDucts(h.ducts as Existing);
+    if (h.yr) {
+      const n = parseInt(h.yr, 10);
+      if (YEAR_OPTIONS.some(o => o.value === n)) setInstallYear(n);
+    }
+  });
+  const hashValues = { state, zip, tons: tonnage, loop, ducts: existingDucts, yr: installYear };
+  useHashStateSync(hashValues);
 
-    const gross: CostBand = {
-      low: loopCost.low + ductBonus.low + permit.low,
-      mid: loopCost.mid + ductBonus.mid + permit.mid,
-      high: loopCost.high + ductBonus.high + permit.high,
-    };
+  const result = useMemo(
+    () => compute({ state, tonnage, loop, existingDucts, installYear }),
+    [state, tonnage, loop, existingDucts, installYear],
+  );
 
-    // Federal 25D credit — TERMINATED by OBBBA for property placed in service after 2025-12-31.
-    // Source: IRS https://www.irs.gov/credits-deductions/residential-clean-energy-credit
-    const fedRate = installYear <= 2025 ? 0.30 : 0;
-    const fedCredit: CostBand = { low: gross.low * fedRate, mid: gross.mid * fedRate, high: gross.high * fedRate };
-    const net: CostBand = { low: gross.low - fedCredit.low, mid: gross.mid - fedCredit.mid, high: gross.high - fedCredit.high };
-
-    return { loopCost, ductBonus, permit, gross, fedCredit, net, fedRate };
-  }, [state, tonnage, loop, existingDucts, installYear]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('geothermal', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -88,35 +86,25 @@ export default function GeothermalCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">System size (tons)</label>
           <select className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
-            <option value="2">2 ton (small home)</option>
-            <option value="3">3 ton (1,500–2,000 sqft)</option>
-            <option value="4">4 ton (2,000–2,500 sqft)</option>
-            <option value="5">5 ton (2,500–3,500 sqft)</option>
-            <option value="6">6 ton (large)</option>
+            {TONNAGE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ground loop type</label>
           <select className="input mt-1 w-full" value={loop} onChange={e => setLoop(e.target.value as Loop)}>
-            <option value="vertical">Vertical bore (most common, smallest yard)</option>
-            <option value="horizontal">Horizontal trench (needs ~1 acre yard)</option>
-            <option value="pond">Pond / lake loop (cheapest if available)</option>
-            <option value="open">Open loop (well + discharge)</option>
+            {LOOP_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing ductwork?</label>
           <select className="input mt-1 w-full" value={existingDucts} onChange={e => setExistingDucts(e.target.value as Existing)}>
-            <option value="yes">Yes (reuse)</option>
-            <option value="no">No (add to install cost)</option>
+            {DUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
           <select className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
-            <option value={2026}>2026 (no federal — 25D expired)</option>
-            <option value={2027}>2027 (no federal)</option>
-            <option value={2025}>2025 (historical — last 30% year)</option>
+            {YEAR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <p className="mt-1 text-[11px] text-ink-600">25D credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
         </div>
