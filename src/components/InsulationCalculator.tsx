@@ -1,104 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findClimate, stateEnergy, findHomeEnergyRebateStatus } from '@/lib/data';
+import { ALL_STATES, findStateForZip, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Scope = 'attic_only' | 'walls_only' | 'attic_walls' | 'attic_walls_air' | 'whole_envelope';
-type AtticType = 'blown_cellulose' | 'blown_fiberglass' | 'open_foam' | 'closed_foam';
-type ExistingR = 'none' | 'low_r11' | 'medium_r19_30' | 'high_r38plus';
-type Income = 'unknown' | 'low' | 'moderate' | 'high';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// Per-sqft pricing for attic insulation by material type, 2026 contractor rates.
-// Sources: 2024 NAIMA contractor pricing surveys, Energy Star Home Performance with ENERGY STAR contractor data,
-// HomeAdvisor + Modernize 2024-2025 marketplace data, Building Science Corp. retrofit cost guides.
-const ATTIC_PER_SQFT: Record<AtticType, CostBand> = {
-  blown_cellulose:  { low: 1.50, mid: 2.00, high: 2.50 },    // R-49 typical depth
-  blown_fiberglass: { low: 1.25, mid: 1.75, high: 2.25 },    // R-49 typical depth
-  open_foam:        { low: 3.50, mid: 4.50, high: 6.00 },    // R-30 open-cell, ~10 inches
-  closed_foam:      { low: 4.50, mid: 6.00, high: 8.50 },    // R-38 closed-cell, ~6 inches
-};
-
-// Wall drill-and-fill (cellulose or fiberglass) — square feet of exterior wall surface
-const WALL_PER_SQFT: CostBand = { low: 2.00, mid: 3.00, high: 4.50 };
-
-// Air sealing (blower door diagnostic + sealing) — flat job cost range
-const AIR_SEAL: CostBand = { low: 600, mid: 1200, high: 2200 };
-
-// Rim joist + crawl space encapsulation (basement/crawl improvement)
-const CRAWL: CostBand = { low: 3500, mid: 7500, high: 14000 };
-
-// Target R-values by IECC climate zone (DOE / 2021 IECC residential)
-// https://www.energy.gov/energysaver/types-insulation
-function targetR(state: string): { attic: number; wall: number } {
-  const zone = findClimate(state)?.iecc_zone ?? '4A';
-  const head = zone[0];
-  switch (head) {
-    case '1': return { attic: 30, wall: 13 };
-    case '2': return { attic: 49, wall: 13 };
-    case '3': return { attic: 49, wall: 15 };
-    case '4': return { attic: 60, wall: 15 };
-    case '5': return { attic: 60, wall: 20 };
-    case '6': return { attic: 60, wall: 20 };
-    case '7': return { attic: 60, wall: 21 };
-    case '8': return { attic: 60, wall: 21 };
-    default:  return { attic: 49, wall: 15 };
-  }
-}
-
-// Heating + cooling savings estimate (very rough)
-// Per Building Science Corp / RECS analysis, attic upgrade from R-11 to R-49 typically cuts
-// HVAC energy 8-15%. Wall fill 5-10%. Air-sealing 5-15%.
-function annualSavingsPct(scope: Scope, existing: ExistingR): number {
-  const atticGain = existing === 'none' ? 0.15
-    : existing === 'low_r11' ? 0.12
-    : existing === 'medium_r19_30' ? 0.05
-    : 0.02;
-  switch (scope) {
-    case 'attic_only': return atticGain;
-    case 'walls_only': return 0.07;
-    case 'attic_walls': return atticGain + 0.05;
-    case 'attic_walls_air': return atticGain + 0.05 + 0.07;
-    case 'whole_envelope': return atticGain + 0.05 + 0.07 + 0.04;
-  }
-}
-
-// Typical annual heating + cooling cost per sqft (very rough, from EIA RECS 2020)
-// $1.20/sqft/yr in cold climates, $0.75 in mild, $0.90 average
-function annualHvacCostPerSqft(state: string, sqft: number): number {
-  const zone = findClimate(state)?.iecc_zone ?? '4A';
-  const head = zone[0];
-  const perSqft = head === '5' || head === '6' || head === '7' || head === '8' ? 1.20
-    : head === '4' ? 1.00
-    : head === '3' ? 0.85
-    : 0.70;
-  return perSqft * sqft;
-}
-
-// HOMES rebate (DOE Home Energy Rebates) per modeled savings tier
-// Up to $4,000 moderate-income / $8,000 low-income for 35%+ modeled savings
-function homesRebateEstimate(state: string, income: Income, savingsPct: number): CostBand {
-  const status = findHomeEnergyRebateStatus(state)?.status;
-  if (status !== 'open') return { low: 0, mid: 0, high: 0 };
-  if (income === 'high' || income === 'unknown') {
-    // HOMES has a market-rate tier (non-income-qualified) for 35%+ modeled savings: up to $2,000–$4,000
-    if (savingsPct >= 0.20) return { low: 1000, mid: 2000, high: 4000 };
-    return { low: 0, mid: 0, high: 0 };
-  }
-  if (income === 'moderate') {
-    if (savingsPct >= 0.35) return { low: 2000, mid: 4000, high: 4000 };
-    if (savingsPct >= 0.20) return { low: 1000, mid: 2000, high: 2000 };
-  }
-  if (income === 'low') {
-    if (savingsPct >= 0.35) return { low: 4000, mid: 8000, high: 8000 };
-    if (savingsPct >= 0.20) return { low: 2000, mid: 4000, high: 4000 };
-  }
-  return { low: 0, mid: 0, high: 0 };
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, targetR, SCOPE_OPTIONS, ATTIC_OPTIONS, EXISTING_OPTIONS,
+  type Scope, type AtticType, type ExistingR, type Income,
+} from '@/lib/calcs/insulation';
 
 export default function InsulationCalculator() {
   useCalculatorUsed('insulation');
@@ -117,42 +27,48 @@ export default function InsulationCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const atticArea = sqft;                  // assume single-story footprint = attic area
-    const wallArea = sqft * 1.2;             // rough: exterior wall surface ≈ 1.2× footprint
-    const stateLab = findStateLabor(state);
-    const laborMult = stateLab?.electrician_multiplier ?? 1.0;  // proxy for general trades
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.sqft) {
+      const n = parseInt(h.sqft, 10);
+      if (Number.isFinite(n)) setSqft(Math.min(6000, Math.max(500, n)));
+    }
+    if (h.scope && SCOPE_OPTIONS.some(o => o.value === h.scope)) setScope(h.scope as Scope);
+    if (h.attic && ATTIC_OPTIONS.some(o => o.value === h.attic)) setAtticType(h.attic as AtticType);
+    if (h.existing && EXISTING_OPTIONS.some(o => o.value === h.existing)) setExisting(h.existing as ExistingR);
+    if (h.income && ['unknown', 'low', 'moderate', 'high'].includes(h.income)) setIncome(h.income as Income);
+  });
+  const hashValues = { state, zip, sqft, scope, attic: atticType, existing, income };
+  useHashStateSync(hashValues);
 
-    const atticPer = ATTIC_PER_SQFT[atticType];
-    const atticCost: CostBand = scale(atticPer, atticArea * laborMult);
-    const wallCost: CostBand = scale(WALL_PER_SQFT, wallArea * laborMult);
-    const airSealCost = scale(AIR_SEAL, laborMult);
-    const crawlCost = scale(CRAWL, laborMult);
+  const result = useMemo(
+    () => compute({ state, sqft, scope, atticType, existing, income }),
+    [state, sqft, scope, atticType, existing, income],
+  );
 
-    let gross: CostBand = { low: 0, mid: 0, high: 0 };
-    if (scope === 'attic_only') gross = atticCost;
-    else if (scope === 'walls_only') gross = wallCost;
-    else if (scope === 'attic_walls') gross = add(atticCost, wallCost);
-    else if (scope === 'attic_walls_air') gross = add(add(atticCost, wallCost), airSealCost);
-    else if (scope === 'whole_envelope') gross = add(add(add(atticCost, wallCost), airSealCost), crawlCost);
-
-    const savingsPct = annualSavingsPct(scope, existing);
-    const annualHvac = annualHvacCostPerSqft(state, sqft);
-    const annualSavings = annualHvac * savingsPct;
-    const paybackYears = annualSavings > 0 ? Math.round((gross.mid / annualSavings) * 10) / 10 : null;
-
-    // HEEHRA / HOMES rebate
-    const homes = homesRebateEstimate(state, income, savingsPct);
-    const net: CostBand = {
-      low: Math.max(0, gross.low - homes.low),
-      mid: Math.max(0, gross.mid - homes.mid),
-      high: Math.max(0, gross.high - homes.high),
-    };
-
-    return { gross, atticCost, wallCost, airSealCost, crawlCost, savingsPct, annualHvac, annualSavings, paybackYears, homes, net };
-  }, [state, sqft, scope, atticType, existing, income]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('insulation', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
+
   const t = targetR(state);
   const climate = findClimate(state)?.iecc_zone ?? '4A';
 
@@ -190,31 +106,21 @@ export default function InsulationCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Job scope</label>
           <select className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
-            <option value="attic_only">Attic only</option>
-            <option value="walls_only">Walls only (drill-and-fill)</option>
-            <option value="attic_walls">Attic + walls</option>
-            <option value="attic_walls_air">Attic + walls + air-sealing (recommended)</option>
-            <option value="whole_envelope">Whole envelope (+ crawl/basement)</option>
+            {SCOPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Attic material</label>
           <select className="input mt-1 w-full" value={atticType} onChange={e => setAtticType(e.target.value as AtticType)}>
-            <option value="blown_cellulose">Blown-in cellulose (recommended)</option>
-            <option value="blown_fiberglass">Blown-in fiberglass</option>
-            <option value="open_foam">Open-cell spray foam</option>
-            <option value="closed_foam">Closed-cell spray foam</option>
+            {ATTIC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing attic R-value</label>
           <select className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as ExistingR)}>
-            <option value="none">None / nothing in attic</option>
-            <option value="low_r11">Low (R-11, ~3 inches)</option>
-            <option value="medium_r19_30">Medium (R-19 to R-30)</option>
-            <option value="high_r38plus">High (R-38 or more)</option>
+            {EXISTING_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
