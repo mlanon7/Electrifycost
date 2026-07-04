@@ -1,113 +1,15 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Fuel = 'natural_gas' | 'electric' | 'propane';
-type Tier = 'standard' | 'powervent' | 'condensing';
-type Size = 40 | 50 | 80;
-
-interface Band { low: number; mid: number; high: number; }
-
-// From tank-water-heater-cost-ranges.csv. 2026 mid-quote dollars.
-const CFG: Record<Fuel, Record<Tier, { equipment: Record<Size, Band>; install: Band; uef: number; annualKwh: number; annualTherms: number; label: string }>> = {
-  natural_gas: {
-    standard: {
-      equipment: {
-        40: { low: 600, mid: 850, high: 1200 },
-        50: { low: 700, mid: 1000, high: 1400 },
-        80: { low: 1100, mid: 1500, high: 2000 },
-      },
-      install: { low: 500, mid: 800, high: 1300 },
-      uef: 0.62, annualKwh: 0, annualTherms: 220, label: 'Atmospheric-vent 0.62 UEF',
-    },
-    powervent: {
-      equipment: {
-        40: { low: 900, mid: 1300, high: 1700 },
-        50: { low: 1100, mid: 1500, high: 2000 },
-        80: { low: 1500, mid: 2100, high: 2700 },
-      },
-      install: { low: 700, mid: 1100, high: 1600 },
-      uef: 0.68, annualKwh: 0, annualTherms: 200, label: 'Power-vent 0.68 UEF',
-    },
-    condensing: {
-      equipment: {
-        40: { low: 1400, mid: 1900, high: 2500 },
-        50: { low: 1700, mid: 2200, high: 2900 },
-        80: { low: 2200, mid: 2800, high: 3700 },
-      },
-      install: { low: 800, mid: 1200, high: 1800 },
-      uef: 0.86, annualKwh: 0, annualTherms: 158, label: 'Condensing 0.86 UEF',
-    },
-  },
-  electric: {
-    standard: {
-      equipment: {
-        40: { low: 400, mid: 650, high: 950 },
-        50: { low: 500, mid: 750, high: 1100 },
-        80: { low: 750, mid: 1100, high: 1500 },
-      },
-      install: { low: 400, mid: 700, high: 1100 },
-      uef: 0.91, annualKwh: 4880, annualTherms: 0, label: 'Resistance 0.91 UEF',
-    },
-    powervent: {
-      equipment: {
-        40: { low: 400, mid: 650, high: 950 },
-        50: { low: 500, mid: 750, high: 1100 },
-        80: { low: 750, mid: 1100, high: 1500 },
-      },
-      install: { low: 400, mid: 700, high: 1100 },
-      uef: 0.91, annualKwh: 4880, annualTherms: 0, label: 'Resistance (no power-vent variant)',
-    },
-    condensing: {
-      equipment: {
-        40: { low: 400, mid: 650, high: 950 },
-        50: { low: 500, mid: 750, high: 1100 },
-        80: { low: 750, mid: 1100, high: 1500 },
-      },
-      install: { low: 400, mid: 700, high: 1100 },
-      uef: 0.91, annualKwh: 4880, annualTherms: 0, label: 'Resistance (no condensing variant)',
-    },
-  },
-  propane: {
-    standard: {
-      equipment: {
-        40: { low: 650, mid: 900, high: 1300 },
-        50: { low: 800, mid: 1100, high: 1500 },
-        80: { low: 1200, mid: 1700, high: 2300 },
-      },
-      install: { low: 500, mid: 800, high: 1300 },
-      uef: 0.62, annualKwh: 0, annualTherms: 220, label: 'Atmospheric LP 0.62 UEF',
-    },
-    powervent: {
-      equipment: {
-        40: { low: 1000, mid: 1400, high: 1800 },
-        50: { low: 1200, mid: 1600, high: 2100 },
-        80: { low: 1600, mid: 2200, high: 2900 },
-      },
-      install: { low: 700, mid: 1100, high: 1600 },
-      uef: 0.68, annualKwh: 0, annualTherms: 200, label: 'LP power-vent 0.68 UEF',
-    },
-    condensing: {
-      equipment: {
-        40: { low: 1500, mid: 2000, high: 2700 },
-        50: { low: 1800, mid: 2400, high: 3100 },
-        80: { low: 2300, mid: 3000, high: 3900 },
-      },
-      install: { low: 800, mid: 1200, high: 1800 },
-      uef: 0.86, annualKwh: 0, annualTherms: 158, label: 'LP condensing 0.86 UEF',
-    },
-  },
-};
-
-// HPWH baseline (for head-to-head)
-const HPWH_BASELINE = { low: 2300, mid: 3100, high: 4200, annualKwh: 1380 };
-// Tankless gas baseline
-const TANKLESS_GAS_BASELINE = { low: 2800, mid: 4300, high: 6500, annualTherms: 180 };
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, TANKLESS_GAS_BASELINE,
+  FUEL_OPTIONS, TIER_OPTIONS, SIZE_OPTIONS,
+  type Fuel, type Tier, type Size,
+} from '@/lib/calcs/tank-water-heater';
 
 export default function TankWaterHeaterCalculator({ initialState }: { initialState?: string } = {}) {
   useCalculatorUsed('tank-water-heater');
@@ -124,35 +26,47 @@ export default function TankWaterHeaterCalculator({ initialState }: { initialSta
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.plumber_multiplier ?? 1.0;
-    const cfg = CFG[fuel][tier];
-    const equipment = cfg.equipment[size];
-    const install = scale(cfg.install, laborMult);
-    const permit: Band = { low: 75, mid: 150, high: 300 };
-    const gross = add(add(equipment, install), permit);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  // A hash-restored state deliberately wins over the page's initialState prop.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.fuel && FUEL_OPTIONS.some(o => o.value === h.fuel)) setFuel(h.fuel as Fuel);
+    if (h.tier && TIER_OPTIONS.some(o => o.value === h.tier)) setTier(h.tier as Tier);
+    if (h.size) {
+      const n = parseInt(h.size, 10);
+      if (SIZE_OPTIONS.some(o => o.value === n)) setSize(n as Size);
+    }
+  });
+  const hashValues = { state, zip, fuel, tier, size };
+  useHashStateSync(hashValues);
 
-    const energy = findStateEnergy(state);
-    const elec = (energy?.electricity_cents_per_kwh ?? 16) / 100;
-    const gas = energy?.natural_gas_dollars_per_therm ?? 1.45;
-    const propane = energy?.propane_dollars_per_gallon ?? 2.85;
-
-    const annualEnergyCost =
-      fuel === 'natural_gas' ? cfg.annualTherms * gas
-      : fuel === 'propane'    ? (cfg.annualTherms * 100000 / 91500) * propane // 91500 BTU/gal
-      : cfg.annualKwh * elec;
-
-    // Comparison vs HPWH (electric homes) or vs HPWH-from-gas (gas homes)
-    const hpwhAnnualCost = HPWH_BASELINE.annualKwh * elec;
-    const hpwhInstallMult = 1.0;
-    const hpwhGross: Band = scale({ low: HPWH_BASELINE.low, mid: HPWH_BASELINE.mid, high: HPWH_BASELINE.high }, hpwhInstallMult);
-    const hpwhSavingsPerYear = annualEnergyCost - hpwhAnnualCost;
-
-    return { equipment, install, permit, gross, annualEnergyCost, hpwhGross, hpwhAnnualCost, hpwhSavingsPerYear, label: cfg.label, uef: cfg.uef };
-  }, [state, fuel, tier, size]);
+  const result = useMemo(
+    () => compute({ state, fuel, tier, size }),
+    [state, fuel, tier, size],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('tank-water-heater', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -173,26 +87,20 @@ export default function TankWaterHeaterCalculator({ initialState }: { initialSta
         <div>
           <label className="label" htmlFor="fuel">Fuel</label>
           <select id="fuel" className="input" value={fuel} onChange={e => setFuel(e.target.value as Fuel)}>
-            <option value="natural_gas">Natural gas (most common)</option>
-            <option value="electric">Electric resistance</option>
-            <option value="propane">Propane (rural)</option>
+            {FUEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="tier">Efficiency tier</label>
           <select id="tier" className="input" value={tier} onChange={e => setTier(e.target.value as Tier)}>
-            <option value="standard">Standard atmospheric vent (gas/LP) or resistance (electric)</option>
-            <option value="powervent" disabled={fuel === 'electric'}>Power-vent (gas/LP only)</option>
-            <option value="condensing" disabled={fuel === 'electric'}>Condensing 95%+ (gas/LP only)</option>
+            {TIER_OPTIONS.map(o => <option key={o.value} value={o.value} disabled={o.gasOnly && fuel === 'electric'}>{o.label}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
           <label className="label" htmlFor="size">Tank size</label>
           <select id="size" className="input" value={size} onChange={e => setSize(Number(e.target.value) as Size)}>
-            <option value={40}>40 gal (1-3 people)</option>
-            <option value={50}>50 gal (3-5 people, most common)</option>
-            <option value={80}>80 gal (large family or solar self-consumption)</option>
+            {SIZE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

@@ -1,100 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Type = 'gas_condensing' | 'gas_non_condensing' | 'electric_pos' | 'electric_whole';
-type Size = '140k' | '180k' | '199k' | 'electric_18' | 'electric_27' | 'electric_36';
-type Existing = 'gas_tank' | 'electric_tank' | 'none_new';
-type GasLine = 'adequate' | 'upsize' | 'new_run';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// 2026 installed cost — Rinnai, Navien, Rheem, Bosch, A.O. Smith. Source: manufacturer MSRPs, contractor surveys.
-const EQUIPMENT: Record<Type, Record<Size, CostBand>> = {
-  gas_non_condensing: {     // direct vent, 80% AFUE, cheaper, shorter venting limits
-    '140k': { low: 1000, mid: 1300, high: 1600 },
-    '180k': { low: 1200, mid: 1500, high: 1900 },
-    '199k': { low: 1400, mid: 1750, high: 2200 },
-    'electric_18': { low: 0, mid: 0, high: 0 },
-    'electric_27': { low: 0, mid: 0, high: 0 },
-    'electric_36': { low: 0, mid: 0, high: 0 },
-  },
-  gas_condensing: {         // sealed combustion, 95% AFUE, PVC venting up to 100 ft
-    '140k': { low: 1500, mid: 1900, high: 2400 },
-    '180k': { low: 1800, mid: 2200, high: 2800 },
-    '199k': { low: 2100, mid: 2600, high: 3300 },
-    'electric_18': { low: 0, mid: 0, high: 0 },
-    'electric_27': { low: 0, mid: 0, high: 0 },
-    'electric_36': { low: 0, mid: 0, high: 0 },
-  },
-  electric_pos: {           // point-of-use under-sink — for additional bathrooms / kitchen
-    '140k': { low: 0, mid: 0, high: 0 },
-    '180k': { low: 0, mid: 0, high: 0 },
-    '199k': { low: 0, mid: 0, high: 0 },
-    'electric_18': { low: 250, mid: 350, high: 500 },
-    'electric_27': { low: 0, mid: 0, high: 0 },
-    'electric_36': { low: 0, mid: 0, high: 0 },
-  },
-  electric_whole: {         // whole-home — typically Stiebel Eltron Tempra Plus or EcoSmart
-    '140k': { low: 0, mid: 0, high: 0 },
-    '180k': { low: 0, mid: 0, high: 0 },
-    '199k': { low: 0, mid: 0, high: 0 },
-    'electric_18': { low: 0, mid: 0, high: 0 },
-    'electric_27': { low: 700, mid: 900, high: 1100 },     // 27 kW, 3-shower capable in warm-water states
-    'electric_36': { low: 900, mid: 1200, high: 1500 },    // 36 kW, whole-home in cold-water states
-  },
-};
-
-// Installation labor + materials
-const INSTALL_BASE: Record<Type, CostBand> = {
-  gas_non_condensing: { low: 800, mid: 1300, high: 2000 },
-  gas_condensing: { low: 1200, mid: 1800, high: 2800 },     // PVC venting + condensate drain
-  electric_pos: { low: 200, mid: 400, high: 700 },          // 240V circuit nearby
-  electric_whole: { low: 1500, mid: 2500, high: 4000 },     // multiple 50A circuits + panel upgrade often required
-};
-
-// Gas line work
-const GAS_LINE: Record<GasLine, CostBand> = {
-  adequate: { low: 0, mid: 0, high: 0 },
-  upsize: { low: 500, mid: 900, high: 1500 },               // 1/2" → 3/4" run for tankless demand
-  new_run: { low: 800, mid: 1500, high: 2800 },             // new run from meter
-};
-
-// Electric panel upgrade likelihood for electric whole-home tankless (it needs 100-150A by itself)
-const PANEL_UPGRADE: CostBand = { low: 2500, mid: 4000, high: 6500 };
-
-// Tank removal + disposal
-const TANK_REMOVE: CostBand = { low: 150, mid: 250, high: 400 };
-
-// Permit
-const PERMIT: CostBand = { low: 250, mid: 450, high: 800 };
-
-// Annual operating cost estimate based on actual water-heating physics.
-// Energy to heat water = gallons × 8.34 lb/gal × ΔT °F × 1 BTU/lb-°F
-// 1 therm = 100,000 BTU; 1 kWh = 3,412 BTU.
-// Default: 64 gal/day × 8.34 × 70°F rise = 37,363 BTU/day = 0.374 therm/day delivered (before UEF losses).
-// Source: DOE water-heating methodology https://www.energy.gov/energysaver/storage-water-heaters
-function annualOperatingCost(
-  type: Type,
-  gasPerTherm: number,
-  elecRate: number,
-  galPerDay = 64,
-  tempRiseF = 70,
-): number {
-  const btuPerDayDelivered = galPerDay * 8.34 * tempRiseF;
-  const thermsPerDayDelivered = btuPerDayDelivered / 100_000;
-  const kwhPerDayDelivered = btuPerDayDelivered / 3412;
-  switch (type) {
-    case 'gas_non_condensing': return (thermsPerDayDelivered / 0.82) * gasPerTherm * 365;  // UEF ~0.82
-    case 'gas_condensing':     return (thermsPerDayDelivered / 0.95) * gasPerTherm * 365;  // UEF ~0.95
-    case 'electric_pos':
-    case 'electric_whole':     return (kwhPerDayDelivered / 0.99) * elecRate * 365;        // UEF ~0.99
-  }
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, validSizesFor, SIZE_LABELS, TYPE_OPTIONS, EXISTING_OPTIONS, GAS_LINE_OPTIONS, PANEL_OPTIONS,
+  type Type, type Size, type Existing, type GasLine, type PanelOk,
+} from '@/lib/calcs/tankless-water-heater';
 
 export default function TanklessCalculator() {
   useCalculatorUsed('tankless-water-heater');
@@ -104,7 +18,7 @@ export default function TanklessCalculator() {
   const [size, setSize] = useState<Size>('180k');
   const [existing, setExisting] = useState<Existing>('gas_tank');
   const [gasLine, setGasLine] = useState<GasLine>('upsize');
-  const [panelOk, setPanelOk] = useState<'yes' | 'no' | 'unknown'>('yes');
+  const [panelOk, setPanelOk] = useState<PanelOk>('yes');
 
   useEffect(() => {
     if (zip.length === 5) {
@@ -113,45 +27,54 @@ export default function TanklessCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const plumbMult = lab?.plumber_multiplier ?? 1.0;
-    const elecMult = lab?.electrician_multiplier ?? 1.0;
-    const eRow = stateEnergy.find(e => e.state === state);
-    const elecRate = eRow ? eRow.electricity_cents_per_kwh / 100 : 0.16;
-    const gasRate = eRow ? eRow.natural_gas_dollars_per_therm : 1.50;
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    let t: Type = 'gas_condensing';
+    if (h.type && TYPE_OPTIONS.some(o => o.value === h.type)) {
+      t = h.type as Type;
+      setType(t);
+      // Restoring a type applies its default size first (same as the select's
+      // onChange), so the type/size pair can never be inconsistent; a valid
+      // h.size then wins below.
+      setSize(t.startsWith('gas') ? '180k' : t === 'electric_pos' ? 'electric_18' : 'electric_27');
+    }
+    if (h.size && validSizesFor(t).includes(h.size as Size)) setSize(h.size as Size);
+    if (h.exist && EXISTING_OPTIONS.some(o => o.value === h.exist)) setExisting(h.exist as Existing);
+    if (h.gas && GAS_LINE_OPTIONS.some(o => o.value === h.gas)) setGasLine(h.gas as GasLine);
+    if (h.panel && PANEL_OPTIONS.some(o => o.value === h.panel)) setPanelOk(h.panel as PanelOk);
+  });
+  const hashValues = { state, zip, type, size, exist: existing, gas: gasLine, panel: panelOk };
+  useHashStateSync(hashValues);
 
-    const equipment = EQUIPMENT[type][size];
-    const isGas = type === 'gas_condensing' || type === 'gas_non_condensing';
-    const install = scale(INSTALL_BASE[type], isGas ? plumbMult : elecMult);
-    const gasLineCost = isGas ? scale(GAS_LINE[gasLine], plumbMult) : { low: 0, mid: 0, high: 0 };
-    const panelUpgrade = type === 'electric_whole' && (panelOk === 'no' || panelOk === 'unknown')
-      ? (panelOk === 'no' ? scale(PANEL_UPGRADE, elecMult) : scale(PANEL_UPGRADE, elecMult * 0.5))
-      : { low: 0, mid: 0, high: 0 };
-    const tankRemove = existing === 'gas_tank' || existing === 'electric_tank'
-      ? scale(TANK_REMOVE, plumbMult) : { low: 0, mid: 0, high: 0 };
-    const permit = scale(PERMIT, plumbMult);
-
-    const gross = add(add(add(add(add(equipment, install), gasLineCost), panelUpgrade), tankRemove), permit);
-
-    const operating = annualOperatingCost(type, gasRate, elecRate);
-    // Tank baseline same physics: 0.374 therm/day delivered, divide by UEF
-    const dailyThermDelivered = 64 * 8.34 * 70 / 100_000;
-    const dailyKwhDelivered = 64 * 8.34 * 70 / 3412;
-    const tankBaselineGas = (dailyThermDelivered / 0.62) * gasRate * 365;        // UEF 0.62 standard gas tank
-    const tankBaselineElec = (dailyKwhDelivered / 0.92) * elecRate * 365;        // UEF 0.92 standard electric tank
-    const baselineForComparison = existing === 'electric_tank' ? tankBaselineElec : tankBaselineGas;
-    const annualSavings = baselineForComparison - operating;  // can be negative — that's the truth
-
-    return { equipment, install, gasLineCost, panelUpgrade, tankRemove, permit, gross, operating, annualSavings };
-  }, [state, type, size, existing, gasLine, panelOk]);
+  const result = useMemo(
+    () => compute({ state, type, size, existing, gasLine, panelOk }),
+    [state, type, size, existing, gasLine, panelOk],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
-  const validSizes: Size[] = type === 'gas_condensing' || type === 'gas_non_condensing'
-    ? ['140k', '180k', '199k']
-    : type === 'electric_pos'
-    ? ['electric_18']
-    : ['electric_27', 'electric_36'];
+  const validSizes = validSizesFor(type);
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('tankless-water-heater', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -177,35 +100,21 @@ export default function TanklessCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Tankless type</label>
           <select className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSize(e.target.value.startsWith('gas') ? '180k' : e.target.value === 'electric_pos' ? 'electric_18' : 'electric_27'); }}>
-            <option value="gas_condensing">Gas condensing (95% AFUE — recommended)</option>
-            <option value="gas_non_condensing">Gas non-condensing (82% AFUE — cheaper)</option>
-            <option value="electric_whole">Electric whole-home (27-36 kW — needs panel capacity)</option>
-            <option value="electric_pos">Electric point-of-use (under-sink booster)</option>
+            {TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Size</label>
           <select className="input mt-1 w-full" value={size} onChange={e => setSize(e.target.value as Size)}>
-            {validSizes.map(s => (
-              <option key={s} value={s}>
-                {s === '140k' ? '140,000 BTU/hr (2-3 bath)' :
-                 s === '180k' ? '180,000 BTU/hr (3 bath)' :
-                 s === '199k' ? '199,000 BTU/hr (4+ bath)' :
-                 s === 'electric_18' ? '18 kW point-of-use' :
-                 s === 'electric_27' ? '27 kW (warm-water states)' :
-                 '36 kW (cold-water states)'}
-              </option>
-            ))}
+            {validSizes.map(s => <option key={s} value={s}>{SIZE_LABELS[s]}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing water heater</label>
           <select className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as Existing)}>
-            <option value="gas_tank">Gas tank (40-50 gal)</option>
-            <option value="electric_tank">Electric tank (40-50 gal)</option>
-            <option value="none_new">New construction / no existing</option>
+            {EXISTING_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
@@ -213,9 +122,7 @@ export default function TanklessCalculator() {
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Gas line</label>
             <select className="input mt-1 w-full" value={gasLine} onChange={e => setGasLine(e.target.value as GasLine)}>
-              <option value="adequate">Adequate as-is</option>
-              <option value="upsize">Upsize existing run</option>
-              <option value="new_run">New run from meter</option>
+              {GAS_LINE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
         )}
@@ -224,9 +131,7 @@ export default function TanklessCalculator() {
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Panel capacity for 100-150A draw?</label>
             <select className="input mt-1 w-full" value={panelOk} onChange={e => setPanelOk(e.target.value as typeof panelOk)}>
-              <option value="yes">Yes — 200A+ service with spare capacity</option>
-              <option value="no">No — needs panel upgrade</option>
-              <option value="unknown">Unknown</option>
+              {PANEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
         )}

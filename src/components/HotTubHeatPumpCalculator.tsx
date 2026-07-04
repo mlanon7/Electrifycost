@@ -1,23 +1,11 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Heater = 'hp_small' | 'hp_med' | 'hp_large' | 'electric' | 'gas';
-
-interface Band { low: number; mid: number; high: number; }
-
-const HEATERS: Record<Heater, { equipment: Band; install: Band; annualKwh: number; annualTherms: number; label: string }> = {
-  hp_small:  { equipment: { low: 1800, mid: 2400, high: 3200 }, install: { low: 400, mid: 800, high: 1500 }, annualKwh: 1100, annualTherms: 0, label: 'Heat pump 300 gal' },
-  hp_med:    { equipment: { low: 2200, mid: 2800, high: 3800 }, install: { low: 500, mid: 900, high: 1700 }, annualKwh: 1500, annualTherms: 0, label: 'Heat pump 450 gal' },
-  hp_large:  { equipment: { low: 2800, mid: 3500, high: 4800 }, install: { low: 600, mid: 1100, high: 2000 }, annualKwh: 1900, annualTherms: 0, label: 'Heat pump 600+ gal' },
-  electric:  { equipment: { low: 400, mid: 600, high: 900 }, install: { low: 200, mid: 400, high: 800 }, annualKwh: 3800, annualTherms: 0, label: 'Electric resistance (built-in, baseline)' },
-  gas:       { equipment: { low: 1500, mid: 2200, high: 3200 }, install: { low: 800, mid: 1500, high: 2800 }, annualKwh: 200, annualTherms: 250, label: 'Gas heater (built-in)' },
-};
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, HEATER_OPTIONS, type Heater } from '@/lib/calcs/hot-tub-heat-pump';
 
 export default function HotTubHeatPumpCalculator() {
   useCalculatorUsed('hot-tub-heat-pump');
@@ -32,27 +20,38 @@ export default function HotTubHeatPumpCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0;
-    const h = HEATERS[heater];
-    const install = scale(h.install, laborMult);
-    const gross = add(h.equipment, install);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.heater && HEATER_OPTIONS.some(o => o.value === h.heater)) setHeater(h.heater as Heater);
+  });
+  const hashValues = { state, zip, heater };
+  useHashStateSync(hashValues);
 
-    const energy = findStateEnergy(state);
-    const elec = (energy?.electricity_cents_per_kwh ?? 16) / 100;
-    const gas = energy?.natural_gas_dollars_per_therm ?? 1.45;
-    const annualOp = h.annualKwh * elec + h.annualTherms * gas;
-
-    // Compare to electric resistance baseline
-    const baselineKwh = 3800;
-    const baselineOp = baselineKwh * elec;
-    const savings = Math.max(0, baselineOp - annualOp);
-
-    return { equipment: h.equipment, install, gross, annualOp, savings, label: h.label };
-  }, [state, heater]);
+  const result = useMemo(() => compute({ state, heater }), [state, heater]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('hot-tub-heat-pump', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -70,11 +69,7 @@ export default function HotTubHeatPumpCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="heater">Heater type</label>
           <select id="heater" className="input" value={heater} onChange={e => setHeater(e.target.value as Heater)}>
-            <option value="hp_small">Heat pump 300 gal tub</option>
-            <option value="hp_med">Heat pump 450 gal tub (most common)</option>
-            <option value="hp_large">Heat pump 600+ gal / swim spa</option>
-            <option value="electric">Electric resistance (built-in baseline)</option>
-            <option value="gas">Gas heater (NG/propane built-in)</option>
+            {HEATER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

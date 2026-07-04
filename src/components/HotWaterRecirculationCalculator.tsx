@@ -1,31 +1,17 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findStateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Type = 'dedicated' | 'crossover' | 'demand' | 'timer' | 'tankless';
-
-interface Band { low: number; mid: number; high: number; }
-
-const TYPES: Record<Type, { pump: Band; install: Band; waterSavedGalYr: number; electricityKwhYr: number; label: string }> = {
-  dedicated: { pump: { low: 250, mid: 400, high: 650 },  install: { low: 400, mid: 800, high: 1500 }, waterSavedGalYr: 12000, electricityKwhYr: 250, label: 'Dedicated return loop (best)' },
-  crossover: { pump: { low: 180, mid: 275, high: 400 },  install: { low: 150, mid: 300, high: 600 },  waterSavedGalYr: 8000,  electricityKwhYr: 150, label: 'Crossover (no new return line)' },
-  demand:    { pump: { low: 300, mid: 450, high: 650 },  install: { low: 200, mid: 400, high: 800 },  waterSavedGalYr: 10000, electricityKwhYr: 80,  label: 'Demand-activated (most efficient)' },
-  timer:     { pump: { low: 150, mid: 225, high: 350 },  install: { low: 100, mid: 250, high: 500 },  waterSavedGalYr: 5000,  electricityKwhYr: 400, label: 'Timer-only continuous loop' },
-  tankless:  { pump: { low: 400, mid: 600, high: 900 },  install: { low: 300, mid: 600, high: 1200 }, waterSavedGalYr: 9000,  electricityKwhYr: 200, label: 'Tankless-compatible kit' },
-};
-
-const WATER_RATE_PER_1000_GAL = 8.50; // US average for water + sewer combined
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, TYPE_OPTIONS, type RecircType } from '@/lib/calcs/hot-water-recirculation';
 
 export default function HotWaterRecirculationCalculator() {
   useCalculatorUsed('hot-water-recirculation');
   const [state, setState] = useState('CA');
   const [zip, setZip] = useState('');
-  const [type, setType] = useState<Type>('demand');
+  const [type, setType] = useState<RecircType>('demand');
 
   useEffect(() => {
     if (zip.length === 5) {
@@ -34,23 +20,38 @@ export default function HotWaterRecirculationCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.plumber_multiplier ?? 1.0;
-    const t = TYPES[type];
-    const install = scale(t.install, laborMult);
-    const gross = add(t.pump, install);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.type && TYPE_OPTIONS.some(o => o.value === h.type)) setType(h.type as RecircType);
+  });
+  const hashValues = { state, zip, type };
+  useHashStateSync(hashValues);
 
-    const energy = findStateEnergy(state);
-    const elec = (energy?.electricity_cents_per_kwh ?? 16) / 100;
-    const waterSavings = (t.waterSavedGalYr / 1000) * WATER_RATE_PER_1000_GAL;
-    const pumpCost = t.electricityKwhYr * elec;
-    const netSavings = waterSavings - pumpCost;
-
-    return { pump: t.pump, install, gross, waterSavings, pumpCost, netSavings, label: t.label, waterSavedGalYr: t.waterSavedGalYr };
-  }, [state, type]);
+  const result = useMemo(() => compute({ state, type }), [state, type]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('hot-water-recirculation', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -67,12 +68,8 @@ export default function HotWaterRecirculationCalculator() {
         </div>
         <div className="md:col-span-2">
           <label className="label" htmlFor="type">System type</label>
-          <select id="type" className="input" value={type} onChange={e => setType(e.target.value as Type)}>
-            <option value="dedicated">Dedicated return loop (best performance, renovation only)</option>
-            <option value="crossover">Crossover undersink (no new line — most common retrofit)</option>
-            <option value="demand">Demand-activated (button or motion — most efficient)</option>
-            <option value="timer">Timer-only continuous loop (cheapest but wasteful)</option>
-            <option value="tankless">Tankless-compatible kit (Navien ComfortFlow, Rinnai)</option>
+          <select id="type" className="input" value={type} onChange={e => setType(e.target.value as RecircType)}>
+            {TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>
