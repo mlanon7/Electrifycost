@@ -90,13 +90,13 @@ export function compute(inputs: WoodPelletStoveInputs, opts?: ComputeOpts): Wood
 export const TIER_INPUTS: TierInputs<WoodPelletStoveInputs> = {
   small:   { state: 'US', stove: 'pellet_small' },
   typical: { state: 'US', stove: 'wood_medium' },
-  large:   { state: 'US', stove: 'pellet_insert' },
+  large:   { state: 'US', stove: 'wood_large_catalytic' },
 };
 
 export const TIER_LABELS: TierLabels = {
   small: 'pellet stove',
   typical: 'wood stove + flue',
-  large: 'fireplace insert + chimney',
+  large: 'large catalytic wood stove',
 };
 
 export const COST_MIX: CostMix = { material: 0.60, labor: 0.37, equipment: 0.03 };

@@ -76,10 +76,12 @@ export const TIER_INPUTS: TierInputs<HotTubHeatPumpInputs> = {
   large:   { state: 'US', heater: 'hp_large' },
 };
 
+// Labels name the configs the tiers actually compute (heater sizes), not the
+// old hand-curated wiring tiers this calculator never modeled.
 export const TIER_LABELS: TierLabels = {
-  small: 'plug-in',
-  typical: 'hardwired',
-  large: '+ circuit / pad',
+  small: '300-gal heat pump',
+  typical: '450-gal heat pump',
+  large: '600+ gal heat pump',
 };
 
 export const COST_MIX: CostMix = { material: 0.70, labor: 0.27, equipment: 0.03 };
