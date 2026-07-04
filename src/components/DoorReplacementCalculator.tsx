@@ -1,29 +1,11 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type DoorType = 'front_steel' | 'front_fiberglass_mid' | 'front_fiberglass_premium' | 'front_wood' | 'sliding_vinyl' | 'sliding_fiberglass' | 'sliding_wood' | 'french' | 'garage_steel_single' | 'garage_steel_double' | 'garage_premium';
-
-interface Band { low: number; mid: number; high: number; }
-
-const DOORS: Record<DoorType, { equipment: Band; install: Band; label: string }> = {
-  front_steel:              { equipment: { low: 200, mid: 400, high: 650 },   install: { low: 300, mid: 500, high: 800 },   label: 'Front — steel basic' },
-  front_fiberglass_mid:     { equipment: { low: 500, mid: 850, high: 1300 },  install: { low: 300, mid: 600, high: 1000 },  label: 'Front — fiberglass mid (most popular)' },
-  front_fiberglass_premium: { equipment: { low: 1100, mid: 1700, high: 2400 }, install: { low: 400, mid: 700, high: 1200 },  label: 'Front — fiberglass premium' },
-  front_wood:               { equipment: { low: 1500, mid: 2400, high: 3800 }, install: { low: 500, mid: 900, high: 1500 },  label: 'Front — solid wood' },
-  sliding_vinyl:            { equipment: { low: 800, mid: 1200, high: 1800 }, install: { low: 400, mid: 700, high: 1100 },  label: 'Sliding patio — vinyl basic' },
-  sliding_fiberglass:       { equipment: { low: 2000, mid: 3200, high: 4800 }, install: { low: 600, mid: 1100, high: 1800 }, label: 'Sliding patio — fiberglass premium' },
-  sliding_wood:             { equipment: { low: 3500, mid: 5500, high: 8500 }, install: { low: 800, mid: 1400, high: 2200 }, label: 'Sliding patio — wood premium' },
-  french:                   { equipment: { low: 1800, mid: 2800, high: 4500 }, install: { low: 700, mid: 1300, high: 2200 }, label: 'French double door' },
-  garage_steel_single:      { equipment: { low: 500, mid: 850, high: 1300 },  install: { low: 300, mid: 500, high: 900 },   label: 'Garage — steel single 8x7' },
-  garage_steel_double:      { equipment: { low: 900, mid: 1500, high: 2400 }, install: { low: 400, mid: 700, high: 1200 },  label: 'Garage — steel double 16x7' },
-  garage_premium:           { equipment: { low: 2500, mid: 4500, high: 8500 }, install: { low: 500, mid: 1000, high: 1800 }, label: 'Garage — premium double (carriage/wood/glass)' },
-};
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, DOOR_GROUPS, type DoorType } from '@/lib/calcs/door-replacement';
 
 export default function DoorReplacementCalculator() {
   useCalculatorUsed('door-replacement');
@@ -38,16 +20,38 @@ export default function DoorReplacementCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0;
-    const d = DOORS[door];
-    const install = scale(d.install, laborMult);
-    const gross = add(d.equipment, install);
-    return { equipment: d.equipment, install, gross, label: d.label };
-  }, [state, door]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.door && DOOR_GROUPS.some(g => g.options.some(o => o.value === h.door))) setDoor(h.door as DoorType);
+  });
+  const hashValues = { state, zip, door };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(() => compute({ state, door }), [state, door]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('door-replacement', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -65,23 +69,11 @@ export default function DoorReplacementCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="door">Door type</label>
           <select id="door" className="input" value={door} onChange={e => setDoor(e.target.value as DoorType)}>
-            <optgroup label="Front entry">
-              <option value="front_steel">Steel basic</option>
-              <option value="front_fiberglass_mid">Fiberglass mid (most popular)</option>
-              <option value="front_fiberglass_premium">Fiberglass premium</option>
-              <option value="front_wood">Solid wood</option>
-            </optgroup>
-            <optgroup label="Patio">
-              <option value="sliding_vinyl">Sliding vinyl basic</option>
-              <option value="sliding_fiberglass">Sliding fiberglass premium</option>
-              <option value="sliding_wood">Sliding wood premium</option>
-              <option value="french">French double door</option>
-            </optgroup>
-            <optgroup label="Garage">
-              <option value="garage_steel_single">Steel single 8×7</option>
-              <option value="garage_steel_double">Steel double 16×7</option>
-              <option value="garage_premium">Premium (carriage / wood / glass)</option>
-            </optgroup>
+            {DOOR_GROUPS.map(g => (
+              <optgroup key={g.label} label={g.label}>
+                {g.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </optgroup>
+            ))}
           </select>
         </div>
       </div>

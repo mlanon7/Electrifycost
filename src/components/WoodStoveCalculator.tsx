@@ -1,26 +1,11 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Stove = 'wood_small' | 'wood_medium' | 'wood_large_catalytic' | 'pellet_small' | 'pellet_medium' | 'pellet_large' | 'pellet_insert' | 'masonry';
-
-interface Band { low: number; mid: number; high: number; }
-
-const STOVES: Record<Stove, { equipment: Band; install: Band; fuel: Band; label: string }> = {
-  wood_small:           { equipment: { low: 1400, mid: 2200, high: 3200 }, install: { low: 1500, mid: 2500, high: 4500 }, fuel: { low: 400, mid: 600, high: 900 }, label: 'Small wood stove (1500 sqft)' },
-  wood_medium:          { equipment: { low: 1800, mid: 2800, high: 4000 }, install: { low: 1600, mid: 2700, high: 4800 }, fuel: { low: 500, mid: 800, high: 1200 }, label: 'Medium wood stove (2000 sqft)' },
-  wood_large_catalytic: { equipment: { low: 2800, mid: 4200, high: 6000 }, install: { low: 1800, mid: 3000, high: 5200 }, fuel: { low: 700, mid: 1100, high: 1600 }, label: 'Large catalytic wood stove' },
-  pellet_small:         { equipment: { low: 1800, mid: 2600, high: 3800 }, install: { low: 1200, mid: 2000, high: 3500 }, fuel: { low: 500, mid: 750, high: 1100 }, label: 'Small pellet stove (1500 sqft)' },
-  pellet_medium:        { equipment: { low: 2200, mid: 3200, high: 4500 }, install: { low: 1300, mid: 2200, high: 3800 }, fuel: { low: 650, mid: 1000, high: 1500 }, label: 'Medium pellet stove (2000 sqft)' },
-  pellet_large:         { equipment: { low: 2800, mid: 4000, high: 5500 }, install: { low: 1400, mid: 2400, high: 4200 }, fuel: { low: 800, mid: 1200, high: 1800 }, label: 'Large pellet stove' },
-  pellet_insert:        { equipment: { low: 2500, mid: 3500, high: 5000 }, install: { low: 1500, mid: 2500, high: 4000 }, fuel: { low: 600, mid: 900, high: 1300 }, label: 'Pellet insert (fireplace retrofit)' },
-  masonry:              { equipment: { low: 8000, mid: 15000, high: 28000 }, install: { low: 5000, mid: 10000, high: 18000 }, fuel: { low: 400, mid: 600, high: 900 }, label: 'Russian/masonry heater (premium)' },
-};
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, STOVE_GROUPS, STOVE_OPTIONS, type Stove } from '@/lib/calcs/wood-pellet-stove';
 
 export default function WoodStoveCalculator() {
   useCalculatorUsed('wood-pellet-stove');
@@ -35,16 +20,38 @@ export default function WoodStoveCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.hvac_multiplier ?? 1.0;
-    const s = STOVES[stove];
-    const install = scale(s.install, laborMult);
-    const gross = add(s.equipment, install);
-    return { equipment: s.equipment, install, gross, fuel: s.fuel, label: s.label };
-  }, [state, stove]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.stove && STOVE_OPTIONS.some(o => o.value === h.stove)) setStove(h.stove as Stove);
+  });
+  const hashValues = { state, zip, stove };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(() => compute({ state, stove }), [state, stove]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('wood-pellet-stove', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -62,20 +69,11 @@ export default function WoodStoveCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="stove">Stove type</label>
           <select id="stove" className="input" value={stove} onChange={e => setStove(e.target.value as Stove)}>
-            <optgroup label="Wood">
-              <option value="wood_small">Small wood stove (1500 sqft)</option>
-              <option value="wood_medium">Medium wood stove (2000 sqft)</option>
-              <option value="wood_large_catalytic">Large catalytic wood stove (2500+ sqft)</option>
-            </optgroup>
-            <optgroup label="Pellet">
-              <option value="pellet_small">Small pellet stove (1500 sqft)</option>
-              <option value="pellet_medium">Medium pellet stove (2000 sqft)</option>
-              <option value="pellet_large">Large pellet stove (2500+ sqft)</option>
-              <option value="pellet_insert">Pellet insert (fireplace retrofit)</option>
-            </optgroup>
-            <optgroup label="Premium">
-              <option value="masonry">Russian / masonry heater</option>
-            </optgroup>
+            {STOVE_GROUPS.map(g => (
+              <optgroup key={g.label} label={g.label}>
+                {g.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </optgroup>
+            ))}
           </select>
         </div>
       </div>

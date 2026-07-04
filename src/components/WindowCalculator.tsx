@@ -1,45 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Material = 'vinyl' | 'fiberglass' | 'wood_clad' | 'aluminum';
-type Glazing = 'double_lowE' | 'triple_lowE' | 'storm_addon';
-type Install = 'retrofit' | 'new_construction';
-
-interface CostBand { low: number; mid: number; high: number; }
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// Per-window installed cost 2026. Sources: Modernize 2024 contractor surveys, ENERGY STAR / NFRC database,
-// Pella, Marvin, Andersen, Milgard, Jeld-Wen MSRPs. Standard double-hung sized roughly 36×60.
-const PER_WINDOW: Record<Material, Record<Glazing, CostBand>> = {
-  vinyl: {
-    double_lowE:  { low: 450, mid: 650, high: 900 },
-    triple_lowE:  { low: 650, mid: 850, high: 1150 },
-    storm_addon:  { low: 200, mid: 350, high: 500 },     // exterior storm window over existing
-  },
-  fiberglass: {
-    double_lowE:  { low: 700, mid: 950, high: 1250 },
-    triple_lowE:  { low: 900, mid: 1200, high: 1600 },
-    storm_addon:  { low: 0, mid: 0, high: 0 },
-  },
-  wood_clad: {
-    double_lowE:  { low: 950, mid: 1300, high: 1750 },
-    triple_lowE:  { low: 1200, mid: 1650, high: 2200 },
-    storm_addon:  { low: 0, mid: 0, high: 0 },
-  },
-  aluminum: {                                            // mostly hot-climate, low-thermal-bridge designs
-    double_lowE:  { low: 600, mid: 850, high: 1150 },
-    triple_lowE:  { low: 800, mid: 1100, high: 1500 },
-    storm_addon:  { low: 0, mid: 0, high: 0 },
-  },
-};
-
-const INSTALL_MULT: Record<Install, number> = {
-  retrofit: 1.0,
-  new_construction: 1.15,   // includes brick/siding trim work, drywall patching
-};
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, MATERIAL_OPTIONS, GLAZING_OPTIONS, INSTALL_OPTIONS,
+  type Material, type Glazing, type Install,
+} from '@/lib/calcs/window-replacement';
 
 export default function WindowCalculator() {
   useCalculatorUsed('window-replacement');
@@ -57,17 +26,47 @@ export default function WindowCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0;  // proxy for general carpentry
-    const installMult = INSTALL_MULT[install];
-    const perWindow = PER_WINDOW[material][glazing];
-    const gross: CostBand = scale(perWindow, count * laborMult * installMult);
-    const annualSavings = count * 8;  // ENERGY STAR estimate: $8/yr saved per replaced window over single-pane
-    return { perWindow, gross, annualSavings };
-  }, [state, count, material, glazing, install]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.count) {
+      const n = parseInt(h.count, 10);
+      if (Number.isFinite(n)) setCount(Math.min(60, Math.max(1, n)));
+    }
+    if (h.mat && MATERIAL_OPTIONS.some(o => o.value === h.mat)) setMaterial(h.mat as Material);
+    if (h.glz && GLAZING_OPTIONS.some(o => o.value === h.glz)) setGlazing(h.glz as Glazing);
+    if (h.inst && INSTALL_OPTIONS.some(o => o.value === h.inst)) setInstall(h.inst as Install);
+  });
+  const hashValues = { state, zip, count, mat: material, glz: glazing, inst: install };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(
+    () => compute({ state, count, material, glazing, install }),
+    [state, count, material, glazing, install],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('window-replacement', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -94,25 +93,20 @@ export default function WindowCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Frame material</label>
           <select className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
-            <option value="vinyl">Vinyl (most common, best value)</option>
-            <option value="fiberglass">Fiberglass (premium, longest life)</option>
-            <option value="wood_clad">Wood-clad (premium aesthetic)</option>
-            <option value="aluminum">Aluminum (hot-climate / commercial)</option>
+            {MATERIAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Glazing</label>
           <select className="input mt-1 w-full" value={glazing} onChange={e => setGlazing(e.target.value as Glazing)}>
-            <option value="double_lowE">Double-pane Low-E (standard 2026)</option>
-            <option value="triple_lowE">Triple-pane Low-E (best, cold climates)</option>
-            {material === 'vinyl' && <option value="storm_addon">Storm window addon (cheapest)</option>}
+            {GLAZING_OPTIONS.filter(o => o.value !== 'storm_addon' || material === 'vinyl')
+              .map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install type</label>
           <select className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
-            <option value="retrofit">Retrofit / pocket install (keep existing trim)</option>
-            <option value="new_construction">Full frame replacement (new construction)</option>
+            {INSTALL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

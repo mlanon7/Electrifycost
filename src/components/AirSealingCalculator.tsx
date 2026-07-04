@@ -1,54 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, findClimate } from '@/lib/data';
+import { ALL_STATES, findStateForZip, findClimate } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Scope = 'diy' | 'pro_targeted' | 'deep' | 'ducts_only';
-type Tightness = 'leaky' | 'average' | 'tight';
-type IncludeDucts = 'yes' | 'no';
-
-interface Band { low: number; mid: number; high: number; }
-
-// Per CSV: air-sealing-cost-ranges.csv (BPI 2024 + Aeroseal)
-function getSealingBand(scope: Scope, sqft: number): Band {
-  if (scope === 'diy') return { low: 80, mid: 150, high: 300 };
-  if (scope === 'ducts_only') return { low: 1200, mid: 1800, high: 2800 };
-  if (scope === 'pro_targeted') {
-    if (sqft < 1800) return { low: 500, mid: 800, high: 1300 };
-    if (sqft < 3000) return { low: 800, mid: 1300, high: 2000 };
-    return { low: 1300, mid: 2000, high: 3200 };
-  }
-  if (scope === 'deep') {
-    if (sqft < 3000) return { low: 2000, mid: 3000, high: 4500 };
-    return { low: 2800, mid: 4200, high: 6500 };
-  }
-  return { low: 0, mid: 0, high: 0 };
-}
-
-const DUCT_SEALING: Band = { low: 1200, mid: 1800, high: 2800 };
-
-// HVAC savings % by scope
-function hvacSavingsPct(scope: Scope, tight: Tightness): number {
-  if (scope === 'diy') return 0.03;
-  if (scope === 'ducts_only') return 0.10;
-  if (scope === 'pro_targeted') return tight === 'leaky' ? 0.12 : tight === 'average' ? 0.08 : 0.04;
-  if (scope === 'deep') return tight === 'leaky' ? 0.20 : tight === 'average' ? 0.14 : 0.07;
-  return 0;
-}
-
-// Typical annual HVAC cost per sqft (rough from EIA RECS)
-function annualHvacCostPerSqft(state: string): number {
-  const zone = findClimate(state)?.iecc_zone ?? '4A';
-  const head = zone[0];
-  return head === '5' || head === '6' || head === '7' || head === '8' ? 1.20
-    : head === '4' ? 1.00
-    : head === '3' ? 0.85
-    : 0.70;
-}
-
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, SCOPE_OPTIONS, TIGHT_OPTIONS, DUCT_OPTIONS,
+  type Scope, type Tightness, type IncludeDucts,
+} from '@/lib/calcs/air-sealing';
 
 export default function AirSealingCalculator() {
   useCalculatorUsed('air-sealing');
@@ -66,23 +26,48 @@ export default function AirSealingCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0;
-    const sealing = scale(getSealingBand(scope, sqft), laborMult);
-    const ducts = includeDucts === 'yes' && scope !== 'ducts_only' ? scale(DUCT_SEALING, laborMult) : { low: 0, mid: 0, high: 0 };
-    const gross = add(sealing, ducts);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.sqft) {
+      const n = parseInt(h.sqft, 10);
+      if (Number.isFinite(n)) setSqft(Math.min(6000, Math.max(500, n)));
+    }
+    if (h.scope && SCOPE_OPTIONS.some(o => o.value === h.scope)) setScope(h.scope as Scope);
+    if (h.tight && TIGHT_OPTIONS.some(o => o.value === h.tight)) setTight(h.tight as Tightness);
+    if (h.ducts && DUCT_OPTIONS.some(o => o.value === h.ducts)) setIncludeDucts(h.ducts as IncludeDucts);
+  });
+  const hashValues = { state, zip, sqft, scope, tight, ducts: includeDucts };
+  useHashStateSync(hashValues);
 
-    const savingsPct = hvacSavingsPct(scope, tight) + (includeDucts === 'yes' && scope !== 'ducts_only' ? 0.08 : 0);
-    const annualHvacCost = annualHvacCostPerSqft(state) * sqft;
-    const annualSavings = annualHvacCost * savingsPct;
-    const paybackYears = annualSavings > 0 ? Math.round((gross.mid / annualSavings) * 10) / 10 : null;
-
-    return { gross, sealing, ducts, savingsPct, annualHvacCost, annualSavings, paybackYears };
-  }, [state, sqft, scope, tight, includeDucts]);
+  const result = useMemo(
+    () => compute({ state, sqft, scope, tight, includeDucts }),
+    [state, sqft, scope, tight, includeDucts],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
   const climate = findClimate(state)?.iecc_zone ?? '4A';
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('air-sealing', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -107,26 +92,20 @@ export default function AirSealingCalculator() {
         <div>
           <label className="label" htmlFor="scope">Scope</label>
           <select id="scope" className="input" value={scope} onChange={e => setScope(e.target.value as Scope)}>
-            <option value="diy">DIY (caulk + weatherstrip basics)</option>
-            <option value="pro_targeted">Professional targeted (recommended)</option>
-            <option value="deep">Deep sealing + blower-door verify</option>
-            <option value="ducts_only">Duct sealing only (aerosolized / mastic)</option>
+            {SCOPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="label" htmlFor="tight">Current envelope tightness</label>
           <select id="tight" className="input" value={tight} onChange={e => setTight(e.target.value as Tightness)}>
-            <option value="leaky">Leaky (drafty, pre-1980 home, no recent work)</option>
-            <option value="average">Average (typical 1980-2010 construction)</option>
-            <option value="tight">Tight (newer, recent sealing done)</option>
+            {TIGHT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="ducts">Include duct sealing?</label>
           <select id="ducts" className="input" value={includeDucts} onChange={e => setIncludeDucts(e.target.value as IncludeDucts)} disabled={scope === 'ducts_only'}>
-            <option value="no">No (envelope only)</option>
-            <option value="yes">Yes (add duct sealing)</option>
+            {DUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

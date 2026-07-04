@@ -1,27 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Tier = 'walkthrough' | 'standard' | 'hers' | 'rater_full';
-type Utility = 'yes_free' | 'yes_subsidized' | 'no';
-
-interface CostBand { low: number; mid: number; high: number; }
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-const BASE: Record<Tier, CostBand> = {
-  walkthrough:  { low: 100, mid: 200, high: 350 },        // visual + clamp ammeter
-  standard:     { low: 250, mid: 425, high: 650 },        // BPI Building Analyst, blower door, IR camera
-  hers:         { low: 450, mid: 650, high: 900 },        // RESNET HERS rater
-  rater_full:   { low: 600, mid: 900, high: 1400 },       // HERS + duct blaster + combustion safety + report
-};
-
-const UTILITY_DISCOUNT: Record<Utility, number> = {
-  yes_free: 0,                  // utility-sponsored = free
-  yes_subsidized: 0.4,
-  no: 1.0,
-};
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, TIER_OPTIONS, UTILITY_OPTIONS,
+  type Tier, type Utility,
+} from '@/lib/calcs/home-energy-audit';
 
 export default function EnergyAuditCalculator() {
   useCalculatorUsed('home-energy-audit');
@@ -37,16 +24,39 @@ export default function EnergyAuditCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const m = lab?.electrician_multiplier ?? 1.0;
-    const subsidy = UTILITY_DISCOUNT[utility];
-    const base = scale(BASE[tier], m);
-    const net: CostBand = { low: base.low * subsidy, mid: base.mid * subsidy, high: base.high * subsidy };
-    return { base, net };
-  }, [state, tier, utility]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.tier && TIER_OPTIONS.some(o => o.value === h.tier)) setTier(h.tier as Tier);
+    if (h.utility && UTILITY_OPTIONS.some(o => o.value === h.utility)) setUtility(h.utility as Utility);
+  });
+  const hashValues = { state, zip, tier, utility };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(() => compute({ state, tier, utility }), [state, tier, utility]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('home-energy-audit', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -67,18 +77,13 @@ export default function EnergyAuditCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Audit tier</label>
           <select className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
-            <option value="walkthrough">Walkthrough (visual only — least useful)</option>
-            <option value="standard">Standard BPI (blower door + IR camera + recommendations)</option>
-            <option value="hers">HERS Index rating (RESNET certified)</option>
-            <option value="rater_full">HERS + Duct Blaster + Combustion Safety (full)</option>
+            {TIER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Utility-sponsored?</label>
           <select className="input mt-1 w-full" value={utility} onChange={e => setUtility(e.target.value as Utility)}>
-            <option value="yes_free">Yes — fully free (Mass Save, ConEd, similar)</option>
-            <option value="yes_subsidized">Yes — partially subsidized (50% typical)</option>
-            <option value="no">No — pay full price</option>
+            {UTILITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

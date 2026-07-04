@@ -1,42 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Material = 'asphalt_3tab' | 'asphalt_architectural' | 'asphalt_premium' | 'metal_standing_seam' | 'metal_corrugated' | 'clay_tile' | 'concrete_tile' | 'slate' | 'synthetic_slate' | 'wood_shake' | 'flat_tpo' | 'flat_epdm';
-type Pitch = 'low' | 'medium' | 'steep' | 'extreme';
-type Stories = '1' | '2' | '3';
-
-interface Band { low: number; mid: number; high: number; }
-
-const MAT: Record<Material, { perSqftLow: number; perSqftMid: number; perSqftHigh: number; lifespan: number; solarReady: number; label: string }> = {
-  asphalt_3tab:           { perSqftLow: 3.50, perSqftMid: 5.00, perSqftHigh: 7.00, lifespan: 18, solarReady: 3, label: '3-tab asphalt shingle' },
-  asphalt_architectural:  { perSqftLow: 4.50, perSqftMid: 7.00, perSqftHigh: 9.50, lifespan: 25, solarReady: 3, label: 'Architectural asphalt shingle' },
-  asphalt_premium:        { perSqftLow: 7.00, perSqftMid: 9.50, perSqftHigh: 12.50, lifespan: 35, solarReady: 3, label: 'Premium architectural shingle' },
-  metal_standing_seam:    { perSqftLow: 11.00, perSqftMid: 15.00, perSqftHigh: 21.00, lifespan: 50, solarReady: 2, label: 'Standing-seam metal' },
-  metal_corrugated:       { perSqftLow: 7.50, perSqftMid: 10.00, perSqftHigh: 13.50, lifespan: 40, solarReady: 2, label: 'Corrugated metal' },
-  clay_tile:              { perSqftLow: 11.00, perSqftMid: 16.00, perSqftHigh: 24.00, lifespan: 75, solarReady: 5, label: 'Clay tile' },
-  concrete_tile:          { perSqftLow: 9.00, perSqftMid: 13.50, perSqftHigh: 18.00, lifespan: 50, solarReady: 4, label: 'Concrete tile' },
-  slate:                  { perSqftLow: 18.00, perSqftMid: 25.00, perSqftHigh: 40.00, lifespan: 100, solarReady: 5, label: 'Natural slate' },
-  synthetic_slate:        { perSqftLow: 9.00, perSqftMid: 12.50, perSqftHigh: 17.00, lifespan: 50, solarReady: 4, label: 'Synthetic slate composite' },
-  wood_shake:             { perSqftLow: 8.50, perSqftMid: 12.00, perSqftHigh: 16.50, lifespan: 30, solarReady: 8, label: 'Wood shake' },
-  flat_tpo:               { perSqftLow: 5.50, perSqftMid: 7.50, perSqftHigh: 10.00, lifespan: 25, solarReady: 2, label: 'Flat TPO membrane' },
-  flat_epdm:              { perSqftLow: 5.00, perSqftMid: 7.00, perSqftHigh: 9.50, lifespan: 25, solarReady: 2, label: 'Flat EPDM rubber' },
-};
-
-const TEAR_OFF_PER_SQFT = 1.25; // average across materials
-const PITCH_MULT: Record<Pitch, number> = { low: 0.9, medium: 1.0, steep: 1.25, extreme: 1.55 };
-const STORIES_MULT: Record<Stories, number> = { '1': 1.0, '2': 1.10, '3': 1.25 };
-const DECK_REPAIR_BAND: Band = { low: 0, mid: 800, high: 3500 };
-const GUTTER_REPLACE: Band = { low: 800, mid: 1800, high: 3500 };
-
-function scale(b: Band, m: number): Band {
-  return { low: b.low * m, mid: b.mid * m, high: b.high * m };
-}
-function add(a: Band, b: Band): Band {
-  return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high };
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, MATERIAL_OPTIONS, PITCH_OPTIONS, STORIES_OPTIONS,
+  type Material, type Pitch, type Stories,
+} from '@/lib/calcs/roof-replacement';
 
 export default function RoofCalculator() {
   useCalculatorUsed('roof-replacement');
@@ -58,36 +30,55 @@ export default function RoofCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0; // proxy for trades
-    const m = MAT[material];
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.sqft) {
+      const n = parseInt(h.sqft, 10);
+      if (Number.isFinite(n)) setRoofSqft(Math.min(10000, Math.max(500, n)));
+    }
+    if (h.mat && MATERIAL_OPTIONS.some(o => o.value === h.mat)) setMaterial(h.mat as Material);
+    if (h.pitch && PITCH_OPTIONS.some(o => o.value === h.pitch)) setPitch(h.pitch as Pitch);
+    if (h.stories && STORIES_OPTIONS.some(o => o.value === h.stories)) setStories(h.stories as Stories);
+    if (h.tear) setNeedsTearoff(h.tear === '1');
+    if (h.deck) setNeedsDeckRepair(h.deck === '1');
+    if (h.gut) setNeedsGutters(h.gut === '1');
+    if (h.solar) setSolarPlanned(h.solar === '1');
+  });
+  const hashValues = {
+    state, zip, sqft: roofSqft, mat: material, pitch, stories,
+    tear: needsTearoff ? '1' : '0', deck: needsDeckRepair ? '1' : '0',
+    gut: needsGutters ? '1' : '0', solar: solarPlanned ? '1' : '0',
+  };
+  useHashStateSync(hashValues);
 
-    const baseBand: Band = {
-      low: m.perSqftLow * roofSqft,
-      mid: m.perSqftMid * roofSqft,
-      high: m.perSqftHigh * roofSqft,
-    };
-    const pitchMult = PITCH_MULT[pitch];
-    const storiesMult = STORIES_MULT[stories];
-    let materialCost = scale(baseBand, laborMult * pitchMult * storiesMult);
-
-    const tearoffCost: Band = needsTearoff
-      ? scale({ low: TEAR_OFF_PER_SQFT * roofSqft * 0.9, mid: TEAR_OFF_PER_SQFT * roofSqft, high: TEAR_OFF_PER_SQFT * roofSqft * 1.2 }, laborMult)
-      : { low: 0, mid: 0, high: 0 };
-    const deckCost: Band = needsDeckRepair ? DECK_REPAIR_BAND : { low: 0, mid: 0, high: 0 };
-    const gutterCost: Band = needsGutters ? GUTTER_REPLACE : { low: 0, mid: 0, high: 0 };
-    const solarPrepCost: Band = solarPlanned ? { low: 200, mid: 500, high: 1200 } : { low: 0, mid: 0, high: 0 };
-
-    const gross = add(add(add(add(materialCost, tearoffCost), deckCost), gutterCost), solarPrepCost);
-    const perSqft = gross.mid / roofSqft;
-    const lifespan = m.lifespan;
-    const lifetimeCostPerYear = gross.mid / lifespan;
-
-    return { gross, materialCost, tearoffCost, deckCost, gutterCost, solarPrepCost, perSqft, lifespan, lifetimeCostPerYear, label: m.label, solarReady: m.solarReady };
-  }, [state, roofSqft, material, pitch, stories, needsTearoff, needsDeckRepair, needsGutters, solarPlanned]);
+  const result = useMemo(
+    () => compute({ state, roofSqft, material, pitch, stories, needsTearoff, needsDeckRepair, needsGutters, solarPlanned }),
+    [state, roofSqft, material, pitch, stories, needsTearoff, needsDeckRepair, needsGutters, solarPlanned],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('roof-replacement', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -113,36 +104,20 @@ export default function RoofCalculator() {
         <div>
           <label className="label" htmlFor="material">Material</label>
           <select id="material" className="input" value={material} onChange={e => setMaterial(e.target.value as Material)}>
-            <option value="asphalt_3tab">3-tab asphalt (cheapest)</option>
-            <option value="asphalt_architectural">Architectural asphalt (most common)</option>
-            <option value="asphalt_premium">Premium asphalt (50yr warranty)</option>
-            <option value="metal_standing_seam">Standing-seam metal (best for solar)</option>
-            <option value="metal_corrugated">Corrugated metal</option>
-            <option value="clay_tile">Clay tile</option>
-            <option value="concrete_tile">Concrete tile</option>
-            <option value="slate">Natural slate (premium)</option>
-            <option value="synthetic_slate">Synthetic slate composite</option>
-            <option value="wood_shake">Wood shake</option>
-            <option value="flat_tpo">Flat TPO membrane</option>
-            <option value="flat_epdm">Flat EPDM rubber</option>
+            {MATERIAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="label" htmlFor="pitch">Roof pitch</label>
           <select id="pitch" className="input" value={pitch} onChange={e => setPitch(e.target.value as Pitch)}>
-            <option value="low">Low (≤4/12 — walkable)</option>
-            <option value="medium">Medium (5/12-7/12)</option>
-            <option value="steep">Steep (8/12-12/12)</option>
-            <option value="extreme">Extreme (12/12+ — requires staging)</option>
+            {PITCH_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="stories">Number of stories</label>
           <select id="stories" className="input" value={stories} onChange={e => setStories(e.target.value as Stories)}>
-            <option value="1">1 story</option>
-            <option value="2">2 stories</option>
-            <option value="3">3+ stories</option>
+            {STORIES_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 

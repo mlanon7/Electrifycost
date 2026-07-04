@@ -1,37 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Model = 'ventless_compact' | 'ventless_fullsize' | 'ventless_premium' | 'hybrid_vented' | 'combo';
-type Current = 'electric_vented' | 'gas_vented' | 'none';
-type Loads = 'light' | 'average' | 'heavy';
-
-interface Band { low: number; mid: number; high: number; }
-
-const MODELS: Record<Model, { equipment: Band; install: Band; kwhPerLoad: number; label: string }> = {
-  ventless_compact:  { equipment: { low: 900, mid: 1300, high: 1700 }, install: { low: 0, mid: 150, high: 400 }, kwhPerLoad: 1.0, label: 'Compact ventless (4.0 cu ft)' },
-  ventless_fullsize: { equipment: { low: 1400, mid: 1900, high: 2700 }, install: { low: 0, mid: 150, high: 400 }, kwhPerLoad: 1.2, label: 'Full-size ventless (7.5 cu ft)' },
-  ventless_premium:  { equipment: { low: 2200, mid: 2800, high: 3600 }, install: { low: 0, mid: 200, high: 500 }, kwhPerLoad: 1.1, label: 'Premium ventless (Miele/Bosch 800)' },
-  hybrid_vented:     { equipment: { low: 1100, mid: 1500, high: 2100 }, install: { low: 200, mid: 400, high: 800 }, kwhPerLoad: 1.3, label: 'Hybrid vented heat pump' },
-  combo:             { equipment: { low: 1800, mid: 2400, high: 3200 }, install: { low: 0, mid: 200, high: 500 }, kwhPerLoad: 0.9, label: 'Washer-dryer combo (LG/GE)' },
-};
-
-const LOADS_PER_WEEK: Record<Loads, number> = { light: 3, average: 5, heavy: 8 };
-
-const CURRENT_PER_LOAD: Record<Current, { kwh: number; therms: number; cost: (e: number, g: number) => number; label: string }> = {
-  electric_vented: { kwh: 3.3, therms: 0, cost: (e, g) => 3.3 * e, label: 'Electric resistance vented' },
-  gas_vented:      { kwh: 0.15, therms: 0.22, cost: (e, g) => 0.15 * e + 0.22 * g, label: 'Gas vented' },
-  none:            { kwh: 0, therms: 0, cost: () => 0, label: 'No current dryer (line-dry / coin laundry)' },
-};
-
-function scale(b: Band, m: number): Band {
-  return { low: b.low * m, mid: b.mid * m, high: b.high * m };
-}
-function add(a: Band, b: Band): Band {
-  return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high };
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, MODEL_OPTIONS, CURRENT_OPTIONS, LOADS_OPTIONS,
+  type Model, type Current, type Loads,
+} from '@/lib/calcs/heat-pump-dryer';
 
 export default function HeatPumpDryerCalculator() {
   useCalculatorUsed('heat-pump-dryer');
@@ -48,27 +25,43 @@ export default function HeatPumpDryerCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const energy = findStateEnergy(state);
-    const elec = (energy?.electricity_cents_per_kwh ?? 16) / 100;
-    const gas = energy?.natural_gas_dollars_per_therm ?? 1.45;
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.model && MODEL_OPTIONS.some(o => o.value === h.model)) setModel(h.model as Model);
+    if (h.cur && CURRENT_OPTIONS.some(o => o.value === h.cur)) setCurrent(h.cur as Current);
+    if (h.loads && LOADS_OPTIONS.some(o => o.value === h.loads)) setLoads(h.loads as Loads);
+  });
+  const hashValues = { state, zip, model, cur: current, loads };
+  useHashStateSync(hashValues);
 
-    const m = MODELS[model];
-    const gross = add(m.equipment, m.install);
-
-    const loadsPerYear = LOADS_PER_WEEK[loads] * 52;
-    const newAnnualKwh = m.kwhPerLoad * loadsPerYear;
-    const newAnnualCost = newAnnualKwh * elec;
-
-    const c = CURRENT_PER_LOAD[current];
-    const oldAnnualCost = c.cost(elec, gas) * loadsPerYear;
-    const annualSavings = Math.max(0, oldAnnualCost - newAnnualCost);
-    const paybackYears = annualSavings > 0 ? Math.round((gross.mid / annualSavings) * 10) / 10 : null;
-
-    return { gross, equipment: m.equipment, install: m.install, newAnnualKwh, newAnnualCost, oldAnnualCost, annualSavings, paybackYears, loadsPerYear, label: m.label };
-  }, [state, model, current, loads]);
+  const result = useMemo(
+    () => compute({ state, model, current, loads }),
+    [state, model, current, loads],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('heat-pump-dryer', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -89,28 +82,20 @@ export default function HeatPumpDryerCalculator() {
         <div>
           <label className="label" htmlFor="model">Heat-pump dryer model</label>
           <select id="model" className="input" value={model} onChange={e => setModel(e.target.value as Model)}>
-            <option value="ventless_compact">Compact ventless (4 cu ft)</option>
-            <option value="ventless_fullsize">Full-size ventless (7.5 cu ft, most common)</option>
-            <option value="ventless_premium">Premium ventless (Miele, Bosch 800)</option>
-            <option value="hybrid_vented">Hybrid vented heat pump (Whirlpool)</option>
-            <option value="combo">Washer-dryer combo (LG WashCombo)</option>
+            {MODEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="current">Current dryer</label>
           <select id="current" className="input" value={current} onChange={e => setCurrent(e.target.value as Current)}>
-            <option value="electric_vented">Electric resistance (vented)</option>
-            <option value="gas_vented">Gas (vented)</option>
-            <option value="none">None / line-dry / coin laundry</option>
+            {CURRENT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
           <label className="label" htmlFor="loads">Loads per week</label>
           <select id="loads" className="input" value={loads} onChange={e => setLoads(e.target.value as Loads)}>
-            <option value="light">Light (~3 loads/wk — 1-2 person household)</option>
-            <option value="average">Average (~5 loads/wk — typical family)</option>
-            <option value="heavy">Heavy (~8 loads/wk — large family, sports, kids)</option>
+            {LOADS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>
