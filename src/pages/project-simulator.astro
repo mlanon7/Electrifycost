@@ -3,7 +3,7 @@ import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
 import ProjectSimulator from '@/components/ProjectSimulator';
 
-const lastReviewed = '2026-06-24';
+const lastReviewed = '2026-07-04';
 
 const schemaJsonLd = [
   {
@@ -13,7 +13,7 @@ const schemaJsonLd = [
     applicationCategory: 'FinanceApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    description: 'Pick multiple home-electrification projects (heat pump, solar, EV charger, panel, water heater, insulation, and more) and run a 10,000-trial Monte Carlo simulation for an honest combined cost distribution — P10 / most-likely / P90 — instead of a naive sum of low and high estimates.',
+    description: 'Build a plan of home-electrification projects (heat pump, solar, EV charger, panel, water heater, insulation, and more) — each as a preset scenario or configured exactly in its full calculator — and run a 10,000-trial Monte Carlo simulation for an honest combined budget: the median total, a safer-budget figure, and the full distribution, instead of a naive sum of low and high estimates.',
     author: {
       '@type': 'Person',
       name: 'Martin Lashgari',
@@ -30,7 +30,7 @@ const faq = [
   },
   {
     q: 'What are the three numbers (Optimistic / Most likely / Safer budget)?',
-    a: 'Optimistic is the P10 — you have about a 10% chance of coming in under it. Most likely is the single most-probable total (the peak of the distribution). Safer budget is the P90 — you have about a 9-in-10 chance of coming in under it, which is the figure to actually plan around.',
+    a: 'Optimistic is the P10 — you have about a 10% chance of coming in under it. Most likely is the median (P50) — half of the simulated outcomes land under it, half over. Safer budget is the P90 — you have about a 9-in-10 chance of coming in under it, which is the figure to actually plan around.',
   },
   {
     q: 'Does it include rebates or tax credits?',
@@ -66,9 +66,10 @@ const schemaWithFaq = [
     <p class="eyebrow">Free tool</p>
     <h1 class="mt-1 text-3xl md:text-4xl">Project Simulator</h1>
     <p class="mt-3 max-w-3xl text-sm text-ink-700 md:text-base">
-      Planning more than one electrification upgrade? Tick the boxes, set the scale, and we roll
-      <strong>10,000 Monte Carlo scenarios</strong> to show a realistic combined budget — the most-likely
-      total plus a safer-budget figure you can plan around — instead of just adding up the low and high estimates.
+      Planning more than one electrification upgrade? Add each project to your plan, pick a starting scenario —
+      or configure it exactly in its full calculator — and we roll <strong>10,000 Monte Carlo scenarios</strong>
+      for an honest combined budget: the median total plus a safer-budget figure you can plan around, instead of
+      just adding up the low and high estimates.
     </p>
     <p class="mt-3 text-xs text-ink-600">
       Built by Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer · Last reviewed {lastReviewed} · A planning simulation, not a quote or bid.

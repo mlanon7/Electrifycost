@@ -40,7 +40,12 @@ export function domainFor(band: McBand, includeSurprises: boolean) {
   return { min: band.low, max: includeSurprises ? band.high + 0.55 * w : band.high };
 }
 
-interface ChartOpts { W?: number; H?: number; ariaLabel?: string }
+interface ChartOpts {
+  W?: number; H?: number; ariaLabel?: string;
+  /** Which central marker to draw: the distribution mode (per-calculator sim)
+   *  or the median/P50 (Project Simulator — the honest combined headline). */
+  midMarker?: 'mode' | 'p50';
+}
 
 /** Build the inline SVG density chart (returns an SVG markup string). */
 export function buildChart(dist: McDist, band: McBand, dom: { min: number; max: number }, opts: ChartOpts = {}): string {
@@ -75,6 +80,8 @@ export function buildChart(dist: McDist, band: McBand, dom: { min: number; max: 
     + ref(band.low) + ref(band.high)
     + '<path d="' + area + '" class="mc-area"/><path d="' + zone + '" class="mc-zone"/><path d="' + line + '" class="mc-line"/>'
     + '<line x1="' + mL + '" y1="' + baseY + '" x2="' + (W - mR) + '" y2="' + baseY + '" class="mc-axis"/>'
-    + vmark(p10, '10% under', 'mc-vline') + vmark(mode, 'most likely', 'mc-vline-mid') + vmark(p90, '90% under', 'mc-vline')
+    + vmark(p10, '10% under', 'mc-vline')
+    + (opts.midMarker === 'p50' ? vmark(dist.p50, 'median', 'mc-vline-mid') : vmark(mode, 'most likely', 'mc-vline-mid'))
+    + vmark(p90, '90% under', 'mc-vline')
     + '</svg>';
 }

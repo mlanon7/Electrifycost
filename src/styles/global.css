@@ -449,11 +449,48 @@
 }
 
 /* === Project Simulator (ProjectSimulator.tsx) ===
-   Two-panel picker/result. Ported from ProjectCostPro's scenario-sim CSS,
-   tokens remapped to the ElectrifyCost brand + ink palette. */
+   v2 instance model: plan workspace on top, then result+report | catalog.
+   Ported from ProjectCostPro's scenario-sim v2 CSS, tokens remapped to the
+   ElectrifyCost brand + ink palette. Mobile order = DOM order:
+   plan -> results -> collapsed catalog. */
 .sim-layout{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:24px;align-items:start}
-/* picker */
+/* plan workspace */
+.sim-plan{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px 16px 14px;margin:0 0 20px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.12)}
+.sim-plan-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sim-plan-title{font-size:16px;font-weight:800;color:#0f172a;margin:0;display:flex;align-items:center;gap:8px}
+.sim-plan-count{font-size:11.5px;font-weight:700;color:#047857;background:#ecfdf5;border-radius:999px;padding:2px 9px}
+.sim-plan-actions{display:flex;align-items:center;gap:8px}
+.sim-add-btn{font-size:13px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:9px;padding:8px 13px;cursor:pointer;transition:background .14s}
+.sim-add-btn:hover{background:#d1fae5}
+.sim-plan-status{min-height:18px;font-size:12.5px;color:#b45309;margin:6px 0 0}
+.sim-plan-status:empty{margin:0}
+.sim-plan-empty{font-size:13.5px;color:#64748b;margin:10px 0 2px}
+.sim-plan-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px;margin-top:12px}
+.sim-card{min-width:0;border:1px solid #e2e8f0;border-radius:12px;padding:12px;background:#f8fafc}
+.sim-card.is-custom{border-color:#a7f3d0;background:#f0fdf9}
+.sim-card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sim-card-name{font-size:13.5px;font-weight:700;color:#0f172a;min-width:0}
+.sim-card-badge{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#64748b;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:2px 7px;line-height:1.2}
+.sim-card-badge.is-custom{color:#047857;background:#ecfdf5;border-color:#a7f3d0}
+.sim-card-loc{font-size:10.5px;font-weight:600;color:#0369a1;background:#e0f2fe;border-radius:6px;padding:2px 7px;line-height:1.2}
+.sim-card-band{margin-left:auto;font-size:12.5px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sim-card-spec{font-size:12px;color:#475569;margin:7px 0 0;overflow-wrap:anywhere}
+.sim-card-ctl{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.sim-card-scenario{width:100%;font-size:12.5px;color:#334155;background-color:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:7px 26px 7px 9px;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%2364748b'%20stroke-width='2.2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%209l6%206%206-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:12px;text-overflow:ellipsis}
+.sim-card-scenario:focus{border-color:#047857;outline:none;box-shadow:0 0 0 3px #d1fae5}
+.sim-card-btns{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sim-card-btn{font-size:12px;font-weight:600;color:#475569;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:6px 11px;cursor:pointer;transition:color .14s,border-color .14s}
+.sim-card-btn:hover{color:#0f172a;border-color:#cbd5e1}
+.sim-card-rm:hover{color:#be123c;border-color:#fecdd3}
+.sim-card-foot{font-size:11.5px;color:#047857;font-weight:600;margin:9px 0 0;font-variant-numeric:tabular-nums}
+/* picker / catalog */
 .sim-picker{min-width:0;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.12)}
+.sim-picker-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.sim-picker-title{font-size:15px;font-weight:800;color:#0f172a;margin:0}
+.sim-picker-sub{font-size:12px;color:#64748b}
+.sim-picker.is-collapsed{cursor:pointer}
+.sim-picker.is-collapsed .sim-picker-body{display:none}
+.sim-picker.is-collapsed .sim-picker-head{margin:0}
 .sim-picker-bar{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;padding-bottom:14px;border-bottom:1px solid #f1f5f9}
 .sim-bundles{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
 .sim-bundles-lbl{font-size:12.5px;font-weight:700;color:#64748b;margin-right:2px}
@@ -474,36 +511,21 @@
 .sim-row{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;flex-wrap:nowrap}
 .sim-row:hover{background:#f1f5f9}
 .sim-row.is-on{background:#ecfdf5}
-.sim-check{display:flex;align-items:center;gap:9px;cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden}
-.sim-check input{position:absolute;opacity:0;width:0;height:0}
-.sim-check-box{width:18px;height:18px;border:1.8px solid #cbd5e1;border-radius:5px;flex:0 0 auto;transition:background .12s,border-color .12s;position:relative}
-.sim-check input:checked + .sim-check-box{background:#047857;border-color:#047857}
-.sim-check input:checked + .sim-check-box::after{content:"";position:absolute;left:5px;top:1.5px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.sim-check input:focus-visible + .sim-check-box{box-shadow:0 0 0 3px #d1fae5}
-.sim-row-name{font-size:13.5px;font-weight:600;color:#0f172a;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sim-row-name{font-size:13.5px;font-weight:600;color:#0f172a;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1 1 auto}
+.sim-row-in{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#047857;background:#d1fae5;border-radius:6px;padding:2px 7px;flex:0 0 auto;white-space:nowrap}
+.sim-row-add{font-size:12px;font-weight:700;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:5px 10px;cursor:pointer;white-space:nowrap;transition:background .14s}
+.sim-row-add:hover{background:#d1fae5}
+.sim-row-addsaved{font-size:11px;font-weight:700;color:#047857;background:transparent;border:none;padding:0;cursor:pointer;white-space:nowrap;text-transform:none;letter-spacing:0}
+.sim-row-addsaved:hover{text-decoration:underline}
 .sim-row-link{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;color:#cbd5e1;flex:0 0 auto;transition:color .14s,background .14s;text-decoration:none}
 .sim-row-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sim-row-link:hover,.sim-row-link:focus-visible{color:#047857;background:#d1fae5}
-.sim-row-ctl{display:flex;align-items:center;gap:8px;margin-left:auto}
-.sim-tier{font-size:12px;color:#334155;background-color:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:5px 26px 5px 9px;width:184px;flex:0 0 auto;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%2364748b'%20stroke-width='2.2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%209l6%206%206-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:12px;text-overflow:ellipsis}
-.sim-tier:focus{border-color:#047857;outline:none;box-shadow:0 0 0 3px #d1fae5}
-.sim-qty{display:inline-flex;align-items:center;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
-.sim-qty-btn{width:24px;height:26px;border:none;background:#fff;color:#475569;font-size:15px;line-height:1;cursor:pointer}
-.sim-qty-btn:hover{background:#f1f5f9;color:#0f172a}
-.sim-qty-btn:disabled{opacity:.4;cursor:default}
-.sim-qty-n{min-width:18px;text-align:center;font-size:12.5px;font-weight:600;color:#0f172a;font-variant-numeric:tabular-nums}
+.sim-row-ctl{display:flex;align-items:center;gap:8px;margin-left:auto;flex:0 0 auto}
 .sim-row-band{display:none;font-size:11.5px;color:#64748b;min-width:96px;text-align:right;font-variant-numeric:tabular-nums}
 @media(min-width:1180px){ .sim-row-band{display:block} }
-/* pinned plan chips */
-.sim-chosen{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:2px 0 8px;padding:0 2px 12px;border-bottom:1px solid #f1f5f9}
-.sim-chosen-lbl{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-right:3px}
-.sim-chosen-lbl b{color:#047857}
-.sim-chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#047857;background:#ecfdf5;border:1px solid #d1fae5;border-radius:999px;padding:5px 8px 5px 11px;cursor:pointer;transition:background .14s,border-color .14s}
-.sim-chip:hover{background:#d1fae5;border-color:#047857}
-.sim-chip svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;flex:0 0 auto}
 /* result column */
 .sim-result{min-width:0}
-.sim-result-inner{position:sticky;top:78px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:18px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.16)}
+.sim-result-inner{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:18px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04),0 12px 32px -12px rgb(15 23 42 / 0.16)}
 /* ZIP bar — sits at the top of the simulator; drives regional pricing */
 .sim-zipbar{display:inline-flex;align-items:center;gap:10px;margin:0 0 16px;padding:7px 10px 7px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px 0 rgb(15 23 42 / 0.04);flex-wrap:wrap}
 .sim-ziplabel{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#334155}
@@ -540,14 +562,50 @@
 .sim-btn-ghost{font-size:13px;font-weight:600;color:#475569;background:transparent;border:1px solid #e2e8f0;border-radius:9px;padding:9px 13px;cursor:pointer;transition:color .14s,border-color .14s}
 .sim-btn-ghost:hover{color:#0f172a;border-color:#cbd5e1}
 @media (max-width:1024px){
-  .sim-layout{grid-template-columns:1fr;gap:18px}
-  .sim-result-inner{position:static}
+  .sim-layout{grid-template-columns:minmax(0,1fr);gap:18px}
   .sim-groups{max-height:none}
 }
 @media (max-width:520px){
   .sim-row{flex-wrap:wrap}
-  .sim-row-ctl{margin-left:0;width:100%}
-  .sim-tier{flex:1;width:auto}
+  .sim-row-ctl{margin-left:0;width:100%;justify-content:flex-end}
+  .sim-plan-cards{grid-template-columns:minmax(0,1fr)}
+}
+/* plan summary report */
+.sim-contingency{font-size:12.5px;color:#334155;margin:6px 0 0}
+.sim-contingency b{color:#0f172a}
+.sim-report{margin-top:18px;padding-top:16px;border-top:1px solid #f1f5f9}
+.sim-report-title{font-size:14px;font-weight:800;color:#0f172a;margin:0 0 3px}
+.sim-report-meta{font-size:11.5px;color:#64748b;margin:0 0 10px}
+.sim-rep-scroll{overflow-x:auto;margin:0 -2px;padding:0 2px}
+.sim-report-table{width:100%;border-collapse:collapse;table-layout:auto;word-break:normal;font-size:12.5px}
+.sim-report-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#64748b;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #e2e8f0}
+.sim-report-table td{padding:7px 10px 7px 0;border-bottom:1px solid #f1f5f9;color:#334155;vertical-align:top}
+.sim-report-table tfoot td{border-bottom:none;border-top:2px solid #e2e8f0;font-weight:700;color:#0f172a}
+.sim-rep-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sim-rep-num.sim-rep-fold,th.sim-rep-fold{padding-right:0}
+.sim-rep-spec{color:#64748b;max-width:220px}
+.sim-rep-badge{display:inline-block;margin-left:6px;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:5px;padding:1px 5px;vertical-align:1px}
+.sim-rep-det{margin-top:8px;border:1px solid #f1f5f9;border-radius:9px;padding:8px 12px}
+.sim-rep-det summary{font-size:12.5px;font-weight:600;color:#334155;cursor:pointer}
+.sim-rep-brk{margin-top:6px;max-width:340px}
+.sim-report-note{font-size:11.5px;color:#64748b;margin:10px 0 0}
+/* Fold the columns duplicated in the plan cards so Project + Scope + Most
+   likely fit a 375px phone with zero side-scroll. */
+@media (max-width:640px){
+  .sim-rep-fold{display:none}
+  .sim-rep-spec{max-width:none}
+}
+/* branded print report: hide the app chrome, keep the result + report */
+.sim-print-head{display:none}
+@media print{
+  .sim-zipbar,.sim-plan,.sim-picker,.sim-controls,.sim-actions,.mc-counter{display:none !important}
+  .sim-layout{display:block}
+  .sim-result-inner{border:none;box-shadow:none;padding:0}
+  .sim-print-head{display:block;font-size:13px;color:#0f172a;border-bottom:2px solid #0f172a;padding:0 0 8px;margin:0 0 14px}
+  .sim-rep-fold{display:table-cell !important}
+  .sim-rep-scroll{overflow:visible}
+  .sim-cbar-seg,.sim-cdot{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .sim-rep-det{border:none;padding:0 0 0 2px}
 }
 /* "Custom" read-back badge — a project the user configured in its own calculator */
 .sim-saved-tag{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:2px 3px 2px 7px;flex:0 0 auto;white-space:nowrap;line-height:1}
