@@ -65,7 +65,7 @@ const AIR_SEAL: CostBand3 = { low: 600, mid: 1200, high: 2200 };
 const CRAWL: CostBand3 = { low: 3500, mid: 7500, high: 14000 };
 
 // Target R-values by IECC climate zone (DOE / 2021 IECC residential)
-// https://www.energy.gov/energysaver/types-insulation
+// https://web.archive.org/web/20260101014129/https://www.energy.gov/energysaver/types-insulation
 export function targetR(state: string): { attic: number; wall: number } {
   const zone = findClimate(state)?.iecc_zone ?? '4A';
   const head = zone[0];

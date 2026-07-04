@@ -104,17 +104,19 @@
   },
   "SRC_DOE_HPWH": {
     "title": "DOE Energy Saver — Heat Pump Water Heaters",
-    "url": "https://www.energy.gov/energysaver/heat-pump-water-heaters",
+    "url": "https://web.archive.org/web/20260101014727/https://www.energy.gov/energysaver/heat-pump-water-heaters",
     "publisher": "U.S. Department of Energy",
     "category": "guide",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "SRC_DOE_WATER_HEATER_COSTS": {
     "title": "DOE — Estimating Water Heater Costs and Efficiency",
-    "url": "https://www.energy.gov/energysaver/estimating-costs-and-efficiency-storage-demand-and-heat-pump-water-heaters",
+    "url": "https://web.archive.org/web/20260101153812/https://www.energy.gov/energysaver/estimating-costs-and-efficiency-storage-demand-and-heat-pump-water-heaters",
     "publisher": "U.S. Department of Energy",
     "category": "guide",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "SRC_DOE_HP_BENCHMARK": {
     "title": "DOE & NREL Residential Heat Pump Cost Studies",
@@ -126,10 +128,11 @@
   },
   "SRC_DOE_BTO_HP_ROADMAP": {
     "title": "DOE Building Technologies Office — Residential Heat Pump Roadmap",
-    "url": "https://www.energy.gov/energysaver/heat-pump-systems",
+    "url": "https://web.archive.org/web/20260101013932/https://www.energy.gov/energysaver/heat-pump-systems",
     "publisher": "U.S. Department of Energy",
     "category": "research",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "SRC_DOE_PV_BENCHMARKS": {
     "title": "DOE Solar PV System Cost Benchmarks",
@@ -404,10 +407,11 @@
   },
   "SRC_NYSERDA_CLEAN_HEAT": {
     "title": "NYSERDA New York State Clean Heat Program",
-    "url": "https://www.nyserda.ny.gov/All-Programs/NYS-Clean-Heat",
+    "url": "https://www.nyserda.ny.gov/All-Programs/Heat-Pump-Program",
     "publisher": "NY State Energy Research & Development Authority",
     "category": "rebate_program",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "NYSERDA moved this page in 2026; URL updated to the current program page (verified live 2026-07-04)."
   },
   "SRC_MASS_SAVE": {
     "title": "Mass Save — Massachusetts Energy Efficiency Programs",
@@ -480,10 +484,11 @@
   },
   "DOE_Energy_Saver": {
     "title": "DOE Energy Saver Guides",
-    "url": "https://www.energy.gov/energysaver/",
+    "url": "https://web.archive.org/web/20260114102535/https://www.energy.gov/energysaver/",
     "publisher": "U.S. Department of Energy",
     "category": "guide",
-    "last_reviewed": "2026-05-12"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "ENERGY_STAR": {
     "title": "ENERGY STAR Product Database",
@@ -693,10 +698,11 @@
   },
   "DOE_Geothermal": {
     "title": "DOE Geothermal Heat Pumps",
-    "url": "https://www.energy.gov/energysaver/geothermal-heat-pumps",
+    "url": "https://web.archive.org/web/20260101032706/https://www.energy.gov/energysaver/geothermal-heat-pumps",
     "publisher": "U.S. Department of Energy",
     "category": "guide",
-    "last_reviewed": "2026-05-12"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "EPA_SNAP_2025": {
     "title": "EPA SNAP Rule 23 — R-410A Phase-out",
@@ -792,10 +798,11 @@
   },
   "NYSERDA": {
     "title": "NYSERDA Residential Storage Incentive",
-    "url": "https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Residential-Energy-Storage",
+    "url": "https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program",
     "publisher": "NYSERDA",
     "category": "rebate_program",
-    "last_reviewed": "2026-05-12"
+    "last_reviewed": "2026-07-04",
+    "notes": "NYSERDA moved this page in 2026; URL updated to the current program page (verified live 2026-07-04)."
   },
   "MassDOER": {
     "title": "MA Department of Energy Resources / SMART / ConnectedSolutions",
@@ -1037,10 +1044,11 @@
   },
   "DOE_boiler_2024": {
     "title": "DOE Residential Boiler Efficiency Standards",
-    "url": "https://www.energy.gov/energysaver/home-heating-systems/furnaces-and-boilers",
+    "url": "https://web.archive.org/web/20251102190601/https://www.energy.gov/energysaver/home-heating-systems/furnaces-and-boilers",
     "publisher": "U.S. Department of Energy",
     "category": "code",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "HomeAdvisor_2024": {
     "title": "HomeAdvisor roof replacement cost guide 2024",
@@ -1114,17 +1122,19 @@
   },
   "DOE_appliance_2024": {
     "title": "DOE Appliance Standards Clothes Dryers",
-    "url": "https://www.energy.gov/energysaver/laundry",
+    "url": "https://web.archive.org/web/20260101023400/https://www.energy.gov/energysaver/laundry",
     "publisher": "U.S. Department of Energy",
     "category": "code",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "DOE_air_sealing_2023": {
     "title": "DOE Energy Saver Air Sealing Your Home",
-    "url": "https://www.energy.gov/energysaver/air-sealing-your-home",
+    "url": "https://web.archive.org/web/20260101014227/https://www.energy.gov/energysaver/air-sealing-your-home",
     "publisher": "U.S. Department of Energy",
     "category": "guide",
-    "last_reviewed": "2026-05-01"
+    "last_reviewed": "2026-07-04",
+    "notes": "DOE removed the Energy Saver section from energy.gov in mid-2026; citation preserved via a pre-removal Internet Archive snapshot."
   },
   "BPI_2024": {
     "title": "Building Performance Institute (BPI) Air Sealing Standards",
