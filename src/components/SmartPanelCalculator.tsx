@@ -1,27 +1,11 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Product = 'span_drive' | 'span_home' | 'lumin' | 'schneider' | 'emporia' | 'load_shed_device' | 'traditional';
-
-interface Band { low: number; mid: number; high: number; }
-
-const PRODUCTS: Record<Product, { equipment: Band; install: Band; label: string; type: 'replace' | 'addon' | 'monitor' | 'baseline' }> = {
-  span_drive:        { equipment: { low: 3500, mid: 4000, high: 4500 }, install: { low: 1800, mid: 2800, high: 4500 }, label: 'Span Drive (full smart panel)', type: 'replace' },
-  span_home:         { equipment: { low: 4000, mid: 4500, high: 5200 }, install: { low: 1800, mid: 2800, high: 4500 }, label: 'Span Home Panel (premium)', type: 'replace' },
-  lumin:             { equipment: { low: 1800, mid: 2200, high: 2800 }, install: { low: 800, mid: 1200, high: 2000 }, label: 'Lumin Smart Panel (add-on)', type: 'addon' },
-  schneider:         { equipment: { low: 3200, mid: 3800, high: 4500 }, install: { low: 1800, mid: 2800, high: 4500 }, label: 'Schneider Square D Energy Center', type: 'replace' },
-  emporia:           { equipment: { low: 400, mid: 700, high: 1200 },   install: { low: 400, mid: 700, high: 1200 }, label: 'Emporia Vue Smart Panel (monitoring)', type: 'monitor' },
-  load_shed_device:  { equipment: { low: 500, mid: 900, high: 1500 },   install: { low: 400, mid: 800, high: 1500 }, label: 'Load-shed device (DCC-9-USA, Wallbox)', type: 'addon' },
-  traditional:       { equipment: { low: 700, mid: 1100, high: 1800 }, install: { low: 1500, mid: 2500, high: 4000 }, label: 'Traditional 200A panel (baseline)', type: 'baseline' },
-};
-
-const PANEL_UPGRADE_AVOIDED: Band = { low: 1500, mid: 3000, high: 5500 };
-
-function scale(b: Band, m: number): Band { return { low: b.low * m, mid: b.mid * m, high: b.high * m }; }
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, PRODUCT_OPTIONS, type Product } from '@/lib/calcs/smart-panel';
 
 export default function SmartPanelCalculator() {
   useCalculatorUsed('smart-panel');
@@ -37,23 +21,41 @@ export default function SmartPanelCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const laborMult = lab?.electrician_multiplier ?? 1.0;
-    const p = PRODUCTS[product];
-    const install = scale(p.install, laborMult);
-    const permit: Band = { low: 200, mid: 400, high: 800 };
-    const gross = add(add(p.equipment, install), permit);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.product && PRODUCT_OPTIONS.some(o => o.value === h.product)) setProduct(h.product as Product);
+    if (h.avoid === '1' || h.avoid === '0') setAvoidsUpgrade(h.avoid === '1');
+  });
+  const hashValues = { state, zip, product, avoid: avoidsUpgrade ? '1' : '0' };
+  useHashStateSync(hashValues);
 
-    const traditional = add(add(PRODUCTS.traditional.equipment, scale(PRODUCTS.traditional.install, laborMult)), permit);
-    const premium = gross.mid - traditional.mid;
-    const avoidedUpgradeValue = avoidsUpgrade ? PANEL_UPGRADE_AVOIDED.mid : 0;
-    const netPremium = premium - avoidedUpgradeValue;
+  const result = useMemo(
+    () => compute({ state, product, avoidsUpgrade }),
+    [state, product, avoidsUpgrade],
+  );
 
-    return { equipment: p.equipment, install, permit, gross, traditional, premium, avoidedUpgradeValue, netPremium, label: p.label, type: p.type };
-  }, [state, product, avoidsUpgrade]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('smart-panel', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -74,13 +76,7 @@ export default function SmartPanelCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="product">Smart panel product</label>
           <select id="product" className="input" value={product} onChange={e => setProduct(e.target.value as Product)}>
-            <option value="span_drive">Span Drive (full smart panel replacement)</option>
-            <option value="span_home">Span Home Panel (premium tier)</option>
-            <option value="schneider">Schneider Square D Energy Center</option>
-            <option value="lumin">Lumin Smart Panel (add-on next to existing)</option>
-            <option value="load_shed_device">Load-shed device only (DCC-9-USA, Wallbox)</option>
-            <option value="emporia">Emporia Vue Smart Panel (monitoring only)</option>
-            <option value="traditional">Traditional 200A panel (baseline for comparison)</option>
+            {PRODUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 

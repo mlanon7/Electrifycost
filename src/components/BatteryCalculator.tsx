@@ -1,95 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor, stateEnergy } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type UseCase = 'backup_only' | 'self_consumption' | 'tou_arbitrage' | 'full_home_backup';
-type Chemistry = 'lfp' | 'nmc';
-type PairedSolar = 'yes' | 'no';
-type Panel = '100A' | '200A' | 'unknown';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// 2026 installed cost benchmarks ($/kWh installed, including inverter integration and labor).
-// LBNL "Tracking the Sun" 2024 reports a median $1,330/kWh installed for paired solar-plus-storage;
-// retrofitted standalone storage commands a premium. NREL's 2024 storage benchmark for residential
-// (single Powerwall-class system): $1,200–$1,500/kWh installed for 10-13.5 kWh systems, with smaller
-// systems closer to $1,500/kWh and larger systems trending toward $1,100/kWh.
-const COST_PER_KWH_PAIRED: CostBand = { low: 950, mid: 1200, high: 1500 };       // installed at same time as solar
-const COST_PER_KWH_RETROFIT: CostBand = { low: 1150, mid: 1400, high: 1750 };    // standalone retrofit
-
-// LFP (LiFePO4) chemistry: 0-5% premium for cycle life + safety vs NMC for residential class.
-const CHEMISTRY_PREMIUM: Record<Chemistry, number> = {
-  lfp: 1.03,   // ~3% premium typical, often comparable
-  nmc: 1.00,
-};
-
-// Use-case driven labor + transfer switch cost. Full-home backup requires whole-house automatic
-// transfer switch + critical load panel resizing; backup-only is a small subpanel install.
-const USECASE_PREMIUM: Record<UseCase, number> = {
-  backup_only: 1.00,            // small subpanel, 4-6 critical circuits
-  self_consumption: 1.05,       // grid-tied storage, no transfer switch
-  tou_arbitrage: 1.05,
-  full_home_backup: 1.15,       // automatic transfer switch + critical load panel
-};
-
-// Permit fees baseline (state labor multiplier scales this)
-const BASE_PERMIT: CostBand = { low: 250, mid: 500, high: 900 };
-
-// State storage incentive snapshot (2026). Per-kWh upfront or one-time grants.
-// Values are conservative — many programs have tiers/income limits.
-interface StateIncentive { name: string; perKwh?: number; flat?: number; cap?: number; note: string; }
-const STATE_BATTERY_INCENTIVE: Record<string, StateIncentive> = {
-  CA: { name: 'CA SGIP (Equity Resiliency tier)', perKwh: 150, cap: 5000, note: 'Self-Generation Incentive Program — General Market tier; higher tiers for low-income, fire-prone areas, medical baseline.' },
-  CT: { name: 'CT Energy Storage Solutions', perKwh: 200, cap: 7500, note: 'CT Green Bank — declining-block upfront incentive plus performance payments.' },
-  MA: { name: 'MA ConnectedSolutions', flat: 0, note: 'Performance-based: pays ~$275–$300/kWh-year for grid services, not upfront — not modeled in upfront cost.' },
-  MD: { name: 'MD Energy Storage Tax Credit', perKwh: 0, cap: 5000, note: '30% state income-tax credit up to $5,000 (separate from federal 25D). 2025 expansion makes it more accessible.' },
-  NY: { name: 'NY-Sun Storage adder', perKwh: 250, cap: 5000, note: 'NY-Sun Residential Storage Incentive — varies by region and declining block.' },
-  OR: { name: 'OR Solar + Storage Rebate', flat: 2500, note: 'Energy Trust of Oregon — combined solar + storage rebate.' },
-  CO: { name: 'Xcel Energy Battery Pilot', flat: 0, note: 'Tariff-based, not upfront.' },
-};
-
-function utilityRebateRange(state: string, kwh: number): CostBand & { name: string; note: string } | null {
-  const s = STATE_BATTERY_INCENTIVE[state];
-  if (!s) return null;
-  if (s.flat && s.flat > 0) {
-    return { name: s.name, note: s.note, low: s.flat * 0.8, mid: s.flat, high: s.flat * 1.1 };
-  }
-  if (s.perKwh && s.perKwh > 0) {
-    const v = Math.min(s.perKwh * kwh, s.cap ?? Infinity);
-    return { name: s.name, note: s.note, low: v * 0.7, mid: v, high: v * 1.2 };
-  }
-  return null;
-}
-
-// TOU arbitrage savings — rough heuristic. Daily cycle, 80% depth of discharge, 90% round-trip efficiency.
-// Savings per kWh-cycled equals (peak-rate - off-peak-rate). Median ratio ~3:1 in TOU-aggressive states.
-function annualArbitrageSavings(state: string, kwh: number): number {
-  const row = stateEnergy.find(e => e.state === state);
-  const rate = row ? row.electricity_cents_per_kwh / 100 : 0.16;
-  // TOU spread by state (rough)
-  const touSpread: Record<string, number> = {
-    CA: 0.30, NY: 0.20, MA: 0.18, HI: 0.25, CT: 0.18, NJ: 0.15, NH: 0.15, RI: 0.18,
-    AZ: 0.15, NV: 0.12, FL: 0.10, TX: 0.12, IL: 0.10, MD: 0.12,
-  };
-  const spread = touSpread[state] ?? Math.max(0.05, rate * 0.5);
-  const usableDaily = kwh * 0.80 * 0.90;
-  return usableDaily * spread * 365;
-}
-
-// Avoided outage cost — qualitative. Use a small annualized resilience value:
-// average household loses $150–$300/year in spoilage + lost-productivity from outages (NREL ICE Calculator)
-function annualResilienceValue(useCase: UseCase): number {
-  switch (useCase) {
-    case 'backup_only': return 100;
-    case 'self_consumption': return 50;
-    case 'tou_arbitrage': return 50;
-    case 'full_home_backup': return 250;
-  }
-}
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, USECASE_OPTIONS, CHEMISTRY_OPTIONS, PAIRED_OPTIONS, PANEL_OPTIONS, YEAR_OPTIONS,
+  type UseCase, type Chemistry, type PairedSolar, type Panel,
+} from '@/lib/calcs/home-battery';
 
 export default function BatteryCalculator() {
   useCalculatorUsed('home-battery');
@@ -109,59 +28,51 @@ export default function BatteryCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const stateMult = findStateLabor(state)?.electrician_multiplier ?? 1.0;
-    const basePerKwh = paired === 'yes' ? COST_PER_KWH_PAIRED : COST_PER_KWH_RETROFIT;
-    const chemMult = CHEMISTRY_PREMIUM[chemistry];
-    const ucMult = USECASE_PREMIUM[useCase];
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.kwh) {
+      const n = parseFloat(h.kwh);
+      if (Number.isFinite(n)) setKwh(Math.min(40, Math.max(5, n)));
+    }
+    if (h.use && USECASE_OPTIONS.some(o => o.value === h.use)) setUseCase(h.use as UseCase);
+    if (h.chem && CHEMISTRY_OPTIONS.some(o => o.value === h.chem)) setChemistry(h.chem as Chemistry);
+    if (h.paired && PAIRED_OPTIONS.some(o => o.value === h.paired)) setPaired(h.paired as PairedSolar);
+    if (h.panel && PANEL_OPTIONS.some(o => o.value === h.panel)) setPanel(h.panel as Panel);
+    if (h.yr) {
+      const n = parseInt(h.yr, 10);
+      if (YEAR_OPTIONS.some(o => o.value === n)) setInstallYear(n);
+    }
+  });
+  const hashValues = { state, zip, kwh, use: useCase, chem: chemistry, paired, panel, yr: installYear };
+  useHashStateSync(hashValues);
 
-    const equipmentAndLabor: CostBand = {
-      low: basePerKwh.low * kwh * chemMult * ucMult * stateMult,
-      mid: basePerKwh.mid * kwh * chemMult * ucMult * stateMult,
-      high: basePerKwh.high * kwh * chemMult * ucMult * stateMult,
-    };
+  const result = useMemo(
+    () => compute({ state, kwh, useCase, chemistry, paired, panel, installYear }),
+    [state, kwh, useCase, chemistry, paired, panel, installYear],
+  );
 
-    // Panel-adjacent work: 100A panels often need a critical-load subpanel; 200A typically does not for backup-only
-    const panelAdder: CostBand = panel === '100A' && (useCase === 'full_home_backup' || useCase === 'backup_only')
-      ? { low: 800, mid: 1400, high: 2200 }
-      : { low: 0, mid: 0, high: 0 };
-
-    const permit: CostBand = scale(BASE_PERMIT, stateMult);
-
-    const gross = add(add(equipmentAndLabor, panelAdder), permit);
-
-    // 25D federal credit — TERMINATED by OBBBA for property placed in service after 2025-12-31.
-    // Standalone battery >=3 kWh qualified historically; not available for 2026 onward.
-    // Source: IRS https://www.irs.gov/credits-deductions/residential-clean-energy-credit
-    const fedRate = installYear <= 2025 ? 0.30 : 0;
-    const federalCredit: CostBand = scale(gross, fedRate);
-
-    const stateRebate = utilityRebateRange(state, kwh);
-    const stateAmt: CostBand = stateRebate
-      ? { low: stateRebate.low, mid: stateRebate.mid, high: stateRebate.high }
-      : { low: 0, mid: 0, high: 0 };
-
-    const net: CostBand = {
-      low: Math.max(0, gross.low - federalCredit.low - stateAmt.low),
-      mid: Math.max(0, gross.mid - federalCredit.mid - stateAmt.mid),
-      high: Math.max(0, gross.high - federalCredit.high - stateAmt.high),
-    };
-
-    // Operating savings
-    const tou = useCase === 'tou_arbitrage' || useCase === 'self_consumption'
-      ? annualArbitrageSavings(state, kwh)
-      : 0;
-    const resilience = annualResilienceValue(useCase);
-    const annualSavings = tou + resilience;
-    const paybackYears = annualSavings > 0 ? Math.round((net.mid / annualSavings) * 10) / 10 : null;
-
-    return {
-      gross, federalCredit, stateAmt, stateRebate, net, fedRate,
-      annualSavings, tou, resilience, paybackYears,
-    };
-  }, [state, kwh, useCase, chemistry, paired, panel, installYear]);
-
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('home-battery', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -202,45 +113,35 @@ export default function BatteryCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Use case</label>
           <select className="input mt-1 w-full" value={useCase} onChange={e => setUseCase(e.target.value as UseCase)}>
-            <option value="self_consumption">Self-consumption (NEM 3.0 / VDER)</option>
-            <option value="tou_arbitrage">Time-of-use arbitrage</option>
-            <option value="backup_only">Backup-only (critical loads)</option>
-            <option value="full_home_backup">Full-home backup</option>
+            {USECASE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cell chemistry</label>
           <select className="input mt-1 w-full" value={chemistry} onChange={e => setChemistry(e.target.value as Chemistry)}>
-            <option value="lfp">LFP (LiFePO4 — safer, longer-cycle)</option>
-            <option value="nmc">NMC (denser, older Powerwall, LG)</option>
+            {CHEMISTRY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Paired with new solar?</label>
           <select className="input mt-1 w-full" value={paired} onChange={e => setPaired(e.target.value as PairedSolar)}>
-            <option value="yes">Yes — installed together (cheaper)</option>
-            <option value="no">No — retrofit to existing panels</option>
+            {PAIRED_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Main panel</label>
           <select className="input mt-1 w-full" value={panel} onChange={e => setPanel(e.target.value as Panel)}>
-            <option value="200A">200A (standard)</option>
-            <option value="100A">100A (may need subpanel for backup)</option>
-            <option value="unknown">Unknown</option>
+            {PANEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
           <select className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
-            <option value={2026}>2026 (no federal — 25D expired)</option>
-            <option value={2027}>2027 (no federal)</option>
-            <option value={2028}>2028 (no federal)</option>
-            <option value={2025}>2025 (historical — last 30% year)</option>
+            {YEAR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <p className="mt-1 text-[11px] text-ink-600">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>
         </div>

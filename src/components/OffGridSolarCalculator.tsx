@@ -3,20 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Profile = 'cabin_basic' | 'cabin_full' | 'homestead_modest' | 'homestead_full' | 'backup';
-
-interface Band { low: number; mid: number; high: number; }
-
-const PROFILES: Record<Profile, { dailyKwh: number; pvKw: number; batteryKwh: number; pv: Band; battery: Band; inverter: Band; install: Band; label: string }> = {
-  cabin_basic:      { dailyKwh: 5, pvKw: 1.5, batteryKwh: 10, pv: { low: 3000, mid: 4500, high: 6000 }, battery: { low: 5000, mid: 7000, high: 10000 }, inverter: { low: 800, mid: 1200, high: 1800 }, install: { low: 2000, mid: 3500, high: 6000 }, label: 'Weekend cabin (basic loads)' },
-  cabin_full:       { dailyKwh: 15, pvKw: 4, batteryKwh: 20, pv: { low: 7500, mid: 11000, high: 15000 }, battery: { low: 10000, mid: 15000, high: 22000 }, inverter: { low: 1500, mid: 2200, high: 3200 }, install: { low: 4000, mid: 7000, high: 11000 }, label: 'Full-time cabin (small home)' },
-  homestead_modest: { dailyKwh: 25, pvKw: 7, batteryKwh: 30, pv: { low: 13500, mid: 19500, high: 27000 }, battery: { low: 15000, mid: 22000, high: 32000 }, inverter: { low: 2500, mid: 3500, high: 5000 }, install: { low: 6000, mid: 11000, high: 18000 }, label: 'Modest homestead (gas heat + cooking)' },
-  homestead_full:   { dailyKwh: 40, pvKw: 12, batteryKwh: 60, pv: { low: 23000, mid: 33500, high: 46000 }, battery: { low: 30000, mid: 45000, high: 65000 }, inverter: { low: 4000, mid: 6000, high: 8500 }, install: { low: 9000, mid: 16000, high: 28000 }, label: 'Full-electric homestead' },
-  backup:           { dailyKwh: 0, pvKw: 10, batteryKwh: 40, pv: { low: 18000, mid: 26000, high: 36000 }, battery: { low: 20000, mid: 30000, high: 42000 }, inverter: { low: 3000, mid: 4500, high: 6500 }, install: { low: 7000, mid: 13000, high: 22000 }, label: 'Grid-tied whole-home backup' },
-};
-
-function add(a: Band, b: Band): Band { return { low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high }; }
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import { compute, PROFILE_OPTIONS, type Profile } from '@/lib/calcs/off-grid-solar';
 
 export default function OffGridSolarCalculator() {
   useCalculatorUsed('off-grid-solar');
@@ -31,13 +20,38 @@ export default function OffGridSolarCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const p = PROFILES[profile];
-    const gross = add(add(add(p.pv, p.battery), p.inverter), p.install);
-    return { ...p, gross };
-  }, [profile]);
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.profile && PROFILE_OPTIONS.some(o => o.value === h.profile)) setProfile(h.profile as Profile);
+  });
+  const hashValues = { state, zip, profile };
+  useHashStateSync(hashValues);
+
+  const result = useMemo(() => compute({ state, profile }), [state, profile]);
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('off-grid-solar', () => {
+    if (!(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <>
@@ -55,11 +69,7 @@ export default function OffGridSolarCalculator() {
         <div className="md:col-span-2">
           <label className="label" htmlFor="profile">Use profile</label>
           <select id="profile" className="input" value={profile} onChange={e => setProfile(e.target.value as Profile)}>
-            <option value="cabin_basic">Weekend cabin (5 kWh/day basic)</option>
-            <option value="cabin_full">Full-time cabin (15 kWh/day small home)</option>
-            <option value="homestead_modest">Modest homestead (25 kWh/day, gas heat)</option>
-            <option value="homestead_full">Full-electric homestead (40 kWh/day)</option>
-            <option value="backup">Grid-tied with whole-home backup capability</option>
+            {PROFILE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
       </div>

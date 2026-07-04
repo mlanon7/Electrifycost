@@ -1,107 +1,14 @@
 import { useCalculatorUsed } from '@/lib/track';
 import { useEffect, useMemo, useState } from 'react';
-import { ALL_STATES, findStateForZip, findStateLabor } from '@/lib/data';
+import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { fmtUSD, fmtUSDRange } from '@/lib/format';
 import MonteCarloSim from './MonteCarloSim';
-
-type Type = 'portable' | 'inverter' | 'standby_air' | 'standby_liquid';
-type Fuel = 'natural_gas' | 'propane' | 'diesel' | 'gasoline';
-type Transfer = 'none' | 'interlock' | 'ats_partial' | 'ats_whole';
-type Sizing = '5kw' | '7kw' | '10kw' | '14kw' | '18kw' | '22kw' | '26kw';
-
-interface CostBand { low: number; mid: number; high: number; }
-const add = (a: CostBand, b: CostBand): CostBand => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-const scale = (b: CostBand, m: number): CostBand => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
-
-// Equipment ranges 2026 (Generac, Kohler, Briggs & Stratton, Champion). Sources: manufacturer MSRPs,
-// Home Depot / Lowe's contractor pricing 2024-2025, electrician install surveys.
-const EQUIPMENT_BASE: Record<Type, Record<Sizing, CostBand>> = {
-  portable: {
-    '5kw':  { low: 600,  mid: 900,  high: 1200 },
-    '7kw':  { low: 800,  mid: 1100, high: 1400 },
-    '10kw': { low: 1300, mid: 1700, high: 2200 },
-    '14kw': { low: 1800, mid: 2300, high: 2800 },
-    '18kw': { low: 0, mid: 0, high: 0 },
-    '22kw': { low: 0, mid: 0, high: 0 },
-    '26kw': { low: 0, mid: 0, high: 0 },
-  },
-  inverter: {
-    '5kw':  { low: 1200, mid: 1600, high: 2000 },
-    '7kw':  { low: 1700, mid: 2100, high: 2500 },
-    '10kw': { low: 2400, mid: 2900, high: 3400 },
-    '14kw': { low: 0, mid: 0, high: 0 },
-    '18kw': { low: 0, mid: 0, high: 0 },
-    '22kw': { low: 0, mid: 0, high: 0 },
-    '26kw': { low: 0, mid: 0, high: 0 },
-  },
-  standby_air: {     // air-cooled standby (Generac Guardian etc.)
-    '5kw':  { low: 0, mid: 0, high: 0 },
-    '7kw':  { low: 0, mid: 0, high: 0 },
-    '10kw': { low: 2800, mid: 3500, high: 4200 },
-    '14kw': { low: 3400, mid: 4200, high: 5000 },
-    '18kw': { low: 4200, mid: 5100, high: 6100 },
-    '22kw': { low: 5000, mid: 6000, high: 7200 },
-    '26kw': { low: 5800, mid: 6900, high: 8200 },
-  },
-  standby_liquid: {  // liquid-cooled (Generac Protector, Kohler 14RESV)
-    '5kw':  { low: 0, mid: 0, high: 0 },
-    '7kw':  { low: 0, mid: 0, high: 0 },
-    '10kw': { low: 0, mid: 0, high: 0 },
-    '14kw': { low: 8500, mid: 10500, high: 12500 },
-    '18kw': { low: 10500, mid: 12500, high: 14500 },
-    '22kw': { low: 12500, mid: 14500, high: 17000 },
-    '26kw': { low: 14500, mid: 16500, high: 19500 },
-  },
-};
-
-// Transfer mechanism cost
-const TRANSFER_COST: Record<Transfer, CostBand> = {
-  none:         { low: 0, mid: 0, high: 0 },            // direct extension cords (portable only)
-  interlock:    { low: 250, mid: 450, high: 700 },      // 30-50A breaker interlock + inlet box
-  ats_partial:  { low: 800, mid: 1500, high: 2400 },    // critical-load subpanel ATS
-  ats_whole:    { low: 1500, mid: 2500, high: 4200 },   // 200A service-rated ATS
-};
-
-// Install labor + materials by configuration (electrician + plumber for fuel + pad/concrete)
-const INSTALL_BASE: Record<Type, CostBand> = {
-  portable:       { low: 50,  mid: 150, high: 350 },     // minor — inlet box wire run
-  inverter:       { low: 100, mid: 250, high: 500 },
-  standby_air:    { low: 1500, mid: 2800, high: 4500 },  // pad, fuel line, wiring, ATS commissioning
-  standby_liquid: { low: 2500, mid: 4500, high: 7500 },  // larger pad, dedicated subpanel
-};
-
-// Natural gas line extension (if standby and existing gas service available)
-const GAS_LINE_EXT: CostBand = { low: 600, mid: 1400, high: 2800 };
-
-// Propane tank install (if propane chosen) — typical 500 gal in-ground tank with regulator
-const PROPANE_TANK: CostBand = { low: 1800, mid: 2800, high: 4200 };
-
-// Permit + inspection
-const PERMIT: CostBand = { low: 250, mid: 500, high: 900 };
-
-// Annual maintenance (standby units need yearly service)
-const ANNUAL_MAINT: Record<Type, number> = {
-  portable: 80,
-  inverter: 80,
-  standby_air: 250,
-  standby_liquid: 450,
-};
-
-// Fuel consumption — gallons or therms per hour at 50% load (typical residential running profile)
-// Standby NG ~ 1.0-2.4 therms/hr by size; propane ~ 1.2-3.2 gal/hr; gasoline portable ~ 0.6-1.5 gal/hr
-function fuelCostPerHour(type: Type, sizing: Sizing, fuel: Fuel): number {
-  const ngTherm = type === 'standby_air' || type === 'standby_liquid' ? 1.0 : 1.0;
-  const sizeMultiplier = ({'5kw': 0.5, '7kw': 0.6, '10kw': 0.8, '14kw': 1.1, '18kw': 1.4, '22kw': 1.7, '26kw': 2.0} as Record<Sizing, number>)[sizing];
-  if (fuel === 'natural_gas') return 1.50 * sizeMultiplier * ngTherm;    // $1.50/therm typical
-  if (fuel === 'propane') return 3.20 * sizeMultiplier * 1.0;             // $3.20/gal; 1 gal ≈ 0.92 therm
-  if (fuel === 'diesel') return 4.00 * sizeMultiplier * 0.7;              // $4.00/gal, slightly more efficient
-  if (fuel === 'gasoline') return 3.50 * sizeMultiplier * 1.0;
-  return 1.50 * sizeMultiplier;
-}
-
-const SIZE_BTU_HOURS: Record<Sizing, number> = {
-  '5kw': 5000, '7kw': 7000, '10kw': 10000, '14kw': 14000, '18kw': 18000, '22kw': 22000, '26kw': 26000,
-};
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate } from '@/lib/estimate-snapshot';
+import {
+  compute, validSizingsFor, SIZE_BTU_HOURS, TYPE_OPTIONS, FUEL_OPTIONS, TRANSFER_OPTIONS,
+  type Type, type Fuel, type Transfer, type Sizing,
+} from '@/lib/calcs/generator';
 
 export default function GeneratorCalculator() {
   useCalculatorUsed('generator');
@@ -120,35 +27,51 @@ export default function GeneratorCalculator() {
     }
   }, [zip, state]);
 
-  const result = useMemo(() => {
-    const lab = findStateLabor(state);
-    const elecMult = lab?.electrician_multiplier ?? 1.0;
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    let t: Type = 'standby_air';
+    if (h.type && TYPE_OPTIONS.some(o => o.value === h.type)) { t = h.type as Type; setType(t); }
+    if (h.size && validSizingsFor(t).includes(h.size as Sizing)) setSizing(h.size as Sizing);
+    if (h.fuel && FUEL_OPTIONS.some(o => o.value === h.fuel)) setFuel(h.fuel as Fuel);
+    if (h.xfer && TRANSFER_OPTIONS.some(o => o.value === h.xfer)) setTransfer(h.xfer as Transfer);
+    if (h.hrs) {
+      const n = parseInt(h.hrs, 10);
+      if (Number.isFinite(n)) setAnnualHours(Math.min(2000, Math.max(0, n)));
+    }
+  });
+  const hashValues = { state, zip, type, size: sizing, fuel, xfer: transfer, hrs: annualHours };
+  useHashStateSync(hashValues);
 
-    const equipment = EQUIPMENT_BASE[type][sizing];
-    const transferCost = scale(TRANSFER_COST[transfer], elecMult);
-    const installCost = scale(INSTALL_BASE[type], elecMult);
-    const gasLine = (type === 'standby_air' || type === 'standby_liquid') && fuel === 'natural_gas'
-      ? scale(GAS_LINE_EXT, elecMult) : { low: 0, mid: 0, high: 0 };
-    const propTank = fuel === 'propane' && (type === 'standby_air' || type === 'standby_liquid')
-      ? PROPANE_TANK : { low: 0, mid: 0, high: 0 };
-    const permit = scale(PERMIT, elecMult);
-
-    const gross = add(add(add(add(add(equipment, transferCost), installCost), gasLine), propTank), permit);
-
-    const fuelPerHour = fuelCostPerHour(type, sizing, fuel);
-    const annualFuelCost = fuelPerHour * annualHours;
-    const maint = ANNUAL_MAINT[type];
-    const annualOperating = annualFuelCost + maint;
-
-    const equipmentValid = equipment.mid > 0;
-
-    return { equipment, transferCost, installCost, gasLine, propTank, permit, gross, fuelPerHour, annualFuelCost, maint, annualOperating, equipmentValid };
-  }, [state, type, sizing, fuel, transfer, annualHours]);
+  const result = useMemo(
+    () => compute({ state, type, sizing, fuel, transfer, annualHours }),
+    [state, type, sizing, fuel, transfer, annualHours],
+  );
 
   const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
-  const validSizings: Sizing[] = type === 'portable' || type === 'inverter' ? ['5kw', '7kw', '10kw', '14kw']
-    : type === 'standby_air' ? ['10kw', '14kw', '18kw', '22kw', '26kw']
-    : ['14kw', '18kw', '22kw', '26kw'];
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  usePublishEstimate('generator', () => {
+    if (!result.equipmentValid || !(result.gross.high > 0)) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: result.scope,
+      qs: serializeHashState(hashValues),
+      attrs: result.attrs,
+      brk: result.brk,
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
+
+  const validSizings = validSizingsFor(type);
 
   return (
     <>
@@ -175,10 +98,7 @@ export default function GeneratorCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Generator type</label>
           <select className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSizing('10kw'); }}>
-            <option value="portable">Portable (wheels, extension cords or inlet box)</option>
-            <option value="inverter">Inverter (quieter, cleaner power, more $/kW)</option>
-            <option value="standby_air">Standby air-cooled (Generac Guardian)</option>
-            <option value="standby_liquid">Standby liquid-cooled (Generac Protector, Kohler)</option>
+            {TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
@@ -192,20 +112,14 @@ export default function GeneratorCalculator() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Fuel</label>
           <select className="input mt-1 w-full" value={fuel} onChange={e => setFuel(e.target.value as Fuel)}>
-            <option value="natural_gas">Natural gas (utility, unlimited runtime)</option>
-            <option value="propane">Propane (tank required)</option>
-            <option value="diesel">Diesel (most efficient; tank required)</option>
-            <option value="gasoline">Gasoline (portable only; ~10 hr/tank)</option>
+            {FUEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Transfer mechanism</label>
           <select className="input mt-1 w-full" value={transfer} onChange={e => setTransfer(e.target.value as Transfer)}>
-            <option value="none">None / extension cords (portable only — code-questionable)</option>
-            <option value="interlock">Interlock kit + inlet box (NEC 702.5)</option>
-            <option value="ats_partial">Automatic transfer switch + critical-load subpanel</option>
-            <option value="ats_whole">Whole-home ATS (200A service)</option>
+            {TRANSFER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
