@@ -23,17 +23,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate CSVs
-        run: node scripts/validate-csvs.cjs
+      # The full 9-stage gate, same as local: validate-csvs, validate-risk-events,
+      # validate-pages, validate-content, smoke-test, new-calc-tests,
+      # test-montecarlo, test-sim-state, build-scenario-bands --check.
+      - name: npm test (all validators + test stages)
+        run: npm test
 
-      - name: Validate pages (Layout + section balance)
-        run: node scripts/validate-pages.cjs
-
-      - name: Smoke tests
-        run: node scripts/smoke-test.cjs
-
-      - name: New calculator assertions
-        run: node scripts/new-calc-tests.cjs
+      - name: Type check
+        run: npx tsc --noEmit
 
       - name: Astro build (verify clean production build)
         run: npm run build

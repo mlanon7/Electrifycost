@@ -188,7 +188,7 @@ export default function ResultPanel({
       </section>
 
       {contractorQuote != null && Number.isFinite(contractorQuote) && contractorQuote > 0 && (
-        <QuoteCheck quote={contractorQuote} gross={result.gross} />
+        <QuoteCheck quote={contractorQuote} gross={result.gross} itemized={result.itemized} />
       )}
 
       {result.incentives.length > 0 && (
@@ -536,12 +536,30 @@ function PanelRiskBadge({ level }: { level: string }) {
   return <span className={map[level] ?? 'badge'}>{label} risk</span>;
 }
 
-/** Shared quote-check block used when the user enters a contractor quote. */
-function QuoteCheck({ quote, gross }: { quote: number; gross: CalculatorResult['gross'] }) {
-  let band: 'low' | 'in' | 'high';
+/** Shared quote-check block used when the user enters a contractor quote.
+ *  Scope-aware (ProjectCostPro bid-check port, 2026-07-04): "Custom — choose
+ *  included items" lists the estimate's current line items as checkboxes and
+ *  rebuilds the comparison band from exactly the ticked lines, so a
+ *  legitimate partial-scope quote isn't false-alarmed against the whole job.
+ *  (PCP gates exempt line categories through its markup; this engine's bands
+ *  are already fully-installed with markup 1:1, so the exact partial band is
+ *  the plain sum of the ticked lines.) */
+function QuoteCheck({ quote, gross, itemized }: { quote: number; gross: CalculatorResult['gross']; itemized: CalculatorResult['itemized'] }) {
+  const [scope, setScope] = useState<'full' | 'lines'>('full');
+  const [excluded, setExcluded] = useState<ReadonlySet<string>>(new Set());
+  const lines = itemized ?? [];
+  const custom = scope === 'lines' && lines.length > 0;
+  const included = custom ? lines.filter(l => !excluded.has(l.label)) : lines;
+  const base = custom
+    ? included.reduce((acc, l) => ({ low: acc.low + l.amount.low, mid: acc.mid + l.amount.mid, high: acc.high + l.amount.high }), { low: 0, mid: 0, high: 0 })
+    : gross;
+  const nothingTicked = custom && included.length === 0;
+
+  let band: 'way_under' | 'low' | 'in' | 'high';
   let diff = 0;
-  if (quote < gross.low) { band = 'low'; diff = gross.low - quote; }
-  else if (quote > gross.high) { band = 'high'; diff = quote - gross.high; }
+  if (quote < base.low * 0.75) { band = 'way_under'; diff = base.low - quote; }
+  else if (quote < base.low) { band = 'low'; diff = base.low - quote; }
+  else if (quote > base.high) { band = 'high'; diff = quote - base.high; }
   else { band = 'in'; }
 
   const headlineColor =
@@ -549,12 +567,13 @@ function QuoteCheck({ quote, gross }: { quote: number; gross: CalculatorResult['
     band === 'low' ? 'text-amber-700' :
     'text-rose-700';
   const headline =
-    band === 'in' ? 'Your quote is inside the typical range.' :
-    band === 'low' ? `Your quote is ~${fmtUSD(diff)} below the typical low end.` :
-    `Your quote is ~${fmtUSD(diff)} above the typical high end.`;
+    band === 'in' ? (custom ? 'Your quote is inside the band for exactly the items you ticked.' : 'Your quote is inside the typical range.') :
+    band === 'way_under' ? `Your quote is far below the planning low (~${fmtUSD(diff)} under). Quotes this far under almost always exclude something — confirm the scope line by line before signing.` :
+    band === 'low' ? `Your quote is ~${fmtUSD(diff)} below the ${custom ? 'ticked-items' : 'typical'} low end.` :
+    `Your quote is ~${fmtUSD(diff)} above the ${custom ? 'ticked-items' : 'typical'} high end.`;
 
   const checklist =
-    band === 'low'
+    band === 'low' || band === 'way_under'
       ? [
           'Confirm permits and inspection are included in the price',
           'Confirm grounding, bonding, and meter/main work meet current code',
@@ -570,22 +589,67 @@ function QuoteCheck({ quote, gross }: { quote: number; gross: CalculatorResult['
         ]
       : [];
 
+  const toggleLine = (label: string) => {
+    setExcluded(prev => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label); else next.add(label);
+      return next;
+    });
+  };
+
+  const cardTone =
+    nothingTicked ? 'border-ink-200' :
+    band === 'in' ? 'border-brand-200 bg-brand-50/40' :
+    band === 'low' ? 'border-amber-200 bg-amber-50/40' :
+    'border-rose-200 bg-rose-50/40';
+
   return (
-    <div className={`card p-4 ${band === 'in' ? 'border-brand-200 bg-brand-50/40' : band === 'low' ? 'border-amber-200 bg-amber-50/40' : 'border-rose-200 bg-rose-50/40'}`}>
-      <div className="flex items-baseline justify-between">
+    <div className={`card p-4 ${cardTone}`}>
+      <div className="flex items-baseline justify-between gap-2">
         <h3 className="text-sm font-semibold text-ink-900">Bid check</h3>
         <span className="text-xs text-ink-600">Your quote: {fmtUSD(quote)}</span>
       </div>
-      <p className={`mt-1 text-sm font-semibold ${headlineColor}`}>{headline}</p>
-      <p className="mt-1 text-xs text-ink-700">
-        Typical range for this project (low / mid / high): {fmtUSD(gross.low)} / {fmtUSD(gross.mid)} / {fmtUSD(gross.high)}.
-      </p>
-      {checklist.length > 0 && (
+      {lines.length > 0 && (
+        <div className="mt-2">
+          <label className="text-xs text-ink-700" htmlFor="bid-scope">What does the quote cover?</label>
+          <select id="bid-scope" className="input mt-1 w-full text-xs" value={scope} onChange={e => setScope(e.target.value as 'full' | 'lines')}>
+            <option value="full">The full job as estimated</option>
+            <option value="lines">Custom — choose included items</option>
+          </select>
+          {custom && (
+            <div className="mt-2 space-y-1 rounded-md border border-ink-200 bg-white/60 p-2" role="group" aria-label="Line items included in the quote">
+              <p className="text-[11px] text-ink-600">Tick what the quote includes — the comparison band rebuilds from just those items.</p>
+              {lines.map(l => (
+                <label key={l.label} className="flex items-center justify-between gap-2 text-xs text-ink-800">
+                  <span className="flex items-center gap-2">
+                    <input type="checkbox" checked={!excluded.has(l.label)} onChange={() => toggleLine(l.label)} />
+                    {l.label}
+                  </span>
+                  <span className="tabular-nums text-ink-600">{fmtUSDRange(l.amount.low, l.amount.high)}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {nothingTicked ? (
+        <p className="mt-2 text-sm text-ink-700">Tick at least one line item above to build a comparison band for this quote.</p>
+      ) : (
         <>
-          <p className="mt-2 text-xs font-medium text-ink-900">Ask the contractor to itemize:</p>
-          <ul className="mt-1 list-disc space-y-0.5 pl-5 text-xs text-ink-700">
-            {checklist.map((line, i) => <li key={i}>{line}</li>)}
-          </ul>
+          <p className={`mt-2 text-sm font-semibold ${headlineColor}`}>{headline}</p>
+          <p className="mt-1 text-xs text-ink-700">
+            {custom
+              ? <>Band for the ticked items (low / mid / high): {fmtUSD(base.low)} / {fmtUSD(base.mid)} / {fmtUSD(base.high)}. Anything unticked (permits, extras) would be on top.</>
+              : <>Typical range for this project (low / mid / high): {fmtUSD(base.low)} / {fmtUSD(base.mid)} / {fmtUSD(base.high)}.</>}
+          </p>
+          {checklist.length > 0 && (
+            <>
+              <p className="mt-2 text-xs font-medium text-ink-900">Ask the contractor to itemize:</p>
+              <ul className="mt-1 list-disc space-y-0.5 pl-5 text-xs text-ink-700">
+                {checklist.map((line, i) => <li key={i}>{line}</li>)}
+              </ul>
+            </>
+          )}
         </>
       )}
     </div>

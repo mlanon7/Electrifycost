@@ -8,7 +8,7 @@ This file is the working context for any AI assistant editing the repo. Read it 
 
 **ElectrifyCost** is a calculator-first content site for U.S. home electrification cost estimation. 38 interactive calculators (heat pumps, solar, EV chargers, panel upgrades, water heaters, induction stoves, insulation, windows, generators, batteries, etc.) return **low / mid / high** installed-cost ranges with applicable rebates pre-applied.
 
-A **Monte Carlo cost simulation** layers on top: an inline P10 / most-likely / P90 distribution on every calculator, plus a combined **Project Simulator** (`/project-simulator/`) that rolls 10,000 scenarios across multiple projects with ZIP-based regional pricing and a "Custom" calculator read-back. Full design: `.claude/lessons/11-monte-carlo-simulation.md`.
+A **Monte Carlo cost simulation** layers on top: an inline P10 / most-likely / P90 distribution on every calculator, plus a combined **Project Simulator** (`/project-simulator/`, v2 instance model as of 2026-07-04) that rolls 10,000 scenarios across an ordered plan of configured project instances, with ZIP-based regional pricing, custom configurations captured from the real calculators via the v2 estimate-snapshot contract, share URLs that reproduce the whole plan on a clean browser (fail-closed decode with visible notices), a median (P50) headline, a plan-summary report, CSV export, and a branded print report. Full design: `.claude/lessons/11-monte-carlo-simulation.md` (v1 port) + the 2026-07-04 commit series (v2).
 
 - **Live:** https://electrifycost.com
 - **Repo:** https://github.com/mlanon7/Electrifycost
@@ -202,9 +202,16 @@ Operating-cost change (heating/cooling/water/EV) layered separately via HDD × U
 
 Returns a `CalculatorResult` with: `gross`, `netAfterIncentives`, `itemized[]`, `incentives[]`, `potentialIncentives[]`, `panelRisk?`, `annualOperatingChange?`, `monthlyEnergyImpact?`, `simplePaybackMonths?`, `sourceIds[]`, `reviewedAt`, `caveats[]`.
 
-### Where the 33 non-flagship calculators differ
+### Where the non-flagship calculators differ
 
-They each do their own `useMemo` math directly in the component (no shared engine). This is fine but means result-panel styling and conversion-event firing varies. Future work: promote `ResultPanel` to all 38 calculators.
+As of 2026-07-04, the 27 bespoke calculators in the simulator catalog compute through **pure modules in `src/lib/calcs/<slug>.ts`** (math moved verbatim out of the components): each exports `compute(inputs, opts)`, its select option arrays, `TIER_INPUTS`/`TIER_LABELS` (the simulator's preset configs), and `COST_MIX`. The island calls the same function; the band generator runs it headlessly at national labor (`opts.laborMult = 1`). Result-panel styling still varies per calculator (promoting `ResultPanel` to all of them remains future work). The 5 analysis calculators outside the catalog (WholeHome, EvTco, SolarPayback, EvChargingCost, HvacRepairReplace) still compute inline.
+
+### Calculator → simulator contracts (load-bearing)
+
+- **Share URLs:** every catalog calculator serializes its inputs to the URL hash (`use-url-state.ts`); restores are validated against option lists and clamped. The same serializer produces the snapshot `qs`.
+- **Estimate snapshots (`src/lib/estimate-snapshot.ts`):** on genuine interaction (trusted events only; `window.__EC_TOUCH()` is the test seam) a calculator publishes `ec:est:<slug>` = `{v:2, low, high, sub, qs, attrs, brk, loc, mode, ts, int}`. Share-link replay and ZIP prefill never create snapshots.
+- **Simulator codec (`src/lib/sim-codec.ts`):** custom instances serialize into the simulator share URL as `slug:c:<base64url JSON>`; decode fails closed to Typical with a visible notice. Tested by `scripts/test-sim-state.cjs` (32 assertions).
+- **Generated bands:** `src/data/scenario-projects.json` is written by `node scripts/build-scenario-bands.cjs` (esbuild-bundles `scripts/band-entry.ts`, runs the real compute functions). Never hand-edit it — `--check` in npm test fails if it drifts.
 
 ---
 
@@ -229,11 +236,11 @@ These rules are baked into the calculator engine via `federal-credits.csv` and t
 |---|---|---|
 | **25C** — Energy Efficient Home Improvement | **Expired 2025-12-31** | $2,000 HP, $2,000 HPWH, $600 panel, $1,200 insulation, $600 windows, $250/door × 2 |
 | **25D** — Residential Clean Energy (solar/battery/geothermal) | **Expired 2025-12-31** | 30% no cap |
-| **30C** — Alternative Fuel Refueling (EV chargers) | **Expires 2026-06-30** | 30% up to $1,000, eligible census tracts only |
+| **30C** — Alternative Fuel Refueling (EV chargers) | **Expired 2026-06-30** | 30% up to $1,000, eligible census tracts only |
 | **30D** — New Clean Vehicle | **Expired 2025-09-30** | $7,500 |
 | **25E** — Used Clean Vehicle | **Expired 2025-09-30** | 30% up to $4,000 |
 
-Any FAQ or copy that asserts a federal credit is **currently active** for an installation in 2026 needs to specifically reference 30C only. Everything else is past-tense / expired.
+Every federal credit is now expired (30C, the last, on 2026-06-30). NO copy anywhere may assert a federal credit is currently claimable — everything is past-tense / expired.
 
 State + utility programs are dynamic and tracked in `rebate-programs.csv` with `last_reviewed` dates.
 
@@ -251,15 +258,18 @@ npm run build
 # Preview built dist/ (port 4321)
 npm run preview
 
-# Full test suite (7 stages — all must pass before commit)
+# Full test suite (9 stages — all must pass before commit)
 npm test
-  # 1. validate-csvs.cjs — schema check on all CSVs
+  # 1. validate-csvs.cjs — schema check on all CSVs (+ explicit status enums)
   # 2. validate-risk-events.cjs — sanity + sourcing guard on risk-events.json
   # 3. validate-pages.cjs — Layout open/close balance, JSX-trap detection
   # 4. validate-content.cjs — banned-string guard (stale incentives, wrong credit codes, AI-slop)
   # 5. smoke-test.cjs — 13 calculator scenarios + 9 targeted assertion groups
   # 6. new-calc-tests.cjs — 29 formula assertions for non-flagship calculators
   # 7. test-montecarlo.cjs — 39 assertions on the Monte Carlo engine (calibration gate)
+  # 8. test-sim-state.cjs — 32 assertions on the simulator's share-URL codec (fail-closed gate)
+  # 9. build-scenario-bands.cjs --check — drift gate: scenario-projects.json must match
+  #    what the real calculator compute functions produce (bands are GENERATED, never hand-typed)
 
 # Type check (independent of tests; run before commits with new code)
 npx tsc --noEmit
