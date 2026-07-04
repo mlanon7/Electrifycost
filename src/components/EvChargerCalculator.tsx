@@ -4,13 +4,14 @@ import { ALL_STATES, findStateForZip } from '@/lib/data';
 import {
   runCalculator,
   type CalcArgs,
-  type CensusTract,
   type Difficulty,
   type PanelSize,
   type HomeType,
   type Timing,
   type IncomeBand,
 } from '@/lib/calc';
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate, brkFromItemized } from '@/lib/estimate-snapshot';
 
 const SCENARIOS: { value: string; label: string }[] = [
   { value: 'level2_hardwired', label: 'Level 2 hardwired (most common)' },
@@ -37,7 +38,6 @@ export default function EvChargerCalculator({ initialState = 'CA' }: { initialSt
   const [homeType, setHomeType] = useState<HomeType>('single_family');
   const [timing, setTiming] = useState<Timing>('this_year');
   const [income, setIncome] = useState<IncomeBand>('unknown');
-  const [eligibleCensusTract, setEligibleCensusTract] = useState<CensusTract>('unknown');
   const [contractorQuote, setContractorQuote] = useState<string>('');
 
   // Sync state from ZIP whenever a complete 5-digit ZIP is entered.
@@ -47,6 +47,25 @@ export default function EvChargerCalculator({ initialState = 'CA' }: { initialSt
       if (detected && detected !== state) setState(detected);
     }
   }, [zip]);
+
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.scenario && SCENARIOS.some(s => s.value === h.scenario)) setScenario(h.scenario);
+    if (h.panel && PANEL_SIZES.includes(h.panel as PanelSize)) setPanelSize(h.panel as PanelSize);
+    if (h.diff && DIFFICULTIES.includes(h.diff as Difficulty)) setDifficulty(h.diff as Difficulty);
+    if (h.hometype && HOME_TYPES.some(t => t.value === h.hometype)) setHomeType(h.hometype as HomeType);
+    if (h.timing && ['planning', 'this_year', 'emergency'].includes(h.timing)) setTiming(h.timing as Timing);
+    if (h.income && ['unknown', 'standard', 'moderate_income', 'low_income'].includes(h.income)) setIncome(h.income as IncomeBand);
+    if (h.quote) setContractorQuote(h.quote.replace(/\D/g, '').slice(0, 7));
+  });
+  const hashValues = {
+    state, zip, scenario, panel: panelSize, diff: difficulty,
+    hometype: homeType, timing, income, quote: contractorQuote,
+  };
+  useHashStateSync(hashValues);
 
   const { result, error } = useMemo(() => {
     const args: CalcArgs = {
@@ -61,7 +80,6 @@ export default function EvChargerCalculator({ initialState = 'CA' }: { initialSt
       homeType,
       timing,
       income,
-      eligibleCensusTract,
       contractorQuote: contractorQuote ? Number(contractorQuote) : undefined,
     };
     try {
@@ -69,7 +87,27 @@ export default function EvChargerCalculator({ initialState = 'CA' }: { initialSt
     } catch (e) {
       return { result: null, error: e instanceof Error ? e.message : String(e) };
     }
-  }, [state, zip, scenario, panelSize, difficulty, homeType, timing, income, eligibleCensusTract, contractorQuote]);
+  }, [state, zip, scenario, panelSize, difficulty, homeType, timing, income, contractorQuote]);
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('ev-charger', () => {
+    if (!result) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: panelSize !== 'unknown' ? `${panelSize} panel` : '',
+      qs: serializeHashState(hashValues),
+      attrs: [['Install scenario', SCENARIOS.find(s => s.value === scenario)?.label ?? '']],
+      brk: brkFromItemized(result.itemized),
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <div className="calc-grid">
@@ -127,16 +165,6 @@ export default function EvChargerCalculator({ initialState = 'CA' }: { initialSt
               <option value="emergency">ASAP</option>
             </select>
           </div>
-        </div>
-
-        <div>
-          <label className="label" htmlFor="census">Federal 30C credit — eligible census tract?</label>
-          <select id="census" className="input" value={eligibleCensusTract} onChange={e => setEligibleCensusTract(e.target.value as CensusTract)}>
-            <option value="unknown">Not sure</option>
-            <option value="yes">Yes — confirmed eligible</option>
-            <option value="no">No — not eligible</option>
-          </select>
-          <p className="mt-1 text-xs text-ink-600">The federal 30C credit only applies to qualifying census tracts. Check with the IRS Form 8911 instructions.</p>
         </div>
 
         <div>

@@ -147,7 +147,8 @@ function laborRateForModule(module: Module): number {
   return findModuleLaborRate(module);
 }
 
-function laborMultiplierForModule(state: string, module: Module): number {
+function laborMultiplierForModule(state: string, module: Module, override?: number): number {
+  if (override !== undefined && Number.isFinite(override)) return override;
   const sl = findStateLabor(state);
   if (!sl) return 1.0;
   switch (module) {
@@ -162,9 +163,9 @@ function laborMultiplierForModule(state: string, module: Module): number {
   }
 }
 
-function computeBaseCost(scenario: CostRange, module: Module, state: string): CostBand {
+function computeBaseCost(scenario: CostRange, module: Module, state: string, laborOverride?: number): CostBand {
   const labor = laborRateForModule(module);
-  const sm = laborMultiplierForModule(state, module);
+  const sm = laborMultiplierForModule(state, module, laborOverride);
   const baseLabor = bandFromTriple(
     scenario.labor_hours_low * labor * sm,
     scenario.labor_hours_mid * labor * sm,
@@ -421,6 +422,9 @@ export interface CalcArgs extends CommonInput {
   eligibleCensusTract?: CensusTract;
   /** Override "today" for tests. Defaults to current ISO date. */
   asOf?: string;
+  /** Generator/test seam: bypass the state labor lookup with an explicit
+   *  multiplier (1 = national average). Never set from the UI. */
+  stateLaborOverride?: number;
 }
 
 export function runCalculator(args: CalcArgs): CalculatorResult {
@@ -428,7 +432,7 @@ export function runCalculator(args: CalcArgs): CalculatorResult {
   if (!sc) throw new Error('Cost scenario not found: ' + args.module + ' / ' + args.scenario);
 
   const today = args.asOf ?? todayIso();
-  const base = computeBaseCost(sc, args.module, args.state);
+  const base = computeBaseCost(sc, args.module, args.state, args.stateLaborOverride);
   const dm = difficultyMultiplier(args.difficulty);
   const ht = homeTypeMultiplier(args.homeType);
   const tm = timingMultiplier(args.timing);
@@ -439,9 +443,9 @@ export function runCalculator(args: CalcArgs): CalculatorResult {
     {
       label: 'Labor',
       amount: bandFromTriple(
-        sc.labor_hours_low * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module),
-        sc.labor_hours_mid * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module),
-        sc.labor_hours_high * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module),
+        sc.labor_hours_low * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module, args.stateLaborOverride),
+        sc.labor_hours_mid * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module, args.stateLaborOverride),
+        sc.labor_hours_high * laborRateForModule(args.module) * laborMultiplierForModule(args.state, args.module, args.stateLaborOverride),
       ),
       notes: 'State labor multiplier applied (' + args.state + ').',
     },

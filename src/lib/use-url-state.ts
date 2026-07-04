@@ -27,11 +27,11 @@ export function readHashState(): Record<string, string> {
   }
 }
 
-/** Write a flat key/value object back to the URL hash with `replaceState`
- *  (no history push). Strips empty / undefined values so the hash stays
- *  short. Pass `{}` to clear the hash. */
-export function writeHashState(values: Record<string, string | number | undefined | null>): void {
-  if (typeof window === 'undefined') return;
+/** Serialize a flat key/value object to the `key=value&key=value` string used
+ *  in the URL hash. Strips empty / undefined values so the hash stays short.
+ *  Also the `qs` field of estimate snapshots — one serializer guarantees a
+ *  snapshot's qs always matches what the shared URL would carry. */
+export function serializeHashState(values: Record<string, string | number | undefined | null>): string {
   const params = new URLSearchParams();
   for (const [k, v] of Object.entries(values)) {
     if (v == null) continue;
@@ -39,7 +39,14 @@ export function writeHashState(values: Record<string, string | number | undefine
     if (!s) continue;
     params.set(k, s);
   }
-  const next = params.toString();
+  return params.toString();
+}
+
+/** Write a flat key/value object back to the URL hash with `replaceState`
+ *  (no history push). Pass `{}` to clear the hash. */
+export function writeHashState(values: Record<string, string | number | undefined | null>): void {
+  if (typeof window === 'undefined') return;
+  const next = serializeHashState(values);
   const url = next
     ? `${window.location.pathname}${window.location.search}#${next}`
     : `${window.location.pathname}${window.location.search}`;

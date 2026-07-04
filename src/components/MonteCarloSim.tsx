@@ -129,22 +129,9 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
 
   useEffect(() => () => stopRaf(), []);
 
-  // Persist the configured installed-cost band so the Project Simulator can read
-  // it back as a "Custom" tier. Only writes once the band moves off its default
-  // (i.e. the user actually changed an input) — matching ProjectCostPro: merely
-  // viewing a calculator never creates a saved config. One write point here
-  // covers every calculator, since each embeds this component with its slug.
-  const bandKey = model ? `${model.band.low}|${model.band.high}` : '';
-  const defaultBandRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (!model || !bandKey) return;
-    if (defaultBandRef.current === null) { defaultBandRef.current = bandKey; return; }
-    if (bandKey === defaultBandRef.current) return;
-    try {
-      localStorage.setItem('ec:est:' + slug, JSON.stringify({ low: model.band.low, high: model.band.high, ts: Date.now(), int: true }));
-    } catch { /* localStorage unavailable */ }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bandKey, slug]);
+  // NOTE: estimate persistence moved to usePublishEstimate (estimate-snapshot.ts),
+  // called by each calculator — snapshots now carry spec/qs/attrs/breakdown, and
+  // the write is gated on genuine (trusted-event) interaction.
 
   if (!model) return null;
 

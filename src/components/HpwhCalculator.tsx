@@ -12,6 +12,8 @@ import {
   type IncomeBand,
   type FuelType,
 } from '@/lib/calc';
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate, brkFromItemized } from '@/lib/estimate-snapshot';
 
 const SCENARIOS: { value: string; label: string }[] = [
   { value: 'plugin_120v_50gal', label: '120V plug-in HPWH (50 gal)' },
@@ -74,6 +76,29 @@ export default function HpwhCalculator({ initialState = 'CA' }: { initialState?:
     }
   }, [zip]);
 
+  // Hydrate from URL hash on mount + serialize back (share-link persistence).
+  // Restored values are validated so a crafted link can't render absurd totals.
+  useHashStateInit(h => {
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.scenario && SCENARIOS.some(s => s.value === h.scenario)) setScenario(h.scenario);
+    if (h.panel && PANEL_SIZES.includes(h.panel as PanelSize)) setPanelSize(h.panel as PanelSize);
+    if (h.diff && DIFFICULTIES.includes(h.diff as Difficulty)) setDifficulty(h.diff as Difficulty);
+    if (h.hometype && HOME_TYPES.some(t => t.value === h.hometype)) setHomeType(h.hometype as HomeType);
+    if (h.fuel && FUEL_OPTIONS.some(f => f.value === h.fuel)) setFuelWater(h.fuel as FuelType);
+    if (h.loc && LOCATIONS.some(l => l.value === h.loc)) setLocation(h.loc);
+    if (h.removeold) setRemoveOld(h.removeold === '1');
+    if (h.timing && ['planning', 'this_year', 'emergency'].includes(h.timing)) setTiming(h.timing as Timing);
+    if (h.income && ['unknown', 'standard', 'moderate_income', 'low_income'].includes(h.income)) setIncome(h.income as IncomeBand);
+    if (h.quote) setContractorQuote(h.quote.replace(/\D/g, '').slice(0, 7));
+  });
+  const hashValues = {
+    state, zip, scenario, panel: panelSize, diff: difficulty,
+    hometype: homeType, fuel: fuelWater, loc: location, removeold: removeOld ? '1' : '0',
+    timing, income, quote: contractorQuote,
+  };
+  useHashStateSync(hashValues);
+
   const { result, error } = useMemo(() => {
     // Removal adder anchor pulled from data/csv/addons-bands.csv (hpwh_removal_old_unit).
     const removalAdder = removeOld ? findAddonBand('hpwh_removal_old_unit').mid : 0;
@@ -108,6 +133,26 @@ export default function HpwhCalculator({ initialState = 'CA' }: { initialState?:
       return { result: null, error: e instanceof Error ? e.message : String(e) };
     }
   }, [state, zip, scenario, panelSize, difficulty, homeType, fuelWater, location, removeOld, timing, income, contractorQuote]);
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('heat-pump-water-heater', () => {
+    if (!result) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: LOCATIONS.find(l => l.value === location)?.label.toLowerCase().replace(/\s*\(.*\)$/, '') + ' install',
+      qs: serializeHashState(hashValues),
+      attrs: [['Equipment', SCENARIOS.find(s => s.value === scenario)?.label ?? '']],
+      brk: brkFromItemized(result.itemized),
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   return (
     <div className="calc-grid">

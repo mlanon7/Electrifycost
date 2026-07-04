@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import ResultPanel from './ResultPanel';
 import { ALL_STATES, findStateForZip } from '@/lib/data';
 import { runCalculator, type CalcArgs, type Difficulty, type PanelSize, type HomeType, type Timing, type IncomeBand } from '@/lib/calc';
-import { useHashStateInit, useHashStateSync } from '@/lib/use-url-state';
+import { useHashStateInit, useHashStateSync, serializeHashState } from '@/lib/use-url-state';
+import { usePublishEstimate, brkFromItemized } from '@/lib/estimate-snapshot';
 
 const SCENARIOS: { value: string; label: string }[] = [
   { value: 'upgrade_100_to_200', label: '100A → 200A panel upgrade' },
@@ -41,22 +42,25 @@ export default function PanelCalculator({ initialState = 'CA' }: { initialState?
     }
   }, [zip]);
 
-  // Hydrate from URL hash on mount + serialize state back to hash.
+  // Hydrate from URL hash on mount + serialize state back to hash. Restored
+  // values are validated against the option lists so a crafted link can never
+  // render absurd totals.
   useHashStateInit(h => {
-    if (h.state) setState(h.state);
-    if (h.zip) setZip(h.zip);
-    if (h.scenario) setScenario(h.scenario);
-    if (h.panel) setPanelSize(h.panel as PanelSize);
-    if (h.diff) setDifficulty(h.diff as Difficulty);
-    if (h.hometype) setHomeType(h.hometype as HomeType);
-    if (h.timing) setTiming(h.timing as Timing);
-    if (h.income) setIncome(h.income as IncomeBand);
-    if (h.quote) setContractorQuote(h.quote);
+    if (h.state && ALL_STATES.some(s => s.code === h.state)) setState(h.state);
+    if (h.zip) setZip(h.zip.replace(/\D/g, '').slice(0, 5));
+    if (h.scenario && SCENARIOS.some(s => s.value === h.scenario)) setScenario(h.scenario);
+    if (h.panel && PANEL_SIZES.includes(h.panel as PanelSize)) setPanelSize(h.panel as PanelSize);
+    if (h.diff && DIFFICULTIES.includes(h.diff as Difficulty)) setDifficulty(h.diff as Difficulty);
+    if (h.hometype && HOME_TYPES.some(t => t.value === h.hometype)) setHomeType(h.hometype as HomeType);
+    if (h.timing && ['planning', 'this_year', 'emergency'].includes(h.timing)) setTiming(h.timing as Timing);
+    if (h.income && ['unknown', 'standard', 'moderate_income', 'low_income'].includes(h.income)) setIncome(h.income as IncomeBand);
+    if (h.quote) setContractorQuote(h.quote.replace(/\D/g, '').slice(0, 7));
   });
-  useHashStateSync({
+  const hashValues = {
     state, zip, scenario, panel: panelSize, diff: difficulty,
     hometype: homeType, timing, income, quote: contractorQuote,
-  });
+  };
+  useHashStateSync(hashValues);
 
   const { result, error } = useMemo(() => {
     const args: CalcArgs = {
@@ -79,6 +83,26 @@ export default function PanelCalculator({ initialState = 'CA' }: { initialState?
       return { result: null, error: e instanceof Error ? e.message : String(e) };
     }
   }, [state, zip, scenario, panelSize, difficulty, homeType, timing, income, contractorQuote]);
+
+  // Publish a structured estimate snapshot for the Project Simulator once the
+  // user genuinely interacts (trusted events only — never a share-link replay).
+  const stateName = ALL_STATES.find(s => s.code === state)?.name ?? state;
+  usePublishEstimate('electrical-panel', () => {
+    if (!result) return null;
+    return {
+      v: 2,
+      low: Math.round(result.gross.low),
+      high: Math.round(result.gross.high),
+      sub: panelSize !== 'unknown' ? `existing ${panelSize} panel` : '',
+      qs: serializeHashState(hashValues),
+      attrs: [['Project', SCENARIOS.find(s => s.value === scenario)?.label ?? '']],
+      brk: brkFromItemized(result.itemized),
+      loc: stateName,
+      mode: 'installed',
+      ts: Date.now(),
+      int: true,
+    };
+  });
 
   const quoteDelta = useMemo(() => {
     if (!result || !contractorQuote) return null;
