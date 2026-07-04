@@ -3,7 +3,7 @@ import Layout from '@/components/Layout.astro';
 import { sources, type SourceCategory } from '@/lib/data';
 
 const groups: { key: SourceCategory; title: string; description: string }[] = [
-  { key: 'tax_credit',     title: 'Federal tax credits',          description: 'Authoritative IRS and ENERGY STAR pages for the residential energy tax credits we track and apply where still active (30C through mid-2026; 25C and 25D are expired for 2026-forward installs).' },
+  { key: 'tax_credit',     title: 'Federal tax credits',          description: 'Authoritative IRS and ENERGY STAR pages for the residential energy tax credits we track (25C and 25D expired for 2026-forward installs; 30C expired for property placed in service after 2026-06-30).' },
   { key: 'rebate_program', title: 'Rebate programs',              description: 'Federal, state, and program-administrator portals for rebates that stack with credits — DOE Home Energy Rebates, DSIRE, NYSERDA, Mass Save, TECH Clean California, and more.' },
   { key: 'product_list',   title: 'Product eligibility lists',    description: 'ENERGY STAR Product Finder and NEEP databases used to verify equipment eligibility for credits and qualifying-equipment rebates.' },
   { key: 'energy_data',    title: 'Energy price data',            description: 'EIA retail-rate datasets for electricity, natural gas, propane, heating oil, and gasoline; updated quarterly.' },

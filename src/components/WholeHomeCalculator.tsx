@@ -74,7 +74,6 @@ export default function WholeHomeCalculator() {
   const [fuelWater, setFuelWater] = useState<FuelType>('natural_gas');
   const [timing, setTiming] = useState<Timing>('planning');
   const [income, setIncome] = useState<IncomeBand>('unknown');
-  const [eligibleCensusTract, setEligibleCensusTract] = useState<'unknown' | 'yes' | 'no'>('unknown');
 
   const [enabled, setEnabled] = useState<Record<ModuleKey, boolean>>(() =>
     MODULES.reduce((acc, m) => ({ ...acc, [m.key]: m.defaultEnabled }), {} as Record<ModuleKey, boolean>),
@@ -109,7 +108,6 @@ export default function WholeHomeCalculator() {
           fuelWater,
           timing,
           income,
-          eligibleCensusTract,
         });
         const panelAdder = result.panelAdder ?? zero;
         const grossExPanel: CostBand = {
@@ -122,7 +120,7 @@ export default function WholeHomeCalculator() {
         return { key: m.key, label: m.label, enabled: true, result: null, panelAdder: zero, grossExPanel: zero };
       }
     });
-  }, [state, zip, panelSize, homeSqft, fuelHeating, fuelWater, timing, income, eligibleCensusTract, enabled]);
+  }, [state, zip, panelSize, homeSqft, fuelHeating, fuelWater, timing, income, enabled]);
 
   // Aggregate. Panel work is shared: take the MAX panel adder across modules, not the sum.
   // Each module's gross is then its non-panel portion; we add one shared panel adder at the end.
@@ -227,15 +225,6 @@ export default function WholeHomeCalculator() {
               <option value="low_income">Low income</option>
             </select>
           </div>
-        </div>
-
-        <div>
-          <label className="label" htmlFor="ct">30C census tract?</label>
-          <select id="ct" className="input" value={eligibleCensusTract} onChange={e => setEligibleCensusTract(e.target.value as 'unknown' | 'yes' | 'no')}>
-            <option value="unknown">Not sure</option>
-            <option value="yes">Yes — confirmed eligible</option>
-            <option value="no">No — not eligible</option>
-          </select>
         </div>
 
         <div className="border-t border-ink-200 pt-4">

@@ -362,25 +362,35 @@ const evBase = {
   panel: '200A', difficulty: 'average', homeType: 'single_family', income: 'unknown',
 };
 
-run('30C unknown → potential only', { ...evBase, censusTract: 'unknown' }, [
+// 30C expired 2026-06-30 (OBBBA). Census-tract routing is still covered via
+// asOf pins to a date when the credit was live; a present-day assertion
+// proves the runtime date filter now drops it everywhere.
+run('30C historical (2026-06): unknown → potential only', { ...evBase, censusTract: 'unknown', asOf: '2026-06-01' }, [
   ['30C not in applied', r => !r.applied.some(i => i.programId === 'FED_30C_EVSE'),
    '30C was in applied (it should be potential when census-tract is unknown)'],
   ['30C in potential', r => r.potential.some(i => i.programId === 'FED_30C_EVSE'),
    '30C missing from potential'],
 ]);
 
-run('30C yes → applied', { ...evBase, censusTract: 'yes' }, [
+run('30C historical (2026-06): yes → applied', { ...evBase, censusTract: 'yes', asOf: '2026-06-01' }, [
   ['30C in applied', r => r.applied.some(i => i.programId === 'FED_30C_EVSE'),
    '30C missing from applied when confirmed eligible'],
   ['30C not in potential', r => !r.potential.some(i => i.programId === 'FED_30C_EVSE'),
    '30C unexpectedly in potential'],
 ]);
 
-run('30C no → excluded entirely', { ...evBase, censusTract: 'no' }, [
+run('30C historical (2026-06): no → excluded entirely', { ...evBase, censusTract: 'no', asOf: '2026-06-01' }, [
   ['30C not in applied', r => !r.applied.some(i => i.programId === 'FED_30C_EVSE'),
    '30C in applied despite census-tract=no'],
   ['30C not in potential', r => !r.potential.some(i => i.programId === 'FED_30C_EVSE'),
    '30C in potential despite census-tract=no'],
+]);
+
+run('30C after 2026-06-30 → expired, gone entirely', { ...evBase, censusTract: 'yes', asOf: '2026-07-01' }, [
+  ['30C not in applied', r => !r.applied.some(i => i.programId === 'FED_30C_EVSE'),
+   '30C still in applied after its 2026-06-30 expiration'],
+  ['30C not in potential', r => !r.potential.some(i => i.programId === 'FED_30C_EVSE'),
+   '30C still in potential after its 2026-06-30 expiration'],
 ]);
 
 const heehraBase = {

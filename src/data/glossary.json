@@ -155,13 +155,13 @@
   "credit_25c": {
     "term": "25C credit",
     "expansion": "Energy Efficient Home Improvement Credit",
-    "definition": "Federal tax credit covering 30% of cost for qualifying heat pumps, heat pump water heaters, electrical panels, insulation, and windows. Annual category caps apply ($2,000 for heat pumps and HPWHs combined; $600 for panels). Through Dec 31, 2025 under current law.",
+    "definition": "Federal tax credit that covered 30% of cost for qualifying heat pumps, heat pump water heaters, electrical panels, insulation, and windows, with annual category caps ($2,000 for heat pumps and HPWHs combined; $600 for panels). Expired for property placed in service after Dec 31, 2025 (OBBBA).",
     "category": "incentive"
   },
   "credit_30c": {
     "term": "30C credit",
     "expansion": "Alternative Fuel Vehicle Refueling Property Credit",
-    "definition": "Federal tax credit covering 30% of cost (up to $1,000) for residential EV chargers and other alt-fuel refueling equipment. Limited to qualifying census tracts; check the AFDC tract-lookup tool. Property placed in service through June 30, 2026.",
+    "definition": "Federal tax credit that covered 30% of cost (up to $1,000) for residential EV chargers and other alt-fuel refueling equipment, limited to qualifying census tracts. Expired for property placed in service after June 30, 2026 (OBBBA).",
     "category": "incentive"
   }
 }

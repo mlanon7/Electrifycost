@@ -38,7 +38,7 @@ console.log('1) federal-credits.csv reflects 2026 reality');
   const c25E = credits.filter(r => r.credit_code === '25E');
   passert('25C rows present and expired', c25C.length >= 1 && c25C.every(r => r.status === 'expired'));
   passert('25D rows present and expired', c25D.length >= 1 && c25D.every(r => r.status === 'expired'));
-  passert('30C remains active',           c30C.length >= 1 && c30C.every(r => r.status === 'active'));
+  passert('30C expired (after 2026-06-30)', c30C.length >= 1 && c30C.every(r => r.status === 'expired'));
   passert('30D expired',                   c30D.length >= 1 && c30D.every(r => r.status === 'expired'));
   passert('25E expired',                   c25E.length >= 1 && c25E.every(r => r.status === 'expired'));
 }

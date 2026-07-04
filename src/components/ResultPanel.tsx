@@ -201,7 +201,7 @@ export default function ResultPanel({
             {fmtUSDRange(result.netAfterIncentives.low, result.netAfterIncentives.high)}
           </p>
           <p className="mt-2 text-xs text-brand-700">
-            Net = gross minus rebates currently available. Federal 25C, 25D, 30D, 25E credits expired (OBBBA, 2025) and are not subtracted. 30C (EV charger) still applies through 2026-06-30 with eligible-tract rules.
+            Net = gross minus rebates currently available. The federal credits (25C, 25D, 30C, 30D, 25E) have all expired under OBBBA — 30C, the last, on 2026-06-30 — and are not subtracted. State and utility programs still apply where shown.
           </p>
         </div>
       )}

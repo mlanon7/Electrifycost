@@ -20,11 +20,11 @@ const faq = [
   },
   {
     q: 'Is there a federal tax credit for home EV chargers?',
-    a: 'Yes — the federal 30C Alternative Fuel Vehicle Refueling Property Credit covers 30% of cost up to $1,000 for qualifying property placed in service through June 30, 2026. The OBBBA legislation (signed July 4, 2025) accelerated the prior 2032 sunset to this June 30, 2026 date. Eligibility is limited to qualifying census tracts. See https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit and Form 8911 instructions: https://www.irs.gov/instructions/i8911. Use the AFDC tool (https://afdc.energy.gov/laws/fed_summary) to confirm tract eligibility.',
+    a: 'No — the federal 30C Alternative Fuel Vehicle Refueling Property Credit (30% of cost up to $1,000, eligible census tracts only) expired for property placed in service after June 30, 2026. The OBBBA legislation (signed July 4, 2025) accelerated the prior 2032 sunset to that date. Chargers placed in service on or before June 30, 2026 can still be claimed on that tax-year return via Form 8911: https://www.irs.gov/instructions/i8911. Background: https://www.irs.gov/credits-deductions/alternative-fuel-vehicle-refueling-property-credit. Some state and utility rebates remain — see the rebates page.',
   },
   {
-    q: 'How do I check if my address is in an eligible 30C census tract?',
-    a: 'Use the DOE / IRS eligibility tool: https://www.energy.gov/vehicles. The tract must qualify as either a low-income community or a non-urban tract. Eligibility is binary — either your address qualifies or it doesn’t — so confirm before assuming the credit on a contractor quote.',
+    q: 'How do I check if my address was in an eligible 30C census tract?',
+    a: 'Tract eligibility now matters only for chargers placed in service on or before June 30, 2026 — the 30C credit expired after that date. If your install qualified on timing, use the DOE / IRS eligibility tool (https://www.energy.gov/vehicles) to confirm the tract before filing Form 8911. The tract had to qualify as either a low-income community or a non-urban tract; eligibility is binary.',
   },
   {
     q: 'What is the right amperage for my install?',
@@ -56,7 +56,7 @@ const schemaJsonLd = [
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    description: 'Free planning-range calculator for Level 2 EV charger installs at home, including the federal 30C credit, panel work, and trenching.',
+    description: 'Free planning-range calculator for Level 2 EV charger installs at home, including panel work, trenching, and state/utility rebates.',
   },
   {
     '@context': 'https://schema.org',
@@ -71,7 +71,7 @@ const schemaJsonLd = [
 ---
 <Layout
   title="EV Charger Installation Cost Calculator 2026"
-  description="Estimate the installed cost of a Level 2 EV charger at home, with the federal 30C credit (through June 30, 2026), panel-load awareness, trenching, and a."
+  description="Estimate the installed cost of a Level 2 EV charger at home, with panel-load awareness, trenching, and state/utility rebates applied."
   active="/ev-charger-installation-cost-calculator/"
   schemaJsonLd={schemaJsonLd}
   ogImage="/assets/topic-images/ev-charger-hero-photo.jpg"
@@ -85,10 +85,10 @@ const schemaJsonLd = [
       <p class="eyebrow">EV charger</p>
       <h1 class="mt-1 text-3xl md:text-4xl">EV Charger Installation Cost Calculator</h1>
       <p class="mt-3 max-w-2xl text-sm text-ink-700 md:text-base">
-        Plan-level installed cost for a Level 2 home charger — hardwired or plug-in, with optional trenching and panel work. Includes the federal 30C credit (eligibility-aware, through June 30, 2026) and state/utility rebates.
+        Plan-level installed cost for a Level 2 home charger — hardwired or plug-in, with optional trenching and panel work. Includes state/utility rebates; the federal 30C credit expired for chargers placed in service after June 30, 2026.
       </p>
       <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 p-3 text-sm text-ink-800">
-        <strong>Quick answer:</strong> a typical Level 2 home charger install runs $1,000–$2,800 hardwired with a short conduit run. Trenching to a detached garage pushes that to $3,000–$8,000. The federal 30C credit (30% up to $1,000) applies through June 30 2026 if your install address is in an eligible census tract.
+        <strong>Quick answer:</strong> a typical Level 2 home charger install runs $1,000–$2,800 hardwired with a short conduit run. Trenching to a detached garage pushes that to $3,000–$8,000. The federal 30C credit (30% up to $1,000) expired for chargers placed in service after June 30, 2026.
       </p>
     </div>
     <picture>
@@ -112,7 +112,7 @@ const schemaJsonLd = [
     <div class="max-w-prose">
       <h2 class="text-xl font-semibold text-ink-900">New to home EV charging?</h2>
       <p class="mt-2 text-sm text-ink-700">
-        The box on your wall is technically an EVSE — the real charger lives inside your car. Level 1 (120V) adds 3–5 mi/hr; Level 2 (240V, 16–80A) is what 80% of EV owners actually want, adding 20–45 mi/hr. NEC 625.41 sizes the circuit at 125% of continuous current (so a 48A EVSE needs a 60A breaker). You probably don't need a panel upgrade — a load-management device at $500–$1,500 often replaces a $4,000 service upgrade. The federal 30C credit (30% up to $1,000) runs through June 30 2026 but requires an eligible census tract.
+        The box on your wall is technically an EVSE — the real charger lives inside your car. Level 1 (120V) adds 3–5 mi/hr; Level 2 (240V, 16–80A) is what 80% of EV owners actually want, adding 20–45 mi/hr. NEC 625.41 sizes the circuit at 125% of continuous current (so a 48A EVSE needs a 60A breaker). You probably don't need a panel upgrade — a load-management device at $500–$1,500 often replaces a $4,000 service upgrade. The federal 30C credit (30% up to $1,000) expired for chargers placed in service after June 30, 2026; state and utility rebates are now the main incentives.
       </p>
       <p class="mt-3 text-sm">
         <a href="/guides/ev-chargers/" class="font-medium text-brand-700">Read the full guide <span aria-hidden="true">→</span></a>
