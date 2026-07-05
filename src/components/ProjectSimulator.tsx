@@ -786,8 +786,10 @@ export default function ProjectSimulator() {
                       const n = inPlanCount[slug] || 0;
                       return (
                         <div key={slug} className={`sim-row${n ? ' is-on' : ''}`}>
-                          <span className="sim-row-name">{p.label}</span>
-                          {n > 0 && <span className="sim-row-in">{n > 1 ? `In plan ×${n}` : 'In plan'}</span>}
+                          <div className="sim-row-main">
+                            <span className="sim-row-name">{p.label}</span>
+                            {n > 0 && <span className="sim-row-in">{n > 1 ? `In plan ×${n}` : 'In plan'}</span>}
+                          </div>
                           <div className="sim-row-ctl">
                             <span className="sim-row-band">{money(b.low)}–{money(b.high)}</span>
                             <button type="button" className="sim-row-add" onClick={() => addInstance(slug, 'typical')} aria-label={`Add ${p.label} to your plan`}>+ Add</button>
