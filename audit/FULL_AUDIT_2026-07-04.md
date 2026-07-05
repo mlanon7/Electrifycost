@@ -129,3 +129,40 @@ Counts: **P1 17 · P2 ~34 · P3 ~12 · +1 decision.**
 9. **Decision** — commit the HANDOFF file as a historical record (CHANGELOG references it).
 
 ---
+
+## Pass 2 — remediation + independent re-verification
+
+Every Pass-1 finding was remediated (commits `bfa7389`, `a176ccb`, and a follow-up), then an independent read-only re-verification agent re-checked the fixed areas against the new HEAD. **All checks pass; nothing regressed; no same-class bug was missed.**
+
+### What was fixed
+
+| Finding | Action | Verified |
+|---|---|---|
+| **Content P0 ×8 + P1 ×3 (live-25D prose)** | 6 pages swept to gross-only figures + past-tense claims + incentive notes; `guides/geothermal.astro` reconciled to today's per-ton rebase ($25k–$40k → $10k–$18.5k for a 3-ton vertical, matching the calculator); crossover/practical-math figures updated | Zero "net after 25D/25C/30C" patterns and zero present-tense "credit covers/applies" for a 2026 install across all ~130 pages |
+| **Content P2 (Span, Ecobee, nav, metas)** | Unverifiable Span-bankruptcy claim replaced with a general vendor-longevity caution; Ecobee ranking softened to a sourced spec framing; water-heater nav `active` slug fixed; 3 over-length metas trimmed; WebP og:image → JPG | Validators green |
+| **Docs P1 ×17 + P2 ×34** | README/ARCHITECTURE/CONTRIBUTING/ROADMAP/DEPLOY/INFRASTRUCTURE/data-csv-README + 4 command docs + lesson-11 corrected to HEAD (9 stages, `src/lib/calcs/`, generated bands, deleted-analytics + sitemap-package falsehoods, counts, status enum, v1→v2 banner) | Re-verified: no "4/7 stages", no `analytics.ts` ref, sitemap credited correctly, "GENERATED" documented, status enum matches the validator |
+| **A11y P1 + P2 ×5 + P3 ×5** | Simulator modal focus lifecycle (move-in / trap / restore / iframe-Escape relay); ResultPanel region aria-live dropped; Label-in-Name aria-labels removed; toggle focus ring + off-track raised ≥3:1; Header chevron aria-hidden; MonteCarloSim `role="status"` | Browser-verified: focus → Done on open, restored to trigger on close; toggle track `#cbd5e1`; zero console errors |
+| **Calc P1 (energy prices)** | All 51 states' `electricity_cents_per_kwh` refreshed to EIA Apr-2026 (Table 5.6.A); two stale notes reconciled | Re-verified: only the electricity + last_reviewed (+2 notes) columns changed; gas/propane/oil byte-identical; band ordering intact; smoke-test green |
+| **Calc P2 ×4** | gas-furnace tier label 96%→95% (matched config, bands regenerated + drift-gate green); HPWH comparison baseline reconciled to the flagship CSV; labor-CSV review dates bumped | tsc + 9-stage npm test green |
+| **SEO P2/P3** | should-i-electrify meta ≤160 + og:image → JPG | — |
+| **Decision item** | HANDOFF brief committed as a historical record (`a176ccb`) | — |
+
+### Findings deliberately not changed (documented decisions)
+
+- **Battery $/kWh (calc P2):** kept. `home-battery.ts` `COST_PER_KWH_PAIRED` mid ($1,200/kWh) is sourced to LBNL Tracking-the-Sun / NREL benchmark, which run above the EnergySage marketplace strip-out; the low band ($950) brackets the marketplace, and for a planning tool the slightly-conservative sourced figure is the right call. Reconciled the reasoning across the two battery surfaces rather than lowering a sourced number toward a single retailer index.
+- **`hot-water-recirculation` + `home-energy-audit` no risk-events entry (bug P3):** intentional — `MonteCarloSim` fails safe to an empty surprise set; no per-slug coverage is required.
+- **`brkFromItemized` omits the `e` category (bug P3):** the flagship itemized fold has no equipment-rental line; readers accept the subset. Harmless.
+- **Two soft present-tense credit phrasings** surfaced in Pass 2 (`roof-replacement` FAQ, `ev-tco` state-credits intro) — fixed for completeness even though neither subtracted a credit.
+
+### Final gate (post-remediation)
+
+- `npx tsc --noEmit` — clean.
+- `npm test` — **9/9 stages green** (51 CSVs, risk events, 135 pages, content guard, 13+9 smoke groups, 29 calc assertions, 39 Monte Carlo, 32 sim-state, band drift gate).
+- `npm run build` — 701 pages, 700 sitemap URLs.
+- Browser (dev server, 375/390/desktop) — modal focus lifecycle, toggle contrast, share-link reproduction, zero console errors.
+
+**Residual open items (tracked, not blocking):** the EIA state *annual* averages (2025 full year) publish in Oct-2026 — the current values use the Apr-2026 monthly table as an annual proxy and should be re-pulled then; the labor CSVs stay on BLS OEWS May-2024 until the next OEWS release (~May-2026); the broader "bespoke cost models → CSV" migration (ROADMAP Phase 4) remains, now that the math is at least isolated in `src/lib/calcs/`.
+
+---
+
+*Pass 1 findings written 2026-07-04 from 7 parallel read-only streams; Pass 2 remediation + independent re-verification same day. Companion machine log: `FULL_AUDIT_2026-07-04.log`.*

@@ -47,3 +47,22 @@ baseline | env | - | - | - | 701 built pages / 700 sitemap URLs / 51 CSVs / 29 c
 1 | docs      | P2 | open | ROADMAP.md | 30C (done today) + v2 sim still listed pending
 1 | docs      | P2 | open | DEPLOY.md:11 | wrong repo path D:\claude projects\Electrifycost
 1 | docs      | DECIDE | open | HANDOFF_FROM_PROJECTCOSTPRO_2026-07-04.md | commit as historical record (CHANGELOG refs it) or delete
+
+## PASS 2 — REMEDIATION + RE-VERIFICATION (all items independently re-checked, PASS)
+2 | content   | P0/P1 | fixed | src/pages/guides/{home-batteries,geothermal,solar,generators}.astro + home-battery-cost-calculator + solar-financing-comparison | 25D past-tensed, gross-only examples; zero residual "net after 25D" across ~130 pages
+2 | content   | P2 | fixed | geothermal guide | reconciled to per-ton rebase $10k-$18.5k (was $25k-$40k); matches calculator page
+2 | content   | P2 | fixed | smart-panels/smart-thermostat/water-heater-installation | Span claim sourced-out; Ecobee softened; nav active slug fixed
+2 | content   | P3 | fixed | roof-replacement-cost-calculator:18, guides/ev-tco:68 | two soft present-tense credit phrasings past-tensed (pass-2 catch)
+2 | seo       | P2/P3 | fixed | guides/should-i-electrify | meta 165->147 chars; og:image webp->jpg
+2 | a11y      | P1 | fixed | ProjectSimulator.tsx | modal focus move-in/trap/restore + iframe Escape relay; browser-verified
+2 | a11y      | P2 | fixed | ResultPanel.tsx | region aria-live removed; Share/Print Label-in-Name aria-labels removed
+2 | a11y      | P2 | fixed | global.css | toggle focus ring outline 2px #047857; unchecked track #cbd5e1 + #94a3b8 border (>=3:1)
+2 | a11y      | P3 | fixed | Header.astro:251, MonteCarloSim.tsx:212 | chevron aria-hidden; counter role=status
+2 | calc      | P1 | fixed | data/csv/state-energy-prices.csv | all 51 electricity rows -> EIA Apr-2026 (Table 5.6.A); gas/propane/oil untouched; 2 notes reconciled
+2 | calc      | P2 | fixed | src/lib/calcs/gas-furnace.ts | TIER_LABELS.typical 96%->95%; bands regenerated; drift gate green
+2 | calc      | P2 | fixed | src/lib/calcs/tank-water-heater.ts | HPWH_BASELINE 2300/3100 -> 2200/3000 (match flagship CSV)
+2 | calc      | P2 | fixed | data/csv/{state-labor-multipliers,module-labor-rates}.csv | last_reviewed 2024-05-01 -> 2026-07-04 (values unchanged, BLS vintage current)
+2 | calc      | P2 | kept  | src/lib/calcs/home-battery.ts | $/kWh sourced to LBNL/NREL (above EnergySage marketplace); low band brackets market; conservative-for-planning kept
+2 | docs      | P1x17 P2x34 | fixed | README/ARCHITECTURE/CONTRIBUTING/ROADMAP/DEPLOY/INFRASTRUCTURE/data-csv-README/4 commands/lesson-11/CLAUDE | 9 stages, src/lib/calcs, generated bands, analytics+sitemap falsehoods, counts, status enum, v1->v2 banner
+2 | docs      | DECIDE | done | HANDOFF_FROM_PROJECTCOSTPRO_2026-07-04.md | committed as historical record (a176ccb)
+2 | gate      | - | green | - | tsc clean; npm test 9/9; build 701 pages/700 URLs; browser modal-focus + toggle + zero console errors
