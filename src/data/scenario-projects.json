@@ -151,7 +151,7 @@
         },
         {
           "name": "typical",
-          "label": "96% AFUE",
+          "label": "95% AFUE",
           "low": 4350,
           "high": 8350
         },

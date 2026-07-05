@@ -209,7 +209,7 @@ export default function MonteCarloSim({ band, items, slug }: Props) {
           <button type="button" className="mc-run" onClick={run} disabled={running}>
             {running ? 'Running…' : hasRun ? 'Run again' : 'Show the range'}
           </button>
-          <span className="mc-counter">{counterText}</span>
+          <span className="mc-counter" role="status" aria-live="polite">{counterText}</span>
         </div>
 
         {events.length > 0 && (

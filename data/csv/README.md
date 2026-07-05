@@ -90,7 +90,7 @@ TECH CA, …).
 | `income_rule` | `none` / `income_qualified` / etc. |
 | `eligible_equipment` | Free-text |
 | `expiration_date` | ISO date or empty |
-| `status` | `active` / `state_rolling_out` / `placeholder` |
+| `status` | Validator-enforced enum: `active` / `expired` / `reserved` / `closed` / `placeholder` / `state_rolling_out` / `utility_specific`. `scripts/validate-csvs.cjs` fails the build on any value outside this set (see `STATUS_ENUMS`); `calc.ts` treats `reserved`/`closed` as potential-only, skips `placeholder`, and the date filter handles `expired`. |
 | `source_url` | Primary citation |
 | `last_reviewed` | ISO date |
 | `notes` | Free-text |
@@ -214,10 +214,3 @@ the same constants by id.
    `low ≤ mid ≤ high` invariant on every scenario.
 5. Run `npx tsc --noEmit` — clean.
 6. Run `npm run build` — Astro/Vite will catch any missing CSV at build time.
-
-## Stale files
-
-The original CSVs are still on disk under `src/data/` because the cowork
-session can't delete files there. They are no longer imported anywhere in the
-code. **Delete them manually before committing** so the source of truth stays
-unambiguous.

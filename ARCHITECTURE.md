@@ -19,7 +19,7 @@ System design for human developers. Complements `CLAUDE.md` (AI-focused working 
                                   ▼
               ┌──────────────────────────────────────┐
               │     Astro 4 static build output      │
-              │  (dist/ — 697 HTML pages, ~5 MB JS)  │
+              │  (dist/ — 701 HTML pages, ~5 MB JS)  │
               └─────────────────┬────────────────────┘
                                 │ at build time
                                 ▼
@@ -62,7 +62,7 @@ Every numeric input — equipment cost, labor hours, state multipliers, climate 
 
 **The tradeoff:** Vite inlines ALL the CSV files into a single client bundle (~104 KB pre-gzip). Every calculator page hydrates the full data bundle, even when it only needs one CSV. **Phase 3 candidate:** split `src/lib/data.ts` into per-domain modules so calculators import only what they need.
 
-### 2. Shared engine for flagships + bespoke math elsewhere
+### 2. Shared engine for flagships + pure compute modules for the rest
 
 **5 flagship calculators** (heat pump, EV charger, panel, HPWH, induction) share a single engine in `src/lib/calc.ts`:
 
@@ -78,11 +78,11 @@ The engine handles:
 - Operating-cost change (HDD × UA × COP for heat pumps; AFDC-anchored for EV; NEEA for HPWH)
 - Simple payback computation
 
-**33 non-flagship calculators** (mini-split, geothermal, AC, ductwork, windows, solar, battery, etc.) do their own `useMemo` math inline in the component. Each reads from its module-specific CSV.
+**27 bespoke calculators** (mini-split, geothermal, AC, ductwork, windows, solar, battery, etc.) now compute through **pure modules in `src/lib/calcs/<slug>.ts`** (with shared `types.ts` and `flagship-tiers.ts`) rather than inline component math. The component calls the module's exported compute function; the same functions are exercised headlessly by `scripts/build-scenario-bands.cjs` (see §5) and mirror-tested. Only **5 analysis calculators** (WholeHome, EvTco, SolarPayback, EvChargingCost, HvacRepairReplace) still do their math inline in the component.
 
-**Why two patterns:** the flagship engine is heavily tested (49 assertion total across the smoke-test suite). Forcing every calculator through the engine would require generalizing it to cooling-only / solar-with-NEM / per-watt costing / per-window costing scenarios — a much bigger surface than the unified energy-conversion math the flagships share. The bespoke calculators are simpler and easier to maintain in isolation.
+**Why the split:** the flagship engine shares a unified energy-conversion math surface; forcing every calculator through it would mean generalizing to cooling-only / solar-with-NEM / per-watt costing / per-window costing scenarios. Extracting the bespoke calculators into standalone pure modules (rather than leaving them inline) is what lets `build-scenario-bands.cjs` run their real compute functions at build time, so the Project Simulator's published bands can never drift from the live calculator.
 
-**Result-panel consistency:** the flagships use `ResultPanel.tsx`. The non-flagships each render their own result UI. **Future work:** promote `ResultPanel` to all 38 calculators.
+**Result-panel consistency:** the flagships use `ResultPanel.tsx`. The bespoke and analysis calculators each render their own result UI. **Future work:** promote `ResultPanel` more broadly.
 
 ### 3. Static-first with React islands
 
@@ -97,7 +97,7 @@ Astro renders each page to static HTML at build time. The five flagship calculat
 
 ### 4. Programmatic SEO dimensions + the routing rule
 
-The site scales URL count by multiplying a calculator across **dimensions**. As of 2026-06 there are four live dimensions (697 built pages):
+The site scales URL count by multiplying a calculator across **dimensions**. As of 2026-07 there are four live dimensions (701 built pages):
 
 | Dimension | Data source | URL shape | Example |
 |---|---|---|---|
@@ -114,16 +114,18 @@ The site scales URL count by multiplying a calculator across **dimensions**. As 
 
 See `.claude/lessons/08-astro-route-collision-patterns.md` for the full decision tree. Adding a new dimension? Pick one of these three shapes; never add a second greedy single-segment dynamic at the same prefix.
 
-The dimensions compose: state × module = 357 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 698 pages came from ~10 template files.
+The dimensions compose: state × module = 357 pages, city × module = 200, brand × module = 22, size × module = 10. Each dimension is one template (or a few static files) + one CSV. This is the core growth lever — most of the 701 pages came from ~10 template files.
 
 ### 5. The Monte Carlo simulation layer
 
 A probabilistic cost layer sits on top of the deterministic engine. `src/lib/montecarlo.js` (ported math-identical from ProjectCostPro) turns a calculator's installed-cost line items into a *distribution* via triangular per-item draws tied by a one-factor Gaussian copula (ρ=0.5). It powers two surfaces:
 
 - **Per-calculator inline sim** (`MonteCarloSim.tsx`) — embedded in `ResultPanel` (flagships) + 27 bespoke calculators. Models gross installed cost; shows P10 / most-likely / P90 + a streaming density curve + sourced "surprise" events. The published band is a faint reference only — nothing is relabeled.
-- **The Project Simulator** (`/project-simulator/`, `ProjectSimulator.tsx`) — combines multiple projects' total bands into one distribution (the portfolio effect: tighter than the naive low+low / high+high sum), with ZIP → state regional pricing and a "Custom" read-back that opens a calculator in an `?embed=1` iframe popup and reads its estimate back via `localStorage['ec:est:<slug>']`.
+- **The Project Simulator** (`/project-simulator/`, `ProjectSimulator.tsx`) — a **v2 instance model**: an ordered plan of project instances (Duplicate, not an ×N stepper), a plan workspace above the results, a **median (P50)** combined-cost headline, CSV export, and a branded print report. It combines the instances' bands into one distribution (the portfolio effect: tighter than the naive low+low / high+high sum), with ZIP → state regional pricing and a "Custom" read-back that opens a calculator in an `?embed=1` iframe popup and reads its estimate back via the v2 snapshot contract in `src/lib/estimate-snapshot.ts` (`ec:est:<slug>`). Share URLs use the codec in `src/lib/sim-codec.ts` and **fail closed** with visible notices on a bad decode.
 
-Pure client-side (no server), shares the static-island model, and is gated by its own calibration test (`scripts/test-montecarlo.cjs`, 39 assertions) + data validator (`scripts/validate-risk-events.cjs`). Full design + the slug/no-double-counting/ZIP-prefill rules: `.claude/lessons/11-monte-carlo-simulation.md`.
+**The per-project bands are GENERATED, not curated.** `src/data/scenario-projects.json` is produced by `scripts/build-scenario-bands.cjs`, which esbuild-bundles `scripts/band-entry.ts` (resolving the same `?raw` CSV imports Vite resolves) and runs the **real** calculator compute functions headlessly at national labor. So a published band can never drift from what the live calculator computes. **Hand-editing the JSON is forbidden**; the drift gate `build-scenario-bands.cjs --check` is stage 9 of `npm test`.
+
+Pure client-side (no server), shares the static-island model, and is gated by its own calibration test (`scripts/test-montecarlo.cjs`, 39 assertions), the share-URL codec round-trip test (`scripts/test-sim-state.cjs`), the generated-bands drift gate, and a data validator (`scripts/validate-risk-events.cjs`). Full v1 design record + the slug/no-double-counting/ZIP-prefill rules: `.claude/lessons/11-monte-carlo-simulation.md` (superseded 2026-07-04 by the v2 instance model + generated bands).
 
 ---
 
@@ -144,12 +146,17 @@ Pure client-side (no server), shares the static-island model, and is gated by it
 ├── data/csv/                   — 51 CSVs (THE source of truth)
 ├── scripts/
 │   ├── build-sitemap.cjs       — postbuild: walks dist/ → emits sitemap.xml
-│   ├── validate-csvs.cjs       — pre-test
+│   ├── validate-csvs.cjs       — pre-test: CSV schema + status-enum check
+│   ├── validate-risk-events.cjs — pre-test: sanity + sourcing guard on risk-events.json
 │   ├── validate-pages.cjs      — pre-test: Layout open/close + JSX traps
-│   ├── smoke-test.cjs          — 13 + 9 assertion runs against the engine
-│   ├── new-calc-tests.cjs      — 29 assertion runs for non-flagship math
-│   ├── validate-risk-events.cjs — sanity + sourcing guard on risk-events.json
-│   └── test-montecarlo.cjs     — 39 assertions: Monte Carlo calibration gate
+│   ├── validate-content.cjs    — pre-test: banned-string guard (stale incentives, AI-slop)
+│   ├── smoke-test.cjs          — 13 + 9 assertion runs against the flagship engine
+│   ├── new-calc-tests.cjs      — 29 assertion runs for bespoke-calculator math
+│   ├── test-montecarlo.cjs     — 39 assertions: Monte Carlo calibration gate
+│   ├── test-sim-state.cjs      — share-URL codec round-trip (sim-codec.ts)
+│   ├── build-scenario-bands.cjs — regenerates scenario-projects.json; --check is the drift gate
+│   ├── band-entry.ts           — esbuild entry the band generator bundles + runs headlessly
+│   └── check-links.cjs         — external citation link checker
 └── src/
     ├── components/
     │   ├── Layout.astro        — site shell: <head>, GA4, schemas, header, footer, slot
@@ -161,23 +168,26 @@ Pure client-side (no server), shares the static-island model, and is gated by it
     │   ├── AdSlot.astro        — gated; reserves min-height for CLS
     │   ├── AffiliateDisclosure.astro + AffiliateModule.astro — gated
     │   ├── MonteCarloSim.tsx   — per-calculator Monte Carlo sim island
-    │   ├── ProjectSimulator.tsx — combined /project-simulator/ tool
-    │   └── 37 *Calculator.tsx  — 5 flagship + 32 bespoke (incl. WholeHome)
+    │   ├── ProjectSimulator.tsx — combined /project-simulator/ tool (v2 instance model)
+    │   └── 37 *Calculator.tsx  — 5 flagship + 32 bespoke (27 compute via src/lib/calcs/, 5 analysis inline)
     ├── lib/
-    │   ├── calc.ts             — shared engine (runCalculator)
+    │   ├── calc.ts             — shared engine for the 5 flagships (runCalculator)
+    │   ├── calcs/              — 27 bespoke compute modules + types.ts + flagship-tiers.ts (29 files)
     │   ├── data.ts             — CSV loaders + lookup helpers
     │   ├── format.ts           — fmtUSD / fmtUSDRange / fmtMonths
     │   ├── use-url-state.ts    — hash-state hooks for shareable inputs
     │   ├── montecarlo.js       — probabilistic cost engine (verbatim math)
     │   ├── mc-chart.ts         — shared sim chart + money/smooth/domainFor
+    │   ├── estimate-snapshot.ts — v2 calculator→simulator snapshot (ec:est:<slug>)
+    │   ├── sim-codec.ts        — Project Simulator share-URL codec
     │   └── guide-relationships.ts — 37 guide siblings + calculator hrefs
     ├── data/
     │   ├── contractor-checklists.json
     │   ├── glossary.json
     │   ├── risk-events.json    — Monte Carlo "surprise" events by slug
-    │   ├── scenario-projects.json — Project Simulator tiers + cost mix
+    │   ├── scenario-projects.json — GENERATED by build-scenario-bands.cjs (do not hand-edit)
     │   └── source-notes.json   — 200+ primary-source entries
-    ├── pages/                  — 131 .astro files → 697 built HTML pages
+    ├── pages/                  — 135 .astro files → 701 built HTML pages
     │   ├── index.astro
     │   ├── about.astro
     │   ├── methodology.astro
@@ -210,11 +220,11 @@ npm run build
    │     │     ├──▶ React islands  → dist/_astro/<calculator>.<hash>.js
    │     │     └──▶ CSV ?raw        → inlined into shared chunk
    │     │
-   │     └──▶ render pages          → dist/<route>/index.html (697 files)
+   │     └──▶ render pages          → dist/<route>/index.html (701 files)
    │
    └──▶ node scripts/build-sitemap.cjs
          │
-         └──▶ walks dist/ → emits dist/sitemap.xml (696 URLs)
+         └──▶ walks dist/ → emits dist/sitemap.xml (~700 URLs)
 ```
 
 Vercel uploads the `dist/` directory verbatim. No edge functions, no SSR runtime, no node server. Pure static hosting with aggressive caching.
@@ -248,8 +258,8 @@ Vercel uploads the `dist/` directory verbatim. No edge functions, no SSR runtime
 | INP | < 200ms | ✅ React hydration is the bottleneck; well under |
 | CLS | < 0.1 | ✅ `<picture>` elements have explicit width/height; ad slot reserved with min-height |
 | JS bundle (per calc page) | < 200 KB transferred | ⚠ ~250 KB transferred currently (104 KB CSVs + 130 KB React + calc component) — Phase 3 candidate |
-| Sitemap URLs | 400+ | ✅ 696 |
-| Indexable pages | ≥ 400 | ✅ 697 built; ~696 indexable (excluding 404) |
+| Sitemap URLs | 400+ | ✅ ~700 |
+| Indexable pages | ≥ 400 | ✅ 701 built; ~700 indexable (excluding 404) |
 
 ---
 

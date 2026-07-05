@@ -1,7 +1,7 @@
 module,hourly_rate_usd,notes,source_id,last_reviewed
-heat_pump,130,HVAC mechanic blended rate (BLS OEWS 49-9021 + overhead),BLS_OEWS,2024-05-01
-hpwh,120,Blended HVAC + plumber rate (HPWHs touch both trades),BLS_OEWS,2024-05-01
-ev_charger,110,Electrician rate (BLS OEWS 47-2111 + overhead),BLS_OEWS,2024-05-01
-panel,110,Electrician rate (BLS OEWS 47-2111 + overhead),BLS_OEWS,2024-05-01
-induction,100,Electrician rate (BLS OEWS 47-2111); slightly lower because most work is straightforward 240V receptacle / circuit,BLS_OEWS,2024-05-01
-ac,110,HVAC mechanic for cooling-only work (BLS OEWS 49-9021 + overhead); aligned with module-labor-rates pattern instead of CSV-internal labor_rate_usd row,BLS_OEWS,2024-05-01
+heat_pump,130,HVAC mechanic blended rate (BLS OEWS 49-9021 + overhead),BLS_OEWS,2026-07-04
+hpwh,120,Blended HVAC + plumber rate (HPWHs touch both trades),BLS_OEWS,2026-07-04
+ev_charger,110,Electrician rate (BLS OEWS 47-2111 + overhead),BLS_OEWS,2026-07-04
+panel,110,Electrician rate (BLS OEWS 47-2111 + overhead),BLS_OEWS,2026-07-04
+induction,100,Electrician rate (BLS OEWS 47-2111); slightly lower because most work is straightforward 240V receptacle / circuit,BLS_OEWS,2026-07-04
+ac,110,HVAC mechanic for cooling-only work (BLS OEWS 49-9021 + overhead); aligned with module-labor-rates pattern instead of CSV-internal labor_rate_usd row,BLS_OEWS,2026-07-04

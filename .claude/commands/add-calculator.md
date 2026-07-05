@@ -41,7 +41,9 @@ Key requirements:
 - **Render via `<ResultPanel result={result} />`** for visual consistency with the other flagships.
 - **Fire the `calculator_used` GA4 event** via ResultPanel (already wired). No additional setup needed.
 
-For bespoke calculators, follow the pattern in `src/components/MiniSplitCalculator.tsx` (or similar) — has its own result UI, no ResultPanel.
+For bespoke calculators, follow the current pattern: put the pure math in a compute module at `src/lib/calcs/<slug>.ts` (see the existing 27 modules + `types.ts`), import it into the component, and give the component its own result UI (no ResultPanel). Keeping the math in a standalone module — not inline — is what lets `scripts/build-scenario-bands.cjs` run the real compute function headlessly so the Project Simulator's published bands can't drift. The only calculators that still compute inline are the 5 analysis calcs (WholeHome, EvTco, SolarPayback, EvChargingCost, HvacRepairReplace).
+
+If the calculator should appear in the **Project Simulator**, add its tier config (see `flagship-tiers.ts` and `scripts/band-entry.ts`), then regenerate the bands with `node scripts/build-scenario-bands.cjs`. **Never hand-edit `src/data/scenario-projects.json`** — it is generated, and `build-scenario-bands.cjs --check` is stage 9 of `npm test`.
 
 ## Step 4 — Create the calculator page
 
@@ -83,9 +85,9 @@ Add targeted assertions to `scripts/smoke-test.cjs` if the calculator has edge c
 ## Step 9 — Verify
 
 ```bash
-npm test          # all 4 stages pass
+npm test          # all 9 stages pass
 npx tsc --noEmit  # zero errors
-npm run build     # 410+ pages (one more than before)
+npm run build     # one more page than before (~700+)
 ```
 
 If the build fails with `Unexpected "export"` — see `.claude/lessons/02-esbuild-template-literal-bug.md`. Most likely a nested template literal in the FAQ array.

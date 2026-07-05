@@ -168,7 +168,6 @@ export default function ResultPanel({
       className="space-y-4 print:space-y-3"
       role="region"
       aria-label="Cost estimate"
-      aria-live="polite"
     >
       <section className="card-elev overflow-hidden">
         <header className="bg-gradient-to-br from-brand-50 via-white to-white px-5 py-5 sm:px-6 sm:py-6">
@@ -487,10 +486,10 @@ export default function ResultPanel({
       </div>
 
       <div className="no-print flex flex-wrap items-center gap-2">
-        <button type="button" onClick={handleCopy} className="btn-ghost border border-ink-200" aria-label="Copy a shareable summary to the clipboard">
+        <button type="button" onClick={handleCopy} className="btn-ghost border border-ink-200">
           {copied ? 'Copied!' : 'Share estimate'}
         </button>
-        <button type="button" onClick={handlePrint} className="btn-ghost border border-ink-200" aria-label="Open the print dialog for a printable summary">
+        <button type="button" onClick={handlePrint} className="btn-ghost border border-ink-200">
           Print summary
         </button>
       </div>

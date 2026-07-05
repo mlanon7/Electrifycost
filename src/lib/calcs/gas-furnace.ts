@@ -149,7 +149,7 @@ export const TIER_INPUTS: TierInputs<GasFurnaceInputs> = {
 
 export const TIER_LABELS: TierLabels = {
   small: '80% AFUE swap',
-  typical: '96% AFUE',
+  typical: '95% AFUE',
   large: 'modulating + ductwork',
 };
 

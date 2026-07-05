@@ -35,15 +35,15 @@ Competitors fall into three buckets: (1) lead-gen funnels (Modernize, Networx, A
 - **CSV-first data** — every numeric input lives in `data/csv/*.csv` (51 files). Loaded via Vite `?raw` imports at build time. NO duplicate numbers in TS/JS.
 - **Vercel** — static deploy, clean URLs, trailing slashes, immutable cache headers, security headers. Config in `vercel.json`.
 - **Self-hosted fonts** — Inter + Source Serif 4 via `@fontsource/*`. NO Google Fonts third-party fetch.
-- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with ~696 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16. **The xmlns must be `http://www.sitemaps.org/schemas/sitemap/0.9` (slash, not hyphen)** — see lessons/01.
+- **Custom sitemap script** — `scripts/build-sitemap.cjs` runs after `astro build` and walks `dist/` for `index.html` files. Outputs `dist/sitemap.xml` with ~700 URLs. Required because `@astrojs/sitemap` 3.1.6 crashed against Astro 4.16. **The xmlns must be `http://www.sitemaps.org/schemas/sitemap/0.9` (slash, not hyphen)** — see lessons/01.
 - **Analytics:** GA4 (`G-5CMBX2RBY4`) with Consent Mode v2 + cookie banner. Wired in `Layout.astro` + `CookieBanner.astro`. `calculator_used` custom event fires from `ResultPanel.tsx` when a valid result renders.
 - **Ahrefs MCP** — connected (the `mcp__...keywords-explorer-*`, `gsc-*`, `site-explorer-*`, `rank-tracker-*` tools). Use for keyword volume/difficulty, GSC query history, backlink + rank-tracking data. See `.claude/prompts/data-verification.md` and the keyword-research workflow.
 
 ---
 
-## Page inventory (698 built pages as of 2026-06-24)
+## Page inventory (701 built pages as of 2026-07-04)
 
-The site grew from 5 flagship calculators to 698 built HTML pages via **four programmatic-SEO dimensions** (plus the standalone `/project-simulator/` tool). Understand these before adding pages:
+The site grew from 5 flagship calculators to 701 built HTML pages via **four programmatic-SEO dimensions** (plus the standalone `/project-simulator/` tool). Understand these before adding pages:
 
 | Dimension | URL shape | Count | Template |
 |---|---|---|---|
@@ -100,7 +100,7 @@ electrifycost/
 │   ├── home-energy-rebate-status.csv   — HEEHRA per-state rollout status
 │   └── ...39 more module-specific files
 ├── scripts/
-│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (~696 URLs)
+│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (~700 URLs)
 │   ├── validate-csvs.cjs               — pre-test: all 51 CSVs schema-checked (source_id resolves, ISO dates)
 │   ├── validate-pages.cjs              — pre-test: Layout open/close balance + JSX-trap detection
 │   ├── validate-content.cjs            — pre-test: banned-string guard (stale incentives, wrong credit codes, AI-slop)
@@ -149,7 +149,7 @@ electrifycost/
     │   ├── risk-events.json            — Monte Carlo "surprise" events keyed by calculator slug
     │   ├── scenario-projects.json      — Project Simulator per-project tiers + cost mix
     │   └── source-notes.json           — 200+ source entries with last_reviewed dates
-    ├── pages/                          — 132 .astro pages; 698 built HTML pages
+    ├── pages/                          — 135 .astro pages; 701 built HTML pages
     │   ├── index.astro                 — homepage + 38 calculator cards
     │   ├── project-simulator.astro     — the combined Project Simulator tool page
     │   ├── about.astro                 — founder bio (E-E-A-T critical)
@@ -216,6 +216,8 @@ As of 2026-07-04, the 27 bespoke calculators in the simulator catalog compute th
 ---
 
 ## Monte Carlo cost simulation (`src/lib/montecarlo.js`)
+
+_(v1 baseline; superseded by v2 — see §Calculator→simulator contracts + CHANGELOG 2026-07-04)_
 
 A probabilistic layer on top of the deterministic engine. **Ported math-identical from ProjectCostPro** (the sister site) — only the module wrapper differs (ESM here vs UMD there). Each installed-cost line item is sampled from a **triangular** distribution (mode skewed 40% up), the items are tied by a **one-factor Gaussian copula** (ρ=0.5), and surprise events add a beta-PERT right tail. **Calibration constants are load-bearing** (`modeSkew 0.40`, `rho 0.5`, `TRIALS 10000`); `scripts/test-montecarlo.cjs` (39 assertions, in `npm test`) is the gate — do not retune without keeping it green.
 
@@ -323,7 +325,7 @@ The site is the product. Docs in the repo are working memory for contributors, n
 
 ### SEO
 
-- ~696 URLs in `sitemap.xml` (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
+- ~700 URLs in `sitemap.xml` (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
 - Submitted to Google Search Console
 - 200+ source citations on `/sources/`
 - `WebSite`, `Organization`, `WebApplication`, `FAQPage`, `BreadcrumbList`, `TechArticle`, `CollectionPage`, `AboutPage`, `Person` JSON-LD schemas
@@ -410,7 +412,7 @@ Operational (non-code) facts — domain, DNS, hosting, **email (ImprovMX + SPF/D
 
 GSC indexing is operational. If a sitemap submission fails:
 1. Verify https://electrifycost.com/sitemap.xml has `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` — slash, not hyphen (this was a real historic bug)
-2. Verify ~696 URLs present
+2. Verify ~700 URLs present
 3. Re-submit in GSC → Sitemaps → Add sitemap → `sitemap.xml`
 
 For manual URL inspection (≤10/day per property), prioritize: `/`, `/about/`, `/methodology/`, `/heat-pump-cost-calculator/`, `/solar-panel-cost-calculator/`, `/ev-charger-installation-cost-calculator/`, `/rebates/`, `/heat-pump-cost-ca/`, `/heat-pump-cost-by-state/`, `/guides/heat-pumps/`.
@@ -429,4 +431,4 @@ If you edit one of these surfaces, keep the disclaimers in place. They're load-b
 
 ---
 
-Last reviewed: 2026-05-19.
+Last reviewed: 2026-07-04.

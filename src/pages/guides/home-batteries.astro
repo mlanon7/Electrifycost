@@ -30,6 +30,9 @@ const schemaJsonLd = {
     <p class="mt-3 text-base text-ink-700">
       What a battery actually is, why LFP took over from NMC, the three use cases (backup, self-consumption under NEM 3.0, time-of-use arbitrage), how to size it, brand-by-brand options for 2026, and how to read a bid without paying for a sales operation's overhead. 11-minute read.
     </p>
+    <p class="mt-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-ink-800">
+      <strong>2026 incentive note:</strong> the federal 25D Residential Clean Energy Credit (30% of cost, including standalone batteries ≥3 kWh) was terminated by the OBBBA for property placed in service after December 31, 2025. Systems installed in 2026 receive no federal credit; state and utility programs (California SGIP, Massachusetts ConnectedSolutions, and similar) still apply where eligible. The costs below are stated gross, before any incentive.
+    </p>
 </section>
 
   <article class="container-tight guide-prose pb-12">
@@ -74,7 +77,7 @@ const schemaJsonLd = {
         You live somewhere with frequent or prolonged outages: hurricane country (FL, NC, TX coast, LA), wildfire shut-offs (CA PSPS, OR), ice-storm territory (TX, OK, the southeast). The battery's job is to power critical loads — refrigerator, lights, internet, well pump, medical equipment — for 12–48 hours.
       </p>
       <p>
-        Decision criteria: pick a <em>full-home</em> system (Powerwall 3, Franklin) only if you have a 200A panel and can afford whole-home backup wiring; otherwise a <em>critical-load subpanel</em> approach (10–15 essential circuits on a separate breaker box that the battery feeds) is much cheaper and equally useful. The federal 25D credit applies regardless of solar.
+        Decision criteria: pick a <em>full-home</em> system (Powerwall 3, Franklin) only if you have a 200A panel and can afford whole-home backup wiring; otherwise a <em>critical-load subpanel</em> approach (10–15 essential circuits on a separate breaker box that the battery feeds) is much cheaper and equally useful. The federal 25D credit used to apply to a standalone battery regardless of solar, but expired for systems placed in service after 2025-12-31.
       </p>
 
       <h3>Use case B: self-consumption (NEM 3.0 territory)</h3>
@@ -87,7 +90,7 @@ const schemaJsonLd = {
 
       <h3>Use case C: time-of-use arbitrage</h3>
       <p>
-        Your utility has steep TOU rates but you don't have solar. The battery charges off-peak (overnight, ~$0.10/kWh) and discharges on-peak (4–9pm, ~$0.40/kWh). Annual benefit: 10–11 kWh-cycled × $0.30 spread × 365 = ~$1,100–$1,200/year. Payback on the battery alone is 8–15 years depending on net cost after 25D.
+        Your utility has steep TOU rates but you don't have solar. The battery charges off-peak (overnight, ~$0.10/kWh) and discharges on-peak (4–9pm, ~$0.40/kWh). Annual benefit: 10–11 kWh-cycled × $0.30 spread × 365 = ~$1,100–$1,200/year. Payback on the battery alone is 12–18 years on installed cost now that the 30% federal 25D credit that once shortened it has expired (2025-12-31); arbitrage-only economics rarely justify a battery without a backup or resilience motive.
       </p>
       <p>
         TOU arbitrage works best in CA, HI, MA, NY, CT, NJ where peak-to-off-peak spreads are real. In flat-rate utility territory (much of the South and Midwest), arbitrage is essentially zero.
@@ -127,13 +130,13 @@ const schemaJsonLd = {
         Per-kWh installed cost has stabilized at $1,100–$1,500/kWh for 10–15 kWh systems in 2026, per LBNL Tracking the Sun data and NREL's 2024 residential storage benchmark. Standalone retrofit installs run 10–15% more than co-installed solar-plus-storage because integration labor is duplicated.
       </p>
       <p>
-        Concrete examples (mid-band, before incentives):
+        Concrete examples (mid-band gross installed cost — the 30% federal 25D credit that once cut ~$4,500–$10,800 off these expired for systems placed in service after 2025-12-31, so 2026 installs pay the gross figure minus only state/utility programs):
       </p>
       <ul>
-        <li>13.5 kWh Powerwall 3 co-installed with new solar in Texas: ~$15,000 → ~$10,500 net after federal 25D.</li>
-        <li>13.5 kWh Powerwall 3 retrofit to existing 7 kW solar in California: ~$16,500 → ~$11,550 net federal, plus ~$2,000 SGIP for general-market tier.</li>
-        <li>20 kWh stacked Enphase IQ Battery 5P (4 units) in Massachusetts: ~$26,000 → ~$18,200 net, plus ConnectedSolutions performance payments over 5 years.</li>
-        <li>27 kWh full-home backup with critical-load panel in Florida (hurricane country): ~$36,000 → ~$25,200 net federal.</li>
+        <li>13.5 kWh Powerwall 3 co-installed with new solar in Texas: ~$15,000 gross (no state storage incentive in TX).</li>
+        <li>13.5 kWh Powerwall 3 retrofit to existing 7 kW solar in California: ~$16,500 gross, less ~$2,000 SGIP for the general-market tier.</li>
+        <li>20 kWh stacked Enphase IQ Battery 5P (4 units) in Massachusetts: ~$26,000 gross, plus ConnectedSolutions performance payments over 5 years.</li>
+        <li>27 kWh full-home backup with critical-load panel in Florida (hurricane country): ~$36,000 gross.</li>
       </ul>
     </section>
 
@@ -152,7 +155,7 @@ const schemaJsonLd = {
         <li><strong>Software, monitoring, and grid-services enrollment</strong>. Tesla VPP, Sunrun Connected Solutions, Sonnen flex programs all pay $200–$1,000/year for grid services. Verify what tariff the installer files you under.</li>
       </ul>
       <p>
-        For the federal 25D credit, keep: the invoice with itemized battery cost (and 30% labor attribution), the permission-to-operate letter or interconnection approval, and IRS Form 5695 filed for the tax year the system was placed in service. Credit is non-refundable but carries forward.
+        The federal 25D credit expired for systems placed in service after 2025-12-31. If your battery was placed in service in 2025 or earlier, you claim it on that tax year's return (IRS Form 5695); keep the itemized invoice with the battery cost and 30% labor attribution and the permission-to-operate or interconnection approval. For a 2026 install there is no federal credit to file — the paperwork that still matters is your state/utility program enrollment (SGIP, ConnectedSolutions, and similar).
       </p>
     </section>
 
@@ -161,7 +164,7 @@ const schemaJsonLd = {
       <ul>
         <li><a href="https://emp.lbl.gov/tracking-the-sun" target="_blank" rel="noopener">LBNL Tracking the Sun 2024</a> — paired storage and standalone storage installed cost</li>
         <li><a href="https://www.nrel.gov/docs/fy24osti/89610.pdf" target="_blank" rel="noopener">NREL U.S. Solar PV System and Storage Cost Benchmark 2024</a></li>
-        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit (Section 25D)</a> — covers standalone storage ≥3 kWh</li>
+        <li><a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" target="_blank" rel="noopener">IRS Residential Clean Energy Credit (Section 25D)</a> — covered standalone storage ≥3 kWh; expired for property placed in service after 2025-12-31</li>
         <li><a href="https://www.selfgenca.com/" target="_blank" rel="noopener">CA SGIP — Self-Generation Incentive Program</a></li>
         <li><a href="https://www.energizect.com/your-home/solutions-list/energy-storage-solutions" target="_blank" rel="noopener">CT Energy Storage Solutions</a></li>
         <li><a href="https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program" target="_blank" rel="noopener">NY-Sun Residential Energy Storage Incentive</a></li>

@@ -1,0 +1,49 @@
+# ElectrifyCost Full Deep Audit — machine log
+# 2026-07-04 · HEAD 4b08e13 · 7 read-only streams, 2 passes
+# Format: PASS | STREAM | SEV | STATUS | FILE:LINE | FINDING
+
+## BASELINE
+baseline | env | - | - | - | 701 built pages / 700 sitemap URLs / 51 CSVs / 29 calc modules / 9-stage npm test green
+
+## PASS 1 — FINDINGS
+1 | calc      | P1 | open | data/csv/state-energy-prices.csv | electricity 15-31% below EIA Apr-2026 (TX 14.4/16.99, NY 23.5/29.45, OH 16.4/19.49, WA 11.0/14.36, HI 42.5/46.62)
+1 | calc      | P2 | open | src/lib/calcs/home-battery.ts:62 | COST_PER_KWH_PAIRED mid $1200/kWh ~20% above ~$1000 EnergySage 2026; disagrees w/ solar.ts BATTERY_ADDER
+1 | calc      | P2 | open | src/lib/calcs/gas-furnace.ts:152 | TIER_LABELS.typical "96% AFUE" but tier config selects mid_95 (95%)
+1 | calc      | P2 | open | data/csv/state-labor-multipliers.csv | last_reviewed 2024-05-01 stale (BLS OEWS May-2024 still current; bump date only)
+1 | calc      | P2 | open | src/lib/calcs/tank-water-heater.ts:130 | HPWH_BASELINE 2300/3100/4200 vs flagship HPWH CSV 2200/3000/4200
+1 | calc      | P3 | open | data/csv/state-energy-prices.csv | gas/propane/oil columns tagged SRC_EIA_RETAIL not their own source ids
+1 | content   | P0 | open | src/pages/guides/home-batteries.astro:77,90,133,134,136,155 | 25D presented live in 2026; net-cost math subtracts expired credit; no expiry statement on page
+1 | content   | P0 | open | src/pages/guides/geothermal.astro:68 | "net after 25D" cost table under "Real 2026 installed cost"
+1 | content   | P0 | open | src/pages/home-battery-cost-calculator.astro:25 | FAQ+JSON-LD "qualify for the 30% federal 25D credit" present tense, contradicts lines 9/13
+1 | content   | P1 | open | src/pages/guides/solar.astro:117,133 | 25D "covers 30%" + worked examples net of credit
+1 | content   | P1 | open | src/pages/guides/generators.astro:116,123 | 25D "knocking it down to net" as live advantage
+1 | content   | P1 | open | src/pages/solar-financing-comparison.astro:31,50 | four option bullets present-tense "claim the 25D credit" (self-contradictory)
+1 | content   | P2 | open | src/pages/guides/whole-home-electrification.astro | section header "rebates stack in 2026" (body correct)
+1 | content   | P2 | open | src/pages/guides/smart-panels.astro:46 | unsourced "Span filed Chapter 11 early 2026"
+1 | content   | P2 | open | src/pages/smart-thermostat-cost-calculator.astro:25 | unsourced "Ecobee leads"
+1 | content   | P2 | open | src/pages/solar-financing-comparison.astro:13 | meta "Comprehensive" (AI-slop blacklist)
+1 | content   | P2 | open | src/pages/{ductwork,mini-split-heat-pump}-*.astro | bare inline URLs vs <a>-tag norm
+1 | content   | P3 | open | src/pages/water-heater-installation-cost-calculator.astro:53 | active= nav highlight points at different slug
+1 | seo       | P2 | open | /guides/should-i-electrify/ | meta description 165 chars > 160
+1 | seo       | P3 | open | /guides/should-i-electrify/ | og:image WebP inconsistent w/ PNG/JPG norm
+1 | a11y      | P1 | open | src/components/ProjectSimulator.tsx:336 | modal focus not moved in / not trapped / not restored; Escape dead in iframe
+1 | a11y      | P2 | open | src/components/ResultPanel.tsx:167 | aria-live=polite on entire result region; re-announces on every keystroke
+1 | a11y      | P2 | open | src/styles/global.css:425 | toggle focus indicator emerald-100 ~1.2:1 + off-track ~1.2:1 fail 1.4.11
+1 | a11y      | P2 | open | src/components/ResultPanel.tsx:490 | Label-in-Name mismatch Share/Print buttons (2.5.3)
+1 | a11y      | P3 | open | src/components/Header.astro:251 | mobile-menu chevron SVG missing aria-hidden
+1 | a11y      | P3 | open | src/components/MonteCarloSim.tsx:141 | run status not announced (no role=status)
+1 | bug       | P3 | open | (guides) | 3 meta descriptions >160 chars (pre-existing)
+1 | bug       | P3 | wontfix | src/data/risk-events.json | hot-water-recirculation + home-energy-audit no risk entry (fails safe by design)
+1 | bug       | P3 | wontfix | src/lib/estimate-snapshot.ts:74 | brkFromItemized omits 'e' category (readers accept subset)
+1 | monetize  | INFO | ack | src/pages/privacy.astro | bump + add ads.txt WHEN ads flip on (no current defect)
+1 | livediff  | PASS | ack | - | 700/700 sitemap↔dist parity; live==HEAD; headers correct
+1 | docs      | P1 | open | README.md | deleted analytics.ts ref; @astrojs/sitemap claim; "no-op stub"; pre-simulator structure; 8 CSVs
+1 | docs      | P1 | open | ARCHITECTURE.md:83,124,146 | "33 calcs compute inline"; scenario JSON "curated"; scripts list omits 5
+1 | docs      | P1 | open | CONTRIBUTING.md:33,130 | "7 stages"; "add row to scenario-projects.json" (now generated)
+1 | docs      | P1 | open | data/csv/README.md:93 | status enum documented as 3 values; actual 6, validator-enforced
+1 | docs      | P1 | open | .claude/lessons/11-monte-carlo-simulation.md:41,75 | bands "curated"; generator "future upgrade" (shipped)
+1 | docs      | P1 | open | .claude/commands/ship.md,preflight.md,add-calculator.md | "4 stages" → 9 (under-verifies)
+1 | docs      | P2 | open | CLAUDE.md | 698→701 pages, 696→700 URLs, v1 sim section no "superseded" pointer, commit table stale
+1 | docs      | P2 | open | ROADMAP.md | 30C (done today) + v2 sim still listed pending
+1 | docs      | P2 | open | DEPLOY.md:11 | wrong repo path D:\claude projects\Electrifycost
+1 | docs      | DECIDE | open | HANDOFF_FROM_PROJECTCOSTPRO_2026-07-04.md | commit as historical record (CHANGELOG refs it) or delete

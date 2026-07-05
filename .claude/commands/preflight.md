@@ -10,11 +10,16 @@ Run before any user-visible content change goes live. Catches regressions BEFORE
 npm test
 ```
 
-All 4 stages must pass:
-- ✅ `OK: validated 49 CSV files`
-- ✅ `OK: validated 109 .astro pages` (or current count)
+All 9 stages must pass:
+- ✅ `OK: validated 51 CSV files`
+- ✅ `OK: risk-events.json validated`
+- ✅ `OK: validated 135 .astro pages` (or current count)
+- ✅ `OK: content guard passed`
 - ✅ `OK: 13 scenarios + 9 targeted assertion groups passed.`
 - ✅ `29/29 new-calculator assertions passed`
+- ✅ `OK: Monte Carlo calibration (39 assertions)`
+- ✅ `OK: sim-state codec round-trip`
+- ✅ `OK: scenario-projects.json is up to date` (build-scenario-bands --check)
 
 ### 2. TypeScript
 
@@ -67,9 +72,9 @@ If a dev server is running (port 4321), navigate to the changed page and verify 
 ## Report
 
 ```
-✅ Tests: passing (4/4)
+✅ Tests: passing (9/9)
 ✅ TypeScript: clean
-✅ Build: 697 pages, 696 sitemap URLs
+✅ Build: 701 pages, ~700 sitemap URLs
 ✅ Sitemap namespace: correct
 ✅ Sample pages: rendered correctly
 ```

@@ -19,7 +19,7 @@ This is currently a solo project; contributions from collaborators / AI assistan
 - **Commit messages:** subject line under 70 chars; descriptive body explaining the *why* (not the *what*). Existing commits like `Phase 1: Unify guide formatting across all 37 guides` and `Fix sitemap.xml namespace typo (sitemap-0.9 → sitemap/0.9)` are the style template.
 - **Always include the co-author trailer** if an AI assistant wrote any portion of the change:
   ```
-  Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+  Co-Authored-By: Claude <noreply@anthropic.com>
   ```
 
 ---
@@ -30,7 +30,7 @@ Every commit must pass the full test chain before pushing:
 
 ```bash
 npm test
-# Runs in this order, all must pass:
+# Runs in this order, all 9 stages must pass:
 #   1. validate-csvs.cjs         — schema check on all CSVs
 #   2. validate-risk-events.cjs  — sanity + sourcing guard on risk-events.json
 #   3. validate-pages.cjs        — Layout open/close balance, JSX-trap detection
@@ -38,13 +38,15 @@ npm test
 #   5. smoke-test.cjs            — 13 calculator scenarios + 9 assertion groups
 #   6. new-calc-tests.cjs        — 29 formula assertions
 #   7. test-montecarlo.cjs       — 39 assertions on the Monte Carlo engine (calibration gate)
+#   8. test-sim-state.cjs        — Project Simulator share-URL codec round-trip
+#   9. build-scenario-bands.cjs --check — fails if scenario-projects.json is stale (generated-bands drift gate)
 ```
 
 Plus:
 
 ```bash
 npx tsc --noEmit          # zero errors
-npm run build             # must complete cleanly + emit 690+ URLs in sitemap.xml
+npm run build             # must complete cleanly + emit ~700 URLs in sitemap.xml
 ```
 
 CI runs the same chain on every push and PR via `.github/workflows/ci.yml`. If CI fails after you push, fix the issue and push a follow-up commit (don't force-push to rewrite history).
@@ -78,7 +80,7 @@ CI runs the same chain on every push and PR via `.github/workflows/ci.yml`. If C
 7. **Add a smoke-test case** in `scripts/smoke-cases.json` covering at least one realistic scenario.
 8. **Run `npm test` and `npm run build` locally before committing.**
 
-**Monte Carlo inline sim:** flagship calculators get it automatically (it's embedded in `ResultPanel`). For a bespoke calculator, render `<MonteCarloSim band={{ low: result.gross.low, high: result.gross.high }} slug="<slug>" />` as a sibling after the component's root (wrap the return in a fragment). To also list the calculator in the **Project Simulator**, add a row to `src/data/scenario-projects.json` and (optionally) risk events to `src/data/risk-events.json` — **the project slug, the `MonteCarloSim` slug, and the risk-events key must all match.** See `.claude/lessons/11-monte-carlo-simulation.md`.
+**Monte Carlo inline sim:** flagship calculators get it automatically (it's embedded in `ResultPanel`). For a bespoke calculator, render `<MonteCarloSim band={{ low: result.gross.low, high: result.gross.high }} slug="<slug>" />` as a sibling after the component's root (wrap the return in a fragment). To also list the calculator in the **Project Simulator**, add its compute module + tier config in `src/lib/calcs/` (see `flagship-tiers.ts` / the per-slug modules and `scripts/band-entry.ts`), then **regenerate the bands** with `node scripts/build-scenario-bands.cjs` — **never hand-edit `src/data/scenario-projects.json`** (it is generated, and `build-scenario-bands.cjs --check` is stage 9 of `npm test`). Optionally add risk events to `src/data/risk-events.json`. **The project slug, the `MonteCarloSim` slug, and the risk-events key must all match.** See `.claude/lessons/11-monte-carlo-simulation.md`.
 
 If the calculator is module-specific enough to also have state programmatic pages, clone `heat-pump-cost-[state].astro` (see "How to add state pages" below).
 
@@ -127,9 +129,9 @@ The footer's "Data last refreshed YYYY-MM-DD" line surfaces the MAX `last_review
 
 A change is mergeable when:
 
-- [ ] `npm test` passes (7 stages, all green)
+- [ ] `npm test` passes (9 stages, all green)
 - [ ] `npx tsc --noEmit` reports zero errors
-- [ ] `npm run build` completes and emits 690+ URLs in `dist/sitemap.xml`
+- [ ] `npm run build` completes and emits ~700 URLs in `dist/sitemap.xml`
 - [ ] No new dependencies added without explicit justification in commit body
 - [ ] Any new content respects the "no funnel" position (see STYLEGUIDE.md)
 - [ ] Any factual claim about a rebate, federal credit, or efficiency standard cites a primary source URL inline or in `/sources/`

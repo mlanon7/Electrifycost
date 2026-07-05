@@ -126,8 +126,10 @@ const CFG: Record<Fuel, Record<Tier, { equipment: Record<Size, CostBand3>; insta
   },
 };
 
-// HPWH baseline (for head-to-head)
-const HPWH_BASELINE = { low: 2300, mid: 3100, high: 4200, annualKwh: 1380 };
+// HPWH baseline (for head-to-head) — kept in sync with the flagship HPWH
+// scenario (project-cost-ranges.csv hybrid_240v_50gal: 2200/3000/4200) so the
+// two surfaces agree.
+const HPWH_BASELINE = { low: 2200, mid: 3000, high: 4200, annualKwh: 1380 };
 // Tankless gas baseline
 export const TANKLESS_GAS_BASELINE = { low: 2800, mid: 4300, high: 6500, annualTherms: 180 };
 

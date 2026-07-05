@@ -80,16 +80,21 @@ Capture the FULL error output. The first few lines usually point at the file + l
 
 ## Step 3 — Validate isolated stage
 
-If `npm test` fails, run each stage independently:
+If `npm test` fails, run each of the 9 stages independently:
 
 ```bash
-node scripts/validate-csvs.cjs      # CSV schema
-node scripts/validate-pages.cjs     # Layout balance + JSX traps
-node scripts/smoke-test.cjs         # 13 engine scenarios
-node scripts/new-calc-tests.cjs     # 29 bespoke formula assertions
+node scripts/validate-csvs.cjs             # 1. CSV schema + status-enum check
+node scripts/validate-risk-events.cjs      # 2. risk-events.json sanity + sourcing
+node scripts/validate-pages.cjs            # 3. Layout balance + JSX traps
+node scripts/validate-content.cjs          # 4. banned-string guard
+node scripts/smoke-test.cjs                # 5. 13 flagship engine scenarios
+node scripts/new-calc-tests.cjs            # 6. 29 bespoke formula assertions
+node scripts/test-montecarlo.cjs           # 7. 39 Monte Carlo calibration assertions
+node scripts/test-sim-state.cjs            # 8. share-URL codec round-trip
+node scripts/build-scenario-bands.cjs --check  # 9. generated-bands drift gate
 ```
 
-This isolates which stage is failing. The error from one stage doesn't always block the others.
+This isolates which stage is failing. The error from one stage doesn't always block the others. **If stage 9 fails** (`scenario-projects.json` is stale), regenerate it with `node scripts/build-scenario-bands.cjs` — do NOT hand-edit the JSON.
 
 ## Step 4 — Check recent commits
 

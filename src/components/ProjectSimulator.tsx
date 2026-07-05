@@ -153,6 +153,12 @@ export default function ProjectSimulator() {
   const pinnedSeedRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
   const runTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Modal focus lifecycle: the panel (for focus trapping), the Done button (the
+  // initial focus target), and the element focused before the modal opened
+  // (restored on close).
+  const modalPanelRef = useRef<HTMLDivElement | null>(null);
+  const modalCloseRef = useRef<HTMLButtonElement | null>(null);
+  const modalReturnFocusRef = useRef<HTMLElement | null>(null);
 
   const nextId = () => ++seqRef.current;
   const announce = (msg: string) => setStatus(msg);
@@ -335,6 +341,8 @@ export default function ProjectSimulator() {
   // the target instance only — closing without changes changes nothing.
   const openCalc = (instId: number | null, slug: string) => {
     if (!PROJECTS[slug]) return;
+    // Remember the trigger so focus can return to it when the modal closes.
+    if (typeof document !== 'undefined') modalReturnFocusRef.current = document.activeElement as HTMLElement | null;
     const inst = instId != null ? instances.find(x => x.id === instId) : null;
     let hash = inst && inst.kind === 'custom' && inst.qs ? inst.qs : '';
     if (zip.length === 5 && !/(^|&)zip=/.test(hash)) hash += (hash ? '&' : '') + 'zip=' + zip;
@@ -364,9 +372,37 @@ export default function ProjectSimulator() {
     if (typeof document === 'undefined') return;
     document.body.classList.toggle('sim-modal-open', !!modal);
     if (!modal) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal(); };
+    // Move focus into the dialog (the Done button) once the panel has mounted.
+    modalCloseRef.current?.focus();
+    // Escape closes; Tab is trapped within the panel so focus can't escape to
+    // the page behind the modal. The same-origin iframe is one focusable stop.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      const panel = modalPanelRef.current;
+      if (!panel) return;
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>('button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])')
+      ).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !panel.contains(active))) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && (active === last || !panel.contains(active))) {
+        e.preventDefault(); first.focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
-    return () => { document.body.classList.remove('sim-modal-open'); document.removeEventListener('keydown', onKey); };
+    return () => {
+      document.body.classList.remove('sim-modal-open');
+      document.removeEventListener('keydown', onKey);
+      // Restore focus to whatever triggered the modal.
+      const returnTo = modalReturnFocusRef.current;
+      modalReturnFocusRef.current = null;
+      if (returnTo && typeof returnTo.focus === 'function') returnTo.focus();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modal]);
 
@@ -780,15 +816,26 @@ export default function ProjectSimulator() {
     {modal && (
       <div className="sim-modal" role="dialog" aria-modal="true" aria-label={`${PROJECTS[modal.slug].label} calculator`}>
         <div className="sim-modal-backdrop" onClick={closeModal} />
-        <div className="sim-modal-panel">
+        <div className="sim-modal-panel" ref={modalPanelRef}>
           <div className="sim-modal-head">
             <div className="sim-modal-titlewrap">
               <span className="sim-modal-title">{PROJECTS[modal.slug].label} calculator</span>
               <span className="sim-modal-hint">Adjust the inputs — press Done to apply them to your plan.</span>
             </div>
-            <button type="button" className="sim-modal-close" onClick={closeModal}>Done</button>
+            <button type="button" className="sim-modal-close" ref={modalCloseRef} onClick={closeModal}>Done</button>
           </div>
-          <iframe className="sim-modal-frame" title={`${PROJECTS[modal.slug].label} calculator`} src={modalSrcRef.current} loading="lazy" />
+          <iframe
+            className="sim-modal-frame" title={`${PROJECTS[modal.slug].label} calculator`}
+            src={modalSrcRef.current} loading="lazy"
+            onLoad={e => {
+              // Escape from inside the iframe: its keydown doesn't bubble to the
+              // parent document, so attach a listener to the same-origin frame.
+              try {
+                const doc = (e.currentTarget as HTMLIFrameElement).contentDocument;
+                doc?.addEventListener('keydown', (ev: KeyboardEvent) => { if (ev.key === 'Escape') closeModal(); });
+              } catch { /* cross-origin or unavailable — Escape from the frame won't fire */ }
+            }}
+          />
         </div>
       </div>
     )}

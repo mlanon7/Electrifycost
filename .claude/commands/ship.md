@@ -8,11 +8,16 @@ When the user invokes `/ship`, follow this procedure exactly:
 npm test
 ```
 
-This runs 4 stages in order:
-1. `validate-csvs.cjs` — schema check on all 49 CSVs
-2. `validate-pages.cjs` — Layout open/close balance, JSX-trap detection on all .astro pages
-3. `smoke-test.cjs` — 13 calculator scenarios + 9 targeted assertion groups
-4. `new-calc-tests.cjs` — 29 formula assertions for non-flagship calculators
+This runs 9 stages in order:
+1. `validate-csvs.cjs` — schema check on all 51 CSVs
+2. `validate-risk-events.cjs` — sanity + sourcing guard on risk-events.json
+3. `validate-pages.cjs` — Layout open/close balance, JSX-trap detection on all .astro pages
+4. `validate-content.cjs` — banned-string guard (stale incentives, wrong credit codes, AI-slop)
+5. `smoke-test.cjs` — 13 calculator scenarios + 9 targeted assertion groups
+6. `new-calc-tests.cjs` — 29 formula assertions for bespoke calculators
+7. `test-montecarlo.cjs` — 39 assertions: Monte Carlo calibration gate
+8. `test-sim-state.cjs` — Project Simulator share-URL codec round-trip
+9. `build-scenario-bands.cjs --check` — fails if scenario-projects.json is stale (generated-bands drift gate)
 
 **If any stage fails, STOP. Do not proceed to commit.** Show the user the failure output and ask for guidance.
 
@@ -30,7 +35,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-**Expected output:** "697 page(s) built" (or current count, ≥ 400) + "[sitemap] wrote 696 URLs to dist/sitemap.xml" (or current count). If the build fails with `Unexpected "export"` at a `.astro` line, see `.claude/lessons/02-esbuild-template-literal-bug.md`.
+**Expected output:** "701 page(s) built" (or current count, ≥ 400) + "[sitemap] wrote ~700 URLs to dist/sitemap.xml" (or current count). If the build fails with `Unexpected "export"` at a `.astro` line, see `.claude/lessons/02-esbuild-template-literal-bug.md`.
 
 ## 4. Verify sitemap namespace
 
@@ -64,9 +69,9 @@ git commit -m "$(cat <<'EOF'
 - Item 2
 
 Verification:
-- npm test: X assertions passed
+- npm test: X assertions passed (9 stages)
 - npx tsc --noEmit: zero errors
-- npm run build: 697 pages OK
+- npm run build: 701 pages OK
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 EOF

@@ -15,7 +15,7 @@ The site is deliberately not a lead-gen funnel: no contact forms, no email gate,
 - [Astro](https://astro.build) for static-first rendering with React Islands
 - React + TypeScript for the interactive calculator components
 - Tailwind CSS for styling
-- CSV/JSON data files for cost ranges, rebates, energy prices, and labor multipliers — every numeric table lives under `data/csv/` (see [`data/csv/README.md`](data/csv/README.md))
+- CSV/JSON data files for cost ranges, rebates, energy prices, and labor multipliers — all 51 numeric tables live under `data/csv/` (see [`data/csv/README.md`](data/csv/README.md))
 
 Astro ships near-zero JavaScript by default; only the calculator islands hydrate, which keeps Core Web Vitals strong.
 
@@ -25,19 +25,23 @@ Every "database of numbers" — pricing tables, state multipliers, IRA / HEEHRA 
 
 There are no duplicate copies of these numbers in TS/JS. The runtime reads CSVs at build time via Vite's `?raw` query (which uses Node `fs` under the hood); the smoke-test reads them directly with `fs.readFileSync`.
 
-### CSVs in `data/csv/`
+### CSVs in `data/csv/` (51 files)
 
-- `project-cost-ranges.csv` — 25 cost scenarios across 5 modules (equipment / labor hours / permit bands).
+The 51 CSVs are the single source of truth for every number. A representative slice:
+
+- `project-cost-ranges.csv` — 25 cost scenarios across 5 flagship modules (equipment / labor hours / permit bands).
 - `state-labor-multipliers.csv` — 51 rows; electrician / HVAC / plumber multipliers vs. U.S. average; permit-fee average.
 - `state-energy-prices.csv` — 51 rows; retail electricity, natural gas, propane, heating oil prices.
-- `rebate-programs.csv` — 22 federal / state / utility programs (25C, 30C, HEEHRA, NYSERDA, Mass Save, TECH CA, ...).
+- `rebate-programs.csv` — federal / state / utility programs (25C, 30C, HEEHRA, NYSERDA, Mass Save, TECH CA, ...).
 - `climate-zones.csv` — 51 rows; IECC zone, HDD/CDD, heat-pump class.
-- `panel-upgrade-risk-rules.csv` — 18 probability-of-upgrade rules indexed by `module × current_panel`.
-- `cost-multipliers.csv` *(new)* — difficulty / home_type / timing factor bands.
-- `module-labor-rates.csv` *(new)* — hourly labor rate by module.
-- `panel-risk-factors.csv` *(new)* — probability-weighted upgrade factors per `risk_level` (with low/high spread).
-- `addons-bands.csv` *(new)* — ductwork repair, HPWH tight-space + removal, induction 240V circuit / gas-cap / cookware.
-- `operating-cost-constants.csv` *(new)* — physics constants for the operating-cost model: heat-pump UA factor, COPs, oversize factors, BTU conversions, HPWH baselines, EV kWh + gasoline anchor, induction baseline savings, uncertainty spreads.
+- `federal-credits.csv` — 25C, 25D, 30C, 30D, 25E with current OBBBA expiration status (all expired as of 2026-07-04).
+- `panel-upgrade-risk-rules.csv` — probability-of-upgrade rules indexed by `module × current_panel`.
+- `cost-multipliers.csv` — difficulty / home_type / timing factor bands.
+- `module-labor-rates.csv` — hourly labor rate by module.
+- `panel-risk-factors.csv` — probability-weighted upgrade factors per `risk_level` (with low/high spread).
+- `addons-bands.csv` — ductwork repair, HPWH tight-space + removal, induction 240V circuit / gas-cap / cookware.
+- `operating-cost-constants.csv` — physics constants for the operating-cost model: heat-pump UA factor, COPs, oversize factors, BTU conversions, HPWH baselines, EV kWh + gasoline anchor, induction baseline savings, uncertainty spreads.
+- …plus ~39 more module-specific cost/range CSVs consumed by the bespoke calculators.
 
 ## Project structure
 
@@ -54,32 +58,49 @@ electrifycost/
 │   ├── favicon.svg
 │   └── robots.txt
 ├── scripts/
-│   ├── smoke-test.cjs         # Plain-Node sanity check for calculator math
-│   └── smoke-cases.json       # 13 test scenarios across all 5 calculators
+│   ├── smoke-test.cjs         # Plain-Node sanity check for the flagship engine
+│   ├── new-calc-tests.cjs     # Formula assertions for the bespoke calculators
+│   ├── test-montecarlo.cjs    # Monte Carlo calibration gate
+│   ├── test-sim-state.cjs     # Share-URL codec round-trip test
+│   ├── build-scenario-bands.cjs # Regenerates src/data/scenario-projects.json (--check drift gate)
+│   ├── band-entry.ts          # esbuild entry the band generator bundles + runs headlessly
+│   ├── build-sitemap.cjs      # POSTBUILD: walks dist/ → emits sitemap.xml
+│   ├── validate-*.cjs         # CSV / page / content / risk-event validators
+│   └── smoke-cases.json       # calculator scenarios for the smoke-test
 └── src/
     ├── components/
-    │   ├── Layout.astro       # Page shell, SEO meta, JSON-LD
+    │   ├── Layout.astro       # Page shell, SEO meta, JSON-LD, GA4
     │   ├── Header.astro
     │   ├── Footer.astro
-    │   ├── ResultPanel.tsx    # Shared low/mid/high results UI
+    │   ├── ResultPanel.tsx    # Shared low/mid/high results UI (5 flagships)
     │   ├── MonteCarloSim.tsx  # Per-calculator Monte Carlo sim island
-    │   ├── ProjectSimulator.tsx # Combined /project-simulator/ tool
+    │   ├── ProjectSimulator.tsx # Combined /project-simulator/ tool (v2 instance model)
     │   ├── PanelCalculator.tsx
     │   ├── HeatPumpCalculator.tsx
     │   ├── EvChargerCalculator.tsx
     │   ├── HpwhCalculator.tsx
-    │   └── InductionCalculator.tsx
-    ├── data/                  # Text/copy JSON only — numeric tables live in /data/csv/
+    │   ├── InductionCalculator.tsx
+    │   └── …32 bespoke calculators (27 compute via src/lib/calcs/, 5 analysis calcs inline)
+    ├── data/                  # Text/copy + generated JSON — numeric tables live in /data/csv/
     │   ├── contractor-checklists.json
     │   ├── glossary.json
+    │   ├── risk-events.json           # Monte Carlo "surprise" events by slug
+    │   ├── scenario-projects.json     # GENERATED by build-scenario-bands.cjs — do not hand-edit
     │   └── source-notes.json
     ├── lib/
-    │   ├── calc.ts            # Shared calculator engine
+    │   ├── calc.ts            # Shared engine for the 5 flagships (runCalculator)
+    │   ├── calcs/             # 27 bespoke calculator compute modules + types.ts + flagship-tiers.ts
     │   ├── data.ts            # CSV/JSON loaders + lookups
     │   ├── format.ts          # Currency / time formatters
-    │   └── analytics.ts       # Event-emitter stub for Plausible/GA4
-    ├── pages/
+    │   ├── use-url-state.ts   # Hash-state hooks for shareable calculator URLs
+    │   ├── montecarlo.js      # Probabilistic cost engine (verbatim math; ESM wrapper)
+    │   ├── mc-chart.ts        # Shared sim chart + money/smooth/domainFor helpers
+    │   ├── estimate-snapshot.ts # v2 calculator→simulator snapshot (ec:est:<slug>)
+    │   ├── sim-codec.ts       # Project Simulator share-URL codec
+    │   └── guide-relationships.ts # 37 guide-slug → siblings + calculator map
+    ├── pages/                 # 135 .astro sources → 701 built HTML pages
     │   ├── index.astro
+    │   ├── project-simulator.astro
     │   ├── electrical-panel-upgrade-cost-calculator.astro
     │   ├── heat-pump-cost-calculator.astro
     │   ├── heat-pump-cost-[state].astro             # 51 programmatic state pages
@@ -133,38 +154,42 @@ gross_cost =
 net_cost = gross_cost − eligible_incentives
 ```
 
-To smoke-test the math without installing dependencies:
+To smoke-test the flagship math without installing dependencies:
 
 ```bash
 node scripts/smoke-test.cjs
 ```
 
+The full gate is `npm test`, which runs nine stages in order: `validate-csvs`, `validate-risk-events`, `validate-pages`, `validate-content`, `smoke-test`, `new-calc-tests`, `test-montecarlo`, `test-sim-state`, and `build-scenario-bands --check` (the generated-bands drift gate). CI runs the same chain plus `npx tsc --noEmit` and `npm run build` on every push and PR.
+
 ## What's done in this build
 
-- Project scaffold, design system, and routing for all v1 pages
-- Full data model: 8 files; 50 states + DC; 25 cost scenarios; 22 rebate programs
-- Shared calculator engine with state labor multipliers, panel-risk weighting, incentive stacking (federal + state + utility), operating-cost change vs. current fuel, and simple payback
-- **All 5 v1 calculators wired end-to-end:** heat pump, EV charger, electrical panel upgrade, heat pump water heater, induction stove
+- Project scaffold, design system, and routing across 701 built pages
+- Full data model: 51 CSV files; 50 states + DC; cost scenarios across every module; federal + state + utility rebate programs
+- Shared calculator engine (5 flagships) with state labor multipliers, panel-risk weighting, incentive stacking (federal + state + utility), operating-cost change vs. current fuel, and simple payback
+- 27 bespoke calculators computing through pure modules in `src/lib/calcs/`; 5 analysis calculators (whole-home, EV TCO, solar payback, EV charging cost, HVAC repair-vs-replace) compute inline
+- **All 5 flagship calculators wired end-to-end:** heat pump, EV charger, electrical panel upgrade, heat pump water heater, induction stove
 - Homepage hub, methodology page, sources page, dynamic rebates page, 404 page
-- **Programmatic state pages**: `/heat-pump-cost-{state}/` for all 50 states + DC, each with state-specific energy prices, climate zone, labor multiplier, and rebates table
-- SEO metadata, canonical URLs, FAQPage + WebApplication JSON-LD per calculator, auto-generated sitemap via `@astrojs/sitemap`
+- **Programmatic state pages**: 51-per-module across heat pump, solar, EV, panel, HPWH, induction, and water heater, each with state-specific energy prices, climate zone, labor multiplier, and rebates table
+- **Monte Carlo cost simulation**: inline P10 / most-likely / P90 sim on every calculator + a combined `/project-simulator/` tool (v2 instance model, median headline, ZIP-based regional pricing, CSV export, branded print report, share-URL codec)
+- SEO metadata, canonical URLs, FAQPage + WebApplication JSON-LD per calculator, sitemap generated by the custom `scripts/build-sitemap.cjs` post-build step (NOT `@astrojs/sitemap`, which crashes against Astro 4.16)
 - Empty `.ad-slot` containers reserved in layout so Mediavine/AdSense can be added later without breaking Core Web Vitals
-- Privacy-first analytics stub at `src/lib/analytics.ts` (events list matches the build prompt; no-op until a provider is wired in)
+- **Google Analytics 4** (`G-5CMBX2RBY4`) live with Consent Mode v2 + cookie banner; a `calculator_used` event fires when a valid result renders
+- **Shareable calculator URLs** via hash-state hooks (`src/lib/use-url-state.ts`)
 - Vercel deploy config at `vercel.json` (clean URLs, security headers, asset cache rules)
 - Print-friendly result UI with `Header`/`Footer` hidden on print
 - A11y: `aria-live="polite"` on result region, labeled form inputs throughout
-- Smoke-test harness at `scripts/smoke-test.cjs` (run via `npm test`); 13 representative scenarios across all 5 calculators
+- Nine-stage `npm test` gate (see above) run in CI on every push and PR
 
 ## Roadmap (suggested)
 
-1. **Programmatic state pages for the other modules** — clone `heat-pump-cost-[state].astro` for EV charger, panel, HPWH, and induction. That's another ~200 long-tail SEO pages with near-zero marginal cost.
+1. **Programmatic state pages for the remaining modules** that don't have them yet (AC, mini-split, geothermal, etc.) — clone `heat-pump-cost-[state].astro`. Near-zero marginal cost per page.
 2. **Embeddable widget** — single-script `<iframe>` distribution so utility/HVAC sites can embed a calculator. Each embed is a backlink and a brand impression.
-3. **Save-your-estimate via URL** — encode inputs in a query string so users can bookmark/share without an account.
-4. **Real OG image** — design a 1200×630 PNG for social previews and pass it via `Layout.ogImage`.
-5. **Live rebate refresh** — replace the seed rebate CSV with a quarterly review process, or back it with the DSIRE / AFDC feeds where available.
-6. **Comparison mode** — heat pump vs. furnace replacement over 15 years, sticky and shareable.
-7. **Affiliate sidebar** — vetted equipment picks (charger hardware, induction ranges, smart panels) clearly labeled as affiliate.
-8. **Wire analytics** — pick Plausible (privacy-first, ~$9/mo) or self-host Plausible/Pirsch. The `track()` calls in `src/lib/analytics.ts` are already wired to detect both.
+3. **Real OG image variants** — per-module 1200×630 PNGs for social previews.
+4. **Live rebate refresh** — replace manual quarterly review with a script that flags rebate rows whose `last_reviewed` date is > 90 days old against the DSIRE / AFDC feeds where available.
+5. **Comparison mode** — heat pump vs. furnace replacement over 15 years, sticky and shareable.
+6. **Affiliate sidebar** — vetted equipment picks (charger hardware, induction ranges, smart panels) clearly labeled as affiliate.
+7. **Migrate the bespoke calculators' remaining hardcoded cost tables to CSV** — the 27 extracted modules in `src/lib/calcs/` still hold some cost tables as TS objects; land them in CSV with `source_id` + `last_reviewed` behind output-snapshot regression tests. See `ROADMAP.md` Phase 4.
 
 ## Monetization notes
 
@@ -181,4 +206,4 @@ Realistic v1 economics, for reference: home improvement display ads run $20–$5
 
 These are planning ranges, not contractor quotes. Actual prices depend on your home, local labor rates, equipment selection, code requirements, utility rules, and contractor availability. Rebate eligibility varies; always verify with the program administrator.
 
-Last reviewed: May 2026.
+Last reviewed: 2026-07-04.
