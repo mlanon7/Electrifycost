@@ -1,0 +1,39 @@
+# ElectrifyCost Full Deep Audit — machine log (second pass)
+# 2026-07-05 · HEAD e81f2c7 -> fixed in aa44a73 · 7 read-only streams
+# Format: STREAM | SEV | STATUS | FILE:LINE/URL | FINDING
+
+baseline | env | - | - | HEAD e81f2c7; 701 pages/700 sitemap; 51 CSVs; npm test 9/9 green; zero P0
+
+calc     | P1 | fixed | src/lib/calcs/geothermal.ts:55 + geothermal-cost-ranges.csv | 3-ton vertical too low (yesterday's rebase undershot); live sources say $20-32k/~$25.5k avg/~$8500/ton; per-ton raised, bands regen ($20,300-$31,800 typical), guide+calc copy reconciled
+calc     | P2 | fixed | src/lib/calcs/mini-split.ts:116 | typical tier pinned premium Mitsubishi Hyper-Heat; switched small+typical to mid-brand Fujitsu standard (typical now $9,312-$15,928); regen
+calc     | P2 | kept  | src/lib/calcs/ac-replacement.ts + solar.ts BATTERY_ADDER.small | AC two-stage typical high-end + battery small $/kWh gap — both sourced, defensible
+calc     | P3 | kept  | generator.ts:124 / boiler.ts oil / smart-thermostat.ts:52 | no-op ternary, duplicate oil tier, identical Ecobee/Nest bands — cosmetic
+calc     | CLEAN | - | - | 32 projects structurally sound; drift gate green; edge cases no NaN/neg; physics sane; credits 0 for 2026; EIA prices current
+content  | P1 | fixed | src/pages/ac-replacement-cost-calculator.astro:25 | FAQ "25D covers" present-tense (feeds JSON-LD) -> past tense
+content  | P1 | fixed | src/pages/guides/ev-tco.astro:52 | "For 2026, four qualifications matter" (expired 30D/25E) -> past-tensed
+content  | P2 | fixed | ac-replacement-cost-calculator.astro:13,86 | SEER2 min wrong (14.3/15.2) -> 13.4 North / 14.3 South (2023 DOE, verified)
+content  | P2 | fixed | gas-furnace-replacement-cost-calculator.astro:12,84,88 | "95% AFUE as of 2024" wrong -> 2028 compliance; 80% still legal now
+content  | P2 | fixed | guides/smart-panels.astro:48 | unsourced Schneider "$30B" -> "large multinational (~EUR36B)"
+content  | P2 | fixed | ac-replacement:48, guides/{boilers,gas-furnaces,solar-payback}:16 | dangling ", and." / ", and a." meta artifacts -> complete sentences
+content  | P2 | fixed | water-heater-comparison.astro:8 | AI-slop "Comprehensive" -> "Compare"
+content  | P3 | fixed | guides/index.astro:34, guides/hiring-a-contractor.astro:19 | geothermal card 25D past-tensed; hiring meta 161-><=160
+content  | CLEAN | - | - | no residual live-25D examples; 908 internal links resolve; FAQ JSON-LD == visible; no emoji/funnel; NEC/Manual-J/refrigerant facts correct
+seo      | P2 | fixed | heat-pump-cost-by-state.astro:37 | duplicate hand-coded BreadcrumbList (Layout emits its own) -> removed
+seo      | P3 | fixed | {induction,ev-charger,hpwh,panel}-cost-[state].astro | "1 rebate programs" -> singular/plural via hoisted const (dodges Astro frontmatter ternary bug)
+seo      | P3 | obs   | solar-panel-cost-[state].astro; city/state og | solar state pages no FAQPage; some og-default fallback — design choices, not defects
+seo      | CLEAN | - | - | 21 page types: titles<=60, metas<=160, one h1, canonicals self+trailing, valid JSON-LD, sitemap 700 correct-ns, unique programmatic pages
+a11y     | P1 | fixed | 14 calculator components (Ac,Battery,Ductwork,EnergyAudit,EvTco,Generator,Geothermal,Insulation,MiniSplit,PoolHp,Solar,Tankless,Thermostat,Window) | detached labels -> htmlFor/id associated; label-click focuses control (browser-verified)
+a11y     | P2 | fixed | global.css .sim-card-badge:473 / .sim-row-band:530 | ink-500 on #f1f5f9 = 4.34:1 (small text) -> ink-600 (7.24:1)
+a11y     | P3 | fixed | global.css .mc-switch-track:432 | off-track border #94a3b8 (2.56:1) -> #64748b (4.76:1)
+a11y     | CLEAN | - | - | prior 6 fixes HELD (modal focus, aria-live, label-in-name, toggle ring, chevron, role=status); keyboard/landmarks/heading/charts/alt/reduced-motion clean
+bug      | P2 | fixed | source-notes.json:809,1111 + guides/{hot-water-recirculation,boilers}.astro | 4 dead URLs (mass.gov DOER, mieleusa dryer, grundfos, heatpumpcollaborative NXDOMAIN) -> verified-live replacements
+bug      | P3 | doc   | data.ts parsed-but-unconsumed CSVs | latent-drift architecture (modules hardcode values); geothermal CSV kept in sync; general refactor = roadmap
+bug      | CLEAN | - | - | build clean; audit-scan 0 orphans; slug-triple 32<->32; localStorage schema agrees; codec fails closed on all hostile input; 8 module<->CSV pairs match
+perf     | P2 | fixed | 37 hero <picture> blocks | <img> fallback src pointed at .webp (undecodable for no-AVIF/no-WebP; JPGs dead weight) -> .jpg (bare-img hub kept webp)
+perf     | P2 | fixed | guides/hiring-a-contractor.astro:21 | og:image electrical-panel-hero-photo.jpg (404) -> panel-upgrade-hero-photo.jpg
+perf     | P3 | fixed | Layout.astro:123 | added preconnect for googletagmanager + analytics.ahrefs (async scripts)
+perf     | P1 | DEFER | src/lib/data.ts | all 51 CSVs ship to every calculator (~46KB gz); top CWV lever but broad 40-calculator refactor — scoped follow-up, documented
+perf     | CLEAN | - | - | code-split per island; 0 console/TODO; monetization env-gated+inert; no-funnel intact; GA4 Consent Mode v2; headers/cache sane; no image>250KB
+ui       | P1 | fixed | global.css html overflow-x + section-shelf::before | ~8px horizontal scroll on every section-shelf page (100vw vs scrollbar); overflow-x:clip on html (scroll container); browser-verified canScrollHorizontally:false, sticky+smooth intact
+ui       | CLEAN | - | - | catalog names full (recent fix held); no element overlap; print CSS sane; zero console errors across page types
+gate     | - | green | - | tsc clean; npm test 9/9; build 701 pages/700 URLs; browser no-hscroll + labels + geo band + zero console errors; shipped aa44a73
