@@ -37,7 +37,8 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `100A-to-200A electrical panel upgrade cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ~$${labor?.permit_avg ?? 300} permit, ${stateRebates.length} rebate programs.`;
+const rebateWord = stateRebates.length === 1 ? 'program' : 'programs';
+const description = `100A-to-200A electrical panel upgrade cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ~$${labor?.permit_avg ?? 300} permit, ${stateRebates.length} rebate ${rebateWord}.`;
 
 // Default 100A→200A range straight from the shared engine — the same numbers the
 // calculator on this page shows by default (average difficulty, single-family).

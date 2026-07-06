@@ -75,8 +75,9 @@ export default function ThermostatCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="thermo-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="thermo-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 94103"
@@ -86,43 +87,44 @@ export default function ThermostatCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="thermo-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="thermo-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Model</label>
-          <select className="input mt-1 w-full" value={model} onChange={e => setModel(e.target.value as Model)}>
+          <label htmlFor="thermo-model" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Model</label>
+          <select id="thermo-model" className="input mt-1 w-full" value={model} onChange={e => setModel(e.target.value as Model)}>
             {MODEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install</label>
-          <select className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
+          <label htmlFor="thermo-install" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install</label>
+          <select id="thermo-install" className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
             {INSTALL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">C-wire present?</label>
-          <select className="input mt-1 w-full" value={cwire} onChange={e => setCwire(e.target.value as Cwire)}>
+          <label htmlFor="thermo-cwire" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">C-wire present?</label>
+          <select id="thermo-cwire" className="input mt-1 w-full" value={cwire} onChange={e => setCwire(e.target.value as Cwire)}>
             {CWIRE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">HVAC type</label>
-          <select className="input mt-1 w-full" value={hvac} onChange={e => setHvac(e.target.value as HvacType)}>
+          <label htmlFor="thermo-hvac" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">HVAC type</label>
+          <select id="thermo-hvac" className="input mt-1 w-full" value={hvac} onChange={e => setHvac(e.target.value as HvacType)}>
             {HVAC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual HVAC energy cost ($)</label>
+          <label htmlFor="thermo-annual-hvac-cost" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual HVAC energy cost ($)</label>
           <input
+            id="thermo-annual-hvac-cost"
             type="number" min={200} max={6000} step={50} value={annualHvacCost}
             onChange={e => setAnnualHvacCost(Number(e.target.value) || 0)}
             className="input mt-1 w-full"

@@ -63,26 +63,26 @@ export default function EnergyAuditCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="audit-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="audit-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 02134" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="audit-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="audit-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Audit tier</label>
-          <select className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
+          <label htmlFor="audit-tier" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Audit tier</label>
+          <select id="audit-tier" className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
             {TIER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Utility-sponsored?</label>
-          <select className="input mt-1 w-full" value={utility} onChange={e => setUtility(e.target.value as Utility)}>
+          <label htmlFor="audit-utility" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Utility-sponsored?</label>
+          <select id="audit-utility" className="input mt-1 w-full" value={utility} onChange={e => setUtility(e.target.value as Utility)}>
             {UTILITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>

@@ -112,10 +112,15 @@ export function compute(inputs: MiniSplitInputs, opts?: ComputeOpts): MiniSplitR
   };
 }
 
+// Tiers use the mid/value brand (Fujitsu) at standard spec for the small +
+// typical rungs — the representative mainstream install — and step up to the
+// cold-climate (hyperheat) spec for the large/whole-home rung. Pinning the
+// "typical" tier to the priciest brand+spec (premium Mitsubishi Hyper-Heat)
+// inflated it above the mainstream 3-zone market.
 export const TIER_INPUTS: TierInputs<MiniSplitInputs> = {
-  small:   { state: 'US', zones: '1', brand: 'mitsubishi', spec: 'hyperheat', needsCircuit: 'yes' },
-  typical: { state: 'US', zones: '3', brand: 'mitsubishi', spec: 'hyperheat', needsCircuit: 'yes' },
-  large:   { state: 'US', zones: '4', brand: 'mitsubishi', spec: 'hyperheat', needsCircuit: 'yes' },
+  small:   { state: 'US', zones: '1', brand: 'fujitsu', spec: 'standard', needsCircuit: 'yes' },
+  typical: { state: 'US', zones: '3', brand: 'fujitsu', spec: 'standard', needsCircuit: 'yes' },
+  large:   { state: 'US', zones: '4', brand: 'fujitsu', spec: 'hyperheat', needsCircuit: 'yes' },
 };
 
 export const TIER_LABELS: TierLabels = {

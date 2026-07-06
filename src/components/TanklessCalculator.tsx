@@ -81,8 +81,9 @@ export default function TanklessCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="tankless-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="tankless-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 94103"
@@ -91,37 +92,37 @@ export default function TanklessCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="tankless-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="tankless-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Tankless type</label>
-          <select className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSize(e.target.value.startsWith('gas') ? '180k' : e.target.value === 'electric_pos' ? 'electric_18' : 'electric_27'); }}>
+          <label htmlFor="tankless-type" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Tankless type</label>
+          <select id="tankless-type" className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSize(e.target.value.startsWith('gas') ? '180k' : e.target.value === 'electric_pos' ? 'electric_18' : 'electric_27'); }}>
             {TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Size</label>
-          <select className="input mt-1 w-full" value={size} onChange={e => setSize(e.target.value as Size)}>
+          <label htmlFor="tankless-size" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Size</label>
+          <select id="tankless-size" className="input mt-1 w-full" value={size} onChange={e => setSize(e.target.value as Size)}>
             {validSizes.map(s => <option key={s} value={s}>{SIZE_LABELS[s]}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing water heater</label>
-          <select className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as Existing)}>
+          <label htmlFor="tankless-existing" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing water heater</label>
+          <select id="tankless-existing" className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as Existing)}>
             {EXISTING_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         {(type === 'gas_condensing' || type === 'gas_non_condensing') && (
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Gas line</label>
-            <select className="input mt-1 w-full" value={gasLine} onChange={e => setGasLine(e.target.value as GasLine)}>
+            <label htmlFor="tankless-gas-line" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Gas line</label>
+            <select id="tankless-gas-line" className="input mt-1 w-full" value={gasLine} onChange={e => setGasLine(e.target.value as GasLine)}>
               {GAS_LINE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
@@ -129,8 +130,8 @@ export default function TanklessCalculator() {
 
         {type === 'electric_whole' && (
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Panel capacity for 100-150A draw?</label>
-            <select className="input mt-1 w-full" value={panelOk} onChange={e => setPanelOk(e.target.value as typeof panelOk)}>
+            <label htmlFor="tankless-panel-ok" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Panel capacity for 100-150A draw?</label>
+            <select id="tankless-panel-ok" className="input mt-1 w-full" value={panelOk} onChange={e => setPanelOk(e.target.value as typeof panelOk)}>
               {PANEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>

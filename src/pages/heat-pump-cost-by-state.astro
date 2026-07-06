@@ -27,20 +27,15 @@ const cheapElec = [...rows].sort((a, b) => a.ecents - b.ecents).slice(0, 5);
 const expElec   = [...rows].sort((a, b) => b.ecents - a.ecents).slice(0, 5);
 const coldStates = rows.filter(r => r.cold);
 
+// Note: the BreadcrumbList schema is emitted by Layout.astro from the
+// breadcrumbs prop below — do not hand-code a second one here (duplicate
+// identical structured data is a validation warning).
 const schemaJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Heat Pump Cost by State',
     description: 'Installed-cost estimates, retail electricity prices, climate zones, and HVAC labor multipliers for heat pumps in every U.S. state plus DC.',
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://electrifycost.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Heat pump cost by state', item: 'https://electrifycost.com/heat-pump-cost-by-state/' },
-    ],
   },
 ];
 ---

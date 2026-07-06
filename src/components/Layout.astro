@@ -121,6 +121,11 @@ const schemas = breadcrumbSchema ? [...baseSchemas, breadcrumbSchema] : baseSche
     <meta name="twitter:image" content={resolvedOgImage} />
     <meta name="theme-color" content="#059669" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {/* Warm up the TLS connections for the two async analytics origins so the
+        DNS+TLS handshake overlaps with page render rather than blocking the
+        deferred fetch. Both scripts still load async (non-render-blocking). */}
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://analytics.ahrefs.com" crossorigin />
     {/* Inter + Source Serif 4 are self-hosted via @fontsource and imported in
         src/styles/global.css. No more third-party fetch in <head>. */}
     {schemas.map(s => (

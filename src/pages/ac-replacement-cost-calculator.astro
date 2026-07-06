@@ -10,7 +10,7 @@ const faq = [
   },
   {
     q: 'What is SEER2 and how is it different from SEER?',
-    a: 'SEER2 is the updated efficiency rating that took effect 2023-01-01 under DOE\'s revised test procedure (Federal Register 87 FR 56500). It uses higher external static pressure than the old SEER test, producing more realistic real-world ratings. A SEER 16 rated under the old test is roughly SEER2 15.2. Minimum efficiency in 2026 is 14.3 SEER2 north of the 36th parallel, 15.2 SEER2 south. Variable-speed inverter systems reach 22-26 SEER2.',
+    a: 'SEER2 is the updated efficiency rating that took effect 2023-01-01 under DOE\'s revised test procedure (Federal Register 87 FR 56500). It uses higher external static pressure than the old SEER test, producing more realistic real-world ratings. A SEER 16 rated under the old test is roughly SEER2 15.2. The federal minimum for split-system central AC is 13.4 SEER2 in the North and 14.3 SEER2 in the South (units under 45,000 BTU/h); variable-speed inverter systems reach 22-26 SEER2.',
   },
   {
     q: 'Should I replace AC or convert to a heat pump?',
@@ -22,7 +22,7 @@ const faq = [
   },
   {
     q: 'Is there a tax credit for replacing my AC?',
-    a: 'No. The federal Energy Efficient Home Improvement Credit (25C) covered heat pumps and electric panels through 2025-12-31, but not air conditioning alone. The 25D Residential Clean Energy Credit covers solar PV, geothermal, and battery storage — also not AC. Income-qualified households may qualify for DOE Home Energy Rebates (HEEHRA) in states where the program is open, but again, only for heat pumps and other electrification measures, not standalone AC.',
+    a: 'No. The federal Energy Efficient Home Improvement Credit (25C) covered heat pumps and electric panels through 2025-12-31, but never air conditioning alone. The 25D Residential Clean Energy Credit covered solar PV, geothermal, and battery storage (it also expired 2025-12-31) — and never AC. Income-qualified households may still qualify for DOE Home Energy Rebates (HEEHRA) in states where the program is open, but again, only for heat pumps and other electrification measures, not standalone AC.',
   },
 ];
 
@@ -45,7 +45,7 @@ const schemaJsonLd = [
 ---
 <Layout
   title="AC Replacement Cost Calculator 2026: SEER2 + R-32 Transition"
-  description="Estimate central AC replacement cost by tonnage, SEER2 tier, ductwork, and state. Includes R-410A → R-32/R-454B refrigerant-transition adder and a."
+  description="Estimate central AC replacement cost by tonnage, SEER2 tier, ductwork, and state, with the R-410A to R-32/R-454B refrigerant-transition adder built in."
   active="/ac-replacement-cost-calculator/"
   schemaJsonLd={schemaJsonLd}
   ogImage="/assets/topic-images/ac-replacement-hero-photo.jpg"
@@ -68,7 +68,7 @@ const schemaJsonLd = [
     <picture>
         <source srcset="/assets/topic-images/ac-replacement-hero-photo.avif" type="image/avif" />
         <source srcset="/assets/topic-images/ac-replacement-hero-photo.webp" type="image/webp" />
-        <img  src="/assets/topic-images/ac-replacement-hero-photo.webp"
+        <img  src="/assets/topic-images/ac-replacement-hero-photo.jpg"
       alt="Central air conditioning condenser at a home"
       width="1200" height="675"
       class="w-full rounded-lg border border-ink-200 bg-white shadow-card"
@@ -83,7 +83,7 @@ const schemaJsonLd = [
     <div class="max-w-prose">
       <h2 class="text-xl font-semibold text-ink-900">New to central AC?</h2>
       <p class="mt-2 text-sm text-ink-700">
-        A central AC has two parts: an outdoor condenser/compressor and an indoor evaporator coil that sits on top of your furnace or air handler. A copper line-set carries refrigerant between them, and ductwork distributes cooled air through the house. Efficiency is rated in SEER2 (Seasonal Energy Efficiency Ratio, 2023 test procedure). Federal minimums are 14.3 SEER2 north / 15.2 SEER2 south. Variable-speed inverter systems reach 22-26 SEER2 and modulate continuously rather than cycling on and off — better dehumidification and 30-40% less electricity than a baseline single-stage unit.
+        A central AC has two parts: an outdoor condenser/compressor and an indoor evaporator coil that sits on top of your furnace or air handler. A copper line-set carries refrigerant between them, and ductwork distributes cooled air through the house. Efficiency is rated in SEER2 (Seasonal Energy Efficiency Ratio, 2023 test procedure). Federal minimums for split-system central AC are 13.4 SEER2 in the North and 14.3 SEER2 in the South (units under 45,000 BTU/h). Variable-speed inverter systems reach 22-26 SEER2 and modulate continuously rather than cycling on and off — better dehumidification and 30-40% less electricity than a baseline single-stage unit.
       </p>
       <p class="mt-3 text-sm">
         <a href="/guides/ac-replacement/" class="font-medium text-brand-700">Read the full guide <span aria-hidden="true">→</span></a>

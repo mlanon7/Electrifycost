@@ -48,15 +48,19 @@ const add = (a: CostBand3, b: CostBand3): CostBand3 => ({ low: a.low + b.low, mi
 const scale = (b: CostBand3, m: number): CostBand3 => ({ low: b.low * m, mid: b.mid * m, high: b.high * m });
 void add; // helper moved verbatim from the component (it was defined-but-unused there as well)
 
-// Fully-loaded per-ton installed cost by loop type. Industry consolidates the
-// indoor heat-pump unit + ground loop + plumbing tie-in into a single per-ton
-// figure ($3,500–$5,500/ton typical, HomeGuide 2026; premium installs up to
-// $11,700/ton, Bryant 2026). Sources: data/csv/geothermal-cost-ranges.csv.
+// Fully-loaded per-ton installed cost by loop type: indoor heat-pump unit +
+// ground loop + drilling/trenching + plumbing tie-in in one figure. The ground
+// loop is 50–70% of the total and drilling dominates it, so VERTICAL (which
+// needs 150–200 ft of bore per ton at $15–30/ft) is the priciest loop. 2026
+// market: a 3-ton system averages ~$25,500 installed ($20k–$32k in standard
+// soil, $35k+ in rock), i.e. ~$8,500/ton nationally, $4,500–$12,500/ton by
+// geology (HomeGuide / Angi / Fixr / HomeAdvisor / Carrier / Bryant 2026).
+// Sources: data/csv/geothermal-cost-ranges.csv.
 const LOOP_PER_TON: Record<Loop, CostBand3> = {
-  vertical:   { low: 3500, mid: 4500, high: 6500 },
-  horizontal: { low: 2500, mid: 3500, high: 5000 },
-  pond:       { low: 2200, mid: 3200, high: 4500 },
-  open:       { low: 2800, mid: 3800, high: 5200 },
+  vertical:   { low: 7000, mid: 8500, high: 11000 },  // drilling-heavy — priciest
+  horizontal: { low: 5500, mid: 7000, high: 9000 },   // trenching (needs ~1 acre)
+  pond:       { low: 5000, mid: 6500, high: 8000 },   // cheapest when water available
+  open:       { low: 5500, mid: 7000, high: 9000 },   // well + discharge
 };
 
 const DUCT_REUSE_BONUS: CostBand3 = { low: -1500, mid: -2500, high: -4000 };  // savings if existing ducts reused

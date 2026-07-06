@@ -73,39 +73,39 @@ export default function WindowCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="window-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="window-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 94103" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="window-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="window-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of windows</label>
-          <input type="number" min={1} max={60} step={1} value={count}
+          <label htmlFor="window-count" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of windows</label>
+          <input id="window-count" type="number" min={1} max={60} step={1} value={count}
             onChange={e => setCount(Number(e.target.value) || 0)} className="input mt-1 w-full" />
           <p className="mt-1 text-[11px] text-ink-600">Typical 1,800 sqft home: 12-18 windows</p>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Frame material</label>
-          <select className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
+          <label htmlFor="window-material" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Frame material</label>
+          <select id="window-material" className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
             {MATERIAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Glazing</label>
-          <select className="input mt-1 w-full" value={glazing} onChange={e => setGlazing(e.target.value as Glazing)}>
+          <label htmlFor="window-glazing" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Glazing</label>
+          <select id="window-glazing" className="input mt-1 w-full" value={glazing} onChange={e => setGlazing(e.target.value as Glazing)}>
             {GLAZING_OPTIONS.filter(o => o.value !== 'storm_addon' || material === 'vinyl')
               .map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install type</label>
-          <select className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
+          <label htmlFor="window-install" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install type</label>
+          <select id="window-install" className="input mt-1 w-full" value={install} onChange={e => setInstall(e.target.value as Install)}>
             {INSTALL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>

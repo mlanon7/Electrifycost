@@ -92,8 +92,9 @@ export default function SolarCalculator() {
       {/* Inputs */}
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="solar-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="solar-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 90210"
@@ -103,17 +104,18 @@ export default function SolarCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="solar-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="solar-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
+          <label htmlFor="solar-kw" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
             System size: <span className="font-bold tabular-nums text-ink-900">{kw} kW DC</span>
           </label>
           <input
+            id="solar-kw"
             type="range" min={3} max={15} step={0.5} value={kw}
             onChange={e => setKw(Number(e.target.value))}
             className="mt-2 w-full accent-brand-600"
@@ -124,43 +126,44 @@ export default function SolarCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Roof type</label>
-          <select className="input mt-1 w-full" value={roof} onChange={e => setRoof(e.target.value as RoofType)}>
+          <label htmlFor="solar-roof" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Roof type</label>
+          <select id="solar-roof" className="input mt-1 w-full" value={roof} onChange={e => setRoof(e.target.value as RoofType)}>
             {ROOF_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Site complexity</label>
-          <select className="input mt-1 w-full" value={complexity} onChange={e => setComplexity(e.target.value as Complexity)}>
+          <label htmlFor="solar-complexity" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Site complexity</label>
+          <select id="solar-complexity" className="input mt-1 w-full" value={complexity} onChange={e => setComplexity(e.target.value as Complexity)}>
             {COMPLEXITY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Inverter</label>
-          <select className="input mt-1 w-full" value={inverter} onChange={e => setInverter(e.target.value as Inverter)}>
+          <label htmlFor="solar-inverter" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Inverter</label>
+          <select id="solar-inverter" className="input mt-1 w-full" value={inverter} onChange={e => setInverter(e.target.value as Inverter)}>
             {INVERTER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Mount type</label>
-          <select className="input mt-1 w-full" value={mount} onChange={e => setMount(e.target.value as Mount)}>
+          <label htmlFor="solar-mount" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Mount type</label>
+          <select id="solar-mount" className="input mt-1 w-full" value={mount} onChange={e => setMount(e.target.value as Mount)}>
             {MOUNT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Battery storage</label>
-          <select className="input mt-1 w-full" value={battery} onChange={e => setBattery(e.target.value as BatterySize)}>
+          <label htmlFor="solar-battery" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Battery storage</label>
+          <select id="solar-battery" className="input mt-1 w-full" value={battery} onChange={e => setBattery(e.target.value as BatterySize)}>
             {BATTERY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual electricity use (kWh)</label>
+          <label htmlFor="solar-annual-kwh" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual electricity use (kWh)</label>
           <input
+            id="solar-annual-kwh"
             type="number" min={1000} max={50000} step={100} value={annualKwh}
             onChange={e => setAnnualKwh(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -169,8 +172,8 @@ export default function SolarCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
-          <select className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
+          <label htmlFor="solar-install-year" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
+          <select id="solar-install-year" className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
             {INSTALL_YEAR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <p className="mt-1 text-[11px] text-ink-600">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>

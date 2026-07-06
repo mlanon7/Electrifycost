@@ -69,38 +69,38 @@ export default function MiniSplitCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="minisplit-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="minisplit-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 02134" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="minisplit-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="minisplit-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of indoor heads (zones)</label>
-          <select className="input mt-1 w-full" value={zones} onChange={e => setZones(e.target.value as Zones)}>
+          <label htmlFor="minisplit-zones" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Number of indoor heads (zones)</label>
+          <select id="minisplit-zones" className="input mt-1 w-full" value={zones} onChange={e => setZones(e.target.value as Zones)}>
             {ZONE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Brand</label>
-          <select className="input mt-1 w-full" value={brand} onChange={e => setBrand(e.target.value as Brand)}>
+          <label htmlFor="minisplit-brand" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Brand</label>
+          <select id="minisplit-brand" className="input mt-1 w-full" value={brand} onChange={e => setBrand(e.target.value as Brand)}>
             {BRAND_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cold-climate spec?</label>
-          <select className="input mt-1 w-full" value={spec} onChange={e => setSpec(e.target.value as Spec)}>
+          <label htmlFor="minisplit-spec" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cold-climate spec?</label>
+          <select id="minisplit-spec" className="input mt-1 w-full" value={spec} onChange={e => setSpec(e.target.value as Spec)}>
             {SPEC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Need new 240V circuit?</label>
-          <select className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as Circuit)}>
+          <label htmlFor="minisplit-circuit" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Need new 240V circuit?</label>
+          <select id="minisplit-circuit" className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as Circuit)}>
             {CIRCUIT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>

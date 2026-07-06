@@ -77,8 +77,9 @@ export default function InsulationCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="insul-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="insul-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 02134"
@@ -88,15 +89,16 @@ export default function InsulationCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="insul-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="insul-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
+          <label htmlFor="insul-sqft" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
           <input
+            id="insul-sqft"
             type="number" min={500} max={6000} step={50} value={sqft}
             onChange={e => setSqft(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -104,29 +106,29 @@ export default function InsulationCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Job scope</label>
-          <select className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
+          <label htmlFor="insul-scope" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Job scope</label>
+          <select id="insul-scope" className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
             {SCOPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Attic material</label>
-          <select className="input mt-1 w-full" value={atticType} onChange={e => setAtticType(e.target.value as AtticType)}>
+          <label htmlFor="insul-attic" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Attic material</label>
+          <select id="insul-attic" className="input mt-1 w-full" value={atticType} onChange={e => setAtticType(e.target.value as AtticType)}>
             {ATTIC_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing attic R-value</label>
-          <select className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as ExistingR)}>
+          <label htmlFor="insul-existing" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing attic R-value</label>
+          <select id="insul-existing" className="input mt-1 w-full" value={existing} onChange={e => setExisting(e.target.value as ExistingR)}>
             {EXISTING_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Income tier (for HEEHRA/HOMES)</label>
-          <select className="input mt-1 w-full" value={income} onChange={e => setIncome(e.target.value as Income)}>
+          <label htmlFor="insul-income" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Income tier (for HEEHRA/HOMES)</label>
+          <select id="insul-income" className="input mt-1 w-full" value={income} onChange={e => setIncome(e.target.value as Income)}>
             <option value="unknown">Unknown / prefer not to say</option>
             <option value="low">Low (&lt;80% Area Median Income)</option>
             <option value="moderate">Moderate (80-150% AMI)</option>

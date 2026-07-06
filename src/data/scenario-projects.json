@@ -50,20 +50,20 @@
         {
           "name": "small",
           "label": "single zone",
-          "low": 5100,
-          "high": 9200
+          "low": 3900,
+          "high": 7400
         },
         {
           "name": "typical",
           "label": "three zone",
-          "low": 12480,
-          "high": 20680
+          "low": 9312,
+          "high": 15928
         },
         {
           "name": "large",
           "label": "whole-home multi-zone",
-          "low": 15900,
-          "high": 26000
+          "low": 14200,
+          "high": 23280
         }
       ]
     },
@@ -82,20 +82,20 @@
         {
           "name": "small",
           "label": "small home",
-          "low": 6300,
-          "high": 11800
+          "low": 13300,
+          "high": 20800
         },
         {
           "name": "typical",
           "label": "typical loop field",
-          "low": 9800,
-          "high": 18300
+          "low": 20300,
+          "high": 31800
         },
         {
           "name": "large",
           "label": "large / vertical bores",
-          "low": 21800,
-          "high": 41800
+          "low": 42800,
+          "high": 68800
         }
       ]
     },

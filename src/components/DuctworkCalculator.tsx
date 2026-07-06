@@ -77,49 +77,49 @@ export default function DuctworkCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="ductwork-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="ductwork-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 94103" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="ductwork-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="ductwork-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
-          <input type="number" min={500} max={6000} step={50} value={sqft}
+          <label htmlFor="ductwork-sqft" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
+          <input id="ductwork-sqft" type="number" min={500} max={6000} step={50} value={sqft}
             onChange={e => setSqft(Number(e.target.value) || 0)} className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Scope of work</label>
-          <select className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
+          <label htmlFor="ductwork-scope" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Scope of work</label>
+          <select id="ductwork-scope" className="input mt-1 w-full" value={scope} onChange={e => setScope(e.target.value as Scope)}>
             {SCOPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Duct material</label>
-          <select className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
+          <label htmlFor="ductwork-material" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Duct material</label>
+          <select id="ductwork-material" className="input mt-1 w-full" value={material} onChange={e => setMaterial(e.target.value as Material)}>
             {MATERIAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Stories</label>
-          <select className="input mt-1 w-full" value={stories} onChange={e => setStories(e.target.value as Stories)}>
+          <label htmlFor="ductwork-stories" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Stories</label>
+          <select id="ductwork-stories" className="input mt-1 w-full" value={stories} onChange={e => setStories(e.target.value as Stories)}>
             {STORIES_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Access difficulty</label>
-          <select className="input mt-1 w-full" value={access} onChange={e => setAccess(e.target.value as Access)}>
+          <label htmlFor="ductwork-access" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Access difficulty</label>
+          <select id="ductwork-access" className="input mt-1 w-full" value={access} onChange={e => setAccess(e.target.value as Access)}>
             {ACCESS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Add Aeroseal injection?</label>
-          <select className="input mt-1 w-full" value={aeroseal} onChange={e => setAeroseal(e.target.value as Aeroseal)}>
+          <label htmlFor="ductwork-aeroseal" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Add Aeroseal injection?</label>
+          <select id="ductwork-aeroseal" className="input mt-1 w-full" value={aeroseal} onChange={e => setAeroseal(e.target.value as Aeroseal)}>
             {AEROSEAL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>

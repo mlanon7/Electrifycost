@@ -79,8 +79,9 @@ export default function BatteryCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="battery-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="battery-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 02134"
@@ -90,17 +91,18 @@ export default function BatteryCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="battery-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="battery-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
+          <label htmlFor="battery-kwh" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
             Usable capacity: <span className="font-bold tabular-nums text-ink-900">{kwh} kWh</span>
           </label>
           <input
+            id="battery-kwh"
             type="range" min={5} max={40} step={0.5} value={kwh}
             onChange={e => setKwh(Number(e.target.value))}
             className="mt-2 w-full accent-brand-600"
@@ -111,36 +113,36 @@ export default function BatteryCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Use case</label>
-          <select className="input mt-1 w-full" value={useCase} onChange={e => setUseCase(e.target.value as UseCase)}>
+          <label htmlFor="battery-usecase" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Use case</label>
+          <select id="battery-usecase" className="input mt-1 w-full" value={useCase} onChange={e => setUseCase(e.target.value as UseCase)}>
             {USECASE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cell chemistry</label>
-          <select className="input mt-1 w-full" value={chemistry} onChange={e => setChemistry(e.target.value as Chemistry)}>
+          <label htmlFor="battery-chemistry" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Cell chemistry</label>
+          <select id="battery-chemistry" className="input mt-1 w-full" value={chemistry} onChange={e => setChemistry(e.target.value as Chemistry)}>
             {CHEMISTRY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Paired with new solar?</label>
-          <select className="input mt-1 w-full" value={paired} onChange={e => setPaired(e.target.value as PairedSolar)}>
+          <label htmlFor="battery-paired" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Paired with new solar?</label>
+          <select id="battery-paired" className="input mt-1 w-full" value={paired} onChange={e => setPaired(e.target.value as PairedSolar)}>
             {PAIRED_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Main panel</label>
-          <select className="input mt-1 w-full" value={panel} onChange={e => setPanel(e.target.value as Panel)}>
+          <label htmlFor="battery-panel" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Main panel</label>
+          <select id="battery-panel" className="input mt-1 w-full" value={panel} onChange={e => setPanel(e.target.value as Panel)}>
             {PANEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
-          <select className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
+          <label htmlFor="battery-year" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
+          <select id="battery-year" className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
             {YEAR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <p className="mt-1 text-[11px] text-ink-600">25D Residential Clean Energy Credit terminated by OBBBA for property placed in service after 2025-12-31.</p>

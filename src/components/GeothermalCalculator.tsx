@@ -72,38 +72,38 @@ export default function GeothermalCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="geo-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="geo-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 14850" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="geo-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="geo-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">System size (tons)</label>
-          <select className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
+          <label htmlFor="geo-tonnage" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">System size (tons)</label>
+          <select id="geo-tonnage" className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
             {TONNAGE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ground loop type</label>
-          <select className="input mt-1 w-full" value={loop} onChange={e => setLoop(e.target.value as Loop)}>
+          <label htmlFor="geo-loop" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ground loop type</label>
+          <select id="geo-loop" className="input mt-1 w-full" value={loop} onChange={e => setLoop(e.target.value as Loop)}>
             {LOOP_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing ductwork?</label>
-          <select className="input mt-1 w-full" value={existingDucts} onChange={e => setExistingDucts(e.target.value as Existing)}>
+          <label htmlFor="geo-ducts" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Existing ductwork?</label>
+          <select id="geo-ducts" className="input mt-1 w-full" value={existingDucts} onChange={e => setExistingDucts(e.target.value as Existing)}>
             {DUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
-          <select className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
+          <label htmlFor="geo-year" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Install year</label>
+          <select id="geo-year" className="input mt-1 w-full" value={installYear} onChange={e => setInstallYear(Number(e.target.value))}>
             {YEAR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <p className="mt-1 text-[11px] text-ink-600">25D credit terminated by OBBBA for property placed in service after 2025-12-31.</p>

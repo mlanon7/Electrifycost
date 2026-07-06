@@ -78,8 +78,9 @@ export default function GeneratorCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="gen-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="gen-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 33101"
@@ -89,43 +90,44 @@ export default function GeneratorCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="gen-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="gen-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Generator type</label>
-          <select className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSizing('10kw'); }}>
+          <label htmlFor="gen-type" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Generator type</label>
+          <select id="gen-type" className="input mt-1 w-full" value={type} onChange={e => { setType(e.target.value as Type); setSizing('10kw'); }}>
             {TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Sizing (kW)</label>
-          <select className="input mt-1 w-full" value={sizing} onChange={e => setSizing(e.target.value as Sizing)}>
+          <label htmlFor="gen-sizing" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Sizing (kW)</label>
+          <select id="gen-sizing" className="input mt-1 w-full" value={sizing} onChange={e => setSizing(e.target.value as Sizing)}>
             {validSizings.map(s => <option key={s} value={s}>{s.replace('kw', ' kW')} ({SIZE_BTU_HOURS[s].toLocaleString()} W)</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Fuel</label>
-          <select className="input mt-1 w-full" value={fuel} onChange={e => setFuel(e.target.value as Fuel)}>
+          <label htmlFor="gen-fuel" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Fuel</label>
+          <select id="gen-fuel" className="input mt-1 w-full" value={fuel} onChange={e => setFuel(e.target.value as Fuel)}>
             {FUEL_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Transfer mechanism</label>
-          <select className="input mt-1 w-full" value={transfer} onChange={e => setTransfer(e.target.value as Transfer)}>
+          <label htmlFor="gen-transfer" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Transfer mechanism</label>
+          <select id="gen-transfer" className="input mt-1 w-full" value={transfer} onChange={e => setTransfer(e.target.value as Transfer)}>
             {TRANSFER_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Expected annual runtime (hours)</label>
+          <label htmlFor="gen-hours" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Expected annual runtime (hours)</label>
           <input
+            id="gen-hours"
             type="number" min={0} max={2000} step={5} value={annualHours}
             onChange={e => setAnnualHours(Number(e.target.value) || 0)}
             className="input mt-1 w-full"

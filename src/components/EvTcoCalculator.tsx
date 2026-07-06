@@ -170,8 +170,9 @@ export default function EvTcoCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="evtco-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="evtco-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 94103"
@@ -181,15 +182,15 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="evtco-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="evtco-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Vehicle category</label>
-          <select className="input mt-1 w-full" value={category} onChange={e => setCategory(e.target.value as Category)}>
+          <label htmlFor="evtco-category" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Vehicle category</label>
+          <select id="evtco-category" className="input mt-1 w-full" value={category} onChange={e => setCategory(e.target.value as Category)}>
             <option value="compact">Compact (Bolt, MINI SE) · 0.28 kWh/mi · 36 mpg</option>
             <option value="sedan">Sedan (Model 3, Ioniq 6) · 0.30 kWh/mi · 32 mpg</option>
             <option value="suv">SUV (Model Y, ID.4) · 0.36 kWh/mi · 26 mpg</option>
@@ -199,8 +200,8 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Hold period</label>
-          <select className="input mt-1 w-full" value={hold} onChange={e => setHold(Number(e.target.value) as Hold)}>
+          <label htmlFor="evtco-hold" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Hold period</label>
+          <select id="evtco-hold" className="input mt-1 w-full" value={hold} onChange={e => setHold(Number(e.target.value) as Hold)}>
             <option value={5}>5 years</option>
             <option value={8}>8 years</option>
             <option value={10}>10 years</option>
@@ -208,8 +209,9 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">EV price (MSRP, less options)</label>
+          <label htmlFor="evtco-ev-price" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">EV price (MSRP, less options)</label>
           <input
+            id="evtco-ev-price"
             type="number" min={15000} max={150000} step={500} value={evPrice}
             onChange={e => setEvPrice(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -217,8 +219,9 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Equivalent gas vehicle price</label>
+          <label htmlFor="evtco-gas-price" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Equivalent gas vehicle price</label>
           <input
+            id="evtco-gas-price"
             type="number" min={15000} max={150000} step={500} value={gasPrice}
             onChange={e => setGasPrice(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -226,8 +229,9 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual miles</label>
+          <label htmlFor="evtco-miles" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Annual miles</label>
           <input
+            id="evtco-miles"
             type="number" min={1000} max={40000} step={500} value={miles}
             onChange={e => setMiles(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -235,8 +239,9 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Gas price ($/gal)</label>
+          <label htmlFor="evtco-gas-gal-price" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Gas price ($/gal)</label>
           <input
+            id="evtco-gas-gal-price"
             type="number" min={2.0} max={7.0} step={0.05} value={gasGalPrice}
             onChange={e => setGasGalPrice(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -244,23 +249,23 @@ export default function EvTcoCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">New or used</label>
-          <select className="input mt-1 w-full" value={newOrUsed} onChange={e => setNewOrUsed(e.target.value as NewUsed)}>
+          <label htmlFor="evtco-new-used" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">New or used</label>
+          <select id="evtco-new-used" className="input mt-1 w-full" value={newOrUsed} onChange={e => setNewOrUsed(e.target.value as NewUsed)}>
             <option value="new">New ($7,500 federal credit if eligible &amp; pre-2025-09-30)</option>
             <option value="used">Used (30% × price, max $4,000, if pre-2025-09-30)</option>
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Acquisition date</label>
-          <input type="date" className="input mt-1 w-full" value={acquisitionDate}
+          <label htmlFor="evtco-acquisition-date" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Acquisition date</label>
+          <input id="evtco-acquisition-date" type="date" className="input mt-1 w-full" value={acquisitionDate}
             onChange={e => setAcquisitionDate(e.target.value)} />
           <p className="mt-1 text-[11px] text-ink-600">30D + 25E credits ended for vehicles acquired after 2025-09-30 (OBBBA).</p>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Federal credit eligibility?</label>
-          <select className="input mt-1 w-full" value={credEligible} onChange={e => setCredEligible(e.target.value as CreditEligible)}>
+          <label htmlFor="evtco-cred-eligible" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Federal credit eligibility?</label>
+          <select id="evtco-cred-eligible" className="input mt-1 w-full" value={credEligible} onChange={e => setCredEligible(e.target.value as CreditEligible)}>
             <option value="unknown">Unknown</option>
             <option value="yes">Yes — meets sourcing + income + MSRP caps</option>
             <option value="no">No — exceeds caps or non-qualifying model</option>

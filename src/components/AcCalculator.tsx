@@ -79,8 +79,9 @@ export default function AcCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <label htmlFor="ac-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
           <input
+            id="ac-zip"
             type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 30303"
@@ -90,15 +91,16 @@ export default function AcCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="ac-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="ac-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
+          <label htmlFor="ac-sqft" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Home size (sqft)</label>
           <input
+            id="ac-sqft"
             type="number" min={500} max={6000} step={50} value={sqft}
             onChange={e => setSqft(Number(e.target.value) || 0)}
             className="input mt-1 w-full"
@@ -106,10 +108,10 @@ export default function AcCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
+          <label htmlFor="ac-tonnage" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">
             System size · recommended: <span className="text-brand-700">{recommendedTon} ton</span>
           </label>
-          <select className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
+          <select id="ac-tonnage" className="input mt-1 w-full" value={tonnage} onChange={e => setTonnage(e.target.value as Tonnage)}>
             {TONNAGE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           {tonMisfit && (
@@ -120,22 +122,22 @@ export default function AcCalculator() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Efficiency tier</label>
-          <select className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
+          <label htmlFor="ac-tier" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Efficiency tier</label>
+          <select id="ac-tier" className="input mt-1 w-full" value={tier} onChange={e => setTier(e.target.value as Tier)}>
             {EFFICIENCY_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ductwork</label>
-          <select className="input mt-1 w-full" value={ducts} onChange={e => setDucts(e.target.value as DuctState)}>
+          <label htmlFor="ac-ducts" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Ductwork</label>
+          <select id="ac-ducts" className="input mt-1 w-full" value={ducts} onChange={e => setDucts(e.target.value as DuctState)}>
             {DUCT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Bundle furnace?</label>
-          <select className="input mt-1 w-full" value={furnaceBundle} onChange={e => setFurnaceBundle(e.target.value as FurnaceBundle)}>
+          <label htmlFor="ac-furnace" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Bundle furnace?</label>
+          <select id="ac-furnace" className="input mt-1 w-full" value={furnaceBundle} onChange={e => setFurnaceBundle(e.target.value as FurnaceBundle)}>
             {FURNACE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>

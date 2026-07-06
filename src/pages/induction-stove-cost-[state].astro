@@ -36,7 +36,8 @@ const gasPrice = energy?.natural_gas_dollars_per_therm ?? 0;
 const oilPrice = energy?.heating_oil_dollars_per_gallon ?? 0;
 const propanePrice = energy?.propane_dollars_per_gallon ?? 0;
 
-const description = `Induction range, cooktop & 240V circuit installed cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ${stateRebates.length} rebate programs (incl. DOE HEEHRA).`;
+const rebateWord = stateRebates.length === 1 ? 'program' : 'programs';
+const description = `Induction range, cooktop & 240V circuit installed cost in ${stateName}: state electrician labor ${labor?.electrician_multiplier?.toFixed(2) ?? 'n/a'}×, ${stateRebates.length} rebate ${rebateWord} (incl. DOE HEEHRA).`;
 
 const faq = [
   {

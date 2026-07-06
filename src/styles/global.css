@@ -16,6 +16,13 @@
   html {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    /* Guard against sub-pixel horizontal overflow from full-bleed helpers
+       (.section-shelf::before uses margin-inline: calc(50% - 50vw); 100vw
+       includes the scrollbar gutter, overhanging ~8px on classic-scrollbar
+       browsers). Applied to the scroll container (html) so it actually clips.
+       `clip` (not `hidden`) does not create a scroll container, so `position:
+       sticky` and smooth scrolling still work. */
+    overflow-x: clip;
   }
   body {
     @apply bg-white text-ink-800 antialiased;
@@ -423,7 +430,7 @@
 .mc-surprises{margin:6px 20px 0;padding:16px 0 0;border-top:1px solid #f1f5f9}
 .mc-switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
 .mc-switch input{position:absolute;opacity:0;width:0;height:0}
-.mc-switch-track{width:40px;height:23px;border-radius:999px;background:#cbd5e1;border:1px solid #94a3b8;position:relative;transition:background .18s;flex:0 0 auto}
+.mc-switch-track{width:40px;height:23px;border-radius:999px;background:#cbd5e1;border:1px solid #64748b;position:relative;transition:background .18s;flex:0 0 auto}
 .mc-switch-thumb{position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.22);transition:transform .18s}
 .mc-switch input:checked + .mc-switch-track{background:#047857;border-color:#047857}
 .mc-switch input:checked + .mc-switch-track .mc-switch-thumb{transform:translateX(17px)}
@@ -470,7 +477,7 @@
 .sim-card.is-custom{border-color:#a7f3d0;background:#f0fdf9}
 .sim-card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .sim-card-name{font-size:13.5px;font-weight:700;color:#0f172a;min-width:0}
-.sim-card-badge{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#64748b;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:2px 7px;line-height:1.2}
+.sim-card-badge{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:#475569;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:2px 7px;line-height:1.2}
 .sim-card-badge.is-custom{color:#047857;background:#ecfdf5;border-color:#a7f3d0}
 .sim-card-loc{font-size:10.5px;font-weight:600;color:#0369a1;background:#e0f2fe;border-radius:6px;padding:2px 7px;line-height:1.2}
 .sim-card-band{margin-left:auto;font-size:12.5px;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -527,7 +534,7 @@
 .sim-row-link:hover,.sim-row-link:focus-visible{color:#047857;background:#d1fae5}
 /* Action line: band pinned left, Add + calculator link pushed right. */
 .sim-row-ctl{display:flex;align-items:center;gap:8px}
-.sim-row-band{display:block;font-size:11.5px;color:#64748b;font-variant-numeric:tabular-nums;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sim-row-band{display:block;font-size:11.5px;color:#475569;font-variant-numeric:tabular-nums;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sim-row-add{margin-left:auto}
 /* result column */
 .sim-result{min-width:0}

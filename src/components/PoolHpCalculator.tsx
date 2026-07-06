@@ -70,38 +70,38 @@ export default function PoolHpCalculator() {
     <div className="card overflow-hidden">
       <div className="grid gap-5 p-5 md:grid-cols-2 md:p-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
-          <input type="text" inputMode="numeric" maxLength={5} value={zip}
+          <label htmlFor="pool-zip" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">ZIP code</label>
+          <input id="pool-zip" type="text" inputMode="numeric" maxLength={5} value={zip}
             onChange={e => setZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
             placeholder="e.g., 33101" className="input mt-1 w-full" />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
-          <select className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
+          <label htmlFor="pool-state" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">State</label>
+          <select id="pool-state" className="input mt-1 w-full" value={state} onChange={e => setState(e.target.value)}>
             {ALL_STATES.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Pool gallons</label>
-          <select className="input mt-1 w-full" value={gallons} onChange={e => setGallons(e.target.value as PoolGallons)}>
+          <label htmlFor="pool-gallons" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Pool gallons</label>
+          <select id="pool-gallons" className="input mt-1 w-full" value={gallons} onChange={e => setGallons(e.target.value as PoolGallons)}>
             {GALLONS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Heat pump size</label>
-          <select className="input mt-1 w-full" value={size} onChange={e => setSize(e.target.value as Size)}>
+          <label htmlFor="pool-size" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Heat pump size</label>
+          <select id="pool-size" className="input mt-1 w-full" value={size} onChange={e => setSize(e.target.value as Size)}>
             {SIZE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Climate</label>
-          <select className="input mt-1 w-full" value={climate} onChange={e => setClimate(e.target.value as Climate)}>
+          <label htmlFor="pool-climate" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Climate</label>
+          <select id="pool-climate" className="input mt-1 w-full" value={climate} onChange={e => setClimate(e.target.value as Climate)}>
             {CLIMATE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Need new 240V/50A circuit?</label>
-          <select className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as Circuit)}>
+          <label htmlFor="pool-needs-circuit" className="block text-xs font-semibold uppercase tracking-wide text-ink-700">Need new 240V/50A circuit?</label>
+          <select id="pool-needs-circuit" className="input mt-1 w-full" value={needsCircuit} onChange={e => setNeedsCircuit(e.target.value as Circuit)}>
             {CIRCUIT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
         </div>
