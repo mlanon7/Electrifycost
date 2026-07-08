@@ -19,7 +19,7 @@ The sister-site session handed off its 2026-07-04 simulator overhaul (`HANDOFF_F
 - **Governance + CI.** Explicit status enums enforced in `validate-csvs.cjs` (zero drift); CI now runs the full 9-stage `npm test` + `tsc --noEmit` (it previously ran 4 stages and no type check). Mobile money-table audit at 375px found all tables already on the overflow-wrapper pattern; the new report table folds columns instead of side-scrolling.
 
 ### Shipped (2026-06-27) — product audit: build the decision on-ramp
-An honest product/UX/growth audit (`audit/PRODUCT_AUDIT_2026-06-27.md`, 6 agents incl. an adversarial lens) found the site's single necessary shortcoming: it only answered "what will THIS install cost" — the question homeowners ask *last* — with no on-ramp for the much larger undecided audience. That gap, not domain age, is the root of the discovery problem. Built the missing front door, fully inside the no-funnel stance:
+An honest product/UX/growth audit (`audit/archive/PRODUCT_AUDIT_2026-06-27.md`, 6 agents incl. an adversarial lens) found the site's single necessary shortcoming: it only answered "what will THIS install cost" — the question homeowners ask *last* — with no on-ramp for the much larger undecided audience. That gap, not domain age, is the root of the discovery problem. Built the missing front door, fully inside the no-funnel stance:
 - **`/guides/should-i-electrify/`** — orientation hub routing undecided visitors to the right tool by situation, the money-saving order, and the 2026 incentive reality.
 - **`/guides/is-a-heat-pump-worth-it/`** — decision-framed guide targeting the high-demand "is it worth it" query (operating-cost math by fuel, premium after rebates, climate limits, honest worth-it/closer-call cases); ends in the calculator.
 - **`/guides/hiring-a-contractor/`** — how to vet a contractor & compare bids; linked from every flagship result panel.
@@ -29,7 +29,7 @@ An honest product/UX/growth audit (`audit/PRODUCT_AUDIT_2026-06-27.md`, 6 agents
 - Site totals: 698 → **701 built pages**, 697 → **700 sitemap URLs**.
 
 ### Shipped (2026-06-25) — full-audit remediation (Claude audit, waves 1-4)
-A second, independent multi-agent audit (`audit/FULL_AUDIT_CLAUDE_2026-06-25.md`, 18 agents, every P0/P1 adversarially re-verified) confirmed the site ship-clean (no P0 defects) and surfaced one P1 plus governance/polish P2s. Fixed:
+A second, independent multi-agent audit (`audit/archive/FULL_AUDIT_CLAUDE_2026-06-25.md`, 18 agents, every P0/P1 adversarially re-verified) confirmed the site ship-clean (no P0 defects) and surfaced one P1 plus governance/polish P2s. Fixed:
 - **P1 — panel-FAQ single-source-of-truth.** `electrical-panel-upgrade-cost-[state]` FAQ hardcoded `$1800/$4500 × labor` and disagreed with the on-page calculator; it now computes the default range from the shared engine (`runCalculator`). FAQ == calculator (CA $1,850-$5,925, TX $1,550-$5,075).
 - **Conversion tracking on all 32 bespoke calculators.** New `useCalculatorUsed` hook (`src/lib/track.ts`) fires `calculator_used` from every calculator island, not just the 5 flagships — affiliate/Mediavine attribution now covers the full product.
 - **`source_id` on the last two un-attributed CSVs** (`rebate-programs.csv`, `home-energy-rebate-status.csv`); every numeric-input CSV now carries resolvable source attribution.
@@ -64,7 +64,7 @@ A second, independent multi-agent audit (`audit/FULL_AUDIT_CLAUDE_2026-06-25.md`
 - **Set up `martin@electrifycost.com`** on ImprovMX (forwarding in, Gmail "send as" relaying out via `smtp.improvmx.com`). Hardened with the full auth stack: SPF (existing), **DKIM** (two `dkimprovmx{1,2}._domainkey` CNAMEs), and **DMARC** (`_dmarc` TXT, `p=none` monitoring). Verified **10/10 on mail-tester.com** ("properly authenticated"). All records managed in Vercel DNS. Documented in `INFRASTRUCTURE.md`; setup gotchas in `.claude/lessons/09-email-auth-dmarc-dkim.md`. Pending: tighten DMARC `p=none` → `p=quarantine` ~2026-07-05. Not a code change — recorded here for traceability.
 
 ### Shipped (2026-05-27 → 2026-06-14) — data-driven audit + build sprint
-- **Audit 2026-05-27 (`20fda58`).** Closed P0 (wrong 30D credit date in ev-tco guide) + 12 P1 + 13 P2 + 3 Ahrefs items. New `/privacy/` and `/terms/` pages (unblock ad-network applications) + Footer "Legal" column; `vercel.json` HTML Cache-Control now matches clean URLs; `BreadcrumbList` on all 6 `[state]` templates (357 pages) + `/rebates/`; `WebApplication` schema on sqft/tonnage/brand pages; hero "planning range" disclaimer on state pages; site-wide `text-ink-500 → ink-600` (WCAG AA contrast); `:focus-visible` ring + cookie-banner/hamburger 44×44 touch targets; `*.csv?raw` declaration in `env.d.ts` (tsc baseline 51 errors → 0); CA `hvac_multiplier` 1.38 → 1.45. Full doc: `audit/AUDIT_2026-05-27.md`.
+- **Audit 2026-05-27 (`20fda58`).** Closed P0 (wrong 30D credit date in ev-tco guide) + 12 P1 + 13 P2 + 3 Ahrefs items. New `/privacy/` and `/terms/` pages (unblock ad-network applications) + Footer "Legal" column; `vercel.json` HTML Cache-Control now matches clean URLs; `BreadcrumbList` on all 6 `[state]` templates (357 pages) + `/rebates/`; `WebApplication` schema on sqft/tonnage/brand pages; hero "planning range" disclaimer on state pages; site-wide `text-ink-500 → ink-600` (WCAG AA contrast); `:focus-visible` ring + cookie-banner/hamburger 44×44 touch targets; `*.csv?raw` declaration in `env.d.ts` (tsc baseline 51 errors → 0); CA `hvac_multiplier` 1.38 → 1.45. Full doc: `audit/archive/AUDIT_2026-05-27.md`.
 - **Brand deepening + replacement page (`13ea0ab`).** GSC showed brand pages are the best performers (Bosch pos 10.6). Deepened all 22 `[brand]-*` pages 4 → 8 FAQs with inline primary-source URLs (IRS/DOE/ENERGY STAR/NEEP/AFDC/CPUC/DSIRE). New `/heat-pump-replacement-cost/` page targets the pos-28 "heat pump replacement" gap.
 - **Water-heater state pages (`e2f59e2`).** 51 `water-heater-installation-cost-[state]` pages + by-state hub, targeting the GSC water-heater demand cluster (#2 by impressions). `TankWaterHeaterCalculator` gains the `initialState` prop (state-programmatic convention).
 - **P2/P3 backlog (`6e38723`).** CWV measured (Lighthouse: home 87/96/96/100, calc 93/94/96/100 — passes Mediavine targets); logo PNG 58KB → 19KB; `source_id`+`last_reviewed` added to the last 7 CSVs (all 51 now carry provenance); named studies cited (LBNL Aeroseal, Nest white paper); internal links into geothermal + battery-vs-generator; ResultPanel row toggle made keyboard-accessible (`<button>` + `aria-expanded`); dingbat/emoji policy codified in `STYLEGUIDE.md`; sitemap priority 0.7 for brand/tonnage/replacement/hub pages; `AffiliateModule` `kind` union trimmed to placed kinds.
@@ -77,7 +77,7 @@ A second, independent multi-agent audit (`audit/FULL_AUDIT_CLAUDE_2026-06-25.md`
 - **Sump-pump battery-backup intent strengthened** on the existing position-15 page (added 3 exact-intent FAQ on backup cost / runtime / selection) rather than creating a competing `/sump-pump-battery-backup-cost/` URL that would cannibalize the ranking.
 
 ### Planned
-- Keyword Tier 3 (audit/KEYWORD_OPPORTUNITIES_2026-05.md): replace-furnace-with-heat-pump, dual-fuel, generic heating-cost calculator, AC-by-tonnage
+- Keyword Tier 3 (audit/archive/KEYWORD_OPPORTUNITIES_2026-05.md): replace-furnace-with-heat-pump, dual-fuel, generic heating-cost calculator, AC-by-tonnage
 - Inline SVG diagrams for the 32 non-Template-A guides (per-topic design work)
 - Custom callout cards on non-flagship guides ("red flags", "key insight", "bid-padding tactics")
 - Per-module CSV chunking refactor to drop the 104 KB shared `?raw` bundle
@@ -91,7 +91,7 @@ Tier 1 (size) is GSC-proven (the export had tonnage/operating-cost queries).
 Tier 2 (brand) is a **strategic bet, NOT GSC-proven** — the export had no brand
 queries (site was days old with no brand pages to surface). Validate brand-page
 performance with Ahrefs + post-launch GSC, not as GSC-driven the way Tier 1 is.
-See audit/KEYWORD_OPPORTUNITIES_2026-05.md.
+See audit/archive/KEYWORD_OPPORTUNITIES_2026-05.md.
 
 ### Added — Tier 2 brand pages (22 pages)
 - `data/csv/brand-profiles.csv` — 22 brand rows (category, brand, slug, tier, positioning, models, price_note)

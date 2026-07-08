@@ -351,20 +351,18 @@ These violate the brand position and would be flagged. If the user asks to add o
 
 ## Audit history (in repo, at `/audit/`)
 
-- `AUDIT.md` — initial deep audit identifying truncated source files (Pass 1)
-- `AUDIT_v2.md` — Pass 2 with CSV refactor and federal-credit date update
-- `DEEP_AUDIT_2026-05-13.md` — Pass 3 with calculation-accuracy industry cross-check (solar $/W rebase, geothermal restructure, Mass Save cap update)
-- `UX_REFINEMENT_2026-05-13.md` — UX-focused refinement pass (palette, breadcrumbs, result panel redesign)
-- `AUDIT_CLAUDE_2026-05-14.md` — Pass 4 with federal-credit IRS cross-check + 24-mo revenue projection
-- `CHANGES_*.md` — per-pass change logs
+The `audit/` folder holds every deep-audit report, chronologically. **`audit/README.md` is the index** — read it first; it lists what each report covered and which findings shipped. Current (July 2026) reports sit at `audit/` top; everything older was superseded and lives in **`audit/archive/`** (nothing deleted — history preserved).
 
-When working on a task, read the most-recent audit for context. When closing a task, append findings to the next-up CHANGES log (or create one).
+- **Current:** `FULL_AUDIT_2026-07-05.md` (+ `.log`) — second full-site deep audit; `FULL_AUDIT_2026-07-04.md` (+ `.log`) — first full-site deep audit + Simulator v2 port verification.
+- **Archived (`audit/archive/`):** `PRODUCT_AUDIT_2026-06-27.md`, `FULL_AUDIT_CLAUDE_2026-06-25.md`, `AUDIT_2026-05-27.md`, `AUDIT_CLAUDE_2026-05-14.md` (Pass 4), `DEEP_AUDIT_2026-05-13.md` (Pass 3) + `UX_REFINEMENT_2026-05-13.md` + `ATTACK_PLAN_2026-05-13.md`, `AUDIT_v2.md` (Pass 2), `AUDIT.md` (Pass 1), the `CHANGES_*.md` per-pass change logs, and `KEYWORD_OPPORTUNITIES_2026-05.md` (keyword backlog; Tier 3 still pending).
+
+When working on a task, read the most-recent audit (or `audit/README.md`) for context. When closing an audit task, add a new dated report at `audit/` top and note it in `audit/README.md`.
 
 ---
 
 ## Recent commits worth knowing about
 
-Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-driven audit + build sprint; see `audit/AUDIT_2026-05-27.md` for the audit doc, `INFRASTRUCTURE.md` for the email/DNS work, and `CHANGELOG.md` for the full per-release log.
+Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-driven audit + build sprint; see `audit/archive/AUDIT_2026-05-27.md` for the audit doc, `INFRASTRUCTURE.md` for the email/DNS work, and `CHANGELOG.md` for the full per-release log.
 
 | SHA | Summary |
 |---|---|
@@ -393,7 +391,7 @@ Most recent first. The 2026-05-27 → 2026-06-14 cycle (top block) was a data-dr
 | `973a426` | Pass 5: About page + 215 new programmatic pages + state-default bug fix |
 | `9b9c318` | Pass 4 audit fixes (EV regression, panel CA, per-amp pages, self-host fonts) |
 
-Keyword strategy + opportunity backlog: `audit/KEYWORD_OPPORTUNITIES_2026-05.md` (Tier 1+2 shipped; Tier 3 pending).
+Keyword strategy + opportunity backlog: `audit/archive/KEYWORD_OPPORTUNITIES_2026-05.md` (Tier 1+2 shipped; Tier 3 pending).
 
 Operational (non-code) facts — domain, DNS, hosting, **email (ImprovMX + SPF/DKIM/DMARC)**, analytics: `INFRASTRUCTURE.md`. Email-auth setup gotchas: `.claude/lessons/09-email-auth-dmarc-dkim.md`.
 

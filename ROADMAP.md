@@ -29,7 +29,7 @@ Items here are loosely ordered by priority (top = sooner). When something ships,
 - **HackerNews "Show HN" launch post.** One-shot, big traffic + backlink potential. Kit is drafted at `.claude/prompts/hackernews-launch.md`. The "no-funnel, source-cited, OBBBA-current" angle has genuine HN appeal.
 - **Newsletter outreach.** Email ~30 climate / electrification newsletters and blogs (Canary Media, Heatmap, Volts, Distilled, The Cool Down, Electrify This). "Free source-backed calculator, no funnel, would your readers find this useful?" Expect 1–3% reply rate; each yes is a high-DA backlink.
 - **Manually request indexing in GSC** on the highest-value new pages after each batch (see `CLAUDE.md` § "When indexing fails").
-- **Use the connected Ahrefs MCP** for keyword volume/difficulty + rank tracking now that real data is available — cross-reference against `audit/KEYWORD_OPPORTUNITIES_2026-05.md`.
+- **Use the connected Ahrefs MCP** for keyword volume/difficulty + rank tracking now that real data is available — cross-reference against `audit/archive/KEYWORD_OPPORTUNITIES_2026-05.md`.
 
 ### Keyword expansion — Tier 3 (Tier 1 + 2 SHIPPED 2026-05-19)
 
