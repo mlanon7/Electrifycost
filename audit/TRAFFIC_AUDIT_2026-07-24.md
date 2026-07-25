@@ -117,6 +117,17 @@ site-level quality systems demote, and Bing is considerably more aggressive abou
 The **hard cutoff on July 2** (rather than a gradual slide) is characteristic of a classifier
 threshold being crossed, not of ranking decay.
 
+**Decisive corroboration — re-submission has already been tried and failed.** Bing's URL Submission
+history shows **15 URLs submitted on 03 Jul 2026 at 19:18** — the day *after* the cutoff — covering
+the homepage, the flagship calculators, `/rebates/`, `/guides/` and the key guide pages. Twenty-one
+days later, impressions are still exactly 0 and Site Explorer still returns "No pages found".
+
+This matters because it removes the last benign explanation. If the July 2 zero were a crawl,
+discovery, or indexing-signal problem, a manual submission of the site's most important URLs would
+have restored *something* within three weeks. It restored nothing. Whatever is suppressing the site
+operates **downstream of crawling and indexing** — which is precisely what a site-level quality or
+authority judgement looks like, and precisely what submission mechanics cannot fix.
+
 **Honest confidence statement:** this cannot be *proven* from outside. Bing publishes no
 "manual action" notice, so there is no UI that will ever confirm a demotion. But it is the only
 hypothesis left standing after the elimination pass above, and two independent engines are
@@ -213,11 +224,13 @@ nothing is broken. Work the re-inclusion path in this order:
 1. ~~**Fix the `307` → `308` redirect**~~ — **DONE 2026-07-24.** `www.electrifycost.com` added to
    the Vercel project as a **308 Permanent** redirect to the apex; verified live, apex unaffected.
    See §3.3 (including the apex-to-www default that must stay unchecked).
-2. **Re-run IndexNow** — `node scripts/indexnow-submit.cjs`. Nothing has been pushed since **June 29**;
-   this re-invites a crawl of all 700 URLs.
-3. **URL Submission** (BWT, 10/day quota) for the ten highest-value pages — homepage, the five
-   flagship calculators, `/heat-pump-replacement-cost/`, `/rebates/`, `/guides/`, `/about/`. This is
-   the strongest direct re-inclusion signal Bing offers.
+2. ~~**Re-run IndexNow**~~ — **DONE 2026-07-24.** `node scripts/indexnow-submit.cjs` → **HTTP 200 OK**,
+   700 URLs. Confirmed in BWT (IndexNow report: submissions logged today, source "Self"). Nothing had
+   been pushed since June 29. *Do not repeat* — re-submitting the full sitemap on a loop can trip
+   IndexNow's 429 spam throttle.
+3. ~~**URL Submission**~~ — **DONE 2026-07-24.** Ten highest-value pages submitted (quota is **100/day**,
+   not 10). **But see §3.2: this had already been done on July 3 and achieved nothing in 21 days.**
+   Repeating it is cheap and completes the due-diligence trail, but it should not be expected to work.
 4. **Read the Site Scan results** (queued 2026-07-24, emailed to `mkml.inc@gmail.com`) and clear
    anything it flags.
 5. **Re-check Site Explorer in ~7–14 days.** If it is still empty after the above, open a Bing
