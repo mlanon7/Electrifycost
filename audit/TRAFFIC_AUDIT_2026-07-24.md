@@ -82,13 +82,60 @@ noisy. Something switched off. **But every fault hypothesis is ruled out:**
 - Homepage URL inspection: **"Indexed successfully — URL can appear on Bing"**, *no SEO/GEO issues*.
 - Bingbot is not blocked (200 on a live fetch with the bingbot UA); robots.txt allows all.
 
-The one contradicting signal: **Site Explorer returns "No pages found"** for the property, which is
-consistent with Bing having dropped the *interior* pages from its serving index while retaining the
-homepage. Unresolved — this is the single item worth active follow-up (see actions).
+### §3.1 — Elimination pass (every site-side and config-side hypothesis tested)
 
-Note: two sitemap entries are registered (`electrifycost.com` and `www.electrifycost.com`). Host
-handling itself is correct — `www` → apex (307), `http` → `https` (308), and every canonical points
-to the apex — so this is not duplicate content, but the `http://www` path takes two hops.
+| Hypothesis | Test | Result |
+|---|---|---|
+| robots.txt blocks Bing | Live fetch | `Allow: /`, sitemap declared — **clean** |
+| `noindex` / `X-Robots-Tag` | Live fetch, 3 URLs | None present — **clean** |
+| Bingbot served a challenge or error | Fetch with bingbot UA, **content-level** | 200 + real HTML (66–78 KB), correct titles, 0 CAPTCHA markers — **clean** |
+| A **Block URLs** rule in BWT | Configuration → Block URLs | "No pages found" — **no rules** |
+| **Crawl Control** throttled | Configuration → Crawl Control | **Default**, normal rate across all 24 h — **clean** |
+| Sitemap rejected | BWT → Sitemaps | **Crawled Jul 22, 700 URLs, Success, 0 errors / 0 warnings** |
+| Homepage deindexed | URL Inspection | **"Indexed successfully — URL can appear on Bing"**, no SEO/GEO issues |
+| Traffic migrated to the **www** property | Opened the `www` property separately | **Identical data** (28 clicks / 1.2K impressions, same Jul 2 cliff) — did not migrate |
+| IndexNow broken | BWT → IndexNow | 791 URLs accepted; **nothing submitted since Jun 29** (cause of nothing, but worth restarting) |
+| Site down / slow | Live probe | 200 from Vercel, 0.32 s |
+
+**Every mechanical explanation is eliminated.** Bing is crawling the site happily and serving none of it.
+
+### §3.2 — What the remaining evidence points to
+
+Three independent signals converge:
+
+1. **Bing's Site Explorer is empty** — its own index view of the site shows no pages, while the
+   homepage alone still inspects as indexed.
+2. **Bing's unprompted #1 recommendation:** *"Your site does not have enough inbound links from high
+   quality domains."* Backlinks report: **2 referring domains** total.
+3. **Google says the same thing more softly:** **317 pages "Discovered – currently not indexed"** and
+   74 "Crawled – currently not indexed" — Google read the sitemap and declined to index most of it.
+
+The site has **~700 pages, of which roughly 580 are programmatic template variations** (357 state ×
+7 modules, 200 city, 22 brand), supported by **2 inbound domains**. That ratio — very large
+template-generated footprint, near-zero external authority — is the classic profile Bing's
+site-level quality systems demote, and Bing is considerably more aggressive about it than Google.
+The **hard cutoff on July 2** (rather than a gradual slide) is characteristic of a classifier
+threshold being crossed, not of ranking decay.
+
+**Honest confidence statement:** this cannot be *proven* from outside. Bing publishes no
+"manual action" notice, so there is no UI that will ever confirm a demotion. But it is the only
+hypothesis left standing after the elimination pass above, and two independent engines are
+signalling the same underlying judgement about the same page set.
+
+A Bing **Site Scan** was queued on 2026-07-24 (500-page scope; results emailed) to close out the
+remaining technical unknowns from Bing's own crawler perspective.
+
+### §3.3 — One real defect found along the way
+
+**`www` → apex returns `307 Temporary Redirect`.** It should be **308 (or 301) Permanent**. A 307
+explicitly tells a search engine "the source URL is still the right one, this is temporary," which
+works against host-signal consolidation — and Bing is notably literal about redirect semantics.
+`vercel.json` contains **no `redirects` block**, so this is coming from the Vercel dashboard's domain
+configuration (Vercel's default is a temporary redirect). Additionally `http://www.electrifycost.com/`
+takes **two hops** to reach the canonical apex.
+
+This is unlikely to be the whole cause of a hard zero, but it is a genuine, cheap fix and it is the
+only technical defect in the entire crawl path.
 
 ## §4 — The uncomfortable finding: most "traffic" is not human
 
@@ -139,10 +186,26 @@ and for a YMYL-adjacent cost query that requires external authority. The `ROADMA
 `.claude/prompts/hackernews-launch.md`, genuine Reddit participation) are the correct levers and are
 now the *only* ones that matter. Everything else is downstream.
 
-**P1 — Resolve the Bing zero.** The sitemap is being read and the homepage is indexed, yet Site
-Explorer is empty and impressions are exactly 0 for 21 days. Re-run `node scripts/indexnow-submit.cjs`
-to re-ping the 700 URLs, then re-check Site Explorer in ~7 days. If it stays empty, this is worth
-raising with Bing support — the data does not match any site-side fault.
+**P1 — The Bing recovery sequence.** There is no switch to flip; the elimination pass in §3.1 proves
+nothing is broken. Work the re-inclusion path in this order:
+
+1. **Fix the `307` → `308` redirect** (§3.3). Vercel → Project → Settings → Domains →
+   `www.electrifycost.com` → set the redirect to **Permanent (308)**. Cheap, correct, and the only
+   technical defect in the crawl path.
+2. **Re-run IndexNow** — `node scripts/indexnow-submit.cjs`. Nothing has been pushed since **June 29**;
+   this re-invites a crawl of all 700 URLs.
+3. **URL Submission** (BWT, 10/day quota) for the ten highest-value pages — homepage, the five
+   flagship calculators, `/heat-pump-replacement-cost/`, `/rebates/`, `/guides/`, `/about/`. This is
+   the strongest direct re-inclusion signal Bing offers.
+4. **Read the Site Scan results** (queued 2026-07-24, emailed to `mkml.inc@gmail.com`) and clear
+   anything it flags.
+5. **Re-check Site Explorer in ~7–14 days.** If it is still empty after the above, open a Bing
+   Webmaster support ticket through BWT feedback — at that point the data genuinely does not match
+   any site-side fault and only Bing can explain it.
+
+**Set expectations honestly:** steps 1–4 make the site easy to re-include, but if this is a
+site-level quality judgement (§3.2), re-inclusion follows the authority and content-ratio work
+below, not the submission mechanics. Bing recovery on this profile is typically weeks, not days.
 
 **P2 — Stop reading Ahrefs Web Analytics as a traffic number.** It is ~86% bot/direct noise.
 GA4 is already wired with Consent Mode v2; use **GA4 as the human-traffic source of truth** and treat
@@ -153,10 +216,20 @@ traction — `heat pump replacement cost` (11 impressions), `heat pump water hea
 `tesla 240v outlet installation cost` (5). These are far more winnable than `heat pump cost` (285
 impressions, position ~50). Deepen the pages that already surface for them.
 
+**P2 — Confront the page-count-to-authority ratio.** This is the uncomfortable one, and it cuts
+against the programmatic-SEO strategy in `CLAUDE.md`. Roughly **580 of 700 pages are template
+variations**, supported by **2 inbound domains**. Both engines are independently rejecting that set:
+Bing's index view of the site is empty, and Google has **317 pages "Discovered – currently not
+indexed"** plus 74 "Crawled – currently not indexed". Publishing more programmatic pages against
+this authority base is very unlikely to help and may actively hurt the site's quality ratio.
+
+Worth considering: consolidate the **200 city pages** — the thinnest cluster, where a city page adds
+little over its state page — into a smaller number of genuinely differentiated pages, and hold the
+state/brand clusters. Fewer, stronger pages is the standard remedy for exactly this signal pattern.
+This is a strategy decision, not a bug fix, so it is flagged rather than actioned.
+
 **P3 — Monitor the scraper backlinks.** 392 Ahrefs referring domains against DR 2 and 2 Bing-visible
 domains. Not currently harmful; worth a monthly glance for a genuine spam attack.
-
-**P3 — Trim the `http://www` redirect chain** (two hops to reach the canonical apex).
 
 ---
 
