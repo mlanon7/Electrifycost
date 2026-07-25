@@ -125,17 +125,38 @@ signalling the same underlying judgement about the same page set.
 A Bing **Site Scan** was queued on 2026-07-24 (500-page scope; results emailed) to close out the
 remaining technical unknowns from Bing's own crawler perspective.
 
-### §3.3 — One real defect found along the way
+### §3.3 — One real defect found along the way — **FIXED 2026-07-24**
 
-**`www` → apex returns `307 Temporary Redirect`.** It should be **308 (or 301) Permanent**. A 307
-explicitly tells a search engine "the source URL is still the right one, this is temporary," which
-works against host-signal consolidation — and Bing is notably literal about redirect semantics.
-`vercel.json` contains **no `redirects` block**, so this is coming from the Vercel dashboard's domain
-configuration (Vercel's default is a temporary redirect). Additionally `http://www.electrifycost.com/`
-takes **two hops** to reach the canonical apex.
+**`www` → apex returned `307 Temporary Redirect`.** A 307 explicitly tells a search engine "the
+source URL is still the right one, this is temporary," which works against host-signal
+consolidation — and Bing is notably literal about redirect semantics.
 
-This is unlikely to be the whole cause of a hard zero, but it is a genuine, cheap fix and it is the
-only technical defect in the entire crawl path.
+**Root cause was not what it first appeared.** `vercel.json` has no `redirects` block, *and*
+`www.electrifycost.com` was **not attached to the Vercel project at all** (the project held only
+`electrifycost.com` and `electrifycost.vercel.app`). The domain's DNS carries a **wildcard**
+record — `* ALIAS cname.vercel-dns-017.com` — so `www` resolved to Vercel anyway (same IPs as the
+apex, `64.29.17.1/65`), and Vercel answered an unclaimed subdomain with its **default 307**. There
+was therefore no redirect setting to "change"; the fix was to *claim* the subdomain.
+
+**Fix applied:** added `www.electrifycost.com` to the `electrifycost` project as
+**Redirect to Another Domain → 308 Permanent Redirect → electrifycost.com**.
+
+⚠️ **Trap worth recording:** Vercel's Add-Domain dialog pre-checks **"Redirect apex domains to www
+(recommended)"** by default. Accepting that default would have inverted the canonical host —
+redirecting `electrifycost.com` → `www`, against all 309 indexed pages, every canonical tag, both
+Search Console properties, and both sitemaps. It must be **unchecked** for this site.
+
+**Verified live after the change:**
+
+| Check | Before | After |
+|---|---|---|
+| `https://www/` → apex | 307 Temporary | **308 Permanent** |
+| Deep path `/heat-pump-cost-calculator/` | — | path preserved exactly |
+| `http://www/` chain | 308 → 307 → 200 | 308 → 308 → 200 (both permanent) |
+| **Apex regression check** | 200, self-canonical | **unchanged** — 200, 0 redirects, same canonical |
+
+This was never likely to be the whole cause of a hard zero, but it was the only technical defect in
+the entire crawl path, and it is now correct.
 
 ## §4 — The uncomfortable finding: most "traffic" is not human
 
@@ -189,9 +210,9 @@ now the *only* ones that matter. Everything else is downstream.
 **P1 — The Bing recovery sequence.** There is no switch to flip; the elimination pass in §3.1 proves
 nothing is broken. Work the re-inclusion path in this order:
 
-1. **Fix the `307` → `308` redirect** (§3.3). Vercel → Project → Settings → Domains →
-   `www.electrifycost.com` → set the redirect to **Permanent (308)**. Cheap, correct, and the only
-   technical defect in the crawl path.
+1. ~~**Fix the `307` → `308` redirect**~~ — **DONE 2026-07-24.** `www.electrifycost.com` added to
+   the Vercel project as a **308 Permanent** redirect to the apex; verified live, apex unaffected.
+   See §3.3 (including the apex-to-www default that must stay unchecked).
 2. **Re-run IndexNow** — `node scripts/indexnow-submit.cjs`. Nothing has been pushed since **June 29**;
    this re-invites a crawl of all 700 URLs.
 3. **URL Submission** (BWT, 10/day quota) for the ten highest-value pages — homepage, the five
