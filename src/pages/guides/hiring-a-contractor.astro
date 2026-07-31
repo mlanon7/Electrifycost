@@ -3,7 +3,7 @@ import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
 import RelatedGuides from '@/components/RelatedGuides.astro';
 
-const lastReviewed = '2026-06-27';
+const lastReviewed = '2026-07-31';
 const schemaJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -31,7 +31,7 @@ const schemaJsonLd = {
     <p class="mt-3 text-base text-ink-700">
       A planning range tells you what a job <em>should</em> cost. The next decision — who does it, and which of three quotes to trust — is where most homeowners actually lose money or get a bad install. This is the part the calculator can't do for you, so here is the playbook: the non-negotiables to verify, the questions that separate a real bid from a sales pitch, and how to compare quotes line by line. It applies to heat pumps, panel upgrades, EV chargers, water heaters, and most home-electrification work. 10-minute read.
     </p>
-    <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer. Reading a scope of work and a bid is squarely within engineering practice; defer to your licensed HVAC/electrical contractor on the trade-specific design.</p>
+    <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer, not an HVAC or electrical contractor. This is general planning guidance; licensing, contracts, permits, and payment rules vary by jurisdiction.</p>
   </section>
 
   <article class="container-tight guide-prose pb-12">
@@ -61,7 +61,7 @@ const schemaJsonLd = {
       </p>
       <ul>
         <li><strong>Run a planning estimate first</strong> (the relevant calculator on this site) so you know roughly what the work should cost in your state before anyone quotes you. A bid 2–3× the planning range deserves a hard question.</li>
-        <li><strong>Insist on a load calculation, not a rule of thumb.</strong> For HVAC, that's an <strong>ACCA Manual J</strong> for sizing (and Manual S for equipment selection, Manual D for ducts). For a panel, it's an <strong>NEC 220.83</strong> load calculation. Oversizing is the most common — and most expensive — mistake, and "we'll match what you have" is not a calculation.</li>
+        <li><strong>Insist on a load calculation, not a rule of thumb.</strong> For HVAC, that is an <strong>ACCA Manual J</strong> load calculation followed by Manual S equipment selection (and Manual D when ducts are being designed). For an existing electrical service, ask which NEC dwelling-load method the electrician used; the applicable section can vary by adopted NEC edition and project. Oversizing is a common and expensive mistake, and "we'll match what you have" is not a calculation.</li>
         <li><strong>Write down the scope yourself</strong> in one paragraph (e.g., "replace 3-ton AC + gas furnace with a cold-climate heat pump, keep furnace as dual-fuel backup, include any panel work"). Hand the same paragraph to every bidder.</li>
       </ul>
     </section>
@@ -69,9 +69,9 @@ const schemaJsonLd = {
     <section>
       <h2 id="non-negotiables">3. The three non-negotiables (verify, don't take their word)</h2>
       <ul>
-        <li><strong>License.</strong> Confirm an active contractor's license in your state and trade — most states have a free online license lookup. An unlicensed install can void equipment warranties and home-insurance claims.</li>
-        <li><strong>Insurance.</strong> Ask for a certificate of <strong>general liability and workers' compensation</strong> insurance. If an uninsured worker is hurt on your property, the liability can land on you.</li>
-        <li><strong>Permit.</strong> The contractor should pull a permit and schedule the inspection — and it should be a line on the bid. A contractor who offers to skip the permit "to save you money" is offering to skip the one independent check on their work. An unpermitted install is the most common red flag during a home sale and can cost far more to remediate later.</li>
+        <li><strong>License.</strong> Confirm any license required by your state or locality and trade using the issuing agency's lookup. Licensing rules vary. Unlicensed work can create permit, warranty, financing, resale, or insurance problems; check the equipment warranty and your policy rather than assuming a universal consequence.</li>
+        <li><strong>Insurance.</strong> Ask for current proof of <strong>general liability and workers' compensation</strong> coverage where required, and verify the certificate with the listed agent or carrier. Coverage and homeowner liability rules vary by state.</li>
+        <li><strong>Permit.</strong> Confirm with the local building department whether the job requires a permit, who will pull it, and who schedules inspection. Where a permit is required, it should appear in the written scope. Skipping required permits removes an independent code check and can complicate resale or later corrective work.</li>
       </ul>
     </section>
 
@@ -82,11 +82,11 @@ const schemaJsonLd = {
         <li>"Will you do a Manual J load calculation, and can I have a copy?" (A good contractor says yes without flinching.)</li>
         <li>"What's the cold-climate rating — the HSPF2 and the capacity at my design temperature?" (Tests whether they spec for your climate or just grab a unit.)</li>
         <li>"Are you recommending dual-fuel or a backup, and why?" (Reveals whether they've thought about your coldest days.)</li>
-        <li>"Who handles the refrigerant transition (R-32 / R-454B) and do your techs have the A2L training?"</li>
+        <li>"Which refrigerant does this model use, and are the installers trained and equipped for that manufacturer's A2L installation requirements?"</li>
       </ul>
       <p>For electrical:</p>
       <ul>
-        <li>"Did you run a 220.83 load calc, and does my existing service actually need upgrading — or would load management work?" (A panel upgrade you don't need is a common upsell.)</li>
+        <li>"Which NEC dwelling-load method did you run, and does my existing service actually need upgrading — or would listed load-management equipment work?" (A panel upgrade you don't need is a common upsell.)</li>
         <li>"Are the service-entrance conductors copper or aluminum, and is the meter base included?"</li>
         <li>"Who coordinates with the utility for the disconnect/reconnect, and is that fee in the bid?"</li>
       </ul>
@@ -151,6 +151,7 @@ const schemaJsonLd = {
     <section class="guide-sources">
       <h2 id="sources">Sources</h2>
       <ul>
+        <li><a href="https://consumer.ftc.gov/articles/how-avoid-home-improvement-scam" target="_blank" rel="noopener">FTC Consumer Advice — licenses, insurance, written estimates, contracts, and payments</a></li>
         <li><a href="https://www.energystar.gov/saveathome" target="_blank" rel="noopener">ENERGY STAR — Save at Home (HVAC quality installation &amp; home upgrades)</a></li>
         <li><a href="https://www.acca.org/standards/technical-manuals" target="_blank" rel="noopener">ACCA — Manual J / S / D residential design standards</a></li>
         <li><a href="https://web.archive.org/web/20260101013320/https://www.energy.gov/energysaver/energy-saver" target="_blank" rel="noopener">DOE Energy Saver — home efficiency &amp; equipment guidance</a></li>

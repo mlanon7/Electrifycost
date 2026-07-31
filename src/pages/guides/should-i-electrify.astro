@@ -3,7 +3,7 @@ import Layout from '@/components/Layout.astro';
 import AdSlot from '@/components/AdSlot.astro';
 import RelatedGuides from '@/components/RelatedGuides.astro';
 
-const lastReviewed = '2026-06-27';
+const lastReviewed = '2026-07-31';
 const schemaJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -68,7 +68,7 @@ const paths = [
     <p class="eyebrow">Guide · Start here</p>
     <h1 class="mt-1 text-3xl md:text-4xl">Should you electrify your home?</h1>
     <p class="mt-3 text-base text-ink-700">
-      If you've landed here unsure whether home electrification is worth it — or just unsure where to start — this is the orientation guide. The honest version is short: for most homeowners, yes, but <strong>on your replacement cycle, not all at once</strong>. Below is how to decide, where to start based on your situation, and the order that saves the most money. Every step links to a calculator that runs <em>your</em> numbers, with no email gate and no contractor funnel. 7-minute read.
+      If you've landed here unsure whether home electrification is worth it — or just unsure where to start — this is the orientation guide. The short version: for many homeowners it is worth evaluating <strong>on the normal replacement cycle, not all at once</strong>. The answer still depends on local energy prices, the condition of your current equipment, the building envelope, and available incentives. Below is how to decide where to start. Every step links to a calculator that runs <em>your</em> numbers, with no email gate and no contractor funnel. 7-minute read.
     </p>
     <p class="mt-3 text-sm text-ink-600">Last reviewed {lastReviewed} · Martin Lashgari, Ph.D., P.E., PMP — a licensed structural engineer. Planning guidance, not a bid or a load calculation.</p>
   </section>
@@ -85,7 +85,7 @@ const paths = [
     <section>
       <h2 id="the-premise">1. The honest premise</h2>
       <p>
-        "Electrify your home" sounds like a single $40,000 project. It almost never is, and treating it that way is how people talk themselves out of it. The realistic version: <strong>every time a gas or oil appliance reaches the end of its life, the electric replacement is usually the better buy</strong> — a heat pump instead of a furnace + AC, a heat pump water heater instead of a gas tank, induction instead of a gas range. Done on the replacement cycle, the marginal cost is small and the incentives do real work.
+        "Electrify your home" sounds like a single $40,000 project. It usually is not one project. The practical version is to <strong>compare the electric option whenever a gas or oil appliance reaches the end of its life</strong> — a heat pump when heating or cooling is due, a heat pump water heater when the tank fails, and induction during a kitchen replacement. Waiting for the replacement cycle avoids discarding useful equipment; whether the electric option is the better buy still depends on local prices, installation scope, and incentives.
       </p>
       <p>
         So the useful question isn't "should I electrify everything?" It's "what's the next thing due, and is the electric version worth it for my home?" The rest of this guide helps you find <em>your</em> next thing.
@@ -113,13 +113,13 @@ const paths = [
     <section>
       <h2 id="the-order">3. The order that saves the most</h2>
       <p>
-        If you do have the luxury of planning ahead rather than reacting to a breakdown, sequence matters — doing things in the right order makes every later step cheaper:
+        If you do have the luxury of planning ahead rather than reacting to a breakdown, sequence can reduce downstream equipment size, duplicated labor, and avoidable electrical work:
       </p>
       <ol>
         <li><strong>Envelope first (if bills are high or comfort is poor).</strong> Air sealing and insulation reduce your heating and cooling load. A smaller load means a smaller, cheaper heat pump and lower bills forever after. A <a href="/home-energy-audit-cost-calculator/">home energy audit</a> tells you whether this applies to you (and is often required for the bigger rebates).</li>
-        <li><strong>Heat pump for space heating &amp; cooling.</strong> Usually the biggest single bill and the biggest single win. See <a href="/guides/is-a-heat-pump-worth-it/">is a heat pump worth it</a>.</li>
-        <li><strong>Heat pump water heater.</strong> The second-biggest energy user in most homes; a quiet, high-return swap.</li>
-        <li><strong>Check the panel before you assume an upgrade.</strong> Adding a heat pump + EV charger + induction doesn't always require a 200A service — a load calculation or smart load management often avoids a $2,000–$4,000 panel job. Don't let it be the thing that stalls the rest.</li>
+        <li><strong>Heat pump for space heating &amp; cooling.</strong> Heating and cooling are major household energy uses, so this is often the largest equipment decision. See <a href="/guides/is-a-heat-pump-worth-it/">is a heat pump worth it</a>.</li>
+        <li><strong>Heat pump water heater.</strong> DOE says water heating is typically the second-largest home energy expense. A properly sited HPWH can cut electric water-heating use substantially, but it produces compressor noise and cool exhaust air, so location and sizing matter. See <a href="https://www.energy.gov/energysaver/water-heating" target="_blank" rel="noopener">DOE water-heating guidance</a>.</li>
+        <li><strong>Check the panel before you assume an upgrade.</strong> Adding a heat pump + EV charger + induction doesn't always require a 200A service — a dwelling load calculation or listed load-management equipment may avoid a multi-thousand-dollar service upgrade. Don't let an unsupported panel assumption stall the rest.</li>
         <li><strong>Solar / battery / EV — whenever they fit your life.</strong> These are less about sequence and more about timing (a new car, a roof replacement, an outage-prone grid).</li>
       </ol>
       <p>
@@ -142,8 +142,8 @@ const paths = [
     <section class="mt-8 not-prose">
       <div class="card p-5">
         <p class="text-sm font-semibold text-ink-900">See the whole picture</p>
-        <p class="mt-1 text-sm text-ink-700">Get a combined, realistic budget across heat pump, water heater, panel, solar, and more — with rebates applied and the portfolio effect handled honestly.</p>
-        <a href="/whole-home-electrification-cost-calculator/" class="btn-primary mt-3 inline-block">Whole-home estimate <span aria-hidden="true">→</span></a>
+        <p class="mt-1 text-sm text-ink-700">Select multiple projects and see a combined P10 / most-likely / P90 gross-cost distribution. Check each project's calculator separately for current incentives.</p>
+        <a href="/project-simulator/" class="btn-primary mt-3 inline-block">Open the Project Simulator <span aria-hidden="true">→</span></a>
       </div>
     </section>
   </article>
