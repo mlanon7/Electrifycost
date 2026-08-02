@@ -187,5 +187,7 @@ Not Ahrefs Web Analytics — it remains ~86% direct/bot noise. The two signals t
 2. **GSC average position** — 51.2 → 49.6 → **39.9**. If it reaches the low 20s, clicks start
    appearing on their own. That is the honest leading indicator.
 
-*Prior: `TRAFFIC_AUDIT_2026-07-24.md`, `FULL_AUDIT_2026-07-05.md`, `FULL_AUDIT_2026-07-04.md`.
-Independent third-party pass: `NINE_ITEM_REMAINING_AUDIT_CODEX_2026-07-25.md` (in the main folder).*
+*Prior reports (all in `archive/`): `TRAFFIC_AUDIT_2026-07-24.md`, `FULL_AUDIT_2026-07-05.md`,
+`FULL_AUDIT_2026-07-04.md`. Independent third-party passes (Codex, also in `archive/`):
+`NINE_ITEM_REMAINING_AUDIT_CODEX_2026-07-25.md` and the three 2026-06-25 reports.
+Index of everything: `README.md`.*

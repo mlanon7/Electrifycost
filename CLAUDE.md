@@ -351,12 +351,33 @@ These violate the brand position and would be flagged. If the user asks to add o
 
 ## Audit history (in repo, at `/audit/`)
 
-The `audit/` folder holds every deep-audit report, chronologically. **`audit/README.md` is the index** — read it first; it lists what each report covered and which findings shipped. Current (July 2026) reports sit at `audit/` top; everything older was superseded and lives in **`audit/archive/`** (nothing deleted — history preserved).
+**`audit/README.md` is the index — read it first.** It describes every report, what it found, and
+what shipped. The folder holds exactly **one current report** at the top level; everything superseded
+lives in `audit/archive/`. Nothing is ever deleted.
 
-- **Current:** `FULL_AUDIT_2026-07-05.md` (+ `.log`) — second full-site deep audit; `FULL_AUDIT_2026-07-04.md` (+ `.log`) — first full-site deep audit + Simulator v2 port verification.
-- **Archived (`audit/archive/`):** `PRODUCT_AUDIT_2026-06-27.md`, `FULL_AUDIT_CLAUDE_2026-06-25.md`, `AUDIT_2026-05-27.md`, `AUDIT_CLAUDE_2026-05-14.md` (Pass 4), `DEEP_AUDIT_2026-05-13.md` (Pass 3) + `UX_REFINEMENT_2026-05-13.md` + `ATTACK_PLAN_2026-05-13.md`, `AUDIT_v2.md` (Pass 2), `AUDIT.md` (Pass 1), the `CHANGES_*.md` per-pass change logs, and `KEYWORD_OPPORTUNITIES_2026-05.md` (keyword backlog; Tier 3 still pending).
+```
+audit/
+├── README.md                    ← the index
+├── FULL_AUDIT_2026-07-31.md     ← the ONE current report
+└── archive/                     ← 25 superseded reports (Claude + independent Codex passes)
+```
 
-When working on a task, read the most-recent audit (or `audit/README.md`) for context. When closing an audit task, add a new dated report at `audit/` top and note it in `audit/README.md`.
+Current: **`FULL_AUDIT_2026-07-31.md`** — Google recovering (position → 39.9), Bing at zero for 27
+days, and the sibling-site comparison showing the constraint is niche difficulty + thin-page ratio,
+not backlinks alone.
+
+Two archived reports carry warnings worth knowing before you trust them: `DEEP_AUDIT_2026-05-13.md`
+has **wrong geothermal numbers** (corrected 2026-07-05), and `TRAFFIC_AUDIT_2026-07-24.md`'s
+"authority-gated" conclusion was **revised** by the 07-31 report.
+
+When closing an audit task: add the new dated report at `audit/` top, `git mv` the previous one into
+`archive/`, and update `audit/README.md`.
+
+> ⚠️ **Two-checkout hazard.** This project has two working copies. The **main folder** is ~19 commits
+> behind with 19 uncommitted files and **fails `npm test`**; the **worktree** is in sync and green.
+> Never ship from the main folder, and never bulk-port its uncommitted changes — its
+> `federal-credits.csv` still has 30C `active` and would revert the July expiry flip. Details in
+> `audit/README.md`.
 
 ---
 
