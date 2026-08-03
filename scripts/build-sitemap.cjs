@@ -49,12 +49,23 @@ function main() {
     process.exit(1);
   }
   const files = walk(DIST);
-  const urls = files.map(f => {
+  // A noindex page must never appear in the sitemap — submitting a URL while
+  // telling the crawler not to index it is a contradictory signal. Pages opt in
+  // via Layout's `noindex` prop, so this stays correct without a path allowlist.
+  let skipped = 0;
+  const indexable = files.filter(f => {
+    const html = fs.readFileSync(f, 'utf8');
+    const isNoindex = /<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html);
+    if (isNoindex) skipped++;
+    return !isNoindex;
+  });
+  const urls = indexable.map(f => {
     const rel = path.relative(DIST, f).replaceAll(path.sep, '/');
     let urlPath = '/' + rel.replace(/index\.html$/, '');
     if (urlPath !== '/' && !urlPath.endsWith('/')) urlPath += '/';
     return urlPath;
   }).filter(u => !u.startsWith('/_'));
+  if (skipped) console.log(`[sitemap] skipped ${skipped} noindex page(s)`);
 
   urls.sort();
   const entries = urls.map(u => `  <url>

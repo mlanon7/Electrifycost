@@ -50,7 +50,7 @@ The site grew from 5 flagship calculators to 701 built HTML pages via **four pro
 | **Calculators** | `/<module>-cost-calculator/` | 37 | one `.astro` per module |
 | **Guides** | `/guides/<topic>/` | 37 | one per topic + RelatedGuides |
 | **State** (heat pump, solar, EV, panel, HPWH, induction, water heater) | `/<module>-cost-<state>/` (prefix form) | 7 × 51 = 357 | `<module>-cost-[state].astro` |
-| **City** (heat pump, HPWH) | `/heat-pump-cost/<city>/` (SUBPATH) | 2 × 100 = 200 | `heat-pump-cost/[city].astro` |
+| **City** (heat pump, HPWH) — **`noindex, follow`** | `/heat-pump-cost/<city>/` (SUBPATH) | 2 × 100 = 200 | `heat-pump-cost/[city].astro` |
 | **Size — sqft** (heat pump) | `/heat-pump-cost-<n>-sqft/` (static) | 5 | individual static files |
 | **Size — tonnage** (heat pump) | `/heat-pump-cost-<n>-ton/` (prefix, static) | 5 | individual static files |
 | **Brand** (HP, HPWH, EV, battery) | `/<brand>-<module>-cost/` (SUFFIX form) | 22 | `[brand]-<module>-cost.astro` |
@@ -59,6 +59,16 @@ The site grew from 5 flagship calculators to 701 built HTML pages via **four pro
 | **Comparison** | `/<a>-vs-<b>/` | ~8 | individual static files |
 | **Intent** (replacement) | `/heat-pump-replacement-cost/` | 1 | individual static file |
 | **Legal** | `/privacy/`, `/terms/` | 2 | individual static files |
+
+> ⚠️ **The 200 city pages are `noindex, follow` as of 2026-07-31 — do not re-index them.**
+> Measured duplication: `heat-pump-cost/austin-tx/` vs `.../dallas-tx/` share **2,214 of 2,226
+> tokens — 0% unique**, differing only in the city name. Across samples, city pages are **0–5%**
+> unique and state pages 2–7%. That is scaled-content duplication, which Bing de-indexes and Google
+> logs as "Discovered – currently not indexed" (317 pages). They stay live and useful for visitors
+> (~2,250 words each, still linked from the by-city hubs) and `follow` keeps link equity flowing;
+> they are simply out of the index. `scripts/build-sitemap.cjs` auto-skips any `noindex` page, so
+> the sitemap is 500 URLs, not 700. Full reasoning: `.claude/lessons/12-programmatic-duplication.md`.
+> **If you add another programmatic dimension, measure uniqueness first.**
 
 **Routing rule (critical — see lessons/08):** to avoid collisions with the greedy `<module>-cost-[state]` dynamic route (which matches any `/<module>-cost-<x>/`):
 - **State / sqft / tonnage** use **prefix form** (`heat-pump-cost-X`) as STATIC files — Astro static-priority lets them coexist with `[state]`.
@@ -100,7 +110,7 @@ electrifycost/
 │   ├── home-energy-rebate-status.csv   — HEEHRA per-state rollout status
 │   └── ...39 more module-specific files
 ├── scripts/
-│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (~700 URLs)
+│   ├── build-sitemap.cjs               — POSTBUILD: walks dist/ → emits sitemap.xml (500 URLs; skips noindex)
 │   ├── validate-csvs.cjs               — pre-test: all 51 CSVs schema-checked (source_id resolves, ISO dates)
 │   ├── validate-pages.cjs              — pre-test: Layout open/close balance + JSX-trap detection
 │   ├── validate-content.cjs            — pre-test: banned-string guard (stale incentives, wrong credit codes, AI-slop)
@@ -325,7 +335,7 @@ The site is the product. Docs in the repo are working memory for contributors, n
 
 ### SEO
 
-- ~700 URLs in `sitemap.xml` (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
+- 500 URLs in `sitemap.xml` — 701 pages built, minus the 200 `noindex` city pages (correctly namespaced — `sitemap/0.9`, slash not hyphen — historic bug, do not regress)
 - Submitted to Google Search Console
 - 200+ source citations on `/sources/`
 - `WebSite`, `Organization`, `WebApplication`, `FAQPage`, `BreadcrumbList`, `TechArticle`, `CollectionPage`, `AboutPage`, `Person` JSON-LD schemas
@@ -431,7 +441,7 @@ Operational (non-code) facts — domain, DNS, hosting, **email (ImprovMX + SPF/D
 
 GSC indexing is operational. If a sitemap submission fails:
 1. Verify https://electrifycost.com/sitemap.xml has `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` — slash, not hyphen (this was a real historic bug)
-2. Verify ~700 URLs present
+2. Verify 500 URLs present (the 200 city pages are intentionally `noindex` and excluded)
 3. Re-submit in GSC → Sitemaps → Add sitemap → `sitemap.xml`
 
 For manual URL inspection (≤10/day per property), prioritize: `/`, `/about/`, `/methodology/`, `/heat-pump-cost-calculator/`, `/solar-panel-cost-calculator/`, `/ev-charger-installation-cost-calculator/`, `/rebates/`, `/heat-pump-cost-ca/`, `/heat-pump-cost-by-state/`, `/guides/heat-pumps/`.

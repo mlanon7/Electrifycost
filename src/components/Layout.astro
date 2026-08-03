@@ -19,6 +19,11 @@ interface Props {
   ogImage?: string;
   breadcrumbs?: BreadcrumbCrumb[];
   lastReviewed?: string;
+  /** Emit `noindex, follow`. Use for pages that are useful to visitors but are
+   *  near-duplicates of a canonical page (e.g. the city pages, which measured
+   *  0-5% unique against their siblings). `follow` keeps internal link equity
+   *  flowing. `scripts/build-sitemap.cjs` skips any page that sets this. */
+  noindex?: boolean;
 }
 
 const {
@@ -30,6 +35,7 @@ const {
   ogImage,
   breadcrumbs,
   lastReviewed,
+  noindex,
 } = Astro.props as Props;
 
 // Default to the site-wide freshness stamp when a page doesn't pass its own.
@@ -104,6 +110,7 @@ const schemas = breadcrumbSchema ? [...baseSchemas, breadcrumbSchema] : baseSche
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     {reviewedAt && <meta name="article:modified_time" content={reviewedAt} />}
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />

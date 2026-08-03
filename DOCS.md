@@ -26,7 +26,7 @@ How work actually moves through this project. Do not skip the gate.
    ├─────────────────────────────────────────────────────────────────┤
    │  3. GATE        npm test          (9 stages, all must pass)     │
    │                 npx tsc --noEmit                                │
-   │                 npm run build     (701 pages / 700 sitemap URLs)│
+   │                 npm run build     (701 pages / 500 sitemap URLs)│
    ├─────────────────────────────────────────────────────────────────┤
    │  4. SHIP        Stage files explicitly (never `git add -A`)     │
    │                 Commit → push to main → Vercel deploys          │
@@ -84,7 +84,7 @@ files — relocating them into a `docs/` folder would break dozens of links for 
 |---|---|
 | [`.claude/README.md`](.claude/README.md) | Toolkit index |
 | `.claude/commands/` (9) | Slash-command playbooks: `ship`, `preflight`, `audit-site`, `add-calculator`, `add-guide`, `add-state-pages`, `debug-build`, `refresh-sources`, `update-data` |
-| `.claude/lessons/` (11) | **Hard-won lessons. Check the relevant one before touching that surface.** Sitemap namespace, esbuild template-literal bug, calculator state prop, guide-template drift, CSV single-source-of-truth, Mediavine timing, no-funnel position, Astro route collisions, email auth, portfolio cross-linking, Monte Carlo port |
+| `.claude/lessons/` (12) | **Hard-won lessons. Check the relevant one before touching that surface.** Sitemap namespace, esbuild template-literal bug, calculator state prop, guide-template drift, CSV single-source-of-truth, Mediavine timing, no-funnel position, Astro route collisions, email auth, portfolio cross-linking, Monte Carlo port, **programmatic duplication (12 — read before adding any programmatic dimension)** |
 | `.claude/prompts/` (5) | Reusable prompts: full-site audit, content-quality review, data verification, cold-start SEO, HackerNews launch |
 | `.claude/launch.json` | Dev-server config for the browser preview |
 

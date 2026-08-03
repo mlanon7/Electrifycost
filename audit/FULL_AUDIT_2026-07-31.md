@@ -187,6 +187,58 @@ Not Ahrefs Web Analytics — it remains ~86% direct/bot noise. The two signals t
 2. **GSC average position** — 51.2 → 49.6 → **39.9**. If it reaches the low 20s, clicks start
    appearing on their own. That is the honest leading indicator.
 
+---
+
+## §8 — Addendum: the duplication measurement (the actual root cause)
+
+A second pass the same day measured what every prior "thin content" check missed. **The programmatic
+pages are not thin — they are near-identical.**
+
+| Comparison | Unique tokens | Uniqueness |
+|---|---|---|
+| `heat-pump-cost/austin-tx/` vs `.../dallas-tx/` | **12 of 2,226** | **0%** — differs only by the city name |
+| `austin-tx` vs `boise-id` (different state) | 77 of 2,226 | 3% |
+| City pages, 10 samples | — | **0–5%** |
+| State pages, 10 samples | — | 2–7% |
+
+City pages average **2,260 words**, so every length-based check passed. The tell was never length —
+it was **variance**: across 100 generated pages the word count spans 2,225–2,260, a **1.5% spread**.
+Pages genuinely written about different places do not cluster that tightly.
+
+This is scaled-content duplication, and it explains the evidence better than authority does:
+
+- **Bing** de-indexes it aggressively → exactly 0 impressions from July 2, unmoved by every
+  mechanical recovery action (sitemap, IndexNow, URL submission — all tried, all no-ops).
+- **Google** declines it quietly → **317 pages "Discovered – currently not indexed"**.
+- **The sibling comparison in §3 now has a mechanism.** PetPlanWise: DR 0, 292 pages, ranking.
+  ElectrifyCost: DR 2, 701 pages of which ~557 are 93–100% duplicates, not ranking. **Page count was
+  the liability.**
+
+**Fixed:** `noindex, follow` on all 200 city pages via a new `noindex` prop on `Layout.astro`;
+`build-sitemap.cjs` now auto-skips any `noindex` page (sitemap 700 → **500 URLs**, no allowlist to
+maintain). Pages stay live and useful for visitors and keep passing link equity. State pages kept
+indexed — weak, but they carry genuinely different data and are the ones earning impressions.
+Reasoning, measurement command, and thresholds: `.claude/lessons/12-programmatic-duplication.md`.
+
+## §9 — What to add (evidence-led, not speculative)
+
+Ranked by what GSC shows is *already* surfacing, rather than by keyword wish-list.
+
+1. **Deepen the Tesla / 240V outlet angle.** The strongest emerging cluster after heat pumps is
+   Tesla charger installation — `tesla 240v outlet installation cost` (6), plus four near-duplicate
+   phrasings (~4 each): ~22 impressions in 28 days. `/tesla-ev-charger-installation-cost/` exists and
+   is solid (3,179 words) **but mentions "240V" only twice.** "Just an outlet, not a hardwired
+   charger" is a distinct sub-intent with its own price band (NEMA 14-50 vs hardwired). Adding that
+   comparison to the Tesla page and the EV charger calculator targets a query already surfacing.
+2. **HPWH installed cost.** `heat pump water heater cost` is the joint-top query (12 impressions).
+   Deepen the existing page rather than adding new URLs.
+3. **`heat pump replacement cost`** (12 impressions) — the page exists; strengthen the swap-out
+   framing that the query implies.
+4. **Do not add another programmatic dimension.** §8 is why. If one is ever proposed, measure
+   uniqueness first with the command in lesson 12 and require > 30%.
+
+---
+
 *Prior reports (all in `archive/`): `TRAFFIC_AUDIT_2026-07-24.md`, `FULL_AUDIT_2026-07-05.md`,
 `FULL_AUDIT_2026-07-04.md`. Independent third-party passes (Codex, also in `archive/`):
 `NINE_ITEM_REMAINING_AUDIT_CODEX_2026-07-25.md` and the three 2026-06-25 reports.

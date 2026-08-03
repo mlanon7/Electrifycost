@@ -8,6 +8,14 @@ This file tracks shipped versions. Per-audit deep dives and pass-by-pass change 
 
 ## [Unreleased]
 
+### Shipped (2026-07-31) — deindex the duplicate city pages
+A deep audit measured what every prior "thin content" check missed: the 200 city pages average 2,260 words but are **near-identical**. `heat-pump-cost/austin-tx/` and `.../dallas-tx/` share **2,214 of 2,226 tokens — 0% unique**, differing only in the city name; across samples city pages are **0–5%** unique and state pages 2–7%. Word count was never the tell; the 1.5% word-count *variance* across 100 generated pages was. This is scaled-content duplication — what Bing de-indexes (site hit **exactly 0 impressions on 2026-07-02** and stayed there) and what Google logs as "Discovered – currently not indexed" (**317 pages**).
+- **`noindex, follow` on all 200 city pages** via a new `noindex` prop on `Layout.astro`. They stay live and useful (~2,250 words, self-canonical, still linked from the by-city hubs); `follow` keeps link equity flowing. Reversible — one prop.
+- **`build-sitemap.cjs` now auto-skips any `noindex` page**, so the sitemap is **500 URLs** (was 700) with no path allowlist to maintain. Add a noindex page anywhere and the sitemap stays correct by itself.
+- **State pages kept indexed** — weak at 2–7% unique but they carry genuinely different data (labor multiplier, energy price, climate zone, rebates) and are the ones earning impressions.
+- Corrects the 2026-07-24 "authority-gated" diagnosis: a sibling site at **DR 0** with a near-identical backlink profile and 292 pages was earning 28 organic visits while this site at DR 2 with 701 pages earned zero. Page count was a liability.
+- New `.claude/lessons/12-programmatic-duplication.md` with the measurement command and thresholds (<10% do not index; 10–30% marginal; >30% fine).
+
 ### Shipped (2026-07-04) — Simulator v2 port (ProjectCostPro handoff) + 30C expiry flip
 The sister-site session handed off its 2026-07-04 simulator overhaul (`audit/archive/HANDOFF_FROM_PROJECTCOSTPRO_2026-07-04.md`); this is the behavioral port into the Astro/React/TS idiom, plus the 30C expiry that came due the same day:
 - **30C expiry flip.** The last live federal credit (30C, EV chargers) expired for property placed in service after 2026-06-30. CSVs flipped to `expired`, smoke tests converted to `asOf`-pinned historical coverage + a present-day gone-entirely assertion, dead census-tract inputs removed from the EV/whole-home calculators, and every page claim that 30C was still claimable rewritten past-tense (13 pages, FAQ JSON-LD kept consistent).
