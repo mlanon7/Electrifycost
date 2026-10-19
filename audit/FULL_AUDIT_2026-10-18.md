@@ -106,7 +106,9 @@ Someone searching "off grid solar system cost" wants the cost. The snippet offer
 
 ### Fixed
 
-Rewrote title and meta on the ten worst converters so the **price leads**. Every figure is lifted
+Rewrote title and meta on **20 pages** so the **price leads** — the ten worst Bing converters, then
+the ten highest-value calculators that had the same feature-list meta (a scan found **65 pages**
+with no price in the snippet at all). Every figure is lifted
 from that page's own published quick-answer, so snippet and content cannot disagree:
 
 | Page | Now leads with |
@@ -121,6 +123,16 @@ from that page's own published quick-answer, so snippet and content cannot disag
 | boiler | 85% AFUE gas $4,500–$8,500 |
 | solar | 7 kW $17,500–$31,500 gross |
 | electrical panel | $1,500–$3,000 replacement, $500–$2,000 subpanel |
+| **ev charger install** | **$1,000–$2,800 hardwired** (Google’s top page, 95 impressions) |
+| heat pump | 3-ton ducted $7,500–$22,000 |
+| water heater install | $1,200–$2,800 standard tank |
+| heat pump water heater | 50-gal 240V hybrid $2,200–$4,200 |
+| panel upgrade | 100A→200A $2,500–$5,000 |
+| insulation | $4,500–$8,500 for 1,800 sqft |
+| ac replacement | 3-ton two-stage $8,000–$11,500 |
+| gas furnace | 95% AFUE $4,500–$8,500 |
+| geothermal | 3-ton vertical bore $20,000–$32,000 |
+| tankless | gas condensing $4,500–$8,500 |
 
 **No ranking change is required for this to pay.** Those two worst pages alone are 997 impressions
 returning 6 clicks. At the ~9% CTR comparable pages already achieve, that is roughly 90 clicks.
@@ -162,8 +174,9 @@ pages correctly `noindex, follow`, sitemap carries zero city URLs.
    impressions, 38 clicks) is the single best page on the site, and the Powerwall / 13.5 kWh /
    price-per-kWh cluster is live demand. `/guides/ev-charging-cost/` and the off-grid solar
    calculator are the next two.
-3. **Apply the price-led snippet pattern site-wide.** Only ten pages were rewritten. The same
-   feature-list meta exists on dozens of calculators that have not yet earned impressions.
+3. **Finish applying the price-led snippet pattern.** 20 pages are done; a scan found **65** with
+   no price in the meta. The remaining ~45 are mostly guides, which need a hand-written hook rather
+   than a quick-answer figure, so they are a writing task rather than a mechanical one.
 4. **Do not add programmatic pages.** 557 of them earn nothing on either engine. See
    `.claude/lessons/12-programmatic-duplication.md`.
 5. **Open question, not yet actioned:** the 357 state pages are 2–7% unique and earn nothing. The
