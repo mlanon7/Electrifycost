@@ -75,8 +75,8 @@ files — relocating them into a `docs/` folder would break dozens of links for 
 | Location | Purpose |
 |---|---|
 | [`audit/README.md`](audit/README.md) | **The index.** Every report, what it found, what shipped, and which archived reports contain known-wrong figures. Read before opening any individual report. |
-| `audit/FULL_AUDIT_2026-07-31.md` | The one current report |
-| `audit/archive/` | 25 superseded reports — Claude passes, independent Codex passes, per-pass change logs, the keyword backlog, and the ProjectCostPro handoff brief |
+| `audit/FULL_AUDIT_2026-10-18.md` | The one current report |
+| `audit/archive/` | 26 superseded reports — Claude passes, independent Codex passes, per-pass change logs, the keyword backlog, and the ProjectCostPro handoff brief |
 
 ## `.claude/` toolkit
 

@@ -10,7 +10,7 @@ current-state documentation — the live state lives in `CLAUDE.md`, `ARCHITECTU
 ```
 audit/
 ├── README.md                    ← you are here: the index
-├── FULL_AUDIT_2026-07-31.md     ← the ONE current report
+├── FULL_AUDIT_2026-10-18.md     ← the ONE current report
 └── archive/                     ← every superseded report (nothing is ever deleted)
 ```
 
@@ -24,7 +24,7 @@ filename, so any group that references each other must move together.
 
 | Report | Date | Scope and outcome |
 |---|---|---|
-| [`FULL_AUDIT_2026-07-31.md`](FULL_AUDIT_2026-07-31.md) | 2026-07-31 | Google is **improving** (avg position 51.2 → 49.6 → **39.9**); Bing is at **absolute zero for 27 straight days**. Found and fixed a self-inflicted regression — the 07-24 `www` 307→308 change appears to have caused Bing to **de-register the sitemap** (re-submitted 7/31). Bing now warns explicitly against the IndexNow batch sent on 07-24. **Headline:** the sibling-site comparison revises the "authority-gated" diagnosis — PetPlanWise has **DR 0** (below EC's DR 2) with a near-identical backlink profile yet earns 28 organic traffic / 25 keywords while EC earns zero. Niche difficulty and the thin-page ratio, not backlinks alone, are the binding constraints. Shipped the June 29 content-precision edits; dependency advisories 9 → 5. |
+| [`FULL_AUDIT_2026-10-18.md`](FULL_AUDIT_2026-10-18.md) | 2026-10-18 | **Bing recovered completely; Google did not.** Bing went 0/day → ~350/day, **219 clicks**, 8.9K impressions, 2.46% CTR. Google fell further (1.75 impressions/day, position 52.3, 1 click in 92 days). Verified the July deindex cost nothing — of 56 pages earning any impression, **not one was a city page**. **New binding constraint: click-through, not ranking.** Pages hold Bing positions 1.63–6.17 and convert at 0.00%; the measured pattern is that a price in the snippet converts and a feature list does not. Rewrote title+meta on the ten worst converters. |
 
 ---
 
@@ -32,6 +32,7 @@ filename, so any group that references each other must move together.
 
 | Report | Date | Scope and outcome |
 |---|---|---|
+| `FULL_AUDIT_2026-07-31.md` | 2026-07-31 | Third July audit. Found and fixed a self-inflicted regression (the 07-24 www 307→308 change caused Bing to de-register the sitemap). **Measured the duplication that mattered**: city pages 0–5% unique, `austin-tx` vs `dallas-tx` differing only by the city name — and shipped `noindex, follow` on all 200. The 2026-10-18 audit confirms that call: those pages earned zero impressions, so nothing was lost, and Bing recovered three weeks later. |
 | `TRAFFIC_AUDIT_2026-07-24.md` | 2026-07-24 | The traffic investigation. Separated three conflated things: the "drop today" in Ahrefs was a **reporting artifact** (incomplete current UTC day); the **real** decline was Google impressions falling ~93% around **June 10–17**, matching the May 2026 core update and the end of the new-domain discovery boost; and **Bing went to exactly 0 on July 2**. Contains the full **elimination pass** (§3.1) proving no site-side fault — still the canonical reference for what was ruled out and how. Superseded on the diagnosis by 07-31. |
 | `FULL_AUDIT_2026-07-05.md` (+ `.log`) | 2026-07-05 | Second full-site deep audit, 7 parallel streams. Zero P0. Four P1s fixed: geothermal had been rebased **too low** on 07-04 (corrected to the $20k–$32k live-source range), 14 bespoke calculators had **detached form labels**, two FAQ answers still framed an expired federal credit as live, and an ~8px horizontal-scroll hairline. |
 | `FULL_AUDIT_2026-07-04.md` (+ `.log`) | 2026-07-04 | First full-site deep audit, run alongside the ProjectCostPro Simulator v2 port. Two-pass: content, UI, calculation accuracy, SEO/schema, accessibility, data integrity, docs. Established the baseline 07-05 verified against. |

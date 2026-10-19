@@ -84,8 +84,23 @@ earning impressions (`heat pump cost oregon`, position 24.9).
 5. **`noindex` is not deletion.** It is the reversible, non-destructive way to remove a duplication
    liability while keeping pages for the visitors who reach them.
 
+## Outcome, measured 11 weeks later (2026-10-18)
+
+The call held up.
+
+- **Nothing was lost.** Of the 56 pages that earned any impression in the following 92 days, **not
+  one was a city page**. Those pages were contributing zero before they were deindexed.
+- **Bing recovered.** 27 consecutive days of zero impressions became ~350/day and 219 clicks,
+  starting about three weeks after the change. Not proof of causation, but the timing fits and no
+  competing explanation appeared.
+- **It applies slowly.** 11 weeks on, Google had processed the `noindex` on only **46 of 200**
+  pages. Expect a quarter-applied result after two months, not a clean cutover.
+- **It did not fix Google.** Google impressions kept falling (8.1/day to 1.75/day). Deduplication
+  removed a liability; it did not create demand. Treat it as hygiene, not growth.
+
 ## Related
 
-- `audit/FULL_AUDIT_2026-07-31.md` — the audit that found it
+- `audit/archive/FULL_AUDIT_2026-07-31.md` — the audit that found it
+- `audit/FULL_AUDIT_2026-10-18.md` — the 11-week follow-up that scored the call
 - `audit/archive/TRAFFIC_AUDIT_2026-07-24.md` — the earlier "authority-gated" diagnosis this corrects
 - `.claude/lessons/08-astro-route-collision-patterns.md` — how these routes are shaped

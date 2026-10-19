@@ -368,17 +368,20 @@ lives in `audit/archive/`. Nothing is ever deleted.
 ```
 audit/
 ├── README.md                    ← the index
-├── FULL_AUDIT_2026-07-31.md     ← the ONE current report
+├── FULL_AUDIT_2026-10-18.md     ← the ONE current report
 └── archive/                     ← 25 superseded reports (Claude + independent Codex passes)
 ```
 
-Current: **`FULL_AUDIT_2026-07-31.md`** — Google recovering (position → 39.9), Bing at zero for 27
-days, and the sibling-site comparison showing the constraint is niche difficulty + thin-page ratio,
-not backlinks alone.
+Current: **`FULL_AUDIT_2026-10-18.md`** — **Bing is now the traffic engine** (0/day → ~350/day,
+219 clicks, 2.46% CTR) while Google stayed flat (1.75 impressions/day, position 52.3). The July
+city deindex was verified harmless: of 56 pages earning any impression, none was a city page. The
+binding constraint is now **click-through, not ranking** — pages rank on Bing page one and convert
+at 0.00% when the snippet lists features instead of a price.
 
-Two archived reports carry warnings worth knowing before you trust them: `DEEP_AUDIT_2026-05-13.md`
-has **wrong geothermal numbers** (corrected 2026-07-05), and `TRAFFIC_AUDIT_2026-07-24.md`'s
-"authority-gated" conclusion was **revised** by the 07-31 report.
+Three archived reports carry warnings before you trust them: `DEEP_AUDIT_2026-05-13.md` has
+**wrong geothermal numbers** (corrected 2026-07-05); `TRAFFIC_AUDIT_2026-07-24.md`'s
+"authority-gated" conclusion was **revised** by 07-31; and 07-31's own framing was refined again by
+10-18, which showed CTR — not ranking or authority — is now the limiting factor.
 
 When closing an audit task: add the new dated report at `audit/` top, `git mv` the previous one into
 `archive/`, and update `audit/README.md`.
